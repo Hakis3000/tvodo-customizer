@@ -284,6 +284,8 @@ align-items:center;
 justify-content:center;
 
 gap:5px;
+
+transition:0.25s;
 }
 
 .embroidery-icon{
@@ -295,7 +297,7 @@ object-fit:contain;
 
 opacity:0;
 
-transition:0.3s;
+transition:0.25s;
 
 filter:
 drop-shadow(0 1px 2px rgba(0,0,0,0.25));
@@ -390,7 +392,7 @@ margin-bottom:26px;
 
 .section{
 
-margin-top:26px;
+margin-top:24px;
 }
 
 .section-title{
@@ -444,15 +446,15 @@ translateY(-3px)
 scale(1.03);
 }
 
-/* PRESS EFFECT */
+/* CLICK EFFECT */
 
 .btn:active{
 
 transform:
-scale(0.92);
+scale(0.88);
 
 box-shadow:
-inset 0 5px 12px rgba(0,0,0,0.18);
+inset 0 6px 12px rgba(0,0,0,0.16);
 }
 
 .active{
@@ -468,6 +470,24 @@ color:white;
 
 box-shadow:
 0 12px 28px rgba(111,152,255,0.35);
+
+animation:clickPulse 0.28s ease;
+}
+
+@keyframes clickPulse{
+
+0%{
+transform:scale(0.92);
+}
+
+60%{
+transform:scale(1.06);
+}
+
+100%{
+transform:scale(1);
+}
+
 }
 
 /* TEXTAREA */
@@ -496,7 +516,7 @@ box-shadow:
 
 resize:none;
 
-min-height:95px;
+min-height:90px;
 
 font-family:Poppins,sans-serif;
 
@@ -563,9 +583,11 @@ transform:scale(0.88);
 
 .color.active-color{
 
-outline:4px solid rgba(111,152,255,0.5);
+outline:4px solid rgba(111,152,255,0.45);
 
-transform:scale(1.12);
+transform:scale(1.1);
+
+animation:clickPulse 0.28s ease;
 }
 
 /* ICONS */
@@ -612,7 +634,7 @@ scale(1.04);
 
 .icon-btn:active{
 
-transform:scale(0.90);
+transform:scale(0.88);
 }
 
 .icon-btn.active{
@@ -626,6 +648,8 @@ linear-gradient(
 
 box-shadow:
 0 12px 28px rgba(111,152,255,0.35);
+
+animation:clickPulse 0.28s ease;
 }
 
 .icon-btn img{
@@ -712,10 +736,10 @@ scale(1.01);
 .order-btn:active{
 
 transform:
-scale(0.94);
+scale(0.92);
 
 box-shadow:
-inset 0 5px 12px rgba(0,0,0,0.2);
+inset 0 6px 12px rgba(0,0,0,0.2);
 }
 
 /* MOBILE */
@@ -780,7 +804,10 @@ src="biele tricko.png"
 
 <div class="embroidery">
 
-<div class="embroidery-content">
+<div
+id="embroideryContent"
+class="embroidery-content"
+>
 
 <img
 id="previewIcon"
@@ -811,7 +838,7 @@ Navrhnite si vlastné tričko
 </div>
 
 <div class="subtitle">
-Vyberte si farbu trička, ikonku a vytvorte si vlastnú výšivku podľa seba.
+Vytvorte si vlastnú výšivku jednoducho podľa seba.
 </div>
 
 <!-- SHIRT -->
@@ -847,7 +874,7 @@ onclick="setShirt('black', this)"
 <div class="section">
 
 <div class="section-title">
-Veľkosť trička
+Veľkosť
 </div>
 
 <div class="row">
@@ -879,11 +906,7 @@ oninput="updatePreview()"
 
 <div class="help">
 
-Po 8 znakoch sa text automaticky presunie na druhý riadok.
-
-<br>
-
-Je možné použiť ENTER pre vlastné rozloženie textu.
+Text sa automaticky prispôsobí vzhľadu výšivky.
 
 </div>
 
@@ -894,7 +917,7 @@ Je možné použiť ENTER pre vlastné rozloženie textu.
 <div class="section">
 
 <div class="section-title">
-Štýl výšivky
+Štýl textu
 </div>
 
 <div class="row">
@@ -973,7 +996,7 @@ onclick="setThreadColor('#8dff8d', this)">
 <div class="section">
 
 <div class="section-title">
-Ikonka výšivky
+Ikonka
 </div>
 
 <div class="icons">
@@ -1006,15 +1029,7 @@ Ikonka výšivky
 
 <div class="info">
 
-Výšivka je automaticky prispôsobená do maximálnej veľkosti 11 × 11 cm.
-
-<br><br>
-
-Náhľad produktu je ilustračný. Každé tričko je vyrábané individuálne.
-
-<br><br>
-
-Výšivka je umiestnená na ľavej strane hrude.
+Každé tričko vyrábame individuálne podľa zvoleného návrhu.
 
 </div>
 
@@ -1034,6 +1049,12 @@ function updatePreview(){
 
 const text =
 document.getElementById('previewText');
+
+const content =
+document.getElementById('embroideryContent');
+
+const previewIcon =
+document.getElementById('previewIcon');
 
 const currentFont =
 text.style.fontFamily;
@@ -1059,6 +1080,12 @@ first + '\n' + second;
 }
 
 text.innerText = input;
+
+const hasIcon =
+previewIcon.style.opacity === '1';
+
+content.style.gap =
+hasIcon ? '5px' : '0px';
 
 const longestLine =
 Math.max(...input.split('\n').map(line => line.length));
@@ -1163,6 +1190,8 @@ previewIcon.src = icon;
 
 previewIcon.style.opacity = '1';
 
+updatePreview();
+
 }
 
 /* REMOVE ICON */
@@ -1179,6 +1208,8 @@ const previewIcon =
 document.getElementById('previewIcon');
 
 previewIcon.style.opacity = '0';
+
+updatePreview();
 
 }
 
