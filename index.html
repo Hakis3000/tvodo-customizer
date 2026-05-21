@@ -7,13 +7,9 @@
 
 <title>TVODO Customizer PRO</title>
 
-<!-- FONTS -->
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Fredoka:wght@500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-
-<!-- FABRIC -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 
@@ -34,8 +30,6 @@ box-sizing:border-box;
 --bg2:#eef5ff;
 
 }
-
-/* BODY */
 
 body{
 
@@ -956,8 +950,6 @@ Pokračovať k objednávke
 
 <script>
 
-/* CANVAS */
-
 const canvas = new fabric.Canvas('shirtCanvas',{
 
 selection:false
@@ -967,12 +959,7 @@ selection:false
 canvas.setWidth(1000);
 canvas.setHeight(1000);
 
-/* SHIRT */
-
 let shirtImage;
-
-/* ICON */
-
 let currentIcon = null;
 
 /* TEXT */
@@ -980,9 +967,9 @@ let currentIcon = null;
 const embroideryText = new fabric.Textbox('',{
 
 left:450,
-top:400,
+top:205,
 
-width:220,
+width:260,
 
 fontSize:42,
 
@@ -1069,13 +1056,11 @@ fontSize:size
 
 });
 
-/* ICON OFFSET */
-
 if(currentIcon){
 
 embroideryText.set({
 
-top:330
+top:225
 
 });
 
@@ -1083,7 +1068,7 @@ top:330
 
 embroideryText.set({
 
-top:305
+top:205
 
 });
 
@@ -1155,8 +1140,8 @@ currentIcon = img;
 
 img.set({
 
-left:650,
-top:295,
+left:565,
+top:185,
 
 selectable:false,
 evented:false
