@@ -5,7 +5,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>TVODO Customizer</title>
+<title>TVODO - Vyšívané tričká</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -104,7 +104,7 @@ display:grid;
 
 grid-template-columns:
 minmax(0,1fr)
-420px;
+430px;
 
 gap:22px;
 
@@ -116,9 +116,15 @@ align-items:start;
 
 .left{
 
+position:sticky;
+
+top:22px;
+
+height:calc(100vh - 44px);
+
 display:flex;
 justify-content:center;
-align-items:flex-start;
+align-items:center;
 
 }
 
@@ -127,8 +133,7 @@ align-items:flex-start;
 .preview-card{
 
 width:100%;
-
-min-height:calc(100vh - 44px);
+height:100%;
 
 background:
 rgba(255,255,255,0.56);
@@ -203,7 +208,9 @@ position:absolute;
 
 top:34%;
 
-left:54%;
+/* POSUN VIAC DOĽAVA */
+
+left:49%;
 
 transform:translateX(-50%);
 
@@ -214,7 +221,9 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 
-gap:2px;
+/* MENŠIA MEDZERA */
+
+gap:0px;
 
 }
 
@@ -231,6 +240,8 @@ display:none;
 
 filter:
 drop-shadow(0 2px 5px rgba(0,0,0,0.14));
+
+margin-bottom:-4px;
 
 }
 
@@ -271,10 +282,6 @@ transition:0.2s;
 /* RIGHT PANEL */
 
 .right{
-
-position:sticky;
-
-top:20px;
 
 background:
 rgba(255,255,255,0.48);
@@ -329,11 +336,35 @@ margin-bottom:22px;
 
 }
 
+/* HANDMADE */
+
+.handmade{
+
+margin-top:14px;
+
+padding:14px;
+
+border-radius:18px;
+
+background:
+rgba(255,255,255,0.55);
+
+font-size:13px;
+
+line-height:1.6;
+
+color:#666;
+
+border:
+1px solid rgba(255,255,255,0.45);
+
+}
+
 /* SECTION */
 
 .section{
 
-margin-top:22px;
+margin-top:24px;
 
 }
 
@@ -354,7 +385,7 @@ font-weight:700;
 
 }
 
-/* INFO TOOLTIP */
+/* INFO */
 
 .info{
 
@@ -382,8 +413,6 @@ font-weight:700;
 cursor:pointer;
 
 position:relative;
-
-flex-shrink:0;
 
 }
 
@@ -461,7 +490,7 @@ box-shadow:
 
 }
 
-/* INFO */
+/* INFO ROW */
 
 .info-row{
 
@@ -531,6 +560,14 @@ color:white;
 
 }
 
+/* SIZE BUTTONS */
+
+.size-btn{
+
+min-width:64px;
+
+}
+
 /* ICON BUTTONS */
 
 .icon-btn{
@@ -597,7 +634,7 @@ outline:4px solid rgba(125,175,255,0.26);
 
 width:100%;
 
-margin-top:24px;
+margin-top:28px;
 
 padding:18px;
 
@@ -630,6 +667,30 @@ transition:0.15s;
 
 transform:
 translateY(-3px);
+
+}
+
+/* CUSTOM MESSAGE */
+
+.custom-message{
+
+margin-top:20px;
+
+padding:16px;
+
+border-radius:18px;
+
+background:
+rgba(255,255,255,0.58);
+
+border:
+1px solid rgba(255,255,255,0.4);
+
+font-size:13px;
+
+line-height:1.7;
+
+color:#666;
 
 }
 
@@ -715,18 +776,21 @@ grid-template-columns:1fr;
 
 }
 
-.right{
+.left{
 
 position:relative;
+
 top:auto;
+
+height:auto;
 
 }
 
 .preview-card{
 
-min-height:unset;
-
 aspect-ratio:1/1;
+
+min-height:unset;
 
 }
 
@@ -786,7 +850,7 @@ max-width:165%;
 
 top:34%;
 
-left:54%;
+left:49%;
 
 width:130px;
 
@@ -846,8 +910,6 @@ class="shirt"
 id="shirt"
 />
 
-<!-- EMBROIDERY -->
-
 <div class="embroidery-zone">
 
 <img
@@ -880,7 +942,11 @@ Vytvor si svoje tričko
 </div>
 
 <div class="subtitle">
-Prémiová výšivka podľa tvojich predstáv.
+Vyberte si farbu, niť a štýl výšivky.
+</div>
+
+<div class="handmade">
+Každý kus je ručne vyrábaný na objednávku. Náhľad na stránke slúži iba ako vizualizácia výsledného trička.
 </div>
 
 <!-- SHIRT COLOR -->
@@ -898,7 +964,7 @@ Farba trička
 i
 
 <div class="tooltip">
-Vyberte farbu trička pre náhľad výšivky.
+Zmeňte farbu trička pre lepší náhľad výšivky.
 </div>
 
 </div>
@@ -919,6 +985,54 @@ class="btn shirt-btn"
 data-shirt="black"
 >
 Čierna
+</button>
+
+</div>
+
+</div>
+
+<!-- SIZE -->
+
+<div class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+Veľkosť trička
+</div>
+
+<div class="info">
+
+i
+
+<div class="tooltip">
+Dostupné veľkosti od S až po 2XL.
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<button class="btn size-btn">
+S
+</button>
+
+<button class="btn size-btn active">
+M
+</button>
+
+<button class="btn size-btn">
+L
+</button>
+
+<button class="btn size-btn">
+XL
+</button>
+
+<button class="btn size-btn">
+2XL
 </button>
 
 </div>
@@ -974,7 +1088,7 @@ Max. 4 riadky
 <div class="section-head">
 
 <div class="section-title">
-Štýl textu
+Štýl výšivky
 </div>
 
 <div class="info">
@@ -982,7 +1096,7 @@ Max. 4 riadky
 i
 
 <div class="tooltip">
-Každý font vytvorí trochu iný štýl výšivky.
+Každý štýl vytvorí trochu iný vzhľad výšivky.
 </div>
 
 </div>
@@ -1023,7 +1137,7 @@ Písaný
 <div class="section-head">
 
 <div class="section-title">
-Farba nite
+Vyberte si niť
 </div>
 
 <div class="info">
@@ -1031,7 +1145,7 @@ Farba nite
 i
 
 <div class="tooltip">
-Farba výšivky sa zobrazí priamo na tričku.
+Farba nite sa zobrazí priamo na náhľade trička.
 </div>
 
 </div>
@@ -1150,6 +1264,10 @@ data-icon="zajko.png"
 🛍️ Pokračovať k objednávke
 </button>
 
+<div class="custom-message">
+Ak máte záujem o väčšiu výšivku alebo vlastný obrázok, napíšte nám správu a pripravíme vám individuálny návrh.
+</div>
+
 <!-- FEATURES -->
 
 <div class="features">
@@ -1163,11 +1281,11 @@ data-icon="zajko.png"
 <div>
 
 <h3>
-Kvalitná výšivka
+Ručná výroba
 </h3>
 
 <p>
-Prémiová niť, ktorá vydrží roky.
+Každé tričko vyrábame individuálne.
 </p>
 
 </div>
@@ -1203,11 +1321,11 @@ Expresné spracovanie objednávok.
 <div>
 
 <h3>
-Jedinečný dizajn
+Prémiová výšivka
 </h3>
 
 <p>
-Každé tričko vyrábame individuálne.
+Kvalitné nite s dlhou životnosťou.
 </p>
 
 </div>
@@ -1241,8 +1359,6 @@ Bezpečná platba
 </div>
 
 <script>
-
-/* ELEMENTS */
 
 const textInput =
 document.getElementById("textInput");
@@ -1448,6 +1564,29 @@ textLayer.style.color = "white";
 shirt.classList.remove("black-shirt");
 
 }
+
+}
+);
+
+});
+
+/* SIZE */
+
+document
+.querySelectorAll(".size-btn")
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".size-btn")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+btn.classList.add("active");
 
 }
 );
