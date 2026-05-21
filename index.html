@@ -2,7 +2,7 @@
 <html lang="sk">
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>TVODO Customizer</title>
@@ -27,16 +27,11 @@ box-sizing:border-box;
 --bg1:#fff7fb;
 --bg2:#eef5ff;
 
---panel:
-rgba(255,255,255,0.72);
-
 }
 
 body{
 
 font-family:Poppins,sans-serif;
-
-min-height:100vh;
 
 background:
 linear-gradient(
@@ -45,11 +40,15 @@ var(--bg1),
 var(--bg2)
 );
 
+min-height:100vh;
+
 overflow-x:hidden;
+
+color:#222;
 
 }
 
-/* BACKGROUND BLOBS */
+/* BACKGROUND */
 
 .bg{
 
@@ -57,11 +56,12 @@ position:fixed;
 
 border-radius:50%;
 
-filter:blur(120px);
+filter:blur(140px);
 
 opacity:0.22;
 
 z-index:-1;
+
 }
 
 .bg1{
@@ -71,8 +71,9 @@ height:500px;
 
 background:var(--pink);
 
-top:-180px;
-left:-120px;
+top:-220px;
+left:-160px;
+
 }
 
 .bg2{
@@ -82,8 +83,9 @@ height:500px;
 
 background:var(--blue);
 
-bottom:-180px;
-right:-120px;
+bottom:-220px;
+right:-160px;
+
 }
 
 /* APP */
@@ -98,7 +100,7 @@ display:grid;
 
 grid-template-columns:
 minmax(0,1fr)
-420px;
+430px;
 
 }
 
@@ -112,7 +114,28 @@ align-items:center;
 
 padding:40px;
 
-min-height:100vh;
+}
+
+/* PREVIEW CARD */
+
+.preview-card{
+
+width:min(92vw,950px);
+
+background:
+rgba(255,255,255,0.55);
+
+backdrop-filter:blur(20px);
+
+border:
+1px solid rgba(255,255,255,0.5);
+
+border-radius:42px;
+
+padding:30px;
+
+box-shadow:
+0 25px 60px rgba(0,0,0,0.08);
 
 }
 
@@ -122,13 +145,13 @@ min-height:100vh;
 
 position:relative;
 
-width:min(90vw,850px);
-
-aspect-ratio:4/5;
+aspect-ratio:1/1;
 
 display:flex;
 justify-content:center;
 align-items:center;
+
+overflow:hidden;
 
 }
 
@@ -145,7 +168,9 @@ user-select:none;
 pointer-events:none;
 
 filter:
-drop-shadow(0 30px 60px rgba(0,0,0,0.16));
+drop-shadow(0 25px 40px rgba(0,0,0,0.10));
+
+opacity:0.97;
 
 }
 
@@ -155,30 +180,38 @@ drop-shadow(0 30px 60px rgba(0,0,0,0.16));
 
 position:absolute;
 
-top:31%;
+top:34%;
 
-left:50%;
+left:38%;
 
 transform:translateX(-50%);
 
-width:34%;
+width:22%;
+
+max-width:180px;
 
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 
-gap:10px;
+gap:6px;
 
 }
 
 /* ICON */
 
-.icon{
+.icon-img{
 
-font-size:34px;
+width:34px;
+height:34px;
 
-line-height:1;
+object-fit:contain;
+
+display:none;
+
+filter:
+drop-shadow(0 2px 4px rgba(0,0,0,0.12));
 
 }
 
@@ -188,70 +221,132 @@ line-height:1;
 
 font-family:'Montserrat';
 
-font-size:clamp(18px,2.2vw,42px);
+font-size:
+clamp(14px,1.5vw,28px);
 
 font-weight:700;
 
-line-height:1.1;
+line-height:1.15;
 
 text-align:center;
 
 white-space:pre-line;
 
-color:black;
+letter-spacing:0.5px;
 
-text-shadow:
-0 1px 1px rgba(255,255,255,0.5),
-0 2px 6px rgba(0,0,0,0.14);
+overflow-wrap:break-word;
 
 max-width:100%;
 
-word-break:break-word;
+color:#ff7cc6;
+
+text-shadow:
+0 1px 1px rgba(255,255,255,0.4),
+0 2px 6px rgba(0,0,0,0.08);
 
 }
 
-/* RIGHT PANEL */
+/* ZONE BORDER */
+
+.zone{
+
+position:absolute;
+
+width:170px;
+height:130px;
+
+border:
+2px dashed rgba(255,124,198,0.4);
+
+border-radius:18px;
+
+pointer-events:none;
+
+}
+
+/* ZOOM */
+
+.zoom{
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+gap:18px;
+
+margin-top:20px;
+
+}
+
+.zoom-btn{
+
+width:46px;
+height:46px;
+
+border:none;
+
+border-radius:18px;
+
+background:white;
+
+font-size:24px;
+
+cursor:pointer;
+
+box-shadow:
+0 8px 20px rgba(0,0,0,0.08);
+
+}
+
+.zoom-percent{
+
+font-weight:600;
+
+font-size:18px;
+
+}
+
+/* DRAG */
+
+.drag-info{
+
+margin-top:16px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+gap:8px;
+
+font-size:14px;
+
+color:#777;
+
+}
+
+/* RIGHT */
 
 .right{
 
 background:
-rgba(255,255,255,0.3);
+rgba(255,255,255,0.42);
 
 backdrop-filter:blur(18px);
 
 border-left:
-1px solid rgba(255,255,255,0.35);
+1px solid rgba(255,255,255,0.4);
 
-padding:28px;
+padding:30px;
 
 overflow-y:auto;
 
-}
-
-/* SCROLL */
-
-.right::-webkit-scrollbar{
-
-width:8px;
-}
-
-.right::-webkit-scrollbar-thumb{
-
-background:
-linear-gradient(
-180deg,
-var(--pink),
-var(--blue)
-);
-
-border-radius:20px;
 }
 
 /* TITLE */
 
 .title{
 
-font-size:34px;
+font-size:38px;
 
 font-weight:700;
 
@@ -273,7 +368,7 @@ var(--blue)
 
 .subtitle{
 
-font-size:14px;
+font-size:15px;
 
 line-height:1.7;
 
@@ -287,15 +382,59 @@ margin-bottom:28px;
 
 .section{
 
-margin-top:24px;
+margin-top:28px;
 }
 
 .section-title{
 
-font-size:15px;
+font-size:16px;
 font-weight:700;
 
-margin-bottom:12px;
+margin-bottom:14px;
+}
+
+/* TEXTAREA */
+
+textarea{
+
+width:100%;
+
+min-height:120px;
+
+border:none;
+
+outline:none;
+
+resize:none;
+
+padding:18px;
+
+border-radius:24px;
+
+font-size:16px;
+
+font-family:Poppins,sans-serif;
+
+background:white;
+
+box-shadow:
+0 10px 24px rgba(0,0,0,0.05);
+
+}
+
+/* INFO ROW */
+
+.info-row{
+
+display:flex;
+justify-content:space-between;
+
+margin-top:10px;
+
+font-size:14px;
+
+color:#777;
+
 }
 
 /* ROW */
@@ -317,18 +456,17 @@ padding:14px 18px;
 
 border-radius:18px;
 
+background:white;
+
 cursor:pointer;
 
 font-size:15px;
 font-weight:600;
 
-background:
-rgba(255,255,255,0.88);
-
 transition:0.15s;
 
 box-shadow:
-0 10px 20px rgba(0,0,0,0.06);
+0 10px 20px rgba(0,0,0,0.05);
 
 }
 
@@ -353,43 +491,6 @@ color:white;
 
 }
 
-/* TEXTAREA */
-
-textarea{
-
-width:100%;
-
-border:none;
-
-outline:none;
-
-resize:none;
-
-min-height:110px;
-
-padding:18px;
-
-border-radius:24px;
-
-font-size:16px;
-
-font-family:Poppins,sans-serif;
-
-background:
-rgba(255,255,255,0.88);
-
-box-shadow:
-0 10px 20px rgba(0,0,0,0.05);
-
-}
-
-textarea:focus{
-
-box-shadow:
-0 0 0 4px rgba(125,175,255,0.18);
-
-}
-
 /* COLORS */
 
 .colors{
@@ -410,10 +511,10 @@ cursor:pointer;
 
 border:3px solid white;
 
-transition:0.15s;
-
 box-shadow:
 0 8px 18px rgba(0,0,0,0.1);
+
+transition:0.15s;
 
 }
 
@@ -424,7 +525,7 @@ transform:scale(1.08);
 
 .color.active{
 
-outline:4px solid rgba(125,175,255,0.28);
+outline:4px solid rgba(125,175,255,0.3);
 
 }
 
@@ -436,9 +537,9 @@ width:100%;
 
 margin-top:34px;
 
-border:none;
-
 padding:20px;
+
+border:none;
 
 border-radius:24px;
 
@@ -457,7 +558,7 @@ var(--blue)
 );
 
 box-shadow:
-0 16px 34px rgba(122,168,255,0.3);
+0 18px 34px rgba(122,168,255,0.28);
 
 transition:0.15s;
 
@@ -471,30 +572,98 @@ scale(1.01);
 
 }
 
+/* FEATURES */
+
+.features{
+
+width:100%;
+
+padding:0 30px 30px;
+
+grid-column:1 / -1;
+
+}
+
+.features-card{
+
+background:
+rgba(255,255,255,0.52);
+
+backdrop-filter:blur(18px);
+
+border:
+1px solid rgba(255,255,255,0.5);
+
+border-radius:34px;
+
+padding:26px;
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:24px;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,0.06);
+
+}
+
+.feature{
+
+display:flex;
+align-items:flex-start;
+
+gap:14px;
+
+}
+
+.feature-icon{
+
+width:52px;
+height:52px;
+
+border-radius:18px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:24px;
+
+background:white;
+
+box-shadow:
+0 10px 20px rgba(0,0,0,0.06);
+
+}
+
+.feature h3{
+
+font-size:17px;
+
+margin-bottom:4px;
+
+}
+
+.feature p{
+
+font-size:14px;
+
+color:#777;
+
+line-height:1.5;
+
+}
+
 /* MOBILE */
 
-@media(max-width:1100px){
+@media(max-width:1150px){
 
 .app{
 
 grid-template-columns:1fr;
-
-}
-
-.left{
-
-min-height:auto;
-
-padding:
-24px
-18px
-10px;
-
-}
-
-.preview{
-
-width:min(100%,620px);
 
 }
 
@@ -505,58 +674,63 @@ border-left:none;
 border-top:
 1px solid rgba(255,255,255,0.4);
 
-padding:22px;
+}
 
-background:
-rgba(255,255,255,0.5);
+.features-card{
+
+grid-template-columns:1fr 1fr;
 
 }
+
+.left{
+
+padding:20px;
+
+}
+
+.preview-card{
+
+padding:20px;
+
+}
+
+}
+
+@media(max-width:700px){
 
 .title{
 
-font-size:28px;
+font-size:30px;
+
+}
+
+.features-card{
+
+grid-template-columns:1fr;
 
 }
 
 .embroidery-zone{
 
-top:30%;
+top:33%;
 
-width:38%;
+left:37%;
 
-}
-
-}
-
-/* SMALL MOBILE */
-
-@media(max-width:600px){
-
-.preview{
-
-width:100%;
+width:24%;
 
 }
 
-.embroidery-zone{
+.zone{
 
-width:44%;
-
-top:29%;
+width:130px;
+height:100px;
 
 }
 
 .text{
 
-font-size:clamp(16px,5vw,28px);
-
-}
-
-.btn{
-
-padding:13px 16px;
-
-font-size:14px;
+font-size:
+clamp(12px,3vw,22px);
 
 }
 
@@ -577,22 +751,22 @@ font-size:14px;
 
 <div class="left">
 
+<div class="preview-card">
+
 <div class="preview">
 
 <img
 src="tricko.svg"
 class="shirt"
-id="shirt"
 />
 
 <div class="embroidery-zone">
 
-<div
-class="icon"
+<img
 id="iconLayer"
+class="icon-img"
+src=""
 >
-✨
-</div>
 
 <div
 class="text"
@@ -601,6 +775,30 @@ id="textLayer"
 TVODO
 </div>
 
+</div>
+
+<div class="zone"></div>
+
+</div>
+
+<div class="zoom">
+
+<button class="zoom-btn">
+−
+</button>
+
+<div class="zoom-percent">
+100%
+</div>
+
+<button class="zoom-btn">
++
+</button>
+
+</div>
+
+<div class="drag-info">
+🖐️ Drag pre posun
 </div>
 
 </div>
@@ -612,11 +810,11 @@ TVODO
 <div class="right">
 
 <div class="title">
-Navrhnite si vlastné tričko
+Vytvor si svoje tričko
 </div>
 
 <div class="subtitle">
-Prémiová personalizovaná výšivka podľa vašich predstáv.
+Prémiová výšivka podľa tvojich predstáv.
 </div>
 
 <!-- TEXT -->
@@ -624,14 +822,26 @@ Prémiová personalizovaná výšivka podľa vašich predstáv.
 <div class="section">
 
 <div class="section-title">
-Text výšivky
+1. Text výšivky
 </div>
 
 <textarea
 id="textInput"
-placeholder="Napíšte meno alebo text..."
 maxlength="40"
+placeholder="Napíšte meno alebo text..."
 ></textarea>
+
+<div class="info-row">
+
+<div id="counter">
+0 / 40
+</div>
+
+<div>
+Max. 3 riadky
+</div>
+
+</div>
 
 </div>
 
@@ -640,13 +850,13 @@ maxlength="40"
 <div class="section">
 
 <div class="section-title">
-Štýl textu
+2. Štýl textu
 </div>
 
 <div class="row">
 
 <button
-class="btn active font-btn"
+class="btn font-btn active"
 data-font="Montserrat"
 >
 Moderný
@@ -670,18 +880,24 @@ Písaný
 
 </div>
 
-<!-- COLOR -->
+<!-- THREAD -->
 
 <div class="section">
 
 <div class="section-title">
-Farba nite
+3. Farba nite
 </div>
 
 <div class="colors">
 
 <div
 class="color active"
+data-color="#ff7cc6"
+style="background:#ff7cc6;"
+></div>
+
+<div
+class="color"
 data-color="black"
 style="background:black;"
 ></div>
@@ -697,48 +913,62 @@ border:1px solid #ccc;
 
 <div
 class="color"
-data-color="#ff7cc6"
-style="background:#ff7cc6;"
+data-color="#5c86ff"
+style="background:#5c86ff;"
 ></div>
 
 <div
 class="color"
-data-color="#7dafff"
-style="background:#7dafff;"
+data-color="#69c27d"
+style="background:#69c27d;"
+></div>
+
+<div
+class="color"
+data-color="#d7b15a"
+style="background:#d7b15a;"
 ></div>
 
 </div>
 
 </div>
 
-<!-- ICON -->
+<!-- ICONS -->
 
 <div class="section">
 
 <div class="section-title">
-Ikonka
+4. Ikonka
 </div>
 
 <div class="row">
 
-<button class="btn icon-btn" data-icon="✨">
-✨
+<button
+class="btn icon-btn active"
+data-icon=""
+>
+✕
 </button>
 
-<button class="btn icon-btn" data-icon="❤️">
+<button
+class="btn icon-btn"
+data-icon="srdce.png"
+>
 ❤️
 </button>
 
-<button class="btn icon-btn" data-icon="⭐">
-⭐
-</button>
-
-<button class="btn icon-btn" data-icon="🧸">
+<button
+class="btn icon-btn"
+data-icon="medved.png"
+>
 🧸
 </button>
 
-<button class="btn icon-btn" data-icon="">
-Bez
+<button
+class="btn icon-btn"
+data-icon="zajko.png"
+>
+🐰
 </button>
 
 </div>
@@ -746,8 +976,98 @@ Bez
 </div>
 
 <button class="order-btn">
-Pokračovať k objednávke
+🛍️ Pokračovať k objednávke
 </button>
+
+</div>
+
+<!-- FEATURES -->
+
+<div class="features">
+
+<div class="features-card">
+
+<div class="feature">
+
+<div class="feature-icon">
+🪡
+</div>
+
+<div>
+
+<h3>
+Kvalitná výšivka
+</h3>
+
+<p>
+Prémiová niť, ktorá vydrží.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+🚚
+</div>
+
+<div>
+
+<h3>
+Rýchle dodanie
+</h3>
+
+<p>
+Expresné spracovanie objednávky.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+✨
+</div>
+
+<div>
+
+<h3>
+Jedinečný dizajn
+</h3>
+
+<p>
+Každý kus vyrábame individuálne.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+🔒
+</div>
+
+<div>
+
+<h3>
+Bezpečná platba
+</h3>
+
+<p>
+100% zabezpečené objednávky.
+</p>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -763,6 +1083,9 @@ document.getElementById("textInput");
 const textLayer =
 document.getElementById("textLayer");
 
+const counter =
+document.getElementById("counter");
+
 const iconLayer =
 document.getElementById("iconLayer");
 
@@ -772,8 +1095,26 @@ textInput.addEventListener(
 "input",
 ()=>{
 
+const value =
+textInput.value;
+
 textLayer.innerText =
-textInput.value || "TVODO";
+value || "TVODO";
+
+counter.innerText =
+value.length + " / 40";
+
+const length =
+value.replace(/\n/g,'').length;
+
+let size = 28;
+
+if(length > 8) size = 24;
+if(length > 14) size = 20;
+if(length > 22) size = 17;
+
+textLayer.style.fontSize =
+size + "px";
 
 }
 );
@@ -848,8 +1189,24 @@ b.classList.remove("active");
 
 btn.classList.add("active");
 
-iconLayer.innerText =
+const icon =
 btn.dataset.icon;
+
+if(icon === ""){
+
+iconLayer.style.display =
+"none";
+
+iconLayer.src = "";
+
+}else{
+
+iconLayer.style.display =
+"block";
+
+iconLayer.src = icon;
+
+}
 
 }
 );
