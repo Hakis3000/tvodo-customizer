@@ -208,9 +208,9 @@ position:absolute;
 
 top:34%;
 
-/* POSUN VIAC DOĽAVA */
+/* POSUN TROSKU DOPRAVA */
 
-left:49%;
+left:51%;
 
 transform:translateX(-50%);
 
@@ -268,6 +268,8 @@ overflow-wrap:anywhere;
 word-break:break-word;
 
 max-width:100%;
+
+padding:0 4px;
 
 color:#ff7cc6;
 
@@ -850,7 +852,7 @@ max-width:165%;
 
 top:34%;
 
-left:49%;
+left:51%;
 
 width:130px;
 
@@ -1054,7 +1056,7 @@ Text výšivky
 i
 
 <div class="tooltip">
-Maximálne 10 znakov na riadok. Text sa automaticky zalomí.
+Text sa automaticky zalomí tak, aby vyzeral prirodzene.
 </div>
 
 </div>
@@ -1375,28 +1377,62 @@ document.getElementById("iconLayer");
 const shirt =
 document.getElementById("shirt");
 
-/* FORMAT TEXT */
+/* SMART TEXT */
 
 function formatText(value){
 
-const clean =
-value.replace(/\n/g,' ');
+const words =
+value.trim().split(/\s+/);
 
-let result = '';
+let lines = [];
+let currentLine = '';
 
-for(let i=0;i<clean.length;i++){
+words.forEach(word=>{
 
-result += clean[i];
+/* veľmi dlhé slovo */
 
-if((i+1)%10===0){
+if(word.length > 10){
 
-result += '\n';
+if(currentLine !== ''){
+
+lines.push(currentLine);
+
+currentLine = '';
 
 }
 
+lines.push(word);
+
+return;
+
 }
 
-return result.trim();
+const testLine =
+currentLine === ''
+? word
+: currentLine + ' ' + word;
+
+if(testLine.length <= 10){
+
+currentLine = testLine;
+
+}else{
+
+lines.push(currentLine);
+
+currentLine = word;
+
+}
+
+});
+
+if(currentLine !== ''){
+
+lines.push(currentLine);
+
+}
+
+return lines.slice(0,4).join('\n');
 
 }
 
