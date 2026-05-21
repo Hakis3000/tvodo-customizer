@@ -13,39 +13,39 @@
 <style>
 
 *{
+margin:0;
+padding:0;
 box-sizing:border-box;
 }
 
 body{
-margin:0;
 font-family:Poppins,sans-serif;
 background:#ececec;
-padding:20px;
 display:flex;
 justify-content:center;
+padding:20px;
 }
 
 .app{
 width:100%;
-max-width:520px;
+max-width:540px;
 background:white;
-border-radius:28px;
-padding:20px;
+border-radius:30px;
+padding:18px;
 box-shadow:0 15px 40px rgba(0,0,0,0.12);
 }
 
 .title{
 font-size:28px;
 font-weight:700;
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
 .preview{
 position:relative;
 background:#f7f7f7;
-border-radius:22px;
+border-radius:24px;
 overflow:hidden;
-padding:10px;
 }
 
 .preview img{
@@ -56,23 +56,23 @@ display:block;
 .embroidery{
 position:absolute;
 top:31%;
-left:22%;
-width:20%;
-height:12%;
+left:38%;
+width:15%;
+height:10%;
 display:flex;
 justify-content:center;
 align-items:center;
-flex-direction:column;
 pointer-events:none;
 }
 
 .embroidery-text{
-font-size:14px;
+font-size:12px;
 font-weight:600;
 text-align:center;
+line-height:1.1;
 max-width:100%;
 word-break:break-word;
-line-height:1.1;
+
 text-shadow:
 0 1px 1px rgba(255,255,255,0.15),
 0 1px 3px rgba(0,0,0,0.35);
@@ -83,8 +83,8 @@ margin-top:24px;
 }
 
 .section-title{
-font-weight:700;
 font-size:17px;
+font-weight:700;
 margin-bottom:12px;
 }
 
@@ -96,7 +96,7 @@ flex-wrap:wrap;
 
 .btn{
 border:none;
-background:#f1f1f1;
+background:#f3f3f3;
 padding:12px 16px;
 border-radius:14px;
 font-weight:600;
@@ -116,11 +116,17 @@ color:white;
 input{
 width:100%;
 padding:15px;
-border-radius:16px;
 border:none;
+border-radius:16px;
 background:#f4f4f4;
 font-size:16px;
 outline:none;
+}
+
+.limit{
+margin-top:8px;
+font-size:13px;
+color:#777;
 }
 
 .colors{
@@ -130,12 +136,12 @@ flex-wrap:wrap;
 }
 
 .color{
-width:38px;
-height:38px;
+width:40px;
+height:40px;
 border-radius:50%;
 cursor:pointer;
 border:3px solid white;
-box-shadow:0 2px 8px rgba(0,0,0,0.15);
+box-shadow:0 2px 10px rgba(0,0,0,0.15);
 transition:0.2s;
 }
 
@@ -143,13 +149,30 @@ transition:0.2s;
 transform:scale(1.08);
 }
 
-.footer{
-margin-top:30px;
+.icons{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.icon-btn{
+border:none;
+background:#f3f3f3;
+padding:12px;
+border-radius:14px;
+font-size:22px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.icon-btn:hover{
+transform:translateY(-2px);
 }
 
 .order-btn{
 width:100%;
-padding:16px;
+margin-top:30px;
+padding:17px;
 border:none;
 border-radius:18px;
 background:black;
@@ -157,12 +180,6 @@ color:white;
 font-size:17px;
 font-weight:700;
 cursor:pointer;
-}
-
-.limit{
-font-size:13px;
-color:#777;
-margin-top:8px;
 }
 
 </style>
@@ -180,7 +197,7 @@ Vyšívaj si vlastné tričko
 
 <img
 id="shirtImage"
-src="ChatGPT Image 21. 5. 2026, 03_32_42.png"
+src="ChatGPT Image 21. 5. 2026, 03_32_37.png"
 >
 
 <div class="embroidery">
@@ -229,13 +246,13 @@ Text výšivky
 </div>
 
 <input
-maxlength="12"
+maxlength="18"
 placeholder="Napíš meno alebo text"
 oninput="updateText(this.value)"
 >
 
 <div class="limit">
-Maximálne 12 znakov kvôli výšivke 11×11 cm
+Výšivka je automaticky prispôsobená do 11×11 cm
 </div>
 
 </div>
@@ -276,23 +293,77 @@ Farba nite
 
 <div class="colors">
 
-<div class="color" style="background:white;border:1px solid #ccc;" onclick="setThreadColor('white')"></div>
+<div
+class="color"
+style="background:white;border:1px solid #ccc;"
+onclick="setThreadColor('white')"
+></div>
 
-<div class="color" style="background:black;" onclick="setThreadColor('black')"></div>
+<div
+class="color"
+style="background:black;"
+onclick="setThreadColor('black')"
+></div>
 
-<div class="color" style="background:#e0b84f;" onclick="setThreadColor('#e0b84f')"></div>
+<div
+class="color"
+style="background:#e0b84f;"
+onclick="setThreadColor('#e0b84f')"
+></div>
 
-<div class="color" style="background:#ff5ca8;" onclick="setThreadColor('#ff5ca8')"></div>
+<div
+class="color"
+style="background:#ff5ca8;"
+onclick="setThreadColor('#ff5ca8')"
+></div>
 
-<div class="color" style="background:#3d7fff;" onclick="setThreadColor('#3d7fff')"></div>
+<div
+class="color"
+style="background:#3d7fff;"
+onclick="setThreadColor('#3d7fff')"
+></div>
 
-<div class="color" style="background:#ff3b30;" onclick="setThreadColor('#ff3b30')"></div>
+<div
+class="color"
+style="background:#ff3b30;"
+onclick="setThreadColor('#ff3b30')"
+></div>
 
 </div>
 
 </div>
 
-<div class="footer">
+<div class="section">
+
+<div class="section-title">
+Ikonka
+</div>
+
+<div class="icons">
+
+<button class="icon-btn" onclick="setIcon('')">
+✖️
+</button>
+
+<button class="icon-btn" onclick="setIcon('❤️')">
+❤️
+</button>
+
+<button class="icon-btn" onclick="setIcon('🧸')">
+🧸
+</button>
+
+<button class="icon-btn" onclick="setIcon('🐰')">
+🐰
+</button>
+
+<button class="icon-btn" onclick="setIcon('⭐')">
+⭐
+</button>
+
+</div>
+
+</div>
 
 <button class="order-btn">
 Pokračovať k objednávke
@@ -300,14 +371,49 @@ Pokračovať k objednávke
 
 </div>
 
-</div>
-
 <script>
 
-function updateText(value){
+let currentIcon = '';
 
-document.getElementById('previewText').innerText =
-value || 'Sofia';
+function updatePreview(){
+
+const text =
+document.getElementById('previewText');
+
+const input =
+document.querySelector('input').value;
+
+const finalText =
+(currentIcon ? currentIcon + ' ' : '') +
+(input || 'Sofia');
+
+text.innerText = finalText;
+
+const len = finalText.length;
+
+if(len <= 6){
+
+text.style.fontSize = '14px';
+
+}else if(len <= 10){
+
+text.style.fontSize = '12px';
+
+}else if(len <= 14){
+
+text.style.fontSize = '10px';
+
+}else{
+
+text.style.fontSize = '8px';
+
+}
+
+}
+
+function updateText(){
+
+updatePreview();
 
 }
 
@@ -322,6 +428,14 @@ function setThreadColor(color){
 
 document.getElementById('previewText').style.color =
 color;
+
+}
+
+function setIcon(icon){
+
+currentIcon = icon;
+
+updatePreview();
 
 }
 
