@@ -1356,8 +1356,8 @@ data-icon="zajko.png"
 
 </div>
 
-<button class="order-btn">
-🛍️ Pokračovať k objednávke
+<button onclick="openOrderForm()" class="order-button">
+  🛍️ Pokračovať k objednávke
 </button>
 
 <div class="custom-message">
@@ -1748,6 +1748,30 @@ btn.classList.add("active");
 );
 
 });
+
+/* SEM VLOŽ FUNKCIU ↓↓↓ */
+
+function openOrderForm() {
+    const color = document.querySelector('input[name="color"]:checked')?.value || "";
+    const size = document.querySelector('input[name="size"]:checked')?.value || "";
+    const text = document.getElementById("text-input")?.value || "";
+    const font = document.querySelector('input[name="style"]:checked')?.value || "";
+    const thread = document.querySelector('input[name="thread-color"]:checked')?.value || "";
+    const icon = document.querySelector('input[name="icon"]:checked')?.value || "";
+
+    const url =
+        "https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/viewform?usp=pp_url"
+        + "&entry.1452889000=" + encodeURIComponent(color)
+        + "&entry.1444664887=" + encodeURIComponent(size)
+        + "&entry.673285472=" + encodeURIComponent(text)
+        + "&entry.564175592=" + encodeURIComponent(font)
+        + "&entry.377229164=" + encodeURIComponent(thread)
+        + "&entry.1304530760=" + encodeURIComponent(icon);
+
+    window.location.href = url;
+}
+
+/* KONIEC FUNKCIE ↑↑↑ */
 
 </script>
 
