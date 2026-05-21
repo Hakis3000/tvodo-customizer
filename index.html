@@ -21,8 +21,8 @@ box-sizing:border-box;
 
 :root{
 
---pink:#ff7dc4;
---blue:#7aa8ff;
+--pink:#ff7cc6;
+--blue:#7dafff;
 
 --bg1:#fff7fb;
 --bg2:#eef5ff;
@@ -249,8 +249,8 @@ blur(0px);
 
 position:absolute;
 
-top:24.5%;
-left:30%;
+top:31%;
+left:58%;
 
 width:140px;
 height:110px;
@@ -272,10 +272,11 @@ height:100%;
 display:flex;
 flex-direction:column;
 
-justify-content:flex-start;
 align-items:center;
 
 gap:6px;
+
+position:relative;
 }
 
 /* ICON */
@@ -290,6 +291,9 @@ object-fit:contain;
 opacity:0;
 
 transition:0.2s;
+
+filter:
+drop-shadow(0 2px 3px rgba(0,0,0,0.18));
 }
 
 /* TEXT */
@@ -324,6 +328,44 @@ min-height:40px;
 text-shadow:
 0 1px 1px rgba(255,255,255,0.16),
 0 2px 4px rgba(0,0,0,0.28);
+}
+
+/* SHIMMER */
+
+.shimmer{
+
+position:absolute;
+
+width:200px;
+height:200px;
+
+background:
+linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,0.28),
+transparent
+);
+
+transform:rotate(25deg);
+
+animation:shimmer 5s linear infinite;
+
+pointer-events:none;
+}
+
+@keyframes shimmer{
+
+0%{
+left:-250px;
+top:-120px;
+}
+
+100%{
+left:900px;
+top:600px;
+}
+
 }
 
 /* RIGHT */
@@ -705,6 +747,35 @@ box-shadow:
 0 14px 30px rgba(122,168,255,0.28);
 
 transition:0.12s;
+
+position:relative;
+
+overflow:hidden;
+}
+
+.order-btn::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:-120px;
+
+width:90px;
+height:100%;
+
+background:
+rgba(255,255,255,0.22);
+
+transform:skewX(-25deg);
+
+transition:0.45s;
+}
+
+.order-btn:hover::before{
+
+left:120%;
 }
 
 .order-btn:hover{
@@ -779,12 +850,10 @@ padding:18px;
 font-size:28px;
 }
 
-/* SAME POSITION EVERYWHERE */
-
 .embroidery{
 
-top:24.5%;
-left:30%;
+top:31%;
+left:58%;
 
 width:140px;
 height:110px;
@@ -805,6 +874,8 @@ height:110px;
 <!-- LEFT -->
 
 <div class="left">
+
+<div class="shimmer"></div>
 
 <div class="preview">
 
@@ -830,6 +901,7 @@ src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
 id="previewText"
 class="embroidery-text"
 >
+Ahojky
 </div>
 
 </div>
@@ -913,7 +985,7 @@ id="textInput"
 maxlength="30"
 placeholder="Napíšte meno alebo text"
 oninput="updatePreview()"
-></textarea>
+>Ahojky</textarea>
 
 <div class="help">
 Pre nový riadok použite ENTER.
@@ -1038,7 +1110,7 @@ Pokračovať k objednávke
 
 <script>
 
-/* STATIC EFFECT */
+/* STATIC */
 
 function triggerStatic(){
 
@@ -1053,7 +1125,7 @@ shirt.classList.add('tv-static');
 
 }
 
-/* UPDATE PREVIEW */
+/* UPDATE */
 
 function updatePreview(){
 
@@ -1069,27 +1141,34 @@ document.getElementById('previewIcon');
 let input =
 document.getElementById('textInput').value;
 
+if(input.trim() === ""){
+
+input = " ";
+
+}
+
 text.innerText = input;
 
 const hasIcon =
 previewIcon.style.opacity === '1';
 
-content.style.gap =
-hasIcon ? '6px' : '0px';
-
 /* POSITION */
 
 if(hasIcon){
+
+content.style.justifyContent = "flex-start";
 
 text.style.marginTop = "0px";
 
 }else{
 
-text.style.marginTop = "12px";
+content.style.justifyContent = "center";
+
+text.style.marginTop = "-8px";
 
 }
 
-/* DYNAMIC SIZE */
+/* SIZE */
 
 const totalChars =
 input.replace(/\n/g,'').length;
