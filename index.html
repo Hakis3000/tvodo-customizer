@@ -19,6 +19,10 @@ padding:0;
 box-sizing:border-box;
 }
 
+html{
+scroll-behavior:smooth;
+}
+
 :root{
 
 --pink:#ff7cc6;
@@ -88,6 +92,61 @@ right:-180px;
 
 }
 
+/* ANIMATIONS */
+
+@keyframes glow{
+
+0%{
+
+box-shadow:
+0 0 0 rgba(255,124,198,0);
+
+}
+
+50%{
+
+box-shadow:
+0 0 26px rgba(255,124,198,0.28);
+
+}
+
+100%{
+
+box-shadow:
+0 0 0 rgba(255,124,198,0);
+
+}
+
+}
+
+@keyframes floaty{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-6px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+@keyframes shimmer{
+
+0%{
+transform:translateX(-100%);
+}
+
+100%{
+transform:translateX(100%);
+}
+
+}
+
 /* MAIN */
 
 .app{
@@ -112,7 +171,7 @@ align-items:start;
 
 }
 
-/* LEFT SIDE */
+/* LEFT */
 
 .left{
 
@@ -145,7 +204,7 @@ border:
 
 border-radius:34px;
 
-padding:20px;
+padding:0;
 
 box-shadow:
 0 20px 50px rgba(0,0,0,0.07);
@@ -155,6 +214,9 @@ justify-content:center;
 align-items:center;
 
 overflow:hidden;
+
+animation:
+floaty 6s ease-in-out infinite;
 
 }
 
@@ -180,8 +242,6 @@ overflow:hidden;
 
 .shirt{
 
-/* ZVÄČŠENÉ O 50% */
-
 width:1600px;
 
 object-fit:contain;
@@ -196,8 +256,6 @@ drop-shadow(0 24px 40px rgba(0,0,0,0.1));
 
 }
 
-/* BLACK SHIRT */
-
 .black-shirt{
 
 filter:
@@ -211,8 +269,6 @@ drop-shadow(0 24px 40px rgba(0,0,0,0.25));
 .embroidery-zone{
 
 position:absolute;
-
-/* POSUNUTÉ PRE VÄČŠIE TRIČKO */
 
 top:200px;
 
@@ -279,6 +335,8 @@ text-shadow:
 0 1px 1px rgba(255,255,255,0.4),
 0 2px 5px rgba(0,0,0,0.08);
 
+transition:0.2s;
+
 }
 
 /* RIGHT PANEL */
@@ -330,7 +388,7 @@ var(--blue)
 
 font-size:14px;
 
-line-height:1.6;
+line-height:1.7;
 
 color:#666;
 
@@ -344,16 +402,16 @@ margin-bottom:22px;
 
 margin-top:14px;
 
-padding:14px;
+padding:18px;
 
-border-radius:18px;
+border-radius:22px;
 
 background:
 rgba(255,255,255,0.55);
 
 font-size:13px;
 
-line-height:1.6;
+line-height:1.8;
 
 color:#666;
 
@@ -387,6 +445,81 @@ font-weight:700;
 
 }
 
+/* TOOLTIP */
+
+.info-tip{
+
+width:18px;
+height:18px;
+
+border-radius:50%;
+
+background:
+linear-gradient(
+135deg,
+var(--pink),
+var(--blue)
+);
+
+color:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:11px;
+font-weight:700;
+
+cursor:pointer;
+
+position:relative;
+
+}
+
+.tip-box{
+
+position:absolute;
+
+top:-8px;
+left:26px;
+
+width:230px;
+
+padding:12px;
+
+background:white;
+
+border-radius:16px;
+
+font-size:12px;
+
+line-height:1.5;
+
+color:#555;
+
+box-shadow:
+0 16px 34px rgba(0,0,0,0.12);
+
+opacity:0;
+
+pointer-events:none;
+
+transform:translateY(4px);
+
+transition:0.2s;
+
+z-index:100;
+
+}
+
+.info-tip:hover .tip-box{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
 /* TEXTAREA */
 
 textarea{
@@ -413,6 +546,18 @@ background:white;
 
 box-shadow:
 0 8px 18px rgba(0,0,0,0.05);
+
+transition:0.2s;
+
+}
+
+textarea:focus{
+
+box-shadow:
+0 0 0 4px rgba(255,124,198,0.12),
+0 12px 28px rgba(0,0,0,0.08);
+
+transform:translateY(-1px);
 
 }
 
@@ -458,7 +603,7 @@ cursor:pointer;
 font-size:14px;
 font-weight:600;
 
-transition:0.15s;
+transition:0.2s;
 
 box-shadow:
 0 8px 18px rgba(0,0,0,0.05);
@@ -468,7 +613,11 @@ box-shadow:
 .btn:hover{
 
 transform:
-translateY(-2px);
+translateY(-3px)
+scale(1.03);
+
+box-shadow:
+0 12px 26px rgba(255,124,198,0.16);
 
 }
 
@@ -543,7 +692,13 @@ border:3px solid white;
 box-shadow:
 0 8px 16px rgba(0,0,0,0.08);
 
-transition:0.15s;
+transition:0.2s;
+
+}
+
+.color:hover{
+
+transform:scale(1.08);
 
 }
 
@@ -584,14 +739,18 @@ var(--blue)
 box-shadow:
 0 16px 28px rgba(122,168,255,0.26);
 
-transition:0.15s;
+transition:0.2s;
+
+animation:
+glow 3s infinite;
 
 }
 
 .order-btn:hover{
 
 transform:
-translateY(-3px);
+translateY(-4px)
+scale(1.01);
 
 }
 
@@ -648,6 +807,39 @@ padding:14px;
 
 display:flex;
 gap:10px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.feature::before{
+
+content:'';
+
+position:absolute;
+
+top:0;
+left:-120%;
+
+width:70%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,0.55),
+transparent
+);
+
+}
+
+.feature:hover::before{
+
+animation:
+shimmer 1.2s;
 
 }
 
@@ -760,8 +952,6 @@ gap:14px;
 
 .preview-card{
 
-padding:10px;
-
 border-radius:26px;
 
 }
@@ -839,7 +1029,6 @@ src=""
 class="text"
 id="textLayer"
 >
-TVODO
 </div>
 
 </div>
@@ -859,19 +1048,37 @@ Vytvor si svoje tričko
 </div>
 
 <div class="subtitle">
-Vyberte si farbu, niť a štýl výšivky.
+Navrhnite si vlastné vyšívané tričko presne podľa seba.
 </div>
 
 <div class="handmade">
-Každý kus je ručne vyrábaný na objednávku. Náhľad na stránke slúži iba ako vizualizácia výsledného trička.
+🪡 Každé tričko vyrábame individuálne na objednávku.<br><br>
+
+✨ Náhľad slúži ako vizualizácia výšivky.<br><br>
+
+💌 Ak chcete väčšiu výšivku alebo vlastný obrázok, napíšte nám správu.
 </div>
+
+<!-- FARBA -->
 
 <div class="section">
 
 <div class="section-head">
+
 <div class="section-title">
 Farba trička
 </div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Vyberte si farbu trička. Náhľad výšivky sa automaticky prispôsobí.
+</div>
+
+</div>
+
 </div>
 
 <div class="row">
@@ -894,12 +1101,26 @@ data-shirt="black"
 
 </div>
 
+<!-- SIZE -->
+
 <div class="section">
 
 <div class="section-head">
+
 <div class="section-title">
 Veľkosť
 </div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Dostupné veľkosti od S až po 2XL.
+</div>
+
+</div>
+
 </div>
 
 <div class="row">
@@ -914,18 +1135,32 @@ Veľkosť
 
 </div>
 
+<!-- TEXT -->
+
 <div class="section">
 
 <div class="section-head">
+
 <div class="section-title">
 Text výšivky
 </div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Text sa automaticky zalomí tak, aby pekne sedel na tričku.
+</div>
+
+</div>
+
 </div>
 
 <textarea
 id="textInput"
 maxlength="40"
-placeholder="Napíšte meno alebo text..."
+placeholder="Napíšte vlastný text..."
 ></textarea>
 
 <div class="info-row">
@@ -942,12 +1177,26 @@ Max. 4 riadky
 
 </div>
 
+<!-- FONT -->
+
 <div class="section">
 
 <div class="section-head">
+
 <div class="section-title">
 Štýl výšivky
 </div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Každý štýl vytvorí trochu iný vzhľad výšivky.
+</div>
+
+</div>
+
 </div>
 
 <div class="row">
@@ -977,12 +1226,26 @@ Písaný
 
 </div>
 
+<!-- COLORS -->
+
 <div class="section">
 
 <div class="section-head">
+
 <div class="section-title">
 Vyberte si niť
 </div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Farba nite sa zobrazí priamo na náhľade trička.
+</div>
+
+</div>
+
 </div>
 
 <div class="colors">
@@ -1030,12 +1293,26 @@ style="background:#f4c542;"
 
 </div>
 
+<!-- ICONS -->
+
 <div class="section">
 
 <div class="section-head">
+
 <div class="section-title">
 Ikonka
 </div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Vyberte si ikonku k výšivke alebo nechajte bez ikonky.
+</div>
+
+</div>
+
 </div>
 
 <div class="row">
@@ -1085,6 +1362,92 @@ data-icon="zajko.png"
 
 <div class="custom-message">
 Ak máte záujem o väčšiu výšivku alebo vlastný obrázok, napíšte nám správu a pripravíme vám individuálny návrh.
+</div>
+
+<!-- FEATURES -->
+
+<div class="features">
+
+<div class="feature">
+
+<div class="feature-icon">
+🪡
+</div>
+
+<div>
+
+<h3>
+Ručná výroba
+</h3>
+
+<p>
+Každé tričko vyrábame individuálne.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+🚚
+</div>
+
+<div>
+
+<h3>
+Rýchle dodanie
+</h3>
+
+<p>
+Expresné spracovanie objednávok.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+✨
+</div>
+
+<div>
+
+<h3>
+Prémiová výšivka
+</h3>
+
+<p>
+Kvalitné nite s dlhou životnosťou.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+🔒
+</div>
+
+<div>
+
+<h3>
+Bezpečná platba
+</h3>
+
+<p>
+100% zabezpečená objednávka.
+</p>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -1178,12 +1541,60 @@ const formatted =
 formatText(value);
 
 textLayer.innerText =
-formatted || "TVODO";
+formatted;
 
 counter.innerText =
 value.length + " / 40";
 
 });
+
+/* AUTO TYPING */
+
+const demoText =
+"Sem môžete pridať vlastný text ✨";
+
+let typingIndex = 0;
+
+let typingFinished = false;
+
+function typeDemo(){
+
+if(
+typingFinished ||
+textInput.value.length > 0
+){
+return;
+}
+
+textLayer.innerText =
+demoText.substring(0,typingIndex);
+
+typingIndex++;
+
+if(typingIndex <= demoText.length){
+
+setTimeout(typeDemo,70);
+
+}
+
+}
+
+setTimeout(typeDemo,900);
+
+textInput.addEventListener(
+'focus',
+()=>{
+
+typingFinished = true;
+
+if(textInput.value === ''){
+
+textLayer.innerText = '';
+
+}
+
+}
+);
 
 /* FONT */
 
