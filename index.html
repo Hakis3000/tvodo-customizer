@@ -2,8 +2,8 @@
 <html lang="sk">
 <head>
 
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>TVODO - Vyšívané tričká</title>
 
@@ -88,7 +88,7 @@ right:-180px;
 
 }
 
-/* APP */
+/* MAIN */
 
 .app{
 
@@ -112,7 +112,7 @@ align-items:start;
 
 }
 
-/* LEFT */
+/* LEFT SIDE */
 
 .left{
 
@@ -165,7 +165,8 @@ overflow:hidden;
 position:relative;
 
 width:100%;
-height:100%;
+
+height:780px;
 
 display:flex;
 justify-content:center;
@@ -179,26 +180,27 @@ overflow:hidden;
 
 .shirt{
 
-width:100%;
-max-width:980px;
+width:760px;
 
 object-fit:contain;
 
 user-select:none;
 pointer-events:none;
 
-filter:
-drop-shadow(0 26px 40px rgba(0,0,0,0.1));
-
 transition:0.3s;
 
+filter:
+drop-shadow(0 24px 40px rgba(0,0,0,0.1));
+
 }
+
+/* BLACK SHIRT */
 
 .black-shirt{
 
 filter:
 brightness(0.18)
-drop-shadow(0 26px 40px rgba(0,0,0,0.22));
+drop-shadow(0 24px 40px rgba(0,0,0,0.25));
 
 }
 
@@ -208,26 +210,20 @@ drop-shadow(0 26px 40px rgba(0,0,0,0.22));
 
 position:absolute;
 
-top:34%;
+top:258px;
 
-left:51%;
+left:53%;
 
 transform:translateX(-50%);
 
-/* FIXED RESPONSIVE SIZE */
-
-width:16%;
-
-max-width:170px;
-
-min-width:80px;
+width:135px;
 
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 
-gap:0px;
+gap:0;
 
 z-index:5;
 
@@ -237,22 +233,17 @@ z-index:5;
 
 .icon-img{
 
-width:38%;
-
-max-width:54px;
-
-min-width:26px;
-
-aspect-ratio:1/1;
+width:42px;
+height:42px;
 
 object-fit:contain;
 
 display:none;
 
-filter:
-drop-shadow(0 2px 5px rgba(0,0,0,0.14));
+margin-bottom:-4px;
 
-margin-bottom:-3px;
+filter:
+drop-shadow(0 2px 5px rgba(0,0,0,0.12));
 
 }
 
@@ -262,40 +253,27 @@ margin-bottom:-3px;
 
 font-family:'Montserrat';
 
-/* RESPONSIVE TEXT */
-
-font-size:
-clamp(10px,1.3vw,24px);
+font-size:18px;
 
 font-weight:700;
 
-line-height:1.05;
+line-height:1.08;
 
 text-align:center;
 
 white-space:pre-line;
 
-letter-spacing:0.2px;
-
-/* DÔLEŽITÉ */
-
-overflow-wrap:break-word;
-
-word-break:normal;
-
 max-width:100%;
 
-width:100%;
-
 padding:0 4px;
+
+overflow-wrap:break-word;
 
 color:#ff7cc6;
 
 text-shadow:
-0 1px 1px rgba(255,255,255,0.45),
+0 1px 1px rgba(255,255,255,0.4),
 0 2px 5px rgba(0,0,0,0.08);
-
-transition:0.2s;
 
 }
 
@@ -304,7 +282,7 @@ transition:0.2s;
 .right{
 
 background:
-rgba(255,255,255,0.48);
+rgba(255,255,255,0.5);
 
 backdrop-filter:blur(18px);
 
@@ -356,7 +334,7 @@ margin-bottom:22px;
 
 }
 
-/* HANDMADE */
+/* INFO BOX */
 
 .handmade{
 
@@ -405,7 +383,7 @@ font-weight:700;
 
 }
 
-/* INFO */
+/* TOOLTIP */
 
 .info{
 
@@ -525,7 +503,7 @@ color:#777;
 
 }
 
-/* ROW */
+/* BUTTON ROW */
 
 .row{
 
@@ -562,8 +540,7 @@ box-shadow:
 .btn:hover{
 
 transform:
-translateY(-2px)
-scale(1.02);
+translateY(-2px);
 
 }
 
@@ -580,7 +557,7 @@ color:white;
 
 }
 
-/* SIZE BUTTONS */
+/* SIZE */
 
 .size-btn{
 
@@ -648,7 +625,7 @@ outline:4px solid rgba(125,175,255,0.26);
 
 }
 
-/* ORDER */
+/* ORDER BUTTON */
 
 .order-btn{
 
@@ -690,7 +667,7 @@ translateY(-3px);
 
 }
 
-/* CUSTOM MESSAGE */
+/* MESSAGE */
 
 .custom-message{
 
@@ -806,17 +783,38 @@ height:auto;
 
 }
 
-.preview-card{
+.preview{
 
-aspect-ratio:1/1;
-
-min-height:unset;
+height:520px;
 
 }
 
 .shirt{
 
-max-width:100%;
+width:500px;
+
+}
+
+.embroidery-zone{
+
+top:172px;
+
+left:53%;
+
+width:96px;
+
+}
+
+.text{
+
+font-size:13px;
+
+}
+
+.icon-img{
+
+width:30px;
+height:30px;
 
 }
 
@@ -860,12 +858,17 @@ grid-template-columns:1fr;
 
 }
 
-.embroidery-zone{
+.icon-btn{
 
-width:22%;
+width:74px;
+height:74px;
 
-top:34%;
-left:51%;
+}
+
+.icon-btn img{
+
+width:48px;
+height:48px;
 
 }
 
@@ -894,7 +897,7 @@ left:51%;
 src="tricko.svg"
 class="shirt"
 id="shirt"
-/>
+>
 
 <div class="embroidery-zone">
 
@@ -935,7 +938,7 @@ Vyberte si farbu, niť a štýl výšivky.
 Každý kus je ručne vyrábaný na objednávku. Náhľad na stránke slúži iba ako vizualizácia výsledného trička.
 </div>
 
-<!-- SHIRT COLOR -->
+<!-- FARBA -->
 
 <div class="section">
 
@@ -943,16 +946,6 @@ Každý kus je ručne vyrábaný na objednávku. Náhľad na stránke slúži ib
 
 <div class="section-title">
 Farba trička
-</div>
-
-<div class="info">
-
-i
-
-<div class="tooltip">
-Zmeňte farbu trička pre lepší náhľad výšivky.
-</div>
-
 </div>
 
 </div>
@@ -984,17 +977,7 @@ data-shirt="black"
 <div class="section-head">
 
 <div class="section-title">
-Veľkosť trička
-</div>
-
-<div class="info">
-
-i
-
-<div class="tooltip">
-Dostupné veľkosti od S až po 2XL.
-</div>
-
+Veľkosť
 </div>
 
 </div>
@@ -1019,16 +1002,6 @@ Dostupné veľkosti od S až po 2XL.
 
 <div class="section-title">
 Text výšivky
-</div>
-
-<div class="info">
-
-i
-
-<div class="tooltip">
-Text sa automaticky zalomí tak, aby ostal vo výšivke.
-</div>
-
 </div>
 
 </div>
@@ -1210,11 +1183,99 @@ data-icon="zajko.png"
 Ak máte záujem o väčšiu výšivku alebo vlastný obrázok, napíšte nám správu a pripravíme vám individuálny návrh.
 </div>
 
+<!-- FEATURES -->
+
+<div class="features">
+
+<div class="feature">
+
+<div class="feature-icon">
+🪡
+</div>
+
+<div>
+
+<h3>
+Ručná výroba
+</h3>
+
+<p>
+Každé tričko vyrábame individuálne.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+🚚
+</div>
+
+<div>
+
+<h3>
+Rýchle dodanie
+</h3>
+
+<p>
+Expresné spracovanie objednávok.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+✨
+</div>
+
+<div>
+
+<h3>
+Prémiová výšivka
+</h3>
+
+<p>
+Kvalitné nite s dlhou životnosťou.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+🔒
+</div>
+
+<div>
+
+<h3>
+Bezpečná platba
+</h3>
+
+<p>
+100% zabezpečená objednávka.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
 
 <script>
+
+/* ELEMENTS */
 
 const textInput =
 document.getElementById("textInput");
@@ -1306,8 +1367,7 @@ formatted || "TVODO";
 counter.innerText =
 value.length + " / 40";
 
-}
-);
+});
 
 /* FONT */
 
@@ -1427,13 +1487,6 @@ btn.dataset.shirt;
 if(color === "black"){
 
 shirt.classList.add("black-shirt");
-
-if(textLayer.style.color === "" ||
-textLayer.style.color === "black"){
-
-textLayer.style.color = "white";
-
-}
 
 }else{
 
