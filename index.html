@@ -9,7 +9,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Bitter:wght@700&family=Indie+Flower&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Fredoka:wght@500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -30,22 +30,22 @@ overflow:hidden;
 background:
 linear-gradient(
 135deg,
-#ffd7ee 0%,
-#dce8ff 40%,
-#fff1b8 70%,
-#f5dcff 100%
+#f7d7ff 0%,
+#dbe7ff 35%,
+#fff0c7 70%,
+#d7fff1 100%
 );
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-padding:18px;
+padding:16px;
 
 position:relative;
 }
 
-/* BLOBS */
+/* SOFT BACKGROUND */
 
 .bg1,
 .bg2,
@@ -56,46 +56,46 @@ position:absolute;
 
 border-radius:50%;
 
-filter:blur(120px);
+filter:blur(130px);
 
-opacity:0.26;
+opacity:0.28;
 
-animation:blobMove 12s ease-in-out infinite;
+animation:blobMove 14s ease-in-out infinite;
 }
 
 .bg1{
 width:420px;
 height:420px;
-background:#ff67bb;
-top:-120px;
+background:#ff73b9;
+top:-140px;
 left:-100px;
 }
 
 .bg2{
 width:420px;
 height:420px;
-background:#6ea8ff;
-bottom:-140px;
-right:-120px;
+background:#73a7ff;
+bottom:-120px;
+right:-100px;
 animation-delay:2s;
 }
 
 .bg3{
 width:320px;
 height:320px;
-background:#b67dff;
-top:40%;
+background:#ffe07d;
+top:50%;
 left:40%;
-animation-delay:4s;
+animation-delay:5s;
 }
 
 .bg4{
-width:300px;
-height:300px;
-background:#ffe066;
-top:20%;
+width:260px;
+height:260px;
+background:#8dffd7;
+top:10%;
 right:20%;
-animation-delay:6s;
+animation-delay:7s;
 }
 
 @keyframes blobMove{
@@ -105,7 +105,7 @@ transform:translate(0px,0px);
 }
 
 50%{
-transform:translate(30px,-20px);
+transform:translate(40px,-20px);
 }
 
 100%{
@@ -114,31 +114,31 @@ transform:translate(0px,0px);
 
 }
 
-/* MAIN */
+/* APP */
 
 .app{
 
 width:100%;
 height:100%;
 
-max-width:1500px;
+max-width:1550px;
 
 background:
-rgba(255,255,255,0.62);
+rgba(255,255,255,0.55);
 
-backdrop-filter:blur(18px);
+backdrop-filter:blur(20px);
 
 border:
 1px solid rgba(255,255,255,0.35);
 
-border-radius:40px;
+border-radius:38px;
 
-box-shadow:
-0 25px 80px rgba(0,0,0,0.12);
+overflow:hidden;
 
 display:flex;
 
-overflow:hidden;
+box-shadow:
+0 30px 80px rgba(0,0,0,0.12);
 
 position:relative;
 }
@@ -160,74 +160,6 @@ position:relative;
 overflow:hidden;
 }
 
-/* GLOW */
-
-.left::before{
-
-content:"";
-
-position:absolute;
-
-width:500px;
-height:500px;
-
-background:
-radial-gradient(circle,
-rgba(255,95,180,0.28),
-transparent 70%);
-
-animation:pulseGlow 5s ease-in-out infinite;
-}
-
-.left::after{
-
-content:"";
-
-position:absolute;
-
-width:450px;
-height:450px;
-
-background:
-radial-gradient(circle,
-rgba(95,150,255,0.28),
-transparent 70%);
-
-animation:pulseGlow2 6s ease-in-out infinite;
-}
-
-@keyframes pulseGlow{
-
-0%{
-transform:scale(1);
-}
-
-50%{
-transform:scale(1.08);
-}
-
-100%{
-transform:scale(1);
-}
-
-}
-
-@keyframes pulseGlow2{
-
-0%{
-transform:scale(1);
-}
-
-50%{
-transform:scale(0.92);
-}
-
-100%{
-transform:scale(1);
-}
-
-}
-
 /* PREVIEW */
 
 .preview{
@@ -239,9 +171,9 @@ position:relative;
 
 z-index:2;
 
-animation:floating 5s ease-in-out infinite;
+animation:floating 6s ease-in-out infinite;
 
-transition:0.3s;
+transition:0.25s;
 }
 
 @keyframes floating{
@@ -251,7 +183,7 @@ transform:translateY(0px);
 }
 
 50%{
-transform:translateY(-7px);
+transform:translateY(-8px);
 }
 
 100%{
@@ -267,36 +199,64 @@ width:100%;
 display:block;
 
 filter:
-drop-shadow(0 18px 40px rgba(0,0,0,0.18));
+drop-shadow(0 20px 40px rgba(0,0,0,0.18));
 
-transition:0.3s;
+transition:0.25s;
 }
 
-/* SHINE */
+/* TV STATIC EFFECT */
 
-.shine{
+.tv-static{
 
-animation:shineAnim 0.8s ease;
+animation:tvStatic 0.22s ease;
 }
 
-@keyframes shineAnim{
+@keyframes tvStatic{
 
 0%{
 filter:
-brightness(1)
-drop-shadow(0 18px 40px rgba(0,0,0,0.18));
+contrast(1)
+blur(0px)
+drop-shadow(0 20px 40px rgba(0,0,0,0.18));
+transform:translateX(0px);
 }
 
-50%{
+20%{
 filter:
-brightness(1.22)
-drop-shadow(0 0 35px rgba(255,255,255,0.9));
+contrast(1.5)
+blur(1px)
+saturate(1.3)
+drop-shadow(0 20px 40px rgba(0,0,0,0.18));
+
+transform:translateX(-1px);
+}
+
+40%{
+filter:
+contrast(0.9)
+blur(0px)
+brightness(1.08)
+drop-shadow(0 20px 40px rgba(0,0,0,0.18));
+
+transform:translateX(1px);
+}
+
+60%{
+filter:
+contrast(1.3)
+blur(0.6px)
+drop-shadow(0 20px 40px rgba(0,0,0,0.18));
+
+transform:translateX(-1px);
 }
 
 100%{
 filter:
-brightness(1)
-drop-shadow(0 18px 40px rgba(0,0,0,0.18));
+contrast(1)
+blur(0px)
+drop-shadow(0 20px 40px rgba(0,0,0,0.18));
+
+transform:translateX(0px);
 }
 
 }
@@ -342,16 +302,13 @@ object-fit:contain;
 opacity:0;
 
 transition:0.25s;
-
-filter:
-drop-shadow(0 1px 2px rgba(0,0,0,0.25));
 }
 
 .embroidery-text{
 
 text-align:center;
 
-line-height:1.02;
+line-height:1;
 
 font-weight:700;
 
@@ -376,46 +333,60 @@ text-shadow:
 
 width:430px;
 
-padding:28px;
+padding:24px;
 
 overflow-y:auto;
 
 background:
-rgba(255,255,255,0.18);
+rgba(255,255,255,0.16);
 
-backdrop-filter:blur(12px);
+backdrop-filter:blur(14px);
 
 border-left:
 1px solid rgba(255,255,255,0.25);
+
+position:relative;
 }
 
-.right::-webkit-scrollbar{
-width:8px;
-}
+/* FIXED TOP */
 
-.right::-webkit-scrollbar-thumb{
-background:#d6d6d6;
-border-radius:20px;
-}
+.top-header{
 
-/* TITLES */
+position:sticky;
+
+top:0;
+
+z-index:10;
+
+padding-bottom:16px;
+
+background:
+linear-gradient(
+to bottom,
+rgba(255,255,255,0.88),
+rgba(255,255,255,0.4),
+transparent
+);
+
+backdrop-filter:blur(12px);
+}
 
 .title{
 
-font-size:34px;
+font-size:33px;
 font-weight:700;
 
-line-height:1.08;
+line-height:1.05;
 
-margin-bottom:10px;
+margin-bottom:8px;
 
 background:
 linear-gradient(
 90deg,
-#ff4ea6,
-#7a6cff,
-#ffcf40,
-#5ca8ff
+#ff5eb3,
+#7b88ff,
+#ffcb4d,
+#4ac8a5
 );
 
 -webkit-background-clip:text;
@@ -426,26 +397,24 @@ linear-gradient(
 
 font-size:14px;
 
-line-height:1.7;
+line-height:1.6;
 
-color:#5c5c5c;
-
-margin-bottom:26px;
+color:#5e5e5e;
 }
 
-/* SECTIONS */
+/* SECTION */
 
 .section{
 
-margin-top:24px;
+margin-top:22px;
 }
 
 .section-title{
 
-font-size:16px;
+font-size:15px;
 font-weight:700;
 
-margin-bottom:14px;
+margin-bottom:12px;
 }
 
 /* BUTTONS */
@@ -470,18 +439,16 @@ cursor:pointer;
 font-weight:600;
 
 background:
-rgba(255,255,255,0.75);
+rgba(255,255,255,0.78);
 
 backdrop-filter:blur(10px);
 
 box-shadow:
 0 8px 18px rgba(0,0,0,0.08);
 
-transition:0.14s;
+transition:0.12s;
 
 position:relative;
-
-overflow:hidden;
 }
 
 .btn:hover{
@@ -491,13 +458,15 @@ translateY(-3px)
 scale(1.03);
 }
 
+/* BUTTON CLICK */
+
 .btn:active{
 
 transform:
-scale(0.88);
+scale(0.86);
 
 box-shadow:
-inset 0 6px 12px rgba(0,0,0,0.16);
+inset 0 5px 12px rgba(0,0,0,0.15);
 }
 
 .active{
@@ -505,27 +474,27 @@ inset 0 6px 12px rgba(0,0,0,0.16);
 background:
 linear-gradient(
 135deg,
-#ff5eb5,
-#ffcf40,
-#6f98ff
+#ff73b9,
+#7ba6ff,
+#ffd866
 );
 
 color:white;
 
 box-shadow:
-0 12px 28px rgba(111,152,255,0.35);
+0 12px 28px rgba(123,166,255,0.35);
 
-animation:clickPulse 0.28s ease;
+animation:buttonPulse 0.25s ease;
 }
 
-@keyframes clickPulse{
+@keyframes buttonPulse{
 
 0%{
-transform:scale(0.92);
+transform:scale(0.88);
 }
 
 60%{
-transform:scale(1.06);
+transform:scale(1.05);
 }
 
 100%{
@@ -547,24 +516,32 @@ border:none;
 border-radius:24px;
 
 background:
-rgba(255,255,255,0.74);
+rgba(255,255,255,0.78);
 
-backdrop-filter:blur(12px);
+backdrop-filter:blur(10px);
 
 font-size:16px;
 
 outline:none;
 
-box-shadow:
-0 8px 18px rgba(0,0,0,0.06);
-
 resize:none;
 
-min-height:90px;
+min-height:88px;
 
 font-family:Poppins,sans-serif;
 
+box-shadow:
+0 8px 18px rgba(0,0,0,0.06);
+
 transition:0.25s;
+}
+
+textarea:focus{
+
+transform:scale(1.01);
+
+box-shadow:
+0 10px 24px rgba(123,166,255,0.18);
 }
 
 /* HELP */
@@ -575,7 +552,7 @@ margin-top:10px;
 
 font-size:13px;
 
-line-height:1.7;
+line-height:1.6;
 
 color:#666;
 }
@@ -600,30 +577,29 @@ cursor:pointer;
 
 border:3px solid white;
 
+transition:0.14s;
+
 box-shadow:
 0 8px 16px rgba(0,0,0,0.12);
-
-transition:0.14s;
 }
 
 .color:hover{
 
-transform:
-scale(1.12);
+transform:scale(1.12);
 }
 
 .color:active{
 
-transform:scale(0.88);
+transform:scale(0.84);
 }
 
-.color.active-color{
+.active-color{
 
-outline:4px solid rgba(255,207,64,0.5);
+outline:4px solid rgba(255,214,102,0.45);
 
-transform:scale(1.1);
+transform:scale(1.12);
 
-animation:clickPulse 0.28s ease;
+animation:buttonPulse 0.25s ease;
 }
 
 /* ICONS */
@@ -647,7 +623,7 @@ border-radius:22px;
 cursor:pointer;
 
 background:
-rgba(255,255,255,0.72);
+rgba(255,255,255,0.74);
 
 backdrop-filter:blur(12px);
 
@@ -658,7 +634,7 @@ align-items:center;
 box-shadow:
 0 8px 18px rgba(0,0,0,0.08);
 
-transition:0.14s;
+transition:0.12s;
 }
 
 .icon-btn:hover{
@@ -670,7 +646,7 @@ scale(1.04);
 
 .icon-btn:active{
 
-transform:scale(0.88);
+transform:scale(0.84);
 }
 
 .icon-btn.active{
@@ -678,22 +654,21 @@ transform:scale(0.88);
 background:
 linear-gradient(
 135deg,
-#ff5eb5,
-#ffcf40,
-#6f98ff
+#ff73b9,
+#7ba6ff,
+#ffd866
 );
 
 box-shadow:
-0 12px 28px rgba(111,152,255,0.35);
+0 12px 28px rgba(123,166,255,0.35);
 
-animation:clickPulse 0.28s ease;
+animation:buttonPulse 0.25s ease;
 }
 
 .icon-btn img{
 
 width:38px;
 height:38px;
-
 object-fit:contain;
 }
 
@@ -708,40 +683,57 @@ color:#666;
 
 .info{
 
-margin-top:28px;
+margin-top:26px;
 
-padding:20px;
+padding:18px;
 
-border-radius:26px;
+border-radius:24px;
 
 background:
-rgba(255,255,255,0.52);
-
-backdrop-filter:blur(12px);
+rgba(255,255,255,0.5);
 
 font-size:14px;
 
-line-height:1.8;
+line-height:1.7;
 
-color:#5c5c5c;
+color:#5e5e5e;
 
 box-shadow:
 0 8px 18px rgba(0,0,0,0.05);
 }
 
-/* ORDER */
+/* FIXED ORDER */
+
+.bottom-order{
+
+position:sticky;
+
+bottom:0;
+
+padding-top:18px;
+
+margin-top:20px;
+
+background:
+linear-gradient(
+to top,
+rgba(255,255,255,0.9),
+rgba(255,255,255,0.4),
+transparent
+);
+
+backdrop-filter:blur(12px);
+}
 
 .order-btn{
 
 width:100%;
 
-margin-top:28px;
-
 padding:20px;
 
 border:none;
 
-border-radius:28px;
+border-radius:26px;
 
 cursor:pointer;
 
@@ -753,15 +745,15 @@ color:white;
 background:
 linear-gradient(
 135deg,
-#ff4ca0,
-#ffcf40,
-#6b9cff
+#ff5eb3,
+#7ba6ff,
+#ffd866
 );
 
 box-shadow:
-0 14px 30px rgba(107,156,255,0.35);
+0 14px 30px rgba(123,166,255,0.35);
 
-transition:0.14s;
+transition:0.12s;
 }
 
 .order-btn:hover{
@@ -773,11 +765,7 @@ scale(1.01);
 
 .order-btn:active{
 
-transform:
-scale(0.92);
-
-box-shadow:
-inset 0 6px 12px rgba(0,0,0,0.2);
+transform:scale(0.9);
 }
 
 /* MOBILE */
@@ -790,29 +778,15 @@ height:auto;
 }
 
 .app{
-
 flex-direction:column;
-
 height:auto;
 }
 
-.left{
-
-padding:15px;
-}
-
 .right{
-
 width:100%;
-
-border-left:none;
-
-border-top:
-1px solid rgba(255,255,255,0.25);
 }
 
 .preview{
-
 max-width:560px;
 }
 
@@ -829,6 +803,8 @@ max-width:560px;
 <div class="bg4"></div>
 
 <div class="app">
+
+<!-- LEFT -->
 
 <div class="left">
 
@@ -866,7 +842,11 @@ class="embroidery-text"
 
 </div>
 
+<!-- RIGHT -->
+
 <div class="right">
+
+<div class="top-header">
 
 <div class="title">
 Navrhnite si vlastné tričko
@@ -875,6 +855,10 @@ Navrhnite si vlastné tričko
 <div class="subtitle">
 Vytvorte si vlastnú výšivku jednoducho podľa seba.
 </div>
+
+</div>
+
+<!-- SHIRT -->
 
 <div class="section">
 
@@ -902,6 +886,8 @@ onclick="setShirt('black', this)"
 
 </div>
 
+<!-- SIZE -->
+
 <div class="section">
 
 <div class="section-title">
@@ -920,6 +906,8 @@ Veľkosť
 
 </div>
 
+<!-- TEXT -->
+
 <div class="section">
 
 <div class="section-title">
@@ -934,12 +922,12 @@ oninput="updatePreview()"
 ></textarea>
 
 <div class="help">
-
 Text sa automaticky prispôsobí vzhľadu výšivky.
-
 </div>
 
 </div>
+
+<!-- FONT -->
 
 <div class="section">
 
@@ -951,21 +939,21 @@ Text sa automaticky prispôsobí vzhľadu výšivky.
 
 <button
 class="btn font-btn active"
-onclick="setFont('Bitter', this)"
+onclick="setFont('Montserrat', this)"
 >
-Klasický
+Moderný
 </button>
 
 <button
 class="btn font-btn"
-onclick="setFont('Indie Flower', this)"
+onclick="setFont('Fredoka', this)"
 >
 Hravý
 </button>
 
 <button
 class="btn font-btn"
-onclick="setFont('Caveat', this)"
+onclick="setFont('Dancing Script', this)"
 >
 Písaný
 </button>
@@ -973,6 +961,8 @@ Písaný
 </div>
 
 </div>
+
+<!-- COLORS -->
 
 <div class="section">
 
@@ -993,28 +983,30 @@ onclick="setThreadColor('white', this)">
 </div>
 
 <div class="color"
-style="background:#ff4ca0;"
-onclick="setThreadColor('#ff4ca0', this)">
+style="background:#ff5eb3;"
+onclick="setThreadColor('#ff5eb3', this)">
 </div>
 
 <div class="color"
-style="background:#6b9cff;"
-onclick="setThreadColor('#6b9cff', this)">
+style="background:#7ba6ff;"
+onclick="setThreadColor('#7ba6ff', this)">
 </div>
 
 <div class="color"
-style="background:#ffd84d;"
-onclick="setThreadColor('#ffd84d', this)">
+style="background:#ffd866;"
+onclick="setThreadColor('#ffd866', this)">
 </div>
 
 <div class="color"
-style="background:#8dff8d;"
-onclick="setThreadColor('#8dff8d', this)">
+style="background:#4ac8a5;"
+onclick="setThreadColor('#4ac8a5', this)">
 </div>
 
 </div>
 
 </div>
+
+<!-- ICONS -->
 
 <div class="section">
 
@@ -1049,10 +1041,10 @@ Ikonka
 </div>
 
 <div class="info">
-
 Každé tričko vyrábame individuálne podľa zvoleného návrhu.
-
 </div>
+
+<div class="bottom-order">
 
 <button class="order-btn">
 Pokračovať k objednávke
@@ -1062,18 +1054,20 @@ Pokračovať k objednávke
 
 </div>
 
+</div>
+
 <script>
 
-function triggerShine(){
+function triggerStatic(){
 
 const shirt =
 document.getElementById('shirtImage');
 
-shirt.classList.remove('shine');
+shirt.classList.remove('tv-static');
 
 void shirt.offsetWidth;
 
-shirt.classList.add('shine');
+shirt.classList.add('tv-static');
 
 }
 
@@ -1128,25 +1122,24 @@ const lineCount =
 input.split('\n').length;
 
 const isHandwritten =
-currentFont === 'Caveat' ||
-currentFont === 'Indie Flower';
+currentFont === 'Dancing Script';
 
 if(lineCount >= 2){
 
 if(longestLine <= 5){
 
 text.style.fontSize =
-isHandwritten ? '22px' : '17px';
+isHandwritten ? '25px' : '18px';
 
 }else if(longestLine <= 8){
 
 text.style.fontSize =
-isHandwritten ? '20px' : '15px';
+isHandwritten ? '22px' : '16px';
 
 }else{
 
 text.style.fontSize =
-isHandwritten ? '15px' : '12px';
+isHandwritten ? '18px' : '13px';
 
 }
 
@@ -1155,17 +1148,17 @@ isHandwritten ? '15px' : '12px';
 if(longestLine <= 5){
 
 text.style.fontSize =
-isHandwritten ? '26px' : '19px';
+isHandwritten ? '30px' : '21px';
 
 }else if(longestLine <= 8){
 
 text.style.fontSize =
-isHandwritten ? '22px' : '17px';
+isHandwritten ? '25px' : '18px';
 
 }else{
 
 text.style.fontSize =
-isHandwritten ? '18px' : '14px';
+isHandwritten ? '20px' : '15px';
 
 }
 
@@ -1190,7 +1183,7 @@ text.style.fontFamily = font;
 
 updatePreview();
 
-triggerShine();
+triggerStatic();
 
 }
 
@@ -1207,7 +1200,7 @@ c.classList.remove('active-color');
 
 el.classList.add('active-color');
 
-triggerShine();
+triggerStatic();
 
 }
 
@@ -1230,7 +1223,7 @@ previewIcon.style.opacity = '1';
 
 updatePreview();
 
-triggerShine();
+triggerStatic();
 
 }
 
@@ -1251,7 +1244,7 @@ previewIcon.style.opacity = '0';
 
 updatePreview();
 
-triggerShine();
+triggerStatic();
 
 }
 
@@ -1293,7 +1286,7 @@ document.querySelector('.color[onclick*=\"white\"]').classList.add('active-color
 
 }
 
-triggerShine();
+triggerStatic();
 
 }
 
@@ -1309,7 +1302,7 @@ b.classList.remove('active');
 
 btn.classList.add('active');
 
-triggerShine();
+triggerStatic();
 
 });
 
