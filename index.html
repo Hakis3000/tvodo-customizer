@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -8,7 +9,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Baloo+2:wght@600&family=Pacifico&family=Fredoka:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Baloo+2:wght@600&family=Pacifico&family=Fredoka:wght@600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -20,32 +21,84 @@ box-sizing:border-box;
 
 body{
 font-family:Poppins,sans-serif;
-background:#ececec;
+background:
+linear-gradient(135deg,#f4f4f4,#e8e8e8);
+padding:20px;
 display:flex;
 justify-content:center;
-padding:20px;
+min-height:100vh;
 }
 
 .app{
 width:100%;
-max-width:540px;
-background:white;
-border-radius:30px;
-padding:18px;
-box-shadow:0 15px 40px rgba(0,0,0,0.12);
+max-width:560px;
+background:
+rgba(255,255,255,0.72);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,0.5);
+
+border-radius:34px;
+
+padding:20px;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,0.12);
+
+animation:fadeIn 0.7s ease;
+}
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(15px);
+}
+
+to{
+opacity:1;
+transform:translateY(0px);
+}
+
 }
 
 .title{
-font-size:28px;
+font-size:30px;
 font-weight:700;
 margin-bottom:18px;
 }
 
 .preview{
 position:relative;
-background:#f7f7f7;
-border-radius:24px;
+background:
+linear-gradient(145deg,#ffffff,#f3f3f3);
+
+border-radius:28px;
+
 overflow:hidden;
+
+box-shadow:
+inset 0 2px 10px rgba(255,255,255,0.8),
+0 10px 30px rgba(0,0,0,0.08);
+
+animation:floatCard 4s ease-in-out infinite;
+}
+
+@keyframes floatCard{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-4px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
 }
 
 .preview img{
@@ -55,27 +108,44 @@ display:block;
 
 .embroidery{
 position:absolute;
+
+/* REAL LEFT CHEST */
 top:31%;
-left:38%;
-width:15%;
-height:10%;
+left:47%;
+
+width:17%;
+height:12%;
+
 display:flex;
 justify-content:center;
 align-items:center;
+
 pointer-events:none;
 }
 
 .embroidery-text{
-font-size:12px;
+
+font-size:15px;
 font-weight:600;
+
 text-align:center;
-line-height:1.1;
-max-width:100%;
+
+line-height:1.05;
+
+white-space:pre-line;
+
 word-break:break-word;
 
+max-width:100%;
+
+transition:0.25s;
+
 text-shadow:
-0 1px 1px rgba(255,255,255,0.15),
-0 1px 3px rgba(0,0,0,0.35);
+0 1px 1px rgba(255,255,255,0.18),
+0 2px 3px rgba(0,0,0,0.35);
+
+filter:
+drop-shadow(0 1px 1px rgba(0,0,0,0.2));
 }
 
 .section{
@@ -90,96 +160,203 @@ margin-bottom:12px;
 
 .row{
 display:flex;
-gap:10px;
+gap:12px;
 flex-wrap:wrap;
 }
 
 .btn{
+
 border:none;
-background:#f3f3f3;
-padding:12px 16px;
-border-radius:14px;
+
+padding:13px 18px;
+
+border-radius:18px;
+
 font-weight:600;
+
 cursor:pointer;
+
+background:
+linear-gradient(145deg,#ffffff,#eaeaea);
+
+box-shadow:
+6px 6px 12px rgba(0,0,0,0.08),
+-4px -4px 10px rgba(255,255,255,0.9);
+
 transition:0.2s;
 }
 
 .btn:hover{
-transform:translateY(-2px);
+
+transform:
+translateY(-2px)
+scale(1.03);
+
 }
 
 .active{
-background:black;
+
+background:
+linear-gradient(145deg,#111,#2b2b2b);
+
 color:white;
+
+box-shadow:
+0 8px 20px rgba(0,0,0,0.25);
+
 }
 
 input{
+
 width:100%;
-padding:15px;
+
+padding:16px;
+
 border:none;
-border-radius:16px;
-background:#f4f4f4;
+
+border-radius:20px;
+
+background:
+linear-gradient(145deg,#ffffff,#ececec);
+
+box-shadow:
+inset 3px 3px 8px rgba(0,0,0,0.06),
+inset -3px -3px 8px rgba(255,255,255,0.9);
+
 font-size:16px;
+
 outline:none;
 }
 
 .limit{
-margin-top:8px;
+margin-top:10px;
 font-size:13px;
 color:#777;
 }
 
 .colors{
 display:flex;
-gap:12px;
+gap:14px;
 flex-wrap:wrap;
 }
 
 .color{
-width:40px;
-height:40px;
+
+width:42px;
+height:42px;
+
 border-radius:50%;
+
 cursor:pointer;
+
 border:3px solid white;
-box-shadow:0 2px 10px rgba(0,0,0,0.15);
+
+box-shadow:
+0 4px 12px rgba(0,0,0,0.18);
+
 transition:0.2s;
 }
 
 .color:hover{
-transform:scale(1.08);
+
+transform:
+scale(1.1);
+
 }
 
 .icons{
 display:flex;
-gap:10px;
+gap:12px;
 flex-wrap:wrap;
 }
 
 .icon-btn{
+
 border:none;
-background:#f3f3f3;
-padding:12px;
-border-radius:14px;
+
+padding:12px 14px;
+
 font-size:22px;
+
+border-radius:18px;
+
 cursor:pointer;
+
+background:
+linear-gradient(145deg,#ffffff,#ececec);
+
+box-shadow:
+6px 6px 12px rgba(0,0,0,0.08),
+-4px -4px 10px rgba(255,255,255,0.9);
+
 transition:0.2s;
 }
 
 .icon-btn:hover{
-transform:translateY(-2px);
+
+transform:
+translateY(-2px)
+scale(1.05);
+
 }
 
 .order-btn{
+
 width:100%;
+
 margin-top:30px;
-padding:17px;
+
+padding:18px;
+
 border:none;
-border-radius:18px;
-background:black;
+
+border-radius:22px;
+
+background:
+linear-gradient(145deg,#111,#2d2d2d);
+
 color:white;
-font-size:17px;
+
+font-size:18px;
+
 font-weight:700;
+
 cursor:pointer;
+
+transition:0.25s;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,0.25);
+}
+
+.order-btn:hover{
+
+transform:
+translateY(-3px)
+scale(1.01);
+
+}
+
+.tip{
+
+margin-top:22px;
+
+padding:18px;
+
+border-radius:22px;
+
+background:
+linear-gradient(145deg,#fafafa,#f0f0f0);
+
+font-size:14px;
+
+color:#666;
+
+line-height:1.5;
+
+box-shadow:
+inset 0 1px 4px rgba(255,255,255,0.9),
+0 4px 10px rgba(0,0,0,0.04);
 }
 
 </style>
@@ -206,7 +383,6 @@ src="ChatGPT Image 21. 5. 2026, 03_32_37.png"
 id="previewText"
 class="embroidery-text"
 >
-Sofia
 </div>
 
 </div>
@@ -246,13 +422,14 @@ Text výšivky
 </div>
 
 <input
+id="textInput"
 maxlength="18"
 placeholder="Napíš meno alebo text"
-oninput="updateText(this.value)"
+oninput="updatePreview()"
 >
 
 <div class="limit">
-Výšivka je automaticky prispôsobená do 11×11 cm
+Automaticky sa prispôsobí do 11×11 cm
 </div>
 
 </div>
@@ -365,6 +542,10 @@ Ikonka
 
 </div>
 
+<div class="tip">
+✨ Text sa automaticky rozdelí na 2 riadky a zmenší tak, aby sa vždy zmestil do výšivky 11×11 cm.
+</div>
+
 <button class="order-btn">
 Pokračovať k objednávke
 </button>
@@ -381,39 +562,51 @@ const text =
 document.getElementById('previewText');
 
 const input =
-document.querySelector('input').value;
+document.getElementById('textInput').value;
 
-const finalText =
-(currentIcon ? currentIcon + ' ' : '') +
-(input || 'Sofia');
+let finalText = input;
+
+if(input.length > 8){
+
+const first =
+input.substring(0,8);
+
+const second =
+input.substring(8);
+
+finalText =
+first + '\n' + second;
+
+}
+
+if(currentIcon){
+
+finalText =
+currentIcon + '\n' + finalText;
+
+}
 
 text.innerText = finalText;
 
-const len = finalText.length;
+const len = input.length;
 
-if(len <= 6){
+if(len <= 5){
+
+text.style.fontSize = '16px';
+
+}else if(len <= 8){
 
 text.style.fontSize = '14px';
 
-}else if(len <= 10){
+}else if(len <= 12){
 
 text.style.fontSize = '12px';
 
-}else if(len <= 14){
+}else{
 
 text.style.fontSize = '10px';
 
-}else{
-
-text.style.fontSize = '8px';
-
 }
-
-}
-
-function updateText(){
-
-updatePreview();
 
 }
 
