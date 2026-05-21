@@ -27,6 +27,9 @@ box-sizing:border-box;
 --bg1:#fff8fc;
 --bg2:#eef5ff;
 
+--panel:
+rgba(255,255,255,0.64);
+
 }
 
 body{
@@ -42,11 +45,9 @@ var(--bg2)
 
 min-height:100vh;
 
-overflow:hidden;
+overflow-x:hidden;
 
 color:#222;
-
-padding:14px;
 
 }
 
@@ -68,25 +69,25 @@ z-index:-1;
 
 .bg1{
 
-width:420px;
-height:420px;
+width:500px;
+height:500px;
 
 background:var(--pink);
 
-top:-180px;
-left:-140px;
+top:-200px;
+left:-180px;
 
 }
 
 .bg2{
 
-width:420px;
-height:420px;
+width:500px;
+height:500px;
 
 background:var(--blue);
 
-bottom:-180px;
-right:-140px;
+bottom:-200px;
+right:-180px;
 
 }
 
@@ -96,19 +97,21 @@ right:-140px;
 
 width:100%;
 
-height:calc(100vh - 28px);
+max-width:1800px;
+
+margin:auto;
+
+padding:22px;
 
 display:grid;
 
 grid-template-columns:
 minmax(0,1fr)
-390px;
+420px;
 
-gap:18px;
+gap:22px;
 
-max-width:1750px;
-
-margin:auto;
+align-items:start;
 
 }
 
@@ -118,7 +121,7 @@ margin:auto;
 
 display:flex;
 justify-content:center;
-align-items:center;
+align-items:flex-start;
 
 }
 
@@ -127,7 +130,8 @@ align-items:center;
 .preview-card{
 
 width:100%;
-height:100%;
+
+min-height:calc(100vh - 44px);
 
 background:
 rgba(255,255,255,0.56);
@@ -139,7 +143,7 @@ border:
 
 border-radius:34px;
 
-padding:12px;
+padding:20px;
 
 box-shadow:
 0 20px 50px rgba(0,0,0,0.07);
@@ -171,8 +175,8 @@ align-items:center;
 
 .shirt{
 
-width:132%;
-height:132%;
+width:1150px;
+max-width:130%;
 
 object-fit:contain;
 
@@ -180,9 +184,19 @@ user-select:none;
 pointer-events:none;
 
 filter:
-drop-shadow(0 24px 38px rgba(0,0,0,0.1));
+drop-shadow(0 26px 40px rgba(0,0,0,0.1));
 
-opacity:0.98;
+transition:0.3s;
+
+}
+
+/* BLACK SHIRT */
+
+.black-shirt{
+
+filter:
+brightness(0.18)
+drop-shadow(0 26px 40px rgba(0,0,0,0.22));
 
 }
 
@@ -192,26 +206,20 @@ opacity:0.98;
 
 position:absolute;
 
-/* POSUNUTÉ VIAC DOĽAVA */
+top:34%;
 
-top:33%;
-
-left:53%;
+left:54%;
 
 transform:translateX(-50%);
 
-width:16%;
-
-max-width:130px;
+width:180px;
 
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 
-gap:6px;
-
-padding:4px;
+gap:8px;
 
 }
 
@@ -219,17 +227,15 @@ padding:4px;
 
 .icon-img{
 
-width:34px;
-height:34px;
+width:54px;
+height:54px;
 
 object-fit:contain;
 
 display:none;
 
 filter:
-drop-shadow(0 2px 4px rgba(0,0,0,0.14));
-
-margin-bottom:2px;
+drop-shadow(0 2px 5px rgba(0,0,0,0.14));
 
 }
 
@@ -239,12 +245,11 @@ margin-bottom:2px;
 
 font-family:'Montserrat';
 
-font-size:
-clamp(13px,1.2vw,24px);
+font-size:24px;
 
 font-weight:700;
 
-line-height:1.1;
+line-height:1.08;
 
 text-align:center;
 
@@ -264,38 +269,20 @@ text-shadow:
 0 1px 1px rgba(255,255,255,0.45),
 0 2px 5px rgba(0,0,0,0.08);
 
-}
-
-/* SAFE ZONE */
-
-.safe-zone{
-
-position:absolute;
-
-top:33%;
-
-left:53%;
-
-transform:translateX(-50%);
-
-width:145px;
-height:100px;
-
-border:
-2px dashed rgba(255,124,198,0.18);
-
-border-radius:16px;
-
-pointer-events:none;
+transition:0.2s;
 
 }
 
-/* RIGHT */
+/* RIGHT PANEL */
 
 .right{
 
+position:sticky;
+
+top:20px;
+
 background:
-rgba(255,255,255,0.42);
+rgba(255,255,255,0.48);
 
 backdrop-filter:blur(18px);
 
@@ -304,12 +291,7 @@ border:
 
 border-radius:34px;
 
-padding:20px;
-
-display:flex;
-flex-direction:column;
-
-overflow:auto;
+padding:24px;
 
 box-shadow:
 0 20px 50px rgba(0,0,0,0.06);
@@ -320,7 +302,7 @@ box-shadow:
 
 .title{
 
-font-size:30px;
+font-size:34px;
 
 font-weight:700;
 
@@ -348,7 +330,7 @@ line-height:1.6;
 
 color:#666;
 
-margin-bottom:18px;
+margin-bottom:22px;
 
 }
 
@@ -356,7 +338,7 @@ margin-bottom:18px;
 
 .section{
 
-margin-top:16px;
+margin-top:22px;
 
 }
 
@@ -365,7 +347,7 @@ margin-top:16px;
 font-size:15px;
 font-weight:700;
 
-margin-bottom:10px;
+margin-bottom:12px;
 
 }
 
@@ -375,9 +357,9 @@ textarea{
 
 width:100%;
 
-min-height:95px;
+min-height:110px;
 
-padding:14px;
+padding:16px;
 
 border:none;
 
@@ -385,7 +367,7 @@ outline:none;
 
 resize:none;
 
-border-radius:20px;
+border-radius:22px;
 
 font-size:15px;
 
@@ -429,7 +411,7 @@ flex-wrap:wrap;
 
 border:none;
 
-padding:11px 14px;
+padding:12px 16px;
 
 border-radius:16px;
 
@@ -472,8 +454,8 @@ color:white;
 
 .icon-btn{
 
-width:64px;
-height:64px;
+width:86px;
+height:86px;
 
 padding:0;
 
@@ -487,8 +469,8 @@ overflow:hidden;
 
 .icon-btn img{
 
-width:36px;
-height:36px;
+width:56px;
+height:56px;
 
 object-fit:contain;
 
@@ -506,8 +488,8 @@ flex-wrap:wrap;
 
 .color{
 
-width:42px;
-height:42px;
+width:46px;
+height:46px;
 
 border-radius:50%;
 
@@ -534,13 +516,13 @@ outline:4px solid rgba(125,175,255,0.26);
 
 width:100%;
 
-margin-top:22px;
+margin-top:24px;
 
-padding:16px;
+padding:18px;
 
 border:none;
 
-border-radius:20px;
+border-radius:22px;
 
 cursor:pointer;
 
@@ -574,7 +556,7 @@ translateY(-3px);
 
 .features{
 
-margin-top:18px;
+margin-top:22px;
 
 display:grid;
 
@@ -604,8 +586,8 @@ gap:10px;
 
 .feature-icon{
 
-width:40px;
-height:40px;
+width:42px;
+height:42px;
 
 border-radius:14px;
 
@@ -644,41 +626,66 @@ line-height:1.4;
 
 /* MOBILE */
 
-@media(max-width:1100px){
-
-body{
-
-overflow:auto;
-
-padding:10px;
-
-}
+@media(max-width:1200px){
 
 .app{
-
-height:auto;
 
 grid-template-columns:1fr;
 
 }
 
-.left{
+.right{
 
-min-height:55vh;
+position:relative;
+top:auto;
 
 }
 
 .preview-card{
 
-height:auto;
+min-height:unset;
 
 aspect-ratio:1/1;
 
 }
 
+.shirt{
+
+max-width:150%;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.app{
+
+padding:10px;
+
+gap:14px;
+
+}
+
+.preview-card{
+
+padding:10px;
+
+border-radius:26px;
+
+}
+
 .right{
 
-overflow:visible;
+padding:18px;
+
+border-radius:26px;
+
+}
+
+.title{
+
+font-size:28px;
 
 }
 
@@ -690,33 +697,44 @@ grid-template-columns:1fr;
 
 .shirt{
 
-width:138%;
-height:138%;
+max-width:165%;
 
 }
-
-/* MOBILE EMBROIDERY */
 
 .embroidery-zone{
 
-top:33%;
+top:34%;
 
-left:53%;
+left:54%;
 
-width:18%;
-
-max-width:100px;
+width:130px;
 
 }
 
-.safe-zone{
+.icon-img{
 
-top:33%;
+width:44px;
+height:44px;
 
-left:53%;
+}
 
-width:110px;
-height:80px;
+.text{
+
+font-size:18px;
+
+}
+
+.icon-btn{
+
+width:74px;
+height:74px;
+
+}
+
+.icon-btn img{
+
+width:48px;
+height:48px;
 
 }
 
@@ -744,6 +762,7 @@ height:80px;
 <img
 src="tricko.svg"
 class="shirt"
+id="shirt"
 />
 
 <!-- EMBROIDERY -->
@@ -765,8 +784,6 @@ TVODO
 
 </div>
 
-<div class="safe-zone"></div>
-
 </div>
 
 </div>
@@ -785,12 +802,40 @@ Vytvor si svoje tričko
 Prémiová výšivka podľa tvojich predstáv.
 </div>
 
+<!-- SHIRT COLOR -->
+
+<div class="section">
+
+<div class="section-title">
+Farba trička
+</div>
+
+<div class="row">
+
+<button
+class="btn shirt-btn active"
+data-shirt="white"
+>
+Biela
+</button>
+
+<button
+class="btn shirt-btn"
+data-shirt="black"
+>
+Čierna
+</button>
+
+</div>
+
+</div>
+
 <!-- TEXT -->
 
 <div class="section">
 
 <div class="section-title">
-1. Text výšivky
+Text výšivky
 </div>
 
 <textarea
@@ -818,7 +863,7 @@ Max. 3 riadky
 <div class="section">
 
 <div class="section-title">
-2. Štýl textu
+Štýl textu
 </div>
 
 <div class="row">
@@ -853,7 +898,7 @@ Písaný
 <div class="section">
 
 <div class="section-title">
-3. Farba nite
+Farba nite
 </div>
 
 <div class="colors">
@@ -900,7 +945,7 @@ style="background:#69c27d;"
 <div class="section">
 
 <div class="section-title">
-4. Ikonka
+Ikonka
 </div>
 
 <div class="row">
@@ -1054,6 +1099,9 @@ document.getElementById("counter");
 const iconLayer =
 document.getElementById("iconLayer");
 
+const shirt =
+document.getElementById("shirt");
+
 /* TEXT */
 
 textInput.addEventListener(
@@ -1069,16 +1117,14 @@ value || "TVODO";
 counter.innerText =
 value.length + " / 40";
 
-/* SAFE FONT SIZE */
-
 const length =
 value.replace(/\n/g,'').length;
 
 let size = 24;
 
-if(length > 8) size = 20;
-if(length > 14) size = 17;
-if(length > 22) size = 14;
+if(length > 8) size = 21;
+if(length > 14) size = 18;
+if(length > 22) size = 15;
 
 textLayer.style.fontSize =
 size + "px";
@@ -1172,6 +1218,49 @@ iconLayer.style.display =
 "block";
 
 iconLayer.src = icon;
+
+}
+
+}
+);
+
+});
+
+/* SHIRT COLOR */
+
+document
+.querySelectorAll(".shirt-btn")
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".shirt-btn")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+btn.classList.add("active");
+
+const color =
+btn.dataset.shirt;
+
+if(color === "black"){
+
+shirt.classList.add("black-shirt");
+
+if(textLayer.style.color === "" ||
+textLayer.style.color === "black"){
+
+textLayer.style.color = "white";
+
+}
+
+}else{
+
+shirt.classList.remove("black-shirt");
 
 }
 
