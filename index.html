@@ -1752,12 +1752,12 @@ btn.classList.add("active");
 /* SEM VLOŽ FUNKCIU ↓↓↓ */
 
 function openOrderForm() {
-    const color = document.querySelector('input[name="color"]:checked')?.value || "";
-    const size = document.querySelector('input[name="size"]:checked')?.value || "";
-    const text = document.getElementById("text-input")?.value || "";
-    const font = document.querySelector('input[name="style"]:checked')?.value || "";
-    const thread = document.querySelector('input[name="thread-color"]:checked')?.value || "";
-    const icon = document.querySelector('input[name="icon"]:checked')?.value || "";
+    const color = document.querySelector(".shirt-btn.active")?.dataset.shirt || "";
+    const size = document.querySelector(".size-btn.active")?.innerText || "";
+    const text = document.getElementById("textInput")?.value || "";
+    const font = document.querySelector(".font-btn.active")?.dataset.font || "";
+    const thread = document.querySelector(".color.active")?.dataset.color || "";
+    const icon = document.querySelector(".icon-btn.active")?.dataset.icon || "";
 
     const url =
         "https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/viewform?usp=pp_url"
@@ -1774,6 +1774,6 @@ function openOrderForm() {
 /* KONIEC FUNKCIE ↑↑↑ */
 
 </script>
-
 </body>
 </html>
+
