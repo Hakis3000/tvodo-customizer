@@ -9,7 +9,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Bitter:wght@700&family=Indie+Flower&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Bitter:wght@700&family=Indie+Flower&family=Caveat:wght@700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -37,7 +37,6 @@ padding:20px;
 
 display:flex;
 justify-content:center;
-align-items:flex-start;
 
 overflow-x:hidden;
 }
@@ -58,7 +57,7 @@ filter:blur(140px);
 top:-150px;
 left:-150px;
 
-opacity:0.25;
+opacity:0.22;
 
 z-index:-1;
 }
@@ -79,7 +78,7 @@ filter:blur(140px);
 bottom:-150px;
 right:-150px;
 
-opacity:0.25;
+opacity:0.22;
 
 z-index:-1;
 }
@@ -190,7 +189,6 @@ display:block;
 
 position:absolute;
 
-/* LEFT CHEST REAL */
 top:31%;
 left:47%;
 
@@ -335,7 +333,7 @@ box-shadow:
 0 10px 25px rgba(107,156,255,0.35);
 }
 
-input{
+textarea{
 
 width:100%;
 
@@ -356,6 +354,12 @@ outline:none;
 
 box-shadow:
 0 6px 14px rgba(0,0,0,0.06);
+
+resize:none;
+
+min-height:90px;
+
+font-family:Poppins,sans-serif;
 }
 
 .help{
@@ -449,7 +453,7 @@ object-fit:contain;
 
 .remove-icon{
 
-font-size:24px;
+font-size:26px;
 font-weight:700;
 color:#555;
 }
@@ -554,7 +558,7 @@ Navrhni si vlastné tričko ✨
 </div>
 
 <div class="subtitle">
-Vyber si farbu trička, ikonku, font a vytvor si vlastnú výšivku.
+Vyber si farbu trička, ikonku a vytvor si vlastnú výšivku.
 </div>
 
 <div class="preview">
@@ -615,18 +619,38 @@ onclick="setShirt('black', this)"
 <div class="section">
 
 <div class="section-title">
+Veľkosť trička
+</div>
+
+<div class="row">
+
+<button class="btn">S</button>
+<button class="btn">M</button>
+<button class="btn">L</button>
+<button class="btn">XL</button>
+<button class="btn">2XL</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">
 Text výšivky
 </div>
 
-<input
+<textarea
 id="textInput"
 maxlength="18"
 placeholder="Napíš meno alebo text"
 oninput="updatePreview()"
->
+></textarea>
 
 <div class="help">
-✨ Kratšie mená budú väčšie a výraznejšie.
+✨ Po 8 znakoch sa text automaticky presunie na druhý riadok.
+<br>
+✨ Môžeš použiť aj ENTER pre vlastné rozloženie textu.
 </div>
 
 </div>
@@ -655,7 +679,7 @@ Hravý
 
 <button
 class="btn"
-onclick="setFont('Great Vibes')"
+onclick="setFont('Caveat')"
 >
 Písaný
 </button>
@@ -696,7 +720,7 @@ Ikonka výšivky
 
 <div class="icons">
 
-<button class="icon-btn" onclick="setIcon('')">
+<button class="icon-btn" onclick="removeIcon()">
 <div class="remove-icon">✕</div>
 </button>
 
@@ -742,17 +766,15 @@ Pokračovať k objednávke
 
 <script>
 
-let currentIcon = '';
-
 function updatePreview(){
 
 const text =
 document.getElementById('previewText');
 
-const input =
+let input =
 document.getElementById('textInput').value;
 
-let finalText = input;
+if(!input.includes('\n')){
 
 if(input.length > 8){
 
@@ -762,30 +784,52 @@ input.substring(0,8);
 const second =
 input.substring(8);
 
-finalText =
+input =
 first + '\n' + second;
 
 }
 
-text.innerText = finalText;
+}
 
-const len = input.length;
+text.innerText = input;
 
-if(len <= 5){
+const longestLine =
+Math.max(...input.split('\n').map(line => line.length));
 
-text.style.fontSize = '16px';
+const lineCount =
+input.split('\n').length;
 
-}else if(len <= 8){
+if(lineCount >= 2){
 
-text.style.fontSize = '14px';
+if(longestLine <= 5){
 
-}else if(len <= 12){
+text.style.fontSize = '15px';
 
-text.style.fontSize = '12px';
+}else if(longestLine <= 8){
+
+text.style.fontSize = '13px';
 
 }else{
 
-text.style.fontSize = '10px';
+text.style.fontSize = '11px';
+
+}
+
+}else{
+
+if(longestLine <= 5){
+
+text.style.fontSize = '17px';
+
+}else if(longestLine <= 8){
+
+text.style.fontSize = '15px';
+
+}else{
+
+text.style.fontSize = '12px';
+
+}
 
 }
 
@@ -810,19 +854,20 @@ function setIcon(icon){
 const previewIcon =
 document.getElementById('previewIcon');
 
-if(icon === ''){
-
-previewIcon.style.display = 'none';
-
-previewIcon.src = '';
-
-}else{
-
 previewIcon.src = icon;
 
 previewIcon.style.display = 'block';
 
 }
+
+function removeIcon(){
+
+const previewIcon =
+document.getElementById('previewIcon');
+
+previewIcon.src = '';
+
+previewIcon.style.display = 'none';
 
 }
 
