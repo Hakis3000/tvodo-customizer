@@ -27,9 +27,9 @@ box-sizing:border-box;
 --bg1:#fff5fb;
 --bg2:#edf4ff;
 
---glass:rgba(255,255,255,0.58);
-
 }
+
+/* BODY */
 
 body{
 
@@ -42,15 +42,15 @@ overflow:hidden;
 background:
 linear-gradient(
 135deg,
-var(--bg1) 0%,
-var(--bg2) 100%
+var(--bg1),
+var(--bg2)
 );
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-padding:16px;
+padding:14px;
 
 position:relative;
 }
@@ -66,7 +66,7 @@ border-radius:50%;
 
 filter:blur(120px);
 
-opacity:0.26;
+opacity:0.25;
 
 animation:blobMove 14s ease-in-out infinite;
 }
@@ -102,7 +102,7 @@ transform:translate(0px,0px);
 }
 
 50%{
-transform:translate(35px,-20px);
+transform:translate(30px,-20px);
 }
 
 100%{
@@ -111,7 +111,7 @@ transform:translate(0px,0px);
 
 }
 
-/* MAIN */
+/* APP */
 
 .app{
 
@@ -120,34 +120,35 @@ height:100%;
 
 max-width:1500px;
 
-background:var(--glass);
+background:
+rgba(255,255,255,0.55);
 
-backdrop-filter:blur(20px);
+backdrop-filter:blur(18px);
 
 border:
 1px solid rgba(255,255,255,0.4);
 
-border-radius:38px;
+border-radius:36px;
 
 overflow:hidden;
 
 display:flex;
 
 box-shadow:
-0 30px 80px rgba(0,0,0,0.10);
+0 25px 70px rgba(0,0,0,0.1);
 }
 
 /* LEFT */
 
 .left{
 
-flex:1.15;
+flex:1.1;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-padding:28px;
+padding:20px;
 
 position:relative;
 
@@ -159,7 +160,7 @@ overflow:hidden;
 .preview{
 
 width:100%;
-max-width:760px;
+max-width:720px;
 
 position:relative;
 
@@ -173,7 +174,7 @@ transform:translateY(0px);
 }
 
 50%{
-transform:translateY(-8px);
+transform:translateY(-7px);
 }
 
 100%{
@@ -194,7 +195,7 @@ drop-shadow(0 18px 35px rgba(0,0,0,0.16));
 transition:0.22s;
 }
 
-/* TV EFFECT */
+/* TV STATIC */
 
 .tv-static{
 
@@ -214,15 +215,14 @@ drop-shadow(0 18px 35px rgba(0,0,0,0.16));
 filter:
 contrast(1.4)
 blur(1px)
-brightness(1.05)
+brightness(1.08)
 drop-shadow(0 18px 35px rgba(0,0,0,0.16));
 }
 
-50%{
+60%{
 filter:
 contrast(0.9)
-blur(0px)
-brightness(1.08)
+brightness(1.06)
 drop-shadow(0 18px 35px rgba(0,0,0,0.16));
 }
 
@@ -284,15 +284,13 @@ line-height:1;
 
 font-weight:700;
 
-font-size:20px;
-
 white-space:pre-line;
 
 word-break:break-word;
 
-transition:0.22s;
-
 max-width:100%;
+
+transition:0.2s;
 
 text-shadow:
 0 1px 1px rgba(255,255,255,0.15),
@@ -305,40 +303,17 @@ text-shadow:
 
 width:430px;
 
-padding:24px;
+padding:22px;
 
 overflow-y:auto;
 
 background:
-rgba(255,255,255,0.12);
-
-backdrop-filter:blur(14px);
+rgba(255,255,255,0.1);
 
 border-left:
 1px solid rgba(255,255,255,0.25);
-}
 
-/* HEADER */
-
-.top-header{
-
-position:sticky;
-
-top:0;
-
-z-index:20;
-
-padding-bottom:18px;
-
-background:
-linear-gradient(
-to bottom,
-rgba(255,255,255,0.95),
-rgba(255,255,255,0.78),
-rgba(255,255,255,0)
-);
-
-backdrop-filter:blur(14px);
+position:relative;
 }
 
 /* TITLE */
@@ -370,6 +345,8 @@ font-size:14px;
 line-height:1.6;
 
 color:#5f5f5f;
+
+margin-bottom:24px;
 }
 
 /* SECTION */
@@ -411,8 +388,6 @@ font-weight:600;
 background:
 rgba(255,255,255,0.82);
 
-backdrop-filter:blur(10px);
-
 box-shadow:
 0 8px 18px rgba(0,0,0,0.07);
 
@@ -428,8 +403,7 @@ scale(1.03);
 
 .btn:active{
 
-transform:
-scale(0.84);
+transform:scale(0.84);
 }
 
 .active{
@@ -492,16 +466,6 @@ font-family:Poppins,sans-serif;
 
 box-shadow:
 0 8px 18px rgba(0,0,0,0.05);
-
-transition:0.2s;
-}
-
-textarea:focus{
-
-transform:scale(1.01);
-
-box-shadow:
-0 10px 24px rgba(122,168,255,0.14);
 }
 
 /* HELP */
@@ -641,7 +605,7 @@ color:#666;
 
 .info{
 
-margin-top:26px;
+margin-top:24px;
 
 padding:18px;
 
@@ -655,12 +619,9 @@ font-size:14px;
 line-height:1.7;
 
 color:#5e5e5e;
-
-box-shadow:
-0 8px 18px rgba(0,0,0,0.04);
 }
 
-/* ORDER */
+/* FIXED ORDER */
 
 .bottom-order{
 
@@ -668,21 +629,19 @@ position:sticky;
 
 bottom:0;
 
-padding-top:18px;
+padding-top:16px;
 
-margin-top:18px;
+padding-bottom:6px;
 
 background:
 linear-gradient(
 to top,
 rgba(255,255,255,0.95),
-rgba(255,255,255,0.75),
+rgba(255,255,255,0.7),
 rgba(255,255,255,0)
 );
 
 backdrop-filter:blur(12px);
-
-z-index:15;
 }
 
 .order-btn{
@@ -732,21 +691,83 @@ transform:scale(0.9);
 @media(max-width:1100px){
 
 body{
+
 overflow:auto;
 height:auto;
+
+padding:0;
 }
 
 .app{
+
 flex-direction:column;
+
 height:auto;
+
+border-radius:0;
 }
 
-.right{
-width:100%;
+/* IMPORTANT */
+
+.left{
+
+position:sticky;
+
+top:0;
+
+z-index:15;
+
+background:
+linear-gradient(
+to bottom,
+rgba(255,255,255,0.95),
+rgba(255,255,255,0.7)
+);
+
+backdrop-filter:blur(14px);
+
+padding:12px;
+
+border-bottom:
+1px solid rgba(255,255,255,0.4);
 }
 
 .preview{
-max-width:560px;
+
+max-width:330px;
+}
+
+.right{
+
+width:100%;
+
+padding:18px;
+
+overflow:visible;
+}
+
+.title{
+
+font-size:28px;
+}
+
+.section{
+
+margin-top:20px;
+}
+
+textarea{
+
+font-size:16px;
+}
+
+.bottom-order{
+
+position:sticky;
+
+bottom:0;
+
+z-index:20;
 }
 
 }
@@ -760,6 +781,8 @@ max-width:560px;
 <div class="bg2"></div>
 
 <div class="app">
+
+<!-- LEFT -->
 
 <div class="left">
 
@@ -797,9 +820,9 @@ class="embroidery-text"
 
 </div>
 
-<div class="right">
+<!-- RIGHT -->
 
-<div class="top-header">
+<div class="right">
 
 <div class="title">
 Navrhnite si vlastné tričko
@@ -809,7 +832,7 @@ Navrhnite si vlastné tričko
 Vytvorte si vlastnú výšivku jednoducho podľa seba.
 </div>
 
-</div>
+<!-- SHIRT -->
 
 <div class="section">
 
@@ -837,6 +860,8 @@ onclick="setShirt('black', this)"
 
 </div>
 
+<!-- SIZE -->
+
 <div class="section">
 
 <div class="section-title">
@@ -855,6 +880,8 @@ Veľkosť
 
 </div>
 
+<!-- TEXT -->
+
 <div class="section">
 
 <div class="section-title">
@@ -863,7 +890,7 @@ Text výšivky
 
 <textarea
 id="textInput"
-maxlength="24"
+maxlength="26"
 placeholder="Napíšte meno alebo text"
 oninput="updatePreview()"
 ></textarea>
@@ -873,6 +900,8 @@ Pre nový riadok použite ENTER.
 </div>
 
 </div>
+
+<!-- FONT -->
 
 <div class="section">
 
@@ -907,6 +936,8 @@ Písaný
 
 </div>
 
+<!-- COLORS -->
+
 <div class="section">
 
 <div class="section-title">
@@ -938,6 +969,8 @@ onclick="setThreadColor('#7aa8ff', this)">
 </div>
 
 </div>
+
+<!-- ICONS -->
 
 <div class="section">
 
@@ -1002,7 +1035,7 @@ shirt.classList.add('tv-static');
 
 }
 
-/* PREVIEW */
+/* UPDATE */
 
 function updatePreview(){
 
@@ -1038,9 +1071,6 @@ input.split('\n');
 const longestLine =
 Math.max(...lines.map(line => line.length));
 
-const lineCount =
-lines.length;
-
 const isHandwritten =
 currentFont === 'Dancing Script';
 
@@ -1051,17 +1081,17 @@ if(!hasEnter){
 if(longestLine <= 4){
 
 text.style.fontSize =
-isHandwritten ? '32px' : '23px';
+isHandwritten ? '34px' : '24px';
 
 }else if(longestLine <= 6){
 
 text.style.fontSize =
-isHandwritten ? '29px' : '21px';
+isHandwritten ? '30px' : '21px';
 
 }else if(longestLine <= 9){
 
 text.style.fontSize =
-isHandwritten ? '25px' : '18px';
+isHandwritten ? '26px' : '18px';
 
 }else if(longestLine <= 12){
 
@@ -1073,40 +1103,41 @@ isHandwritten ? '22px' : '16px';
 text.style.fontSize =
 isHandwritten ? '18px' : '13px';
 
-}else{
+}else if(longestLine <= 20){
 
 text.style.fontSize =
 isHandwritten ? '15px' : '11px';
 
-}
-
-/* USER USED ENTER */
-
 }else{
 
-if(lineCount >= 2){
+text.style.fontSize =
+isHandwritten ? '13px' : '9px';
+
+}
+
+/* ENTER */
+
+}else{
 
 if(longestLine <= 5){
 
 text.style.fontSize =
-isHandwritten ? '26px' : '19px';
+isHandwritten ? '28px' : '20px';
 
 }else if(longestLine <= 8){
 
 text.style.fontSize =
-isHandwritten ? '22px' : '16px';
+isHandwritten ? '24px' : '17px';
 
 }else if(longestLine <= 12){
 
 text.style.fontSize =
-isHandwritten ? '18px' : '13px';
+isHandwritten ? '20px' : '14px';
 
 }else{
 
 text.style.fontSize =
-isHandwritten ? '15px' : '11px';
-
-}
+isHandwritten ? '16px' : '11px';
 
 }
 
