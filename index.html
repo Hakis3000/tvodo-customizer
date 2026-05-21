@@ -16,4 +16,1221 @@
 *{
 margin:0;
 padding:0;
-box-sizing
+box-sizing:border-box;
+}
+
+body{
+
+font-family:Poppins,sans-serif;
+
+height:100vh;
+
+overflow:hidden;
+
+background:
+linear-gradient(
+135deg,
+#ffd7ee 0%,
+#dce8ff 45%,
+#f5dcff 100%
+);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:18px;
+
+position:relative;
+}
+
+/* BLOBS */
+
+.bg1,
+.bg2,
+.bg3{
+
+position:absolute;
+
+border-radius:50%;
+
+filter:blur(120px);
+
+opacity:0.28;
+
+animation:blobMove 12s ease-in-out infinite;
+}
+
+.bg1{
+width:420px;
+height:420px;
+background:#ff67bb;
+top:-120px;
+left:-100px;
+}
+
+.bg2{
+width:420px;
+height:420px;
+background:#6ea8ff;
+bottom:-140px;
+right:-120px;
+animation-delay:2s;
+}
+
+.bg3{
+width:320px;
+height:320px;
+background:#b67dff;
+top:40%;
+left:40%;
+animation-delay:4s;
+}
+
+@keyframes blobMove{
+
+0%{
+transform:translate(0px,0px);
+}
+
+50%{
+transform:translate(30px,-20px);
+}
+
+100%{
+transform:translate(0px,0px);
+}
+
+}
+
+/* MAIN */
+
+.app{
+
+width:100%;
+height:100%;
+
+max-width:1500px;
+
+background:
+rgba(255,255,255,0.62);
+
+backdrop-filter:blur(18px);
+
+border:
+1px solid rgba(255,255,255,0.35);
+
+border-radius:40px;
+
+box-shadow:
+0 25px 80px rgba(0,0,0,0.12);
+
+display:flex;
+
+overflow:hidden;
+
+position:relative;
+}
+
+/* LEFT */
+
+.left{
+
+flex:1.15;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:30px;
+
+position:relative;
+
+overflow:hidden;
+}
+
+/* GLOW */
+
+.left::before{
+
+content:"";
+
+position:absolute;
+
+width:500px;
+height:500px;
+
+background:
+radial-gradient(circle,
+rgba(255,95,180,0.28),
+transparent 70%);
+
+animation:pulseGlow 5s ease-in-out infinite;
+}
+
+.left::after{
+
+content:"";
+
+position:absolute;
+
+width:450px;
+height:450px;
+
+background:
+radial-gradient(circle,
+rgba(95,150,255,0.28),
+transparent 70%);
+
+animation:pulseGlow2 6s ease-in-out infinite;
+}
+
+@keyframes pulseGlow{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.08);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+@keyframes pulseGlow2{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(0.92);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+
+/* PREVIEW */
+
+.preview{
+
+width:100%;
+max-width:760px;
+
+position:relative;
+
+z-index:2;
+
+animation:floating 5s ease-in-out infinite;
+}
+
+@keyframes floating{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-7px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+.preview img{
+
+width:100%;
+
+display:block;
+
+filter:
+drop-shadow(0 18px 40px rgba(0,0,0,0.18));
+}
+
+/* EMBROIDERY */
+
+.embroidery{
+
+position:absolute;
+
+top:31%;
+left:47%;
+
+width:17%;
+height:12%;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+pointer-events:none;
+}
+
+.embroidery-content{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+gap:5px;
+}
+
+.embroidery-icon{
+
+width:38px;
+height:38px;
+
+object-fit:contain;
+
+opacity:0;
+
+transition:0.3s;
+
+filter:
+drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+}
+
+.embroidery-text{
+
+text-align:center;
+
+line-height:1.02;
+
+font-weight:700;
+
+font-size:18px;
+
+white-space:pre-line;
+
+word-break:break-word;
+
+transition:0.25s;
+
+max-width:100%;
+
+text-shadow:
+0 1px 1px rgba(255,255,255,0.15),
+0 2px 3px rgba(0,0,0,0.35);
+}
+
+/* RIGHT */
+
+.right{
+
+width:430px;
+
+padding:28px;
+
+overflow-y:auto;
+
+background:
+rgba(255,255,255,0.18);
+
+backdrop-filter:blur(12px);
+
+border-left:
+1px solid rgba(255,255,255,0.25);
+}
+
+.right::-webkit-scrollbar{
+width:8px;
+}
+
+.right::-webkit-scrollbar-thumb{
+background:#d6d6d6;
+border-radius:20px;
+}
+
+/* TITLES */
+
+.title{
+
+font-size:34px;
+font-weight:700;
+
+line-height:1.08;
+
+margin-bottom:10px;
+
+background:
+linear-gradient(
+90deg,
+#ff4ea6,
+#7a6cff,
+#5ca8ff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+
+font-size:14px;
+
+line-height:1.7;
+
+color:#5c5c5c;
+
+margin-bottom:26px;
+}
+
+/* SECTIONS */
+
+.section{
+
+margin-top:26px;
+}
+
+.section-title{
+
+font-size:16px;
+font-weight:700;
+
+margin-bottom:14px;
+}
+
+/* BUTTONS */
+
+.row{
+
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.btn{
+
+border:none;
+
+padding:14px 18px;
+
+border-radius:18px;
+
+cursor:pointer;
+
+font-weight:600;
+
+background:
+rgba(255,255,255,0.75);
+
+backdrop-filter:blur(10px);
+
+box-shadow:
+0 8px 18px rgba(0,0,0,0.08);
+
+transition:0.14s;
+
+position:relative;
+
+overflow:hidden;
+}
+
+.btn:hover{
+
+transform:
+translateY(-3px)
+scale(1.03);
+}
+
+/* PRESS EFFECT */
+
+.btn:active{
+
+transform:
+scale(0.92);
+
+box-shadow:
+inset 0 5px 12px rgba(0,0,0,0.18);
+}
+
+.active{
+
+background:
+linear-gradient(
+135deg,
+#ff5eb5,
+#6f98ff
+);
+
+color:white;
+
+box-shadow:
+0 12px 28px rgba(111,152,255,0.35);
+}
+
+/* TEXTAREA */
+
+textarea{
+
+width:100%;
+
+padding:18px;
+
+border:none;
+
+border-radius:24px;
+
+background:
+rgba(255,255,255,0.74);
+
+backdrop-filter:blur(12px);
+
+font-size:16px;
+
+outline:none;
+
+box-shadow:
+0 8px 18px rgba(0,0,0,0.06);
+
+resize:none;
+
+min-height:95px;
+
+font-family:Poppins,sans-serif;
+
+transition:0.25s;
+}
+
+textarea:focus{
+
+transform:scale(1.01);
+
+box-shadow:
+0 10px 24px rgba(111,152,255,0.18);
+}
+
+/* HELP */
+
+.help{
+
+margin-top:10px;
+
+font-size:13px;
+
+line-height:1.7;
+
+color:#666;
+}
+
+/* COLORS */
+
+.colors{
+
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+}
+
+.color{
+
+width:46px;
+height:46px;
+
+border-radius:50%;
+
+cursor:pointer;
+
+border:3px solid white;
+
+box-shadow:
+0 8px 16px rgba(0,0,0,0.12);
+
+transition:0.14s;
+}
+
+.color:hover{
+
+transform:
+scale(1.12);
+}
+
+.color:active{
+
+transform:scale(0.88);
+}
+
+.color.active-color{
+
+outline:4px solid rgba(111,152,255,0.5);
+
+transform:scale(1.12);
+}
+
+/* ICONS */
+
+.icons{
+
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+}
+
+.icon-btn{
+
+width:70px;
+height:70px;
+
+border:none;
+
+border-radius:22px;
+
+cursor:pointer;
+
+background:
+rgba(255,255,255,0.72);
+
+backdrop-filter:blur(12px);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+box-shadow:
+0 8px 18px rgba(0,0,0,0.08);
+
+transition:0.14s;
+}
+
+.icon-btn:hover{
+
+transform:
+translateY(-4px)
+scale(1.04);
+}
+
+.icon-btn:active{
+
+transform:scale(0.90);
+}
+
+.icon-btn.active{
+
+background:
+linear-gradient(
+135deg,
+#ff5eb5,
+#6f98ff
+);
+
+box-shadow:
+0 12px 28px rgba(111,152,255,0.35);
+}
+
+.icon-btn img{
+
+width:38px;
+height:38px;
+
+object-fit:contain;
+}
+
+.remove-icon{
+
+font-size:30px;
+font-weight:700;
+color:#666;
+}
+
+/* INFO */
+
+.info{
+
+margin-top:28px;
+
+padding:20px;
+
+border-radius:26px;
+
+background:
+rgba(255,255,255,0.52);
+
+backdrop-filter:blur(12px);
+
+font-size:14px;
+
+line-height:1.8;
+
+color:#5c5c5c;
+
+box-shadow:
+0 8px 18px rgba(0,0,0,0.05);
+}
+
+/* ORDER */
+
+.order-btn{
+
+width:100%;
+
+margin-top:28px;
+
+padding:20px;
+
+border:none;
+
+border-radius:28px;
+
+cursor:pointer;
+
+font-size:18px;
+font-weight:700;
+
+color:white;
+
+background:
+linear-gradient(
+135deg,
+#ff4ca0,
+#6b9cff
+);
+
+box-shadow:
+0 14px 30px rgba(107,156,255,0.35);
+
+transition:0.14s;
+}
+
+.order-btn:hover{
+
+transform:
+translateY(-4px)
+scale(1.01);
+}
+
+.order-btn:active{
+
+transform:
+scale(0.94);
+
+box-shadow:
+inset 0 5px 12px rgba(0,0,0,0.2);
+}
+
+/* MOBILE */
+
+@media(max-width:1100px){
+
+body{
+overflow:auto;
+height:auto;
+}
+
+.app{
+
+flex-direction:column;
+
+height:auto;
+}
+
+.left{
+
+padding:15px;
+}
+
+.right{
+
+width:100%;
+
+border-left:none;
+
+border-top:
+1px solid rgba(255,255,255,0.25);
+}
+
+.preview{
+
+max-width:560px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg1"></div>
+<div class="bg2"></div>
+<div class="bg3"></div>
+
+<div class="app">
+
+<!-- LEFT -->
+
+<div class="left">
+
+<div class="preview">
+
+<img
+id="shirtImage"
+src="biele tricko.png"
+>
+
+<div class="embroidery">
+
+<div class="embroidery-content">
+
+<img
+id="previewIcon"
+class="embroidery-icon"
+src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+>
+
+<div
+id="previewText"
+class="embroidery-text"
+>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="right">
+
+<div class="title">
+Navrhnite si vlastné tričko
+</div>
+
+<div class="subtitle">
+Vyberte si farbu trička, ikonku a vytvorte si vlastnú výšivku podľa seba.
+</div>
+
+<!-- SHIRT -->
+
+<div class="section">
+
+<div class="section-title">
+Farba trička
+</div>
+
+<div class="row">
+
+<button
+class="btn shirt-btn active"
+onclick="setShirt('white', this)"
+>
+Biele
+</button>
+
+<button
+class="btn shirt-btn"
+onclick="setShirt('black', this)"
+>
+Čierne
+</button>
+
+</div>
+
+</div>
+
+<!-- SIZE -->
+
+<div class="section">
+
+<div class="section-title">
+Veľkosť trička
+</div>
+
+<div class="row">
+
+<button class="btn size-btn">S</button>
+<button class="btn size-btn active">M</button>
+<button class="btn size-btn">L</button>
+<button class="btn size-btn">XL</button>
+<button class="btn size-btn">2XL</button>
+
+</div>
+
+</div>
+
+<!-- TEXT -->
+
+<div class="section">
+
+<div class="section-title">
+Text výšivky
+</div>
+
+<textarea
+id="textInput"
+maxlength="18"
+placeholder="Napíšte meno alebo text"
+oninput="updatePreview()"
+></textarea>
+
+<div class="help">
+
+Po 8 znakoch sa text automaticky presunie na druhý riadok.
+
+<br>
+
+Je možné použiť ENTER pre vlastné rozloženie textu.
+
+</div>
+
+</div>
+
+<!-- FONT -->
+
+<div class="section">
+
+<div class="section-title">
+Štýl výšivky
+</div>
+
+<div class="row">
+
+<button
+class="btn font-btn active"
+onclick="setFont('Bitter', this)"
+>
+Klasický
+</button>
+
+<button
+class="btn font-btn"
+onclick="setFont('Indie Flower', this)"
+>
+Hravý
+</button>
+
+<button
+class="btn font-btn"
+onclick="setFont('Caveat', this)"
+>
+Písaný
+</button>
+
+</div>
+
+</div>
+
+<!-- THREAD -->
+
+<div class="section">
+
+<div class="section-title">
+Farba nite
+</div>
+
+<div class="colors">
+
+<div class="color active-color"
+style="background:black;"
+onclick="setThreadColor('black', this)">
+</div>
+
+<div class="color"
+style="background:white;border:1px solid #ccc;"
+onclick="setThreadColor('white', this)">
+</div>
+
+<div class="color"
+style="background:#ff4ca0;"
+onclick="setThreadColor('#ff4ca0', this)">
+</div>
+
+<div class="color"
+style="background:#6b9cff;"
+onclick="setThreadColor('#6b9cff', this)">
+</div>
+
+<div class="color"
+style="background:#ffd84d;"
+onclick="setThreadColor('#ffd84d', this)">
+</div>
+
+<div class="color"
+style="background:#8dff8d;"
+onclick="setThreadColor('#8dff8d', this)">
+</div>
+
+</div>
+
+</div>
+
+<!-- ICONS -->
+
+<div class="section">
+
+<div class="section-title">
+Ikonka výšivky
+</div>
+
+<div class="icons">
+
+<button class="icon-btn active" onclick="removeIcon(this)">
+<div class="remove-icon">✕</div>
+</button>
+
+<button class="icon-btn" onclick="setIcon('srdce.png', this)">
+<img src="srdce.png">
+</button>
+
+<button class="icon-btn" onclick="setIcon('medved.png', this)">
+<img src="medved.png">
+</button>
+
+<button class="icon-btn" onclick="setIcon('hviezda.png', this)">
+<img src="hviezda.png">
+</button>
+
+<button class="icon-btn" onclick="setIcon('zajko.png', this)">
+<img src="zajko.png">
+</button>
+
+</div>
+
+</div>
+
+<!-- INFO -->
+
+<div class="info">
+
+Výšivka je automaticky prispôsobená do maximálnej veľkosti 11 × 11 cm.
+
+<br><br>
+
+Náhľad produktu je ilustračný. Každé tričko je vyrábané individuálne.
+
+<br><br>
+
+Výšivka je umiestnená na ľavej strane hrude.
+
+</div>
+
+<button class="order-btn">
+Pokračovať k objednávke
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* PREVIEW */
+
+function updatePreview(){
+
+const text =
+document.getElementById('previewText');
+
+const currentFont =
+text.style.fontFamily;
+
+let input =
+document.getElementById('textInput').value;
+
+if(!input.includes('\n')){
+
+if(input.length > 8){
+
+const first =
+input.substring(0,8);
+
+const second =
+input.substring(8);
+
+input =
+first + '\n' + second;
+
+}
+
+}
+
+text.innerText = input;
+
+const longestLine =
+Math.max(...input.split('\n').map(line => line.length));
+
+const lineCount =
+input.split('\n').length;
+
+const isHandwritten =
+currentFont === 'Caveat' ||
+currentFont === 'Indie Flower';
+
+if(lineCount >= 2){
+
+if(longestLine <= 5){
+
+text.style.fontSize =
+isHandwritten ? '20px' : '15px';
+
+}else if(longestLine <= 8){
+
+text.style.fontSize =
+isHandwritten ? '18px' : '13px';
+
+}else{
+
+text.style.fontSize =
+isHandwritten ? '14px' : '11px';
+
+}
+
+}else{
+
+if(longestLine <= 5){
+
+text.style.fontSize =
+isHandwritten ? '24px' : '17px';
+
+}else if(longestLine <= 8){
+
+text.style.fontSize =
+isHandwritten ? '20px' : '15px';
+
+}else{
+
+text.style.fontSize =
+isHandwritten ? '16px' : '12px';
+
+}
+
+}
+
+}
+
+/* FONT */
+
+function setFont(font, btn){
+
+document.querySelectorAll('.font-btn').forEach(b=>{
+b.classList.remove('active');
+});
+
+btn.classList.add('active');
+
+const text =
+document.getElementById('previewText');
+
+text.style.fontFamily = font;
+
+updatePreview();
+
+}
+
+/* THREAD */
+
+function setThreadColor(color, el){
+
+document.getElementById('previewText').style.color =
+color;
+
+document.querySelectorAll('.color').forEach(c=>{
+c.classList.remove('active-color');
+});
+
+el.classList.add('active-color');
+
+}
+
+/* ICON */
+
+function setIcon(icon, btn){
+
+document.querySelectorAll('.icon-btn').forEach(b=>{
+b.classList.remove('active');
+});
+
+btn.classList.add('active');
+
+const previewIcon =
+document.getElementById('previewIcon');
+
+previewIcon.src = icon;
+
+previewIcon.style.opacity = '1';
+
+}
+
+/* REMOVE ICON */
+
+function removeIcon(btn){
+
+document.querySelectorAll('.icon-btn').forEach(b=>{
+b.classList.remove('active');
+});
+
+btn.classList.add('active');
+
+const previewIcon =
+document.getElementById('previewIcon');
+
+previewIcon.style.opacity = '0';
+
+}
+
+/* SHIRT */
+
+function setShirt(color, btn){
+
+document.querySelectorAll('.shirt-btn').forEach(b=>{
+b.classList.remove('active');
+});
+
+btn.classList.add('active');
+
+const img =
+document.getElementById('shirtImage');
+
+const text =
+document.getElementById('previewText');
+
+if(color === 'white'){
+
+img.src = 'biele tricko.png';
+
+text.style.color = 'black';
+
+}else{
+
+img.src = 'cierne tricko.png';
+
+text.style.color = 'white';
+
+}
+
+}
+
+/* SIZE */
+
+document.querySelectorAll('.size-btn').forEach(btn=>{
+
+btn.addEventListener('click',()=>{
+
+document.querySelectorAll('.size-btn').forEach(b=>{
+b.classList.remove('active');
+});
+
+btn.classList.add('active');
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
