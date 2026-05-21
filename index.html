@@ -24,8 +24,11 @@ box-sizing:border-box;
 --pink:#ff7cc6;
 --blue:#7dafff;
 
---bg1:#fff7fb;
+--bg1:#fff8fc;
 --bg2:#eef5ff;
+
+--panel:
+rgba(255,255,255,0.62);
 
 }
 
@@ -56,9 +59,9 @@ position:fixed;
 
 border-radius:50%;
 
-filter:blur(140px);
+filter:blur(130px);
 
-opacity:0.22;
+opacity:0.2;
 
 z-index:-1;
 
@@ -72,7 +75,7 @@ height:500px;
 background:var(--pink);
 
 top:-220px;
-left:-160px;
+left:-180px;
 
 }
 
@@ -84,7 +87,7 @@ height:500px;
 background:var(--blue);
 
 bottom:-220px;
-right:-160px;
+right:-180px;
 
 }
 
@@ -112,7 +115,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 
-padding:40px;
+padding:36px;
 
 }
 
@@ -120,19 +123,19 @@ padding:40px;
 
 .preview-card{
 
-width:min(92vw,950px);
+width:min(92vw,980px);
 
 background:
-rgba(255,255,255,0.55);
+rgba(255,255,255,0.52);
 
-backdrop-filter:blur(20px);
+backdrop-filter:blur(18px);
 
 border:
 1px solid rgba(255,255,255,0.5);
 
 border-radius:42px;
 
-padding:30px;
+padding:28px;
 
 box-shadow:
 0 25px 60px rgba(0,0,0,0.08);
@@ -168,9 +171,9 @@ user-select:none;
 pointer-events:none;
 
 filter:
-drop-shadow(0 25px 40px rgba(0,0,0,0.10));
+drop-shadow(0 24px 40px rgba(0,0,0,0.1));
 
-opacity:0.97;
+opacity:0.98;
 
 }
 
@@ -180,15 +183,17 @@ opacity:0.97;
 
 position:absolute;
 
-top:34%;
+/* PRAVÉ PRSO Z POHĽADU UŽÍVATEĽA */
 
-left:38%;
+top:33%;
+
+left:61%;
 
 transform:translateX(-50%);
 
-width:22%;
+width:18%;
 
-max-width:180px;
+max-width:160px;
 
 display:flex;
 flex-direction:column;
@@ -197,14 +202,16 @@ justify-content:center;
 
 gap:6px;
 
+padding:8px;
+
 }
 
 /* ICON */
 
 .icon-img{
 
-width:34px;
-height:34px;
+width:32px;
+height:32px;
 
 object-fit:contain;
 
@@ -222,7 +229,7 @@ drop-shadow(0 2px 4px rgba(0,0,0,0.12));
 font-family:'Montserrat';
 
 font-size:
-clamp(14px,1.5vw,28px);
+clamp(14px,1.5vw,26px);
 
 font-weight:700;
 
@@ -232,31 +239,39 @@ text-align:center;
 
 white-space:pre-line;
 
-letter-spacing:0.5px;
+letter-spacing:0.4px;
 
-overflow-wrap:break-word;
+overflow-wrap:anywhere;
+
+word-break:break-word;
 
 max-width:100%;
 
 color:#ff7cc6;
 
 text-shadow:
-0 1px 1px rgba(255,255,255,0.4),
-0 2px 6px rgba(0,0,0,0.08);
+0 1px 1px rgba(255,255,255,0.5),
+0 2px 5px rgba(0,0,0,0.08);
 
 }
 
-/* ZONE BORDER */
+/* SAFE ZONE */
 
-.zone{
+.safe-zone{
 
 position:absolute;
 
-width:170px;
+top:33%;
+
+left:61%;
+
+transform:translateX(-50%);
+
+width:180px;
 height:130px;
 
 border:
-2px dashed rgba(255,124,198,0.4);
+2px dashed rgba(255,124,198,0.28);
 
 border-radius:18px;
 
@@ -264,81 +279,42 @@ pointer-events:none;
 
 }
 
-/* ZOOM */
-
-.zoom{
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-gap:18px;
-
-margin-top:20px;
-
-}
-
-.zoom-btn{
-
-width:46px;
-height:46px;
-
-border:none;
-
-border-radius:18px;
-
-background:white;
-
-font-size:24px;
-
-cursor:pointer;
-
-box-shadow:
-0 8px 20px rgba(0,0,0,0.08);
-
-}
-
-.zoom-percent{
-
-font-weight:600;
-
-font-size:18px;
-
-}
-
-/* DRAG */
-
-.drag-info{
-
-margin-top:16px;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-gap:8px;
-
-font-size:14px;
-
-color:#777;
-
-}
-
-/* RIGHT */
+/* RIGHT PANEL */
 
 .right{
 
 background:
-rgba(255,255,255,0.42);
+rgba(255,255,255,0.36);
 
 backdrop-filter:blur(18px);
 
 border-left:
-1px solid rgba(255,255,255,0.4);
+1px solid rgba(255,255,255,0.42);
 
 padding:30px;
 
 overflow-y:auto;
+
+}
+
+/* SCROLL */
+
+.right::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+.right::-webkit-scrollbar-thumb{
+
+background:
+linear-gradient(
+180deg,
+var(--pink),
+var(--blue)
+);
+
+border-radius:20px;
 
 }
 
@@ -350,7 +326,7 @@ font-size:38px;
 
 font-weight:700;
 
-line-height:1.05;
+line-height:1.04;
 
 margin-bottom:10px;
 
@@ -383,6 +359,7 @@ margin-bottom:28px;
 .section{
 
 margin-top:28px;
+
 }
 
 .section-title{
@@ -391,6 +368,7 @@ font-size:16px;
 font-weight:700;
 
 margin-bottom:14px;
+
 }
 
 /* TEXTAREA */
@@ -401,13 +379,13 @@ width:100%;
 
 min-height:120px;
 
+padding:18px;
+
 border:none;
 
 outline:none;
 
 resize:none;
-
-padding:18px;
 
 border-radius:24px;
 
@@ -418,7 +396,14 @@ font-family:Poppins,sans-serif;
 background:white;
 
 box-shadow:
-0 10px 24px rgba(0,0,0,0.05);
+0 10px 22px rgba(0,0,0,0.05);
+
+}
+
+textarea:focus{
+
+box-shadow:
+0 0 0 4px rgba(125,175,255,0.16);
 
 }
 
@@ -444,6 +429,7 @@ color:#777;
 display:flex;
 gap:12px;
 flex-wrap:wrap;
+
 }
 
 /* BUTTON */
@@ -498,6 +484,7 @@ color:white;
 display:flex;
 gap:14px;
 flex-wrap:wrap;
+
 }
 
 .color{
@@ -521,6 +508,7 @@ transition:0.15s;
 .color:hover{
 
 transform:scale(1.08);
+
 }
 
 .color.active{
@@ -529,7 +517,7 @@ outline:4px solid rgba(125,175,255,0.3);
 
 }
 
-/* ORDER BUTTON */
+/* ORDER */
 
 .order-btn{
 
@@ -558,7 +546,7 @@ var(--blue)
 );
 
 box-shadow:
-0 18px 34px rgba(122,168,255,0.28);
+0 18px 34px rgba(122,168,255,0.3);
 
 transition:0.15s;
 
@@ -690,11 +678,13 @@ padding:20px;
 
 .preview-card{
 
-padding:20px;
+padding:18px;
 
 }
 
 }
+
+/* MOBILE SMALL */
 
 @media(max-width:700px){
 
@@ -710,27 +700,49 @@ grid-template-columns:1fr;
 
 }
 
+.preview-card{
+
+border-radius:30px;
+
+}
+
+/* EMBROIDERY SAFE POSITION */
+
 .embroidery-zone{
 
 top:33%;
 
-left:37%;
+left:61%;
 
-width:24%;
+width:20%;
+
+max-width:120px;
 
 }
 
-.zone{
+.safe-zone{
 
-width:130px;
-height:100px;
+top:33%;
+
+left:61%;
+
+width:120px;
+height:95px;
 
 }
 
 .text{
 
 font-size:
-clamp(12px,3vw,22px);
+clamp(12px,3vw,20px);
+
+}
+
+.btn{
+
+padding:13px 15px;
+
+font-size:14px;
 
 }
 
@@ -777,28 +789,8 @@ TVODO
 
 </div>
 
-<div class="zone"></div>
+<div class="safe-zone"></div>
 
-</div>
-
-<div class="zoom">
-
-<button class="zoom-btn">
-−
-</button>
-
-<div class="zoom-percent">
-100%
-</div>
-
-<button class="zoom-btn">
-+
-</button>
-
-</div>
-
-<div class="drag-info">
-🖐️ Drag pre posun
 </div>
 
 </div>
@@ -880,7 +872,7 @@ Písaný
 
 </div>
 
-<!-- THREAD -->
+<!-- COLORS -->
 
 <div class="section">
 
@@ -923,12 +915,6 @@ data-color="#69c27d"
 style="background:#69c27d;"
 ></div>
 
-<div
-class="color"
-data-color="#d7b15a"
-style="background:#d7b15a;"
-></div>
-
 </div>
 
 </div>
@@ -952,9 +938,9 @@ data-icon=""
 
 <button
 class="btn icon-btn"
-data-icon="srdce.png"
+data-icon="hviezda.png"
 >
-❤️
+⭐
 </button>
 
 <button
@@ -966,9 +952,9 @@ data-icon="medved.png"
 
 <button
 class="btn icon-btn"
-data-icon="zajko.png"
+data-icon="srdce.png"
 >
-🐰
+❤️
 </button>
 
 </div>
@@ -1000,7 +986,7 @@ Kvalitná výšivka
 </h3>
 
 <p>
-Prémiová niť, ktorá vydrží.
+Prémiová niť, ktorá vydrží roky.
 </p>
 
 </div>
@@ -1020,7 +1006,7 @@ Rýchle dodanie
 </h3>
 
 <p>
-Expresné spracovanie objednávky.
+Expresné spracovanie objednávok.
 </p>
 
 </div>
@@ -1040,7 +1026,7 @@ Jedinečný dizajn
 </h3>
 
 <p>
-Každý kus vyrábame individuálne.
+Každé tričko vyrábame individuálne.
 </p>
 
 </div>
@@ -1060,7 +1046,7 @@ Bezpečná platba
 </h3>
 
 <p>
-100% zabezpečené objednávky.
+100% zabezpečená objednávka.
 </p>
 
 </div>
@@ -1104,14 +1090,16 @@ value || "TVODO";
 counter.innerText =
 value.length + " / 40";
 
+/* SAFE FONT SIZE */
+
 const length =
 value.replace(/\n/g,'').length;
 
-let size = 28;
+let size = 26;
 
-if(length > 8) size = 24;
-if(length > 14) size = 20;
-if(length > 22) size = 17;
+if(length > 8) size = 22;
+if(length > 14) size = 18;
+if(length > 22) size = 15;
 
 textLayer.style.fontSize =
 size + "px";
