@@ -27,9 +27,6 @@ box-sizing:border-box;
 --bg1:#fff8fc;
 --bg2:#eef5ff;
 
---panel:
-rgba(255,255,255,0.64);
-
 }
 
 body{
@@ -190,8 +187,6 @@ transition:0.3s;
 
 }
 
-/* BLACK SHIRT */
-
 .black-shirt{
 
 filter:
@@ -212,14 +207,14 @@ left:54%;
 
 transform:translateX(-50%);
 
-width:180px;
+width:170px;
 
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 
-gap:8px;
+gap:2px;
 
 }
 
@@ -249,13 +244,13 @@ font-size:24px;
 
 font-weight:700;
 
-line-height:1.08;
+line-height:1.05;
 
 text-align:center;
 
 white-space:pre-line;
 
-letter-spacing:0.4px;
+letter-spacing:0.2px;
 
 overflow-wrap:anywhere;
 
@@ -342,12 +337,98 @@ margin-top:22px;
 
 }
 
+.section-head{
+
+display:flex;
+align-items:center;
+gap:8px;
+
+margin-bottom:12px;
+
+}
+
 .section-title{
 
 font-size:15px;
 font-weight:700;
 
-margin-bottom:12px;
+}
+
+/* INFO TOOLTIP */
+
+.info{
+
+width:18px;
+height:18px;
+
+border-radius:50%;
+
+background:
+linear-gradient(
+135deg,
+var(--pink),
+var(--blue)
+);
+
+color:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:11px;
+font-weight:700;
+
+cursor:pointer;
+
+position:relative;
+
+flex-shrink:0;
+
+}
+
+.info:hover .tooltip{
+
+opacity:1;
+transform:translateY(0);
+
+pointer-events:auto;
+
+}
+
+.tooltip{
+
+position:absolute;
+
+left:26px;
+top:-8px;
+
+width:220px;
+
+background:white;
+
+padding:12px;
+
+border-radius:14px;
+
+font-size:12px;
+
+line-height:1.5;
+
+color:#555;
+
+box-shadow:
+0 12px 30px rgba(0,0,0,0.12);
+
+opacity:0;
+
+transform:translateY(4px);
+
+transition:0.15s;
+
+pointer-events:none;
+
+z-index:10;
 
 }
 
@@ -806,8 +887,22 @@ Prémiová výšivka podľa tvojich predstáv.
 
 <div class="section">
 
+<div class="section-head">
+
 <div class="section-title">
 Farba trička
+</div>
+
+<div class="info">
+
+i
+
+<div class="tooltip">
+Vyberte farbu trička pre náhľad výšivky.
+</div>
+
+</div>
+
 </div>
 
 <div class="row">
@@ -834,8 +929,22 @@ data-shirt="black"
 
 <div class="section">
 
+<div class="section-head">
+
 <div class="section-title">
 Text výšivky
+</div>
+
+<div class="info">
+
+i
+
+<div class="tooltip">
+Maximálne 10 znakov na riadok. Text sa automaticky zalomí.
+</div>
+
+</div>
+
 </div>
 
 <textarea
@@ -851,7 +960,7 @@ placeholder="Napíšte meno alebo text..."
 </div>
 
 <div>
-Max. 3 riadky
+Max. 4 riadky
 </div>
 
 </div>
@@ -862,8 +971,22 @@ Max. 3 riadky
 
 <div class="section">
 
+<div class="section-head">
+
 <div class="section-title">
 Štýl textu
+</div>
+
+<div class="info">
+
+i
+
+<div class="tooltip">
+Každý font vytvorí trochu iný štýl výšivky.
+</div>
+
+</div>
+
 </div>
 
 <div class="row">
@@ -897,8 +1020,22 @@ Písaný
 
 <div class="section">
 
+<div class="section-head">
+
 <div class="section-title">
 Farba nite
+</div>
+
+<div class="info">
+
+i
+
+<div class="tooltip">
+Farba výšivky sa zobrazí priamo na tričku.
+</div>
+
+</div>
+
 </div>
 
 <div class="colors">
@@ -936,6 +1073,12 @@ data-color="#69c27d"
 style="background:#69c27d;"
 ></div>
 
+<div
+class="color"
+data-color="#f4c542"
+style="background:#f4c542;"
+></div>
+
 </div>
 
 </div>
@@ -944,8 +1087,22 @@ style="background:#69c27d;"
 
 <div class="section">
 
+<div class="section-head">
+
 <div class="section-title">
 Ikonka
+</div>
+
+<div class="info">
+
+i
+
+<div class="tooltip">
+Vyberte si ikonku k výšivke alebo nechajte bez ikonky.
+</div>
+
+</div>
+
 </div>
 
 <div class="row">
@@ -1102,6 +1259,31 @@ document.getElementById("iconLayer");
 const shirt =
 document.getElementById("shirt");
 
+/* FORMAT TEXT */
+
+function formatText(value){
+
+const clean =
+value.replace(/\n/g,' ');
+
+let result = '';
+
+for(let i=0;i<clean.length;i++){
+
+result += clean[i];
+
+if((i+1)%10===0){
+
+result += '\n';
+
+}
+
+}
+
+return result.trim();
+
+}
+
 /* TEXT */
 
 textInput.addEventListener(
@@ -1111,8 +1293,11 @@ textInput.addEventListener(
 const value =
 textInput.value;
 
+const formatted =
+formatText(value);
+
 textLayer.innerText =
-value || "TVODO";
+formatted || "TVODO";
 
 counter.innerText =
 value.length + " / 40";
