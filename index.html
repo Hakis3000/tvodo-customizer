@@ -37,7 +37,7 @@ linear-gradient(
 
 min-height:100vh;
 
-padding:22px;
+padding:20px;
 
 display:flex;
 justify-content:center;
@@ -47,7 +47,7 @@ overflow-x:hidden;
 color:#222;
 }
 
-/* GLOW BACKGROUND */
+/* BACKGROUND GLOW */
 
 body::before{
 
@@ -55,17 +55,17 @@ content:"";
 
 position:fixed;
 
-width:550px;
-height:550px;
+width:600px;
+height:600px;
 
-background:#ff69ba;
+background:#ff69b4;
 
-top:-200px;
-left:-200px;
+top:-250px;
+left:-250px;
 
-filter:blur(160px);
+filter:blur(180px);
 
-opacity:0.23;
+opacity:0.24;
 
 z-index:-1;
 }
@@ -76,22 +76,22 @@ content:"";
 
 position:fixed;
 
-width:550px;
-height:550px;
+width:600px;
+height:600px;
 
-background:#6ea8ff;
+background:#6ba7ff;
 
-bottom:-200px;
-right:-200px;
+bottom:-250px;
+right:-250px;
 
-filter:blur(160px);
+filter:blur(180px);
 
-opacity:0.23;
+opacity:0.24;
 
 z-index:-1;
 }
 
-/* MAIN CARD */
+/* APP */
 
 .app{
 
@@ -99,14 +99,14 @@ width:100%;
 max-width:620px;
 
 background:
-rgba(255,255,255,0.66);
+rgba(255,255,255,0.68);
 
 backdrop-filter:blur(18px);
 
 border:
-1px solid rgba(255,255,255,0.45);
+1px solid rgba(255,255,255,0.42);
 
-border-radius:38px;
+border-radius:40px;
 
 padding:24px;
 
@@ -114,18 +114,49 @@ box-shadow:
 0 20px 60px rgba(0,0,0,0.12);
 
 animation:fadeIn 0.7s ease;
+
+position:relative;
+
+overflow:hidden;
 }
 
 @keyframes fadeIn{
 
 from{
 opacity:0;
-transform:translateY(24px);
+transform:translateY(25px);
 }
 
 to{
 opacity:1;
 transform:translateY(0px);
+}
+
+}
+
+/* RIPPLE EFFECT */
+
+.ripple{
+
+position:absolute;
+
+border-radius:50%;
+
+transform:scale(0);
+
+animation:rippleAnim 0.7s linear;
+
+background:
+rgba(255,255,255,0.55);
+
+pointer-events:none;
+}
+
+@keyframes rippleAnim{
+
+to{
+transform:scale(8);
+opacity:0;
 }
 
 }
@@ -156,11 +187,12 @@ linear-gradient(
 .subtitle{
 
 font-size:15px;
-color:#5f5f5f;
 
 line-height:1.6;
 
-margin-bottom:22px;
+color:#5e5e5e;
+
+margin-bottom:24px;
 }
 
 /* PREVIEW */
@@ -184,6 +216,13 @@ box-shadow:
 0 18px 50px rgba(0,0,0,0.08);
 
 animation:floating 5s ease-in-out infinite;
+
+transition:0.35s;
+}
+
+.preview:hover{
+
+transform:scale(1.01);
 }
 
 @keyframes floating{
@@ -193,7 +232,7 @@ transform:translateY(0px);
 }
 
 50%{
-transform:translateY(-7px);
+transform:translateY(-6px);
 }
 
 100%{
@@ -281,7 +320,7 @@ text-shadow:
 
 .section{
 
-margin-top:28px;
+margin-top:30px;
 }
 
 .section-title{
@@ -316,14 +355,18 @@ font-weight:600;
 font-size:14px;
 
 background:
-rgba(255,255,255,0.7);
+rgba(255,255,255,0.72);
 
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
 
 box-shadow:
 0 8px 18px rgba(0,0,0,0.08);
 
 transition:0.25s;
+
+position:relative;
+
+overflow:hidden;
 }
 
 .btn:hover{
@@ -612,14 +655,14 @@ height:58px;
 
 <body>
 
-<div class="app">
+<div class="app" id="app">
 
 <div class="title">
-Navrhni si vlastné tričko
+Navrhnite si vlastné tričko
 </div>
 
 <div class="subtitle">
-Vyber si farbu trička, ikonku a vytvor si vlastnú výšivku presne podľa seba.
+Vyberte si farbu trička, ikonku a vytvorte si vlastnú výšivku presne podľa seba.
 </div>
 
 <!-- PREVIEW -->
@@ -664,7 +707,7 @@ Farba trička
 <div class="row">
 
 <button
-class="btn active shirt-btn"
+class="btn shirt-btn active"
 onclick="setShirt('white', this)"
 >
 Biele
@@ -691,8 +734,8 @@ Veľkosť trička
 
 <div class="row">
 
-<button class="btn size-btn active">M</button>
 <button class="btn size-btn">S</button>
+<button class="btn size-btn active">M</button>
 <button class="btn size-btn">L</button>
 <button class="btn size-btn">XL</button>
 <button class="btn size-btn">2XL</button>
@@ -712,27 +755,27 @@ Text výšivky
 <textarea
 id="textInput"
 maxlength="18"
-placeholder="Napíš meno alebo text"
+placeholder="Napíšte meno alebo text"
 oninput="updatePreview()"
 ></textarea>
 
 <div class="help">
 
-✨ Po 8 znakoch sa text automaticky presunie na druhý riadok.
+Po 8 znakoch sa text automaticky presunie na druhý riadok.
 
 <br>
 
-✨ Môžeš použiť aj ENTER pre vlastné rozloženie textu.
+Je možné použiť aj ENTER pre vlastné rozloženie textu.
 
 <br>
 
-✨ Kratšie mená budú väčšie a výraznejšie.
+Kratšie mená budú väčšie a výraznejšie.
 
 </div>
 
 </div>
 
-<!-- FONTS -->
+<!-- FONT -->
 
 <div class="section">
 
@@ -743,22 +786,22 @@ oninput="updatePreview()"
 <div class="row">
 
 <button
-class="btn"
-onclick="setFont('Bitter')"
+class="btn font-btn active"
+onclick="setFont('Bitter', this)"
 >
 Klasický
 </button>
 
 <button
-class="btn"
-onclick="setFont('Indie Flower')"
+class="btn font-btn"
+onclick="setFont('Indie Flower', this)"
 >
 Hravý
 </button>
 
 <button
-class="btn"
-onclick="setFont('Caveat')"
+class="btn font-btn"
+onclick="setFont('Caveat', this)"
 >
 Písaný
 </button>
@@ -831,19 +874,19 @@ Ikonka výšivky
 
 <div class="info-box">
 
-✨ Výšivka je automaticky prispôsobená do maximálnej veľkosti 11×11 cm.
+Výšivka je automaticky prispôsobená do maximálnej veľkosti 11 × 11 cm.
 
 <br><br>
 
-✨ Náhľad je ilustračný — každé tričko vyrábame ručne.
+Náhľad produktu je ilustračný. Každé tričko je vyrábané individuálne.
 
 <br><br>
 
-✨ Výšivka je umiestnená na ľavej strane hrude.
+Výšivka je umiestnená na ľavej strane hrude.
 
 <br><br>
 
-✨ Každý kus vyrábame individuálne s dôrazom na detail.
+Dlhšie texty môžu byť automaticky rozdelené na viac riadkov pre zachovanie správneho vzhľadu výšivky.
 
 </div>
 
@@ -855,12 +898,45 @@ Pokračovať k objednávke
 
 <script>
 
-/* PREVIEW TEXT */
+/* RIPPLE EFFECT */
+
+document.querySelectorAll('button,.color').forEach(el=>{
+
+el.addEventListener('click',function(e){
+
+const ripple =
+document.createElement('span');
+
+ripple.classList.add('ripple');
+
+const rect =
+this.getBoundingClientRect();
+
+ripple.style.left =
+(e.clientX - rect.left) + 'px';
+
+ripple.style.top =
+(e.clientY - rect.top) + 'px';
+
+this.appendChild(ripple);
+
+setTimeout(()=>{
+ripple.remove();
+},700);
+
+});
+
+});
+
+/* PREVIEW */
 
 function updatePreview(){
 
 const text =
 document.getElementById('previewText');
+
+const currentFont =
+text.style.fontFamily;
 
 let input =
 document.getElementById('textInput').value;
@@ -890,19 +966,26 @@ Math.max(...input.split('\n').map(line => line.length));
 const lineCount =
 input.split('\n').length;
 
+const isHandwritten =
+currentFont === 'Caveat' ||
+currentFont === 'Indie Flower';
+
 if(lineCount >= 2){
 
 if(longestLine <= 5){
 
-text.style.fontSize = '15px';
+text.style.fontSize =
+isHandwritten ? '20px' : '15px';
 
 }else if(longestLine <= 8){
 
-text.style.fontSize = '13px';
+text.style.fontSize =
+isHandwritten ? '18px' : '13px';
 
 }else{
 
-text.style.fontSize = '11px';
+text.style.fontSize =
+isHandwritten ? '14px' : '11px';
 
 }
 
@@ -910,15 +993,18 @@ text.style.fontSize = '11px';
 
 if(longestLine <= 5){
 
-text.style.fontSize = '17px';
+text.style.fontSize =
+isHandwritten ? '24px' : '17px';
 
 }else if(longestLine <= 8){
 
-text.style.fontSize = '15px';
+text.style.fontSize =
+isHandwritten ? '20px' : '15px';
 
 }else{
 
-text.style.fontSize = '12px';
+text.style.fontSize =
+isHandwritten ? '16px' : '12px';
 
 }
 
@@ -928,14 +1014,24 @@ text.style.fontSize = '12px';
 
 /* FONT */
 
-function setFont(font){
+function setFont(font, btn){
 
-document.getElementById('previewText').style.fontFamily =
-font;
+document.querySelectorAll('.font-btn').forEach(b=>{
+b.classList.remove('active');
+});
+
+btn.classList.add('active');
+
+const text =
+document.getElementById('previewText');
+
+text.style.fontFamily = font;
+
+updatePreview();
 
 }
 
-/* THREAD COLOR */
+/* THREAD */
 
 function setThreadColor(color){
 
@@ -1000,7 +1096,7 @@ text.style.color = 'white';
 
 }
 
-/* SIZE BUTTONS */
+/* SIZE */
 
 document.querySelectorAll('.size-btn').forEach(btn=>{
 
