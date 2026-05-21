@@ -2,16 +2,14 @@
 <html lang="sk">
 <head>
 
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>TVODO Customizer PRO</title>
+<title>TVODO Customizer</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Fredoka:wght@500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 
 <style>
 
@@ -29,6 +27,9 @@ box-sizing:border-box;
 --bg1:#fff7fb;
 --bg2:#eef5ff;
 
+--panel:
+rgba(255,255,255,0.72);
+
 }
 
 body{
@@ -44,71 +45,45 @@ var(--bg1),
 var(--bg2)
 );
 
-display:flex;
-justify-content:center;
-align-items:center;
+overflow-x:hidden;
 
-padding:12px;
-
-overflow:hidden;
-
-position:relative;
 }
 
-/* BLOBS */
+/* BACKGROUND BLOBS */
 
-.bg1,
-.bg2{
+.bg{
 
-position:absolute;
+position:fixed;
 
 border-radius:50%;
 
-filter:blur(140px);
+filter:blur(120px);
 
-opacity:0.2;
+opacity:0.22;
 
-animation:blobMove 16s ease-in-out infinite;
+z-index:-1;
 }
 
 .bg1{
 
-width:520px;
-height:520px;
+width:500px;
+height:500px;
 
 background:var(--pink);
 
-top:-220px;
-left:-140px;
+top:-180px;
+left:-120px;
 }
 
 .bg2{
 
-width:520px;
-height:520px;
+width:500px;
+height:500px;
 
 background:var(--blue);
 
-bottom:-220px;
-right:-140px;
-
-animation-delay:4s;
-}
-
-@keyframes blobMove{
-
-0%{
-transform:translate(0px,0px);
-}
-
-50%{
-transform:translate(35px,-20px);
-}
-
-100%{
-transform:translate(0px,0px);
-}
-
+bottom:-180px;
+right:-120px;
 }
 
 /* APP */
@@ -116,83 +91,28 @@ transform:translate(0px,0px);
 .app{
 
 width:100%;
-max-width:1850px;
 
-height:96vh;
+min-height:100vh;
 
-display:flex;
+display:grid;
 
-overflow:hidden;
+grid-template-columns:
+minmax(0,1fr)
+420px;
 
-border-radius:42px;
-
-background:
-rgba(255,255,255,0.56);
-
-backdrop-filter:blur(18px);
-
-border:
-1px solid rgba(255,255,255,0.45);
-
-box-shadow:
-0 25px 70px rgba(0,0,0,0.1);
-
-position:relative;
-
-z-index:5;
 }
 
 /* LEFT */
 
 .left{
 
-flex:1.6;
-
 display:flex;
 justify-content:center;
 align-items:center;
 
-padding:12px;
+padding:40px;
 
-position:relative;
-overflow:hidden;
-}
-
-/* SHIMMER */
-
-.shimmer{
-
-position:absolute;
-
-width:260px;
-height:260px;
-
-background:
-linear-gradient(
-120deg,
-transparent,
-rgba(255,255,255,0.28),
-transparent
-);
-
-transform:rotate(25deg);
-
-animation:shimmer 5s linear infinite;
-
-pointer-events:none;
-}
-
-@keyframes shimmer{
-
-0%{
-left:-250px;
-top:-120px;
-}
-
-100%{
-left:1600px;
-top:900px;
-}
+min-height:100vh;
 
 }
 
@@ -200,65 +120,112 @@ top:900px;
 
 .preview{
 
-width:min(100vw,1450px);
+position:relative;
 
-aspect-ratio:1/1;
+width:min(90vw,850px);
+
+aspect-ratio:4/5;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-position:relative;
-
-animation:floating 6s ease-in-out infinite;
 }
 
-@keyframes floating{
+/* SHIRT */
 
-0%{
-transform:translateY(0px);
-}
+.shirt{
 
-50%{
-transform:translateY(-8px);
-}
+width:100%;
+height:100%;
 
-100%{
-transform:translateY(0px);
-}
+object-fit:contain;
 
-}
-
-/* CANVAS */
-
-#shirtCanvas{
-
-width:100% !important;
-height:auto !important;
-
-max-width:1450px;
+user-select:none;
+pointer-events:none;
 
 filter:
-drop-shadow(0 25px 50px rgba(0,0,0,0.18));
+drop-shadow(0 30px 60px rgba(0,0,0,0.16));
 
-border-radius:20px;
 }
 
-/* RIGHT */
+/* EMBROIDERY */
+
+.embroidery-zone{
+
+position:absolute;
+
+top:31%;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:34%;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+gap:10px;
+
+}
+
+/* ICON */
+
+.icon{
+
+font-size:34px;
+
+line-height:1;
+
+}
+
+/* TEXT */
+
+.text{
+
+font-family:'Montserrat';
+
+font-size:clamp(18px,2.2vw,42px);
+
+font-weight:700;
+
+line-height:1.1;
+
+text-align:center;
+
+white-space:pre-line;
+
+color:black;
+
+text-shadow:
+0 1px 1px rgba(255,255,255,0.5),
+0 2px 6px rgba(0,0,0,0.14);
+
+max-width:100%;
+
+word-break:break-word;
+
+}
+
+/* RIGHT PANEL */
 
 .right{
 
-width:440px;
+background:
+rgba(255,255,255,0.3);
+
+backdrop-filter:blur(18px);
+
+border-left:
+1px solid rgba(255,255,255,0.35);
+
+padding:28px;
 
 overflow-y:auto;
 
-padding:26px;
-
-background:
-rgba(255,255,255,0.12);
-
-border-left:
-1px solid rgba(255,255,255,0.22);
 }
 
 /* SCROLL */
@@ -284,10 +251,11 @@ border-radius:20px;
 
 .title{
 
-font-size:36px;
+font-size:34px;
+
 font-weight:700;
 
-line-height:1.02;
+line-height:1.05;
 
 margin-bottom:10px;
 
@@ -300,17 +268,19 @@ var(--blue)
 
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
+
 }
 
 .subtitle{
 
 font-size:14px;
 
-line-height:1.6;
+line-height:1.7;
 
-color:#5f5f5f;
+color:#666;
 
-margin-bottom:26px;
+margin-bottom:28px;
+
 }
 
 /* SECTION */
@@ -349,17 +319,17 @@ border-radius:18px;
 
 cursor:pointer;
 
+font-size:15px;
 font-weight:600;
 
-font-size:15px;
-
 background:
-rgba(255,255,255,0.84);
+rgba(255,255,255,0.88);
+
+transition:0.15s;
 
 box-shadow:
-0 8px 18px rgba(0,0,0,0.07);
+0 10px 20px rgba(0,0,0,0.06);
 
-transition:0.12s;
 }
 
 .btn:hover{
@@ -367,14 +337,10 @@ transition:0.12s;
 transform:
 translateY(-3px)
 scale(1.03);
+
 }
 
-.btn:active{
-
-transform:scale(0.84);
-}
-
-.active{
+.btn.active{
 
 background:
 linear-gradient(
@@ -385,26 +351,6 @@ var(--blue)
 
 color:white;
 
-box-shadow:
-0 12px 24px rgba(122,168,255,0.28);
-
-animation:buttonPulse 0.22s ease;
-}
-
-@keyframes buttonPulse{
-
-0%{
-transform:scale(0.88);
-}
-
-60%{
-transform:scale(1.05);
-}
-
-100%{
-transform:scale(1);
-}
-
 }
 
 /* TEXTAREA */
@@ -413,46 +359,35 @@ textarea{
 
 width:100%;
 
-padding:18px;
-
 border:none;
-
-border-radius:24px;
-
-background:
-rgba(255,255,255,0.84);
-
-font-size:16px;
 
 outline:none;
 
 resize:none;
 
-min-height:90px;
+min-height:110px;
+
+padding:18px;
+
+border-radius:24px;
+
+font-size:16px;
 
 font-family:Poppins,sans-serif;
 
+background:
+rgba(255,255,255,0.88);
+
 box-shadow:
-0 8px 18px rgba(0,0,0,0.05);
+0 10px 20px rgba(0,0,0,0.05);
+
 }
 
 textarea:focus{
 
 box-shadow:
-0 0 0 4px rgba(122,168,255,0.18);
-}
+0 0 0 4px rgba(125,175,255,0.18);
 
-/* HELP */
-
-.help{
-
-margin-top:10px;
-
-font-size:13px;
-
-line-height:1.6;
-
-color:#666;
 }
 
 /* COLORS */
@@ -466,8 +401,8 @@ flex-wrap:wrap;
 
 .color{
 
-width:46px;
-height:46px;
+width:48px;
+height:48px;
 
 border-radius:50%;
 
@@ -475,140 +410,42 @@ cursor:pointer;
 
 border:3px solid white;
 
-transition:0.12s;
+transition:0.15s;
 
 box-shadow:
-0 8px 16px rgba(0,0,0,0.1);
+0 8px 18px rgba(0,0,0,0.1);
+
 }
 
 .color:hover{
 
-transform:scale(1.12);
+transform:scale(1.08);
 }
 
-.color:active{
+.color.active{
 
-transform:scale(0.84);
+outline:4px solid rgba(125,175,255,0.28);
+
 }
 
-.active-color{
-
-outline:4px solid rgba(122,168,255,0.28);
-
-transform:scale(1.12);
-}
-
-/* ICONS */
-
-.icons{
-
-display:flex;
-gap:14px;
-flex-wrap:wrap;
-}
-
-.icon-btn{
-
-width:70px;
-height:70px;
-
-border:none;
-
-border-radius:22px;
-
-cursor:pointer;
-
-background:
-rgba(255,255,255,0.84);
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-box-shadow:
-0 8px 18px rgba(0,0,0,0.07);
-
-transition:0.12s;
-}
-
-.icon-btn:hover{
-
-transform:
-translateY(-4px)
-scale(1.04);
-}
-
-.icon-btn:active{
-
-transform:scale(0.84);
-}
-
-.icon-btn.active{
-
-background:
-linear-gradient(
-135deg,
-var(--pink),
-var(--blue)
-);
-
-box-shadow:
-0 12px 24px rgba(122,168,255,0.28);
-}
-
-.icon-btn img{
-
-width:38px;
-height:38px;
-
-object-fit:contain;
-}
-
-.remove-icon{
-
-font-size:30px;
-font-weight:700;
-color:#666;
-}
-
-/* INFO */
-
-.info{
-
-margin-top:24px;
-
-padding:18px;
-
-border-radius:24px;
-
-background:
-rgba(255,255,255,0.5);
-
-font-size:14px;
-
-line-height:1.7;
-
-color:#5e5e5e;
-}
-
-/* ORDER */
+/* ORDER BUTTON */
 
 .order-btn{
 
 width:100%;
 
-padding:20px;
+margin-top:34px;
 
 border:none;
 
-border-radius:26px;
+padding:20px;
+
+border-radius:24px;
 
 cursor:pointer;
 
 font-size:18px;
 font-weight:700;
-
-margin-top:28px;
 
 color:white;
 
@@ -620,38 +457,10 @@ var(--blue)
 );
 
 box-shadow:
-0 14px 30px rgba(122,168,255,0.28);
+0 16px 34px rgba(122,168,255,0.3);
 
-transition:0.12s;
+transition:0.15s;
 
-position:relative;
-
-overflow:hidden;
-}
-
-.order-btn::before{
-
-content:"";
-
-position:absolute;
-
-top:0;
-left:-120px;
-
-width:90px;
-height:100%;
-
-background:
-rgba(255,255,255,0.22);
-
-transform:skewX(-25deg);
-
-transition:0.45s;
-}
-
-.order-btn:hover::before{
-
-left:120%;
 }
 
 .order-btn:hover{
@@ -659,82 +468,108 @@ left:120%;
 transform:
 translateY(-4px)
 scale(1.01);
-}
 
-.order-btn:active{
-
-transform:scale(0.9);
 }
 
 /* MOBILE */
 
 @media(max-width:1100px){
 
-body{
-
-overflow:auto;
-
-padding:0;
-}
-
 .app{
 
-flex-direction:column;
+grid-template-columns:1fr;
 
-height:auto;
-
-border-radius:0;
 }
 
 .left{
 
-position:sticky;
+min-height:auto;
 
-top:0;
+padding:
+24px
+18px
+10px;
 
-z-index:20;
-
-background:
-linear-gradient(
-to bottom,
-rgba(255,255,255,0.96),
-rgba(255,255,255,0.84)
-);
-
-backdrop-filter:blur(14px);
-
-padding:10px;
-
-border-bottom:
-1px solid rgba(255,255,255,0.45);
 }
 
 .preview{
 
-width:min(100vw,760px);
+width:min(100%,620px);
+
 }
 
 .right{
 
-width:100%;
+border-left:none;
 
-padding:18px;
+border-top:
+1px solid rgba(255,255,255,0.4);
+
+padding:22px;
+
+background:
+rgba(255,255,255,0.5);
+
 }
 
 .title{
 
 font-size:28px;
+
+}
+
+.embroidery-zone{
+
+top:30%;
+
+width:38%;
+
+}
+
+}
+
+/* SMALL MOBILE */
+
+@media(max-width:600px){
+
+.preview{
+
+width:100%;
+
+}
+
+.embroidery-zone{
+
+width:44%;
+
+top:29%;
+
+}
+
+.text{
+
+font-size:clamp(16px,5vw,28px);
+
+}
+
+.btn{
+
+padding:13px 16px;
+
+font-size:14px;
+
 }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="bg1"></div>
-<div class="bg2"></div>
+<div class="bg bg1"></div>
+<div class="bg bg2"></div>
 
 <div class="app">
 
@@ -742,11 +577,31 @@ font-size:28px;
 
 <div class="left">
 
-<div class="shimmer"></div>
-
 <div class="preview">
 
-<canvas id="shirtCanvas"></canvas>
+<img
+src="tricko.svg"
+class="shirt"
+id="shirt"
+/>
+
+<div class="embroidery-zone">
+
+<div
+class="icon"
+id="iconLayer"
+>
+✨
+</div>
+
+<div
+class="text"
+id="textLayer"
+>
+TVODO
+</div>
+
+</div>
 
 </div>
 
@@ -761,55 +616,7 @@ Navrhnite si vlastné tričko
 </div>
 
 <div class="subtitle">
-Vytvorte si vlastnú výšivku jednoducho podľa seba.
-</div>
-
-<!-- SHIRT -->
-
-<div class="section">
-
-<div class="section-title">
-Farba trička
-</div>
-
-<div class="row">
-
-<button
-class="btn shirt-btn active"
-onclick="setShirt('white', this)"
->
-Biele
-</button>
-
-<button
-class="btn shirt-btn"
-onclick="setShirt('black', this)"
->
-Čierne
-</button>
-
-</div>
-
-</div>
-
-<!-- SIZE -->
-
-<div class="section">
-
-<div class="section-title">
-Veľkosť
-</div>
-
-<div class="row">
-
-<button class="btn size-btn">S</button>
-<button class="btn size-btn active">M</button>
-<button class="btn size-btn">L</button>
-<button class="btn size-btn">XL</button>
-<button class="btn size-btn">2XL</button>
-
-</div>
-
+Prémiová personalizovaná výšivka podľa vašich predstáv.
 </div>
 
 <!-- TEXT -->
@@ -822,14 +629,9 @@ Text výšivky
 
 <textarea
 id="textInput"
-maxlength="30"
-placeholder="Napíšte meno alebo text"
-oninput="updateText()"
+placeholder="Napíšte meno alebo text..."
+maxlength="40"
 ></textarea>
-
-<div class="help">
-Pre nový riadok použite ENTER.
-</div>
 
 </div>
 
@@ -844,22 +646,22 @@ Pre nový riadok použite ENTER.
 <div class="row">
 
 <button
-class="btn font-btn active"
-onclick="setFont('Montserrat', this)"
+class="btn active font-btn"
+data-font="Montserrat"
 >
 Moderný
 </button>
 
 <button
 class="btn font-btn"
-onclick="setFont('Fredoka', this)"
+data-font="Fredoka"
 >
 Hravý
 </button>
 
 <button
 class="btn font-btn"
-onclick="setFont('Dancing Script', this)"
+data-font="Dancing Script"
 >
 Písaný
 </button>
@@ -868,7 +670,7 @@ Písaný
 
 </div>
 
-<!-- THREAD -->
+<!-- COLOR -->
 
 <div class="section">
 
@@ -878,31 +680,38 @@ Farba nite
 
 <div class="colors">
 
-<div class="color active-color"
+<div
+class="color active"
+data-color="black"
 style="background:black;"
-onclick="setThreadColor('black', this)">
+></div>
+
+<div
+class="color"
+data-color="white"
+style="
+background:white;
+border:1px solid #ccc;
+"
+></div>
+
+<div
+class="color"
+data-color="#ff7cc6"
+style="background:#ff7cc6;"
+></div>
+
+<div
+class="color"
+data-color="#7dafff"
+style="background:#7dafff;"
+></div>
+
 </div>
 
-<div class="color"
-style="background:white;border:1px solid #ccc;"
-onclick="setThreadColor('white', this)">
 </div>
 
-<div class="color"
-style="background:#ff78b8;"
-onclick="setThreadColor('#ff78b8', this)">
-</div>
-
-<div class="color"
-style="background:#7aa8ff;"
-onclick="setThreadColor('#7aa8ff', this)">
-</div>
-
-</div>
-
-</div>
-
-<!-- ICONS -->
+<!-- ICON -->
 
 <div class="section">
 
@@ -910,34 +719,30 @@ onclick="setThreadColor('#7aa8ff', this)">
 Ikonka
 </div>
 
-<div class="icons">
+<div class="row">
 
-<button class="icon-btn active" onclick="removeIcon(this)">
-<div class="remove-icon">✕</div>
+<button class="btn icon-btn" data-icon="✨">
+✨
 </button>
 
-<button class="icon-btn" onclick="setIcon('srdce.png', this)">
-<img src="srdce.png">
+<button class="btn icon-btn" data-icon="❤️">
+❤️
 </button>
 
-<button class="icon-btn" onclick="setIcon('medved.png', this)">
-<img src="medved.png">
+<button class="btn icon-btn" data-icon="⭐">
+⭐
 </button>
 
-<button class="icon-btn" onclick="setIcon('hviezda.png', this)">
-<img src="hviezda.png">
+<button class="btn icon-btn" data-icon="🧸">
+🧸
 </button>
 
-<button class="icon-btn" onclick="setIcon('zajko.png', this)">
-<img src="zajko.png">
+<button class="btn icon-btn" data-icon="">
+Bez
 </button>
 
 </div>
 
-</div>
-
-<div class="info">
-Každé tričko vyrábame individuálne podľa zvoleného návrhu.
 </div>
 
 <button class="order-btn">
@@ -950,297 +755,104 @@ Pokračovať k objednávke
 
 <script>
 
-const canvas = new fabric.Canvas('shirtCanvas',{
+/* ELEMENTS */
 
-selection:false
+const textInput =
+document.getElementById("textInput");
 
-});
+const textLayer =
+document.getElementById("textLayer");
 
-canvas.setWidth(1000);
-canvas.setHeight(1000);
-
-let shirtImage;
-let currentIcon = null;
+const iconLayer =
+document.getElementById("iconLayer");
 
 /* TEXT */
 
-const embroideryText = new fabric.Textbox('',{
+textInput.addEventListener(
+"input",
+()=>{
 
-left:450,
-top:205,
-
-width:260,
-
-fontSize:42,
-
-fontFamily:'Montserrat',
-
-fill:'black',
-
-fontWeight:'700',
-
-textAlign:'center',
-
-editable:false,
-
-selectable:false,
-
-splitByGrapheme:true
-
-});
-
-canvas.add(embroideryText);
-
-/* LOAD SHIRT */
-
-function loadShirt(src){
-
-fabric.Image.fromURL(src,function(img){
-
-if(shirtImage){
-
-canvas.remove(shirtImage);
+textLayer.innerText =
+textInput.value || "TVODO";
 
 }
-
-shirtImage = img;
-
-img.set({
-
-left:0,
-top:0,
-
-selectable:false,
-evented:false
-
-});
-
-img.scaleToWidth(1000);
-
-canvas.add(img);
-
-canvas.sendToBack(img);
-
-canvas.renderAll();
-
-});
-
-}
-
-loadShirt('biele tricko.png');
-
-/* UPDATE TEXT */
-
-function updateText(){
-
-const input =
-document.getElementById('textInput').value;
-
-embroideryText.text =
-input;
-
-const totalChars =
-input.replace(/\n/g,'').length;
-
-let size = 48;
-
-if(totalChars > 4) size = 42;
-if(totalChars > 8) size = 34;
-if(totalChars > 12) size = 28;
-if(totalChars > 16) size = 22;
-if(totalChars > 22) size = 18;
-
-embroideryText.set({
-
-fontSize:size
-
-});
-
-if(currentIcon){
-
-embroideryText.set({
-
-top:225
-
-});
-
-}else{
-
-embroideryText.set({
-
-top:205
-
-});
-
-}
-
-canvas.renderAll();
-
-}
+);
 
 /* FONT */
 
-function setFont(font, btn){
+document
+.querySelectorAll(".font-btn")
+.forEach(btn=>{
 
-document.querySelectorAll('.font-btn').forEach(b=>{
-b.classList.remove('active');
+btn.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".font-btn")
+.forEach(b=>{
+b.classList.remove("active");
 });
 
-btn.classList.add('active');
+btn.classList.add("active");
 
-embroideryText.set({
-
-fontFamily:font
-
-});
-
-canvas.renderAll();
+textLayer.style.fontFamily =
+btn.dataset.font;
 
 }
-
-/* THREAD */
-
-function setThreadColor(color, el){
-
-document.querySelectorAll('.color').forEach(c=>{
-c.classList.remove('active-color');
-});
-
-el.classList.add('active-color');
-
-embroideryText.set({
-
-fill:color
+);
 
 });
 
-canvas.renderAll();
+/* COLORS */
+
+document
+.querySelectorAll(".color")
+.forEach(color=>{
+
+color.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".color")
+.forEach(c=>{
+c.classList.remove("active");
+});
+
+color.classList.add("active");
+
+textLayer.style.color =
+color.dataset.color;
 
 }
+);
 
-/* ICON */
-
-function setIcon(src, btn){
-
-document.querySelectorAll('.icon-btn').forEach(b=>{
-b.classList.remove('active');
 });
 
-btn.classList.add('active');
+/* ICONS */
 
-if(currentIcon){
+document
+.querySelectorAll(".icon-btn")
+.forEach(btn=>{
 
-canvas.remove(currentIcon);
+btn.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".icon-btn")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+btn.classList.add("active");
+
+iconLayer.innerText =
+btn.dataset.icon;
 
 }
-
-fabric.Image.fromURL(src,function(img){
-
-currentIcon = img;
-
-img.set({
-
-left:565,
-top:185,
-
-selectable:false,
-evented:false
-
-});
-
-img.scaleToWidth(43);
-
-canvas.add(img);
-
-canvas.renderAll();
-
-updateText();
-
-});
-
-}
-
-/* REMOVE ICON */
-
-function removeIcon(btn){
-
-document.querySelectorAll('.icon-btn').forEach(b=>{
-b.classList.remove('active');
-});
-
-btn.classList.add('active');
-
-if(currentIcon){
-
-canvas.remove(currentIcon);
-
-currentIcon = null;
-
-}
-
-updateText();
-
-canvas.renderAll();
-
-}
-
-/* SHIRT */
-
-function setShirt(color, btn){
-
-document.querySelectorAll('.shirt-btn').forEach(b=>{
-b.classList.remove('active');
-});
-
-btn.classList.add('active');
-
-document.querySelectorAll('.color').forEach(c=>{
-c.classList.remove('active-color');
-});
-
-if(color === 'white'){
-
-loadShirt('biele tricko.png');
-
-embroideryText.set({
-
-fill:'black'
-
-});
-
-document.querySelector('.color[onclick*="black"]').classList.add('active-color');
-
-}else{
-
-loadShirt('cierne tricko.png');
-
-embroideryText.set({
-
-fill:'white'
-
-});
-
-document.querySelector('.color[onclick*="white"]').classList.add('active-color');
-
-}
-
-canvas.renderAll();
-
-}
-
-/* SIZE */
-
-document.querySelectorAll('.size-btn').forEach(btn=>{
-
-btn.addEventListener('click',()=>{
-
-document.querySelectorAll('.size-btn').forEach(b=>{
-b.classList.remove('active');
-});
-
-btn.classList.add('active');
-
-});
+);
 
 });
 
