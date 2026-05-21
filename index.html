@@ -27,9 +27,6 @@ box-sizing:border-box;
 --bg1:#fff8fc;
 --bg2:#eef5ff;
 
---panel:
-rgba(255,255,255,0.62);
-
 }
 
 body{
@@ -48,6 +45,8 @@ min-height:100vh;
 overflow-x:hidden;
 
 color:#222;
+
+padding-top:28px;
 
 }
 
@@ -69,8 +68,8 @@ z-index:-1;
 
 .bg1{
 
-width:500px;
-height:500px;
+width:520px;
+height:520px;
 
 background:var(--pink);
 
@@ -81,8 +80,8 @@ left:-180px;
 
 .bg2{
 
-width:500px;
-height:500px;
+width:520px;
+height:520px;
 
 background:var(--blue);
 
@@ -97,13 +96,22 @@ right:-180px;
 
 width:100%;
 
-min-height:100vh;
+max-width:1850px;
+
+margin:auto;
 
 display:grid;
 
 grid-template-columns:
 minmax(0,1fr)
 430px;
+
+gap:26px;
+
+padding:
+0 26px 30px;
+
+align-items:start;
 
 }
 
@@ -113,9 +121,7 @@ minmax(0,1fr)
 
 display:flex;
 justify-content:center;
-align-items:center;
-
-padding:36px;
+align-items:flex-start;
 
 }
 
@@ -123,10 +129,10 @@ padding:36px;
 
 .preview-card{
 
-width:min(92vw,980px);
+width:100%;
 
 background:
-rgba(255,255,255,0.52);
+rgba(255,255,255,0.56);
 
 backdrop-filter:blur(18px);
 
@@ -135,7 +141,7 @@ border:
 
 border-radius:42px;
 
-padding:28px;
+padding:38px;
 
 box-shadow:
 0 25px 60px rgba(0,0,0,0.08);
@@ -162,8 +168,8 @@ overflow:hidden;
 
 .shirt{
 
-width:100%;
-height:100%;
+width:180%;
+height:180%;
 
 object-fit:contain;
 
@@ -171,7 +177,7 @@ user-select:none;
 pointer-events:none;
 
 filter:
-drop-shadow(0 24px 40px rgba(0,0,0,0.1));
+drop-shadow(0 28px 44px rgba(0,0,0,0.12));
 
 opacity:0.98;
 
@@ -183,7 +189,7 @@ opacity:0.98;
 
 position:absolute;
 
-/* PRAVÉ PRSO Z POHĽADU UŽÍVATEĽA */
+/* PRAVÉ PRSO */
 
 top:33%;
 
@@ -191,18 +197,18 @@ left:61%;
 
 transform:translateX(-50%);
 
-width:18%;
+width:17%;
 
-max-width:160px;
+max-width:150px;
 
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 
-gap:6px;
+gap:8px;
 
-padding:8px;
+padding:6px;
 
 }
 
@@ -210,15 +216,17 @@ padding:8px;
 
 .icon-img{
 
-width:32px;
-height:32px;
+width:38px;
+height:38px;
 
 object-fit:contain;
 
 display:none;
 
 filter:
-drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+drop-shadow(0 2px 5px rgba(0,0,0,0.14));
+
+margin-bottom:2px;
 
 }
 
@@ -229,11 +237,11 @@ drop-shadow(0 2px 4px rgba(0,0,0,0.12));
 font-family:'Montserrat';
 
 font-size:
-clamp(14px,1.5vw,26px);
+clamp(14px,1.5vw,28px);
 
 font-weight:700;
 
-line-height:1.15;
+line-height:1.12;
 
 text-align:center;
 
@@ -267,11 +275,11 @@ left:61%;
 
 transform:translateX(-50%);
 
-width:180px;
-height:130px;
+width:165px;
+height:120px;
 
 border:
-2px dashed rgba(255,124,198,0.28);
+2px dashed rgba(255,124,198,0.22);
 
 border-radius:18px;
 
@@ -284,37 +292,23 @@ pointer-events:none;
 .right{
 
 background:
-rgba(255,255,255,0.36);
+rgba(255,255,255,0.4);
 
 backdrop-filter:blur(18px);
 
-border-left:
-1px solid rgba(255,255,255,0.42);
+border:
+1px solid rgba(255,255,255,0.5);
+
+border-radius:38px;
 
 padding:30px;
 
-overflow-y:auto;
+position:sticky;
 
-}
+top:24px;
 
-/* SCROLL */
-
-.right::-webkit-scrollbar{
-
-width:8px;
-
-}
-
-.right::-webkit-scrollbar-thumb{
-
-background:
-linear-gradient(
-180deg,
-var(--pink),
-var(--blue)
-);
-
-border-radius:20px;
+box-shadow:
+0 20px 50px rgba(0,0,0,0.06);
 
 }
 
@@ -477,6 +471,32 @@ color:white;
 
 }
 
+/* ICON BUTTONS */
+
+.icon-btn{
+
+width:74px;
+height:74px;
+
+padding:0;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+overflow:hidden;
+
+}
+
+.icon-btn img{
+
+width:42px;
+height:42px;
+
+object-fit:contain;
+
+}
+
 /* COLORS */
 
 .colors{
@@ -566,16 +586,21 @@ scale(1.01);
 
 width:100%;
 
-padding:0 30px 30px;
+max-width:1850px;
 
-grid-column:1 / -1;
+margin:
+0 auto
+30px;
+
+padding:
+0 26px;
 
 }
 
 .features-card{
 
 background:
-rgba(255,255,255,0.52);
+rgba(255,255,255,0.55);
 
 backdrop-filter:blur(18px);
 
@@ -657,10 +682,9 @@ grid-template-columns:1fr;
 
 .right{
 
-border-left:none;
+position:relative;
 
-border-top:
-1px solid rgba(255,255,255,0.4);
+top:auto;
 
 }
 
@@ -670,23 +694,53 @@ grid-template-columns:1fr 1fr;
 
 }
 
-.left{
+.preview-card{
 
-padding:20px;
+padding:24px;
+
+}
+
+.shirt{
+
+width:120%;
+height:120%;
+
+}
+
+}
+
+@media(max-width:700px){
+
+body{
+
+padding-top:14px;
+
+}
+
+.app{
+
+padding:
+0 14px 20px;
+
+gap:18px;
 
 }
 
 .preview-card{
 
-padding:18px;
+padding:12px;
+
+border-radius:28px;
 
 }
 
+.right{
+
+padding:22px;
+
+border-radius:28px;
+
 }
-
-/* MOBILE SMALL */
-
-@media(max-width:700px){
 
 .title{
 
@@ -694,19 +748,28 @@ font-size:30px;
 
 }
 
+.features{
+
+padding:0 14px;
+
+}
+
 .features-card{
 
 grid-template-columns:1fr;
 
-}
-
-.preview-card{
-
-border-radius:30px;
+padding:20px;
 
 }
 
-/* EMBROIDERY SAFE POSITION */
+.shirt{
+
+width:132%;
+height:132%;
+
+}
+
+/* MOBILE POSITION */
 
 .embroidery-zone{
 
@@ -716,7 +779,7 @@ left:61%;
 
 width:20%;
 
-max-width:120px;
+max-width:110px;
 
 }
 
@@ -727,14 +790,14 @@ top:33%;
 left:61%;
 
 width:120px;
-height:95px;
+height:92px;
 
 }
 
 .text{
 
 font-size:
-clamp(12px,3vw,20px);
+clamp(12px,3vw,18px);
 
 }
 
@@ -743,6 +806,20 @@ clamp(12px,3vw,20px);
 padding:13px 15px;
 
 font-size:14px;
+
+}
+
+.icon-btn{
+
+width:62px;
+height:62px;
+
+}
+
+.icon-btn img{
+
+width:34px;
+height:34px;
 
 }
 
@@ -771,6 +848,8 @@ font-size:14px;
 src="tricko.svg"
 class="shirt"
 />
+
+<!-- EMBROIDERY -->
 
 <div class="embroidery-zone">
 
@@ -940,21 +1019,28 @@ data-icon=""
 class="btn icon-btn"
 data-icon="hviezda.png"
 >
-⭐
+<img src="hviezda.png">
 </button>
 
 <button
 class="btn icon-btn"
 data-icon="medved.png"
 >
-🧸
+<img src="medved.png">
 </button>
 
 <button
 class="btn icon-btn"
 data-icon="srdce.png"
 >
-❤️
+<img src="srdce.png">
+</button>
+
+<button
+class="btn icon-btn"
+data-icon="zajko.png"
+>
+<img src="zajko.png">
 </button>
 
 </div>
@@ -964,6 +1050,8 @@ data-icon="srdce.png"
 <button class="order-btn">
 🛍️ Pokračovať k objednávke
 </button>
+
+</div>
 
 </div>
 
@@ -1057,8 +1145,6 @@ Bezpečná platba
 
 </div>
 
-</div>
-
 <script>
 
 /* ELEMENTS */
@@ -1095,11 +1181,11 @@ value.length + " / 40";
 const length =
 value.replace(/\n/g,'').length;
 
-let size = 26;
+let size = 28;
 
-if(length > 8) size = 22;
-if(length > 14) size = 18;
-if(length > 22) size = 15;
+if(length > 8) size = 24;
+if(length > 14) size = 20;
+if(length > 22) size = 16;
 
 textLayer.style.fontSize =
 size + "px";
