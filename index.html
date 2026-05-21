@@ -31,7 +31,8 @@ background:
 linear-gradient(
 135deg,
 #ffd7ee 0%,
-#dce8ff 45%,
+#dce8ff 40%,
+#fff1b8 70%,
 #f5dcff 100%
 );
 
@@ -48,7 +49,8 @@ position:relative;
 
 .bg1,
 .bg2,
-.bg3{
+.bg3,
+.bg4{
 
 position:absolute;
 
@@ -56,7 +58,7 @@ border-radius:50%;
 
 filter:blur(120px);
 
-opacity:0.28;
+opacity:0.26;
 
 animation:blobMove 12s ease-in-out infinite;
 }
@@ -85,6 +87,15 @@ background:#b67dff;
 top:40%;
 left:40%;
 animation-delay:4s;
+}
+
+.bg4{
+width:300px;
+height:300px;
+background:#ffe066;
+top:20%;
+right:20%;
+animation-delay:6s;
 }
 
 @keyframes blobMove{
@@ -229,6 +240,8 @@ position:relative;
 z-index:2;
 
 animation:floating 5s ease-in-out infinite;
+
+transition:0.3s;
 }
 
 @keyframes floating{
@@ -255,6 +268,37 @@ display:block;
 
 filter:
 drop-shadow(0 18px 40px rgba(0,0,0,0.18));
+
+transition:0.3s;
+}
+
+/* SHINE */
+
+.shine{
+
+animation:shineAnim 0.8s ease;
+}
+
+@keyframes shineAnim{
+
+0%{
+filter:
+brightness(1)
+drop-shadow(0 18px 40px rgba(0,0,0,0.18));
+}
+
+50%{
+filter:
+brightness(1.22)
+drop-shadow(0 0 35px rgba(255,255,255,0.9));
+}
+
+100%{
+filter:
+brightness(1)
+drop-shadow(0 18px 40px rgba(0,0,0,0.18));
+}
+
 }
 
 /* EMBROIDERY */
@@ -311,7 +355,7 @@ line-height:1.02;
 
 font-weight:700;
 
-font-size:18px;
+font-size:20px;
 
 white-space:pre-line;
 
@@ -370,6 +414,7 @@ linear-gradient(
 90deg,
 #ff4ea6,
 #7a6cff,
+#ffcf40,
 #5ca8ff
 );
 
@@ -446,8 +491,6 @@ translateY(-3px)
 scale(1.03);
 }
 
-/* CLICK EFFECT */
-
 .btn:active{
 
 transform:
@@ -463,6 +506,7 @@ background:
 linear-gradient(
 135deg,
 #ff5eb5,
+#ffcf40,
 #6f98ff
 );
 
@@ -523,14 +567,6 @@ font-family:Poppins,sans-serif;
 transition:0.25s;
 }
 
-textarea:focus{
-
-transform:scale(1.01);
-
-box-shadow:
-0 10px 24px rgba(111,152,255,0.18);
-}
-
 /* HELP */
 
 .help{
@@ -583,7 +619,7 @@ transform:scale(0.88);
 
 .color.active-color{
 
-outline:4px solid rgba(111,152,255,0.45);
+outline:4px solid rgba(255,207,64,0.5);
 
 transform:scale(1.1);
 
@@ -643,6 +679,7 @@ background:
 linear-gradient(
 135deg,
 #ff5eb5,
+#ffcf40,
 #6f98ff
 );
 
@@ -717,6 +754,7 @@ background:
 linear-gradient(
 135deg,
 #ff4ca0,
+#ffcf40,
 #6b9cff
 );
 
@@ -788,10 +826,9 @@ max-width:560px;
 <div class="bg1"></div>
 <div class="bg2"></div>
 <div class="bg3"></div>
+<div class="bg4"></div>
 
 <div class="app">
-
-<!-- LEFT -->
 
 <div class="left">
 
@@ -829,8 +866,6 @@ class="embroidery-text"
 
 </div>
 
-<!-- RIGHT -->
-
 <div class="right">
 
 <div class="title">
@@ -840,8 +875,6 @@ Navrhnite si vlastné tričko
 <div class="subtitle">
 Vytvorte si vlastnú výšivku jednoducho podľa seba.
 </div>
-
-<!-- SHIRT -->
 
 <div class="section">
 
@@ -869,8 +902,6 @@ onclick="setShirt('black', this)"
 
 </div>
 
-<!-- SIZE -->
-
 <div class="section">
 
 <div class="section-title">
@@ -888,8 +919,6 @@ Veľkosť
 </div>
 
 </div>
-
-<!-- TEXT -->
 
 <div class="section">
 
@@ -911,8 +940,6 @@ Text sa automaticky prispôsobí vzhľadu výšivky.
 </div>
 
 </div>
-
-<!-- FONT -->
 
 <div class="section">
 
@@ -946,8 +973,6 @@ Písaný
 </div>
 
 </div>
-
-<!-- THREAD -->
 
 <div class="section">
 
@@ -991,8 +1016,6 @@ onclick="setThreadColor('#8dff8d', this)">
 
 </div>
 
-<!-- ICONS -->
-
 <div class="section">
 
 <div class="section-title">
@@ -1025,8 +1048,6 @@ Ikonka
 
 </div>
 
-<!-- INFO -->
-
 <div class="info">
 
 Každé tričko vyrábame individuálne podľa zvoleného návrhu.
@@ -1042,6 +1063,19 @@ Pokračovať k objednávke
 </div>
 
 <script>
+
+function triggerShine(){
+
+const shirt =
+document.getElementById('shirtImage');
+
+shirt.classList.remove('shine');
+
+void shirt.offsetWidth;
+
+shirt.classList.add('shine');
+
+}
 
 /* PREVIEW */
 
@@ -1102,17 +1136,17 @@ if(lineCount >= 2){
 if(longestLine <= 5){
 
 text.style.fontSize =
-isHandwritten ? '20px' : '15px';
+isHandwritten ? '22px' : '17px';
 
 }else if(longestLine <= 8){
 
 text.style.fontSize =
-isHandwritten ? '18px' : '13px';
+isHandwritten ? '20px' : '15px';
 
 }else{
 
 text.style.fontSize =
-isHandwritten ? '14px' : '11px';
+isHandwritten ? '15px' : '12px';
 
 }
 
@@ -1121,17 +1155,17 @@ isHandwritten ? '14px' : '11px';
 if(longestLine <= 5){
 
 text.style.fontSize =
-isHandwritten ? '24px' : '17px';
+isHandwritten ? '26px' : '19px';
 
 }else if(longestLine <= 8){
 
 text.style.fontSize =
-isHandwritten ? '20px' : '15px';
+isHandwritten ? '22px' : '17px';
 
 }else{
 
 text.style.fontSize =
-isHandwritten ? '16px' : '12px';
+isHandwritten ? '18px' : '14px';
 
 }
 
@@ -1156,6 +1190,8 @@ text.style.fontFamily = font;
 
 updatePreview();
 
+triggerShine();
+
 }
 
 /* THREAD */
@@ -1170,6 +1206,8 @@ c.classList.remove('active-color');
 });
 
 el.classList.add('active-color');
+
+triggerShine();
 
 }
 
@@ -1192,6 +1230,8 @@ previewIcon.style.opacity = '1';
 
 updatePreview();
 
+triggerShine();
+
 }
 
 /* REMOVE ICON */
@@ -1211,6 +1251,8 @@ previewIcon.style.opacity = '0';
 
 updatePreview();
 
+triggerShine();
+
 }
 
 /* SHIRT */
@@ -1229,11 +1271,17 @@ document.getElementById('shirtImage');
 const text =
 document.getElementById('previewText');
 
+document.querySelectorAll('.color').forEach(c=>{
+c.classList.remove('active-color');
+});
+
 if(color === 'white'){
 
 img.src = 'biele tricko.png';
 
 text.style.color = 'black';
+
+document.querySelector('.color[onclick*=\"black\"]').classList.add('active-color');
 
 }else{
 
@@ -1241,7 +1289,11 @@ img.src = 'cierne tricko.png';
 
 text.style.color = 'white';
 
+document.querySelector('.color[onclick*=\"white\"]').classList.add('active-color');
+
 }
+
+triggerShine();
 
 }
 
@@ -1256,6 +1308,8 @@ b.classList.remove('active');
 });
 
 btn.classList.add('active');
+
+triggerShine();
 
 });
 
