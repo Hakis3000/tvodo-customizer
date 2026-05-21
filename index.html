@@ -116,7 +116,7 @@ transform:translate(0px,0px);
 .app{
 
 width:100%;
-max-width:1500px;
+max-width:1650px;
 
 height:95vh;
 
@@ -146,7 +146,7 @@ z-index:5;
 
 .left{
 
-flex:1.15;
+flex:1.35;
 
 display:flex;
 justify-content:center;
@@ -165,7 +165,7 @@ position:relative;
 
 position:relative;
 
-width:min(78vw,720px);
+width:min(92vw,950px);
 
 aspect-ratio:1/1;
 
@@ -202,7 +202,7 @@ object-fit:contain;
 display:block;
 
 filter:
-drop-shadow(0 18px 35px rgba(0,0,0,0.16));
+drop-shadow(0 20px 45px rgba(0,0,0,0.18));
 
 transition:0.22s;
 }
@@ -250,10 +250,10 @@ blur(0px);
 position:absolute;
 
 top:31%;
-left:58%;
+left:60.5%;
 
-width:140px;
-height:110px;
+width:170px;
+height:120px;
 
 display:flex;
 justify-content:center;
@@ -283,8 +283,8 @@ position:relative;
 
 .embroidery-icon{
 
-width:34px;
-height:34px;
+width:20px;
+height:20px;
 
 object-fit:contain;
 
@@ -336,8 +336,8 @@ text-shadow:
 
 position:absolute;
 
-width:200px;
-height:200px;
+width:220px;
+height:220px;
 
 background:
 linear-gradient(
@@ -362,8 +362,8 @@ top:-120px;
 }
 
 100%{
-left:900px;
-top:600px;
+left:1200px;
+top:700px;
 }
 
 }
@@ -372,7 +372,7 @@ top:600px;
 
 .right{
 
-width:430px;
+width:440px;
 
 overflow-y:auto;
 
@@ -835,7 +835,7 @@ border-bottom:
 
 .preview{
 
-width:min(96vw,420px);
+width:min(100vw,520px);
 }
 
 .right{
@@ -853,10 +853,10 @@ font-size:28px;
 .embroidery{
 
 top:31%;
-left:58%;
+left:60.5%;
 
-width:140px;
-height:110px;
+width:170px;
+height:120px;
 }
 
 }
@@ -924,8 +924,6 @@ Navrhnite si vlastné tričko
 Vytvorte si vlastnú výšivku jednoducho podľa seba.
 </div>
 
-<!-- SHIRT -->
-
 <div class="section">
 
 <div class="section-title">
@@ -952,8 +950,6 @@ onclick="setShirt('black', this)"
 
 </div>
 
-<!-- SIZE -->
-
 <div class="section">
 
 <div class="section-title">
@@ -971,8 +967,6 @@ Veľkosť
 </div>
 
 </div>
-
-<!-- TEXT -->
 
 <div class="section">
 
@@ -992,8 +986,6 @@ Pre nový riadok použite ENTER.
 </div>
 
 </div>
-
-<!-- FONT -->
 
 <div class="section">
 
@@ -1028,8 +1020,6 @@ Písaný
 
 </div>
 
-<!-- THREAD -->
-
 <div class="section">
 
 <div class="section-title">
@@ -1061,8 +1051,6 @@ onclick="setThreadColor('#7aa8ff', this)">
 </div>
 
 </div>
-
-<!-- ICON -->
 
 <div class="section">
 
@@ -1110,8 +1098,6 @@ Pokračovať k objednávke
 
 <script>
 
-/* STATIC */
-
 function triggerStatic(){
 
 const shirt =
@@ -1124,8 +1110,6 @@ void shirt.offsetWidth;
 shirt.classList.add('tv-static');
 
 }
-
-/* UPDATE */
 
 function updatePreview(){
 
@@ -1152,8 +1136,6 @@ text.innerText = input;
 const hasIcon =
 previewIcon.style.opacity === '1';
 
-/* POSITION */
-
 if(hasIcon){
 
 content.style.justifyContent = "flex-start";
@@ -1168,21 +1150,19 @@ text.style.marginTop = "-8px";
 
 }
 
-/* SIZE */
-
 const totalChars =
 input.replace(/\n/g,'').length;
 
 const hasEnter =
 input.includes('\n');
 
-let size = 36;
+let size = 42;
 
-if(totalChars > 4) size = 32;
-if(totalChars > 8) size = 26;
-if(totalChars > 12) size = 20;
-if(totalChars > 16) size = 16;
-if(totalChars > 22) size = 13;
+if(totalChars > 4) size = 36;
+if(totalChars > 8) size = 30;
+if(totalChars > 12) size = 24;
+if(totalChars > 16) size = 19;
+if(totalChars > 22) size = 15;
 
 if(hasEnter){
 
@@ -1194,8 +1174,6 @@ text.style.fontSize =
 size + 'px';
 
 }
-
-/* FONT */
 
 function setFont(font, btn){
 
@@ -1214,8 +1192,6 @@ triggerStatic();
 
 }
 
-/* THREAD */
-
 function setThreadColor(color, el){
 
 document.getElementById('previewText').style.color =
@@ -1230,8 +1206,6 @@ el.classList.add('active-color');
 triggerStatic();
 
 }
-
-/* ICON */
 
 function setIcon(icon, btn){
 
@@ -1254,8 +1228,6 @@ triggerStatic();
 
 }
 
-/* REMOVE ICON */
-
 function removeIcon(btn){
 
 document.querySelectorAll('.icon-btn').forEach(b=>{
@@ -1274,8 +1246,6 @@ updatePreview();
 triggerStatic();
 
 }
-
-/* SHIRT */
 
 function setShirt(color, btn){
 
@@ -1317,8 +1287,6 @@ triggerStatic();
 
 }
 
-/* SIZE */
-
 document.querySelectorAll('.size-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
@@ -1334,8 +1302,6 @@ triggerStatic();
 });
 
 });
-
-/* DEFAULT */
 
 document.getElementById('previewText').style.color =
 'black';
