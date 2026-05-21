@@ -171,14 +171,16 @@ display:flex;
 justify-content:center;
 align-items:center;
 
+overflow:hidden;
+
 }
 
 /* SHIRT */
 
 .shirt{
 
-width:1150px;
-max-width:130%;
+width:100%;
+max-width:980px;
 
 object-fit:contain;
 
@@ -208,22 +210,26 @@ position:absolute;
 
 top:34%;
 
-/* POSUN TROSKU DOPRAVA */
-
 left:51%;
 
 transform:translateX(-50%);
 
-width:170px;
+/* FIXED RESPONSIVE SIZE */
+
+width:16%;
+
+max-width:170px;
+
+min-width:80px;
 
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 
-/* MENŠIA MEDZERA */
-
 gap:0px;
+
+z-index:5;
 
 }
 
@@ -231,8 +237,13 @@ gap:0px;
 
 .icon-img{
 
-width:54px;
-height:54px;
+width:38%;
+
+max-width:54px;
+
+min-width:26px;
+
+aspect-ratio:1/1;
 
 object-fit:contain;
 
@@ -241,7 +252,7 @@ display:none;
 filter:
 drop-shadow(0 2px 5px rgba(0,0,0,0.14));
 
-margin-bottom:-4px;
+margin-bottom:-3px;
 
 }
 
@@ -251,7 +262,10 @@ margin-bottom:-4px;
 
 font-family:'Montserrat';
 
-font-size:24px;
+/* RESPONSIVE TEXT */
+
+font-size:
+clamp(10px,1.3vw,24px);
 
 font-weight:700;
 
@@ -263,11 +277,15 @@ white-space:pre-line;
 
 letter-spacing:0.2px;
 
-overflow-wrap:anywhere;
+/* DÔLEŽITÉ */
 
-word-break:break-word;
+overflow-wrap:break-word;
+
+word-break:normal;
 
 max-width:100%;
+
+width:100%;
 
 padding:0 4px;
 
@@ -798,7 +816,7 @@ min-height:unset;
 
 .shirt{
 
-max-width:150%;
+max-width:100%;
 
 }
 
@@ -842,46 +860,12 @@ grid-template-columns:1fr;
 
 }
 
-.shirt{
-
-max-width:165%;
-
-}
-
 .embroidery-zone{
 
+width:22%;
+
 top:34%;
-
 left:51%;
-
-width:130px;
-
-}
-
-.icon-img{
-
-width:44px;
-height:44px;
-
-}
-
-.text{
-
-font-size:18px;
-
-}
-
-.icon-btn{
-
-width:74px;
-height:74px;
-
-}
-
-.icon-btn img{
-
-width:48px;
-height:48px;
 
 }
 
@@ -1017,25 +1001,11 @@ Dostupné veľkosti od S až po 2XL.
 
 <div class="row">
 
-<button class="btn size-btn">
-S
-</button>
-
-<button class="btn size-btn active">
-M
-</button>
-
-<button class="btn size-btn">
-L
-</button>
-
-<button class="btn size-btn">
-XL
-</button>
-
-<button class="btn size-btn">
-2XL
-</button>
+<button class="btn size-btn">S</button>
+<button class="btn size-btn active">M</button>
+<button class="btn size-btn">L</button>
+<button class="btn size-btn">XL</button>
+<button class="btn size-btn">2XL</button>
 
 </div>
 
@@ -1056,7 +1026,7 @@ Text výšivky
 i
 
 <div class="tooltip">
-Text sa automaticky zalomí tak, aby vyzeral prirodzene.
+Text sa automaticky zalomí tak, aby ostal vo výšivke.
 </div>
 
 </div>
@@ -1091,16 +1061,6 @@ Max. 4 riadky
 
 <div class="section-title">
 Štýl výšivky
-</div>
-
-<div class="info">
-
-i
-
-<div class="tooltip">
-Každý štýl vytvorí trochu iný vzhľad výšivky.
-</div>
-
 </div>
 
 </div>
@@ -1140,16 +1100,6 @@ Písaný
 
 <div class="section-title">
 Vyberte si niť
-</div>
-
-<div class="info">
-
-i
-
-<div class="tooltip">
-Farba nite sa zobrazí priamo na náhľade trička.
-</div>
-
 </div>
 
 </div>
@@ -1209,16 +1159,6 @@ style="background:#f4c542;"
 Ikonka
 </div>
 
-<div class="info">
-
-i
-
-<div class="tooltip">
-Vyberte si ikonku k výšivke alebo nechajte bez ikonky.
-</div>
-
-</div>
-
 </div>
 
 <div class="row">
@@ -1270,92 +1210,6 @@ data-icon="zajko.png"
 Ak máte záujem o väčšiu výšivku alebo vlastný obrázok, napíšte nám správu a pripravíme vám individuálny návrh.
 </div>
 
-<!-- FEATURES -->
-
-<div class="features">
-
-<div class="feature">
-
-<div class="feature-icon">
-🪡
-</div>
-
-<div>
-
-<h3>
-Ručná výroba
-</h3>
-
-<p>
-Každé tričko vyrábame individuálne.
-</p>
-
-</div>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-🚚
-</div>
-
-<div>
-
-<h3>
-Rýchle dodanie
-</h3>
-
-<p>
-Expresné spracovanie objednávok.
-</p>
-
-</div>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-✨
-</div>
-
-<div>
-
-<h3>
-Prémiová výšivka
-</h3>
-
-<p>
-Kvalitné nite s dlhou životnosťou.
-</p>
-
-</div>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-🔒
-</div>
-
-<div>
-
-<h3>
-Bezpečná platba
-</h3>
-
-<p>
-100% zabezpečená objednávka.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -1388,8 +1242,6 @@ let lines = [];
 let currentLine = '';
 
 words.forEach(word=>{
-
-/* veľmi dlhé slovo */
 
 if(word.length > 10){
 
@@ -1453,18 +1305,6 @@ formatted || "TVODO";
 
 counter.innerText =
 value.length + " / 40";
-
-const length =
-value.replace(/\n/g,'').length;
-
-let size = 24;
-
-if(length > 8) size = 21;
-if(length > 14) size = 18;
-if(length > 22) size = 15;
-
-textLayer.style.fontSize =
-size + "px";
 
 }
 );
