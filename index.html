@@ -180,7 +180,9 @@ overflow:hidden;
 
 .shirt{
 
-width:760px;
+/* ZVÄČŠENÉ O 50% */
+
+width:1140px;
 
 object-fit:contain;
 
@@ -210,13 +212,15 @@ drop-shadow(0 24px 40px rgba(0,0,0,0.25));
 
 position:absolute;
 
-top:258px;
+/* POSUNUTÉ PRE VÄČŠIE TRIČKO */
 
-left:53%;
+top:330px;
+
+left:52%;
 
 transform:translateX(-50%);
 
-width:135px;
+width:170px;
 
 display:flex;
 flex-direction:column;
@@ -380,82 +384,6 @@ margin-bottom:12px;
 
 font-size:15px;
 font-weight:700;
-
-}
-
-/* TOOLTIP */
-
-.info{
-
-width:18px;
-height:18px;
-
-border-radius:50%;
-
-background:
-linear-gradient(
-135deg,
-var(--pink),
-var(--blue)
-);
-
-color:white;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-font-size:11px;
-font-weight:700;
-
-cursor:pointer;
-
-position:relative;
-
-}
-
-.info:hover .tooltip{
-
-opacity:1;
-transform:translateY(0);
-
-pointer-events:auto;
-
-}
-
-.tooltip{
-
-position:absolute;
-
-left:26px;
-top:-8px;
-
-width:220px;
-
-background:white;
-
-padding:12px;
-
-border-radius:14px;
-
-font-size:12px;
-
-line-height:1.5;
-
-color:#555;
-
-box-shadow:
-0 12px 30px rgba(0,0,0,0.12);
-
-opacity:0;
-
-transform:translateY(4px);
-
-transition:0.15s;
-
-pointer-events:none;
-
-z-index:10;
 
 }
 
@@ -791,17 +719,17 @@ height:520px;
 
 .shirt{
 
-width:500px;
+width:760px;
 
 }
 
 .embroidery-zone{
 
-top:172px;
+top:240px;
 
-left:53%;
+left:52%;
 
-width:96px;
+width:120px;
 
 }
 
@@ -938,16 +866,12 @@ Vyberte si farbu, niť a štýl výšivky.
 Každý kus je ručne vyrábaný na objednávku. Náhľad na stránke slúži iba ako vizualizácia výsledného trička.
 </div>
 
-<!-- FARBA -->
-
 <div class="section">
 
 <div class="section-head">
-
 <div class="section-title">
 Farba trička
 </div>
-
 </div>
 
 <div class="row">
@@ -970,16 +894,12 @@ data-shirt="black"
 
 </div>
 
-<!-- SIZE -->
-
 <div class="section">
 
 <div class="section-head">
-
 <div class="section-title">
 Veľkosť
 </div>
-
 </div>
 
 <div class="row">
@@ -994,16 +914,12 @@ Veľkosť
 
 </div>
 
-<!-- TEXT -->
-
 <div class="section">
 
 <div class="section-head">
-
 <div class="section-title">
 Text výšivky
 </div>
-
 </div>
 
 <textarea
@@ -1026,16 +942,12 @@ Max. 4 riadky
 
 </div>
 
-<!-- FONT -->
-
 <div class="section">
 
 <div class="section-head">
-
 <div class="section-title">
 Štýl výšivky
 </div>
-
 </div>
 
 <div class="row">
@@ -1065,16 +977,12 @@ Písaný
 
 </div>
 
-<!-- COLORS -->
-
 <div class="section">
 
 <div class="section-head">
-
 <div class="section-title">
 Vyberte si niť
 </div>
-
 </div>
 
 <div class="colors">
@@ -1122,16 +1030,12 @@ style="background:#f4c542;"
 
 </div>
 
-<!-- ICONS -->
-
 <div class="section">
 
 <div class="section-head">
-
 <div class="section-title">
 Ikonka
 </div>
-
 </div>
 
 <div class="row">
@@ -1183,99 +1087,11 @@ data-icon="zajko.png"
 Ak máte záujem o väčšiu výšivku alebo vlastný obrázok, napíšte nám správu a pripravíme vám individuálny návrh.
 </div>
 
-<!-- FEATURES -->
-
-<div class="features">
-
-<div class="feature">
-
-<div class="feature-icon">
-🪡
-</div>
-
-<div>
-
-<h3>
-Ručná výroba
-</h3>
-
-<p>
-Každé tričko vyrábame individuálne.
-</p>
-
-</div>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-🚚
-</div>
-
-<div>
-
-<h3>
-Rýchle dodanie
-</h3>
-
-<p>
-Expresné spracovanie objednávok.
-</p>
-
-</div>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-✨
-</div>
-
-<div>
-
-<h3>
-Prémiová výšivka
-</h3>
-
-<p>
-Kvalitné nite s dlhou životnosťou.
-</p>
-
-</div>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-🔒
-</div>
-
-<div>
-
-<h3>
-Bezpečná platba
-</h3>
-
-<p>
-100% zabezpečená objednávka.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
 </div>
 
 </div>
 
 <script>
-
-/* ELEMENTS */
 
 const textInput =
 document.getElementById("textInput");
