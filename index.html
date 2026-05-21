@@ -1356,7 +1356,7 @@ data-icon="zajko.png"
 
 </div>
 
-<button onclick="openOrderForm()" class="order-button">
+<button onclick="openOrderForm()" class="order-btn">
   🛍️ Pokračovať k objednávke
 </button>
 
@@ -1752,11 +1752,24 @@ btn.classList.add("active");
 /* SEM VLOŽ FUNKCIU ↓↓↓ */
 
 function openOrderForm() {
+
+    const threadNames = {
+        "#ff7cc6": "ružová",
+        "black": "čierna",
+        "white": "biela",
+        "#5c86ff": "modrá",
+        "#69c27d": "zelená",
+        "#f4c542": "žltá"
+    };
+
     const color = document.querySelector(".shirt-btn.active")?.dataset.shirt || "";
     const size = document.querySelector(".size-btn.active")?.innerText || "";
     const text = document.getElementById("textInput")?.value || "";
     const font = document.querySelector(".font-btn.active")?.dataset.font || "";
-    const thread = document.querySelector(".color.active")?.dataset.color || "";
+
+    const threadHex = document.querySelector(".color.active")?.dataset.color || "";
+    const thread = threadNames[threadHex] || threadHex;
+
     const icon = document.querySelector(".icon-btn.active")?.dataset.icon || "";
 
     const url =
@@ -1772,6 +1785,7 @@ function openOrderForm() {
 }
 
 /* KONIEC FUNKCIE ↑↑↑ */
+
 
 </script>
 </body>
