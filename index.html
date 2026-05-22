@@ -1,17 +1,16 @@
-# TVODO Customizer V2
-
-```html
 <!DOCTYPE html>
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TVODO - Vyšívaný customizer</title>
+
+<title>TVODO - Customizer</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Fredoka:wght@500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -123,11 +122,13 @@ display:flex;
 justify-content:center;
 align-items:center;
 box-shadow:0 14px 40px rgba(0,0,0,0.08);
+padding:20px;
 }
 
 .preview-window svg{
 width:100%;
-height:100%;
+height:auto;
+aspect-ratio:1/1;
 max-width:760px;
 }
 
@@ -146,9 +147,9 @@ filter:drop-shadow(0 4px 10px rgba(0,0,0,0.15));
 
 .zone-frame{
 fill:none;
-stroke:rgba(255,124,198,0.55);
-stroke-width:4;
-stroke-dasharray:10 10;
+stroke:rgba(255,124,198,0.22);
+stroke-width:2;
+stroke-dasharray:8 8;
 rx:20;
 }
 
@@ -254,7 +255,7 @@ outline:4px solid rgba(125,175,255,0.25);
 
 .icon-grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(2,1fr);
 gap:12px;
 }
 
@@ -264,7 +265,7 @@ border:none;
 border-radius:22px;
 background:white;
 cursor:pointer;
-font-size:32px;
+font-size:28px;
 box-shadow:0 8px 18px rgba(0,0,0,0.05);
 transition:0.2s;
 }
@@ -275,19 +276,7 @@ color:white;
 }
 
 .order-bar{
-position:sticky;
-bottom:10px;
 margin-top:24px;
-background:white;
-padding:16px;
-border-radius:24px;
-box-shadow:0 14px 40px rgba(0,0,0,0.1);
-}
-
-.price{
-font-size:28px;
-font-weight:700;
-margin-bottom:12px;
 }
 
 .order-btn{
@@ -303,46 +292,8 @@ cursor:pointer;
 box-shadow:0 14px 30px rgba(122,168,255,0.3);
 }
 
-.modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.45);
-display:none;
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:999;
-}
-
-.modal-content{
-width:100%;
-max-width:520px;
-background:white;
-border-radius:28px;
-padding:24px;
-}
-
-.modal-content h2{
-margin-bottom:18px;
-}
-
-.input{
-width:100%;
-padding:16px;
-border:none;
-border-radius:18px;
-background:#f6f6f6;
-margin-bottom:14px;
-font-size:15px;
-}
-
-.close-btn{
-margin-top:10px;
-background:#f1f1f1;
-color:#333;
-}
-
 @media(max-width:1200px){
+
 .app{
 grid-template-columns:1fr;
 }
@@ -355,9 +306,11 @@ height:auto;
 .preview-window{
 height:560px;
 }
+
 }
 
 @media(max-width:700px){
+
 .app{
 padding:10px;
 gap:14px;
@@ -374,54 +327,84 @@ font-size:32px;
 .right{
 padding:18px;
 }
+
 }
+
 </style>
 </head>
+
 <body>
 
 <div class="app">
 
 <div class="left">
+
 <div class="preview-card">
 
 <div class="product-bar">
-<button class="product-btn active" data-product="shirt">👕 Tričko</button>
-<button class="product-btn" data-product="body">🍼 Body</button>
-<button class="product-btn" data-product="towel">🧺 Uterák</button>
-<button class="product-btn" data-product="bib">🧸 Bryndák</button>
+
+<button class="product-btn active" data-product="shirt">
+👕 Tričko
+</button>
+
+<button class="product-btn" data-product="body">
+🍼 Body
+</button>
+
+<button class="product-btn" data-product="bib">
+🧸 Bryndák
+</button>
+
 </div>
 
 <div class="preview-window">
 
-<svg id="previewSvg" viewBox="0 0 1000 1000">
+<svg
+id="previewSvg"
+viewBox="0 0 1000 1000"
+preserveAspectRatio="xMidYMid meet">
 
-<image id="productImage"
-href="tricko.svg"
+<image
+id="productImage"
+href="shirt.svg"
 x="120"
 y="60"
 width="760"
-height="860" />
+height="860"
+/>
 
-<rect id="zoneFrame"
+<rect
+id="zoneFrame"
 class="zone-frame"
 x="410"
 y="260"
 width="180"
-height="180" />
+height="180"
+/>
 
-<image id="embroideryIcon"
+<image
+id="embroideryIcon"
 href=""
 x="470"
 y="250"
 width="60"
 height="60"
-display="none" />
+display="none"
+/>
 
-<text id="embroideryText"
+<text
+id="embroideryText"
 x="500"
 y="340">
+
+<tspan x="500" dy="0">
 Sem môžete
+</tspan>
+
+<tspan x="500" dy="48">
 pridať text
+</tspan>
+
 </text>
 
 </svg>
@@ -429,6 +412,7 @@ pridať text
 </div>
 
 </div>
+
 </div>
 
 <div class="right">
@@ -444,79 +428,157 @@ Navrhnite si vlastný vyšívaný produkt presne podľa seba.
 <div class="info-box">
 🪡 Každý produkt vyrábame individuálne na objednávku.<br><br>
 ✨ Náhľad slúži ako vizualizácia výšivky.<br><br>
-💌 Ak chcete vlastný obrázok alebo väčšiu výšivku, napíšte nám správu.
+💌 Ak chcete väčšiu výšivku alebo vlastný obrázok, napíšte nám správu.
 </div>
 
 <div class="section">
-<div class="section-title">Text výšivky</div>
-<textarea id="textInput" maxlength="40" placeholder="Napíšte vlastný text..."></textarea>
+
+<div class="section-title">
+Text výšivky
+</div>
+
+<textarea
+id="textInput"
+maxlength="40"
+placeholder="Napíšte vlastný text..."></textarea>
+
 </div>
 
 <div class="section">
-<div class="section-title">Štýl výšivky</div>
+
+<div class="section-title">
+Štýl výšivky
+</div>
+
 <div class="row">
-<button class="btn font-btn active" data-font="Montserrat">Moderný</button>
-<button class="btn font-btn" data-font="Fredoka">Hravý</button>
-<button class="btn font-btn" data-font="Dancing Script">Písaný</button>
+
+<button
+class="btn font-btn active"
+data-font="Montserrat"
+style="font-family:Montserrat">
+
+Mia ✨
+
+</button>
+
+<button
+class="btn font-btn"
+data-font="Fredoka"
+style="font-family:Fredoka">
+
+Mia ✨
+
+</button>
+
+<button
+class="btn font-btn"
+data-font="Dancing Script"
+style="font-family:'Dancing Script'">
+
+Mia ✨
+
+</button>
+
 </div>
+
 </div>
 
 <div class="section">
-<div class="section-title">Farba nite</div>
+
+<div class="section-title">
+Farba nite
+</div>
+
 <div class="colors">
-<div class="color active" data-color="#ff7cc6" style="background:#ff7cc6"></div>
-<div class="color" data-color="#5c86ff" style="background:#5c86ff"></div>
-<div class="color" data-color="#69c27d" style="background:#69c27d"></div>
-<div class="color" data-color="#f4c542" style="background:#f4c542"></div>
-<div class="color" data-color="black" style="background:black"></div>
-<div class="color" data-color="white" style="background:white;border:1px solid #ccc"></div>
+
+<div
+class="color active"
+data-color="#ff7cc6"
+style="background:#ff7cc6"></div>
+
+<div
+class="color"
+data-color="#5c86ff"
+style="background:#5c86ff"></div>
+
+<div
+class="color"
+data-color="#69c27d"
+style="background:#69c27d"></div>
+
+<div
+class="color"
+data-color="#f4c542"
+style="background:#f4c542"></div>
+
+<div
+class="color"
+data-color="black"
+style="background:black"></div>
+
 </div>
+
 </div>
 
 <div class="section">
-<div class="section-title">Ikonka</div>
-<div class="icon-grid">
-<button class="icon-btn active" data-icon="">✕</button>
-<button class="icon-btn" data-icon="hviezda.png">⭐</button>
-<button class="icon-btn" data-icon="srdce.png">❤️</button>
-<button class="icon-btn" data-icon="medved.png">🧸</button>
-<button class="icon-btn" data-icon="zajko.png">🐰</button>
-<button class="icon-btn" data-icon="motyl.png">🦋</button>
+
+<div class="section-title">
+Ikonka
 </div>
+
+<div class="icon-grid">
+
+<button
+class="icon-btn active"
+data-icon="">
+✕
+</button>
+
+<button
+class="icon-btn"
+data-icon="hviezda.png">
+⭐
+</button>
+
+<button
+class="icon-btn"
+data-icon="srdce.png">
+❤️
+</button>
+
+<button
+class="icon-btn"
+data-icon="medved.png">
+🧸
+</button>
+
+<button
+class="icon-btn"
+data-icon="zajko.png">
+🐰
+</button>
+
+</div>
+
 </div>
 
 <div class="order-bar">
-<div class="price">od 19,90€</div>
-<button class="order-btn" id="openOrder">
+
+<button
+class="order-btn">
+
 🛍️ Pokračovať k objednávke
-</button>
-</div>
 
-</div>
-</div>
-
-<div class="modal" id="orderModal">
-<div class="modal-content">
-<h2>Dokončenie objednávky</h2>
-
-<input class="input" id="customerName" placeholder="Meno a priezvisko">
-<input class="input" id="customerEmail" placeholder="Email">
-<input class="input" id="customerPhone" placeholder="Telefón">
-<input class="input" id="customerAddress" placeholder="Adresa">
-<textarea class="input" id="customerNote" placeholder="Poznámka"></textarea>
-
-<button class="order-btn" id="submitOrder">
-Odoslať objednávku
-</button>
-
-<button class="order-btn close-btn" id="closeModal">
-Zavrieť
 </button>
 
 </div>
+
+</div>
+
 </div>
 
 <script>
+
 const embroideryText = document.getElementById('embroideryText');
 const textInput = document.getElementById('textInput');
 const embroideryIcon = document.getElementById('embroideryIcon');
@@ -524,29 +586,29 @@ const zoneFrame = document.getElementById('zoneFrame');
 const productImage = document.getElementById('productImage');
 
 const products = {
+
 shirt:{
-image:'tricko.svg',
+image:'shirt.svg',
 zone:{x:410,y:260,w:180,h:180},
 text:{x:500,y:350}
 },
+
 body:{
 image:'body.svg',
 zone:{x:420,y:310,w:160,h:160},
 text:{x:500,y:390}
 },
-towel:{
-image:'uterak.svg',
-zone:{x:390,y:380,w:220,h:220},
-text:{x:500,y:490}
-},
+
 bib:{
-image:'brindak.svg',
+image:'bib.svg',
 zone:{x:410,y:290,w:180,h:180},
 text:{x:500,y:390}
 }
+
 };
 
 function updateText(){
+
 let text = textInput.value.trim();
 
 if(text === ''){
@@ -558,152 +620,161 @@ embroideryText.innerHTML='';
 const lines = text.split(/\n| /);
 
 lines.forEach((line,index)=>{
-const tspan = document.createElementNS('http://www.w3.org/2000/svg','tspan');
-tspan.setAttribute('x', embroideryText.getAttribute('x'));
-tspan.setAttribute('dy', index===0 ? 0 : 48);
+
+const tspan = document.createElementNS(
+'http://www.w3.org/2000/svg',
+'tspan'
+);
+
+tspan.setAttribute(
+'x',
+embroideryText.getAttribute('x')
+);
+
+tspan.setAttribute(
+'dy',
+index===0 ? 0 : 48
+);
+
 tspan.textContent = line;
+
 embroideryText.appendChild(tspan);
+
 });
+
 }
 
-textInput.addEventListener('input',updateText);
+textInput.addEventListener(
+'input',
+updateText
+);
+
 updateText();
 
 document.querySelectorAll('.font-btn').forEach(btn=>{
+
 btn.addEventListener('click',()=>{
-document.querySelectorAll('.font-btn').forEach(b=>b.classList.remove('active'));
+
+document
+.querySelectorAll('.font-btn')
+.forEach(b=>b.classList.remove('active'));
+
 btn.classList.add('active');
+
 embroideryText.style.fontFamily = btn.dataset.font;
+
 });
+
 });
 
 document.querySelectorAll('.color').forEach(color=>{
+
 color.addEventListener('click',()=>{
-document.querySelectorAll('.color').forEach(c=>c.classList.remove('active'));
+
+document
+.querySelectorAll('.color')
+.forEach(c=>c.classList.remove('active'));
+
 color.classList.add('active');
+
 embroideryText.style.fill = color.dataset.color;
+
 });
+
 });
 
 document.querySelectorAll('.icon-btn').forEach(btn=>{
+
 btn.addEventListener('click',()=>{
-document.querySelectorAll('.icon-btn').forEach(b=>b.classList.remove('active'));
+
+document
+.querySelectorAll('.icon-btn')
+.forEach(b=>b.classList.remove('active'));
+
 btn.classList.add('active');
 
 const icon = btn.dataset.icon;
 
 if(icon === ''){
-embroideryIcon.style.display = 'none';
+
+embroideryIcon.style.display='none';
+
 }else{
+
 embroideryIcon.setAttribute('href',icon);
-embroideryIcon.style.display = 'block';
+
+embroideryIcon.style.display='block';
+
 }
+
 });
+
 });
 
 document.querySelectorAll('.product-btn').forEach(btn=>{
+
 btn.addEventListener('click',()=>{
-document.querySelectorAll('.product-btn').forEach(b=>b.classList.remove('active'));
+
+document
+.querySelectorAll('.product-btn')
+.forEach(b=>b.classList.remove('active'));
+
 btn.classList.add('active');
 
 const product = products[btn.dataset.product];
 
-productImage.setAttribute('href',product.image);
+productImage.setAttribute(
+'href',
+product.image
+);
 
-zoneFrame.setAttribute('x',product.zone.x);
-zoneFrame.setAttribute('y',product.zone.y);
-zoneFrame.setAttribute('width',product.zone.w);
-zoneFrame.setAttribute('height',product.zone.h);
+zoneFrame.setAttribute(
+'x',
+product.zone.x
+);
 
-embroideryText.setAttribute('x',product.text.x);
-embroideryText.setAttribute('y',product.text.y);
+zoneFrame.setAttribute(
+'y',
+product.zone.y
+);
 
-embroideryIcon.setAttribute('x',product.text.x - 30);
-embroideryIcon.setAttribute('y',product.text.y - 90);
+zoneFrame.setAttribute(
+'width',
+product.zone.w
+);
+
+zoneFrame.setAttribute(
+'height',
+product.zone.h
+);
+
+embroideryText.setAttribute(
+'x',
+product.text.x
+);
+
+embroideryText.setAttribute(
+'y',
+product.text.y
+);
+
+embroideryIcon.setAttribute(
+'x',
+product.text.x - 30
+);
+
+embroideryIcon.setAttribute(
+'y',
+product.text.y - 90
+);
 
 updateText();
-});
-});
-
-const modal = document.getElementById('orderModal');
-
-document.getElementById('openOrder').addEventListener('click',()=>{
-modal.style.display='flex';
-});
-
-document.getElementById('closeModal').addEventListener('click',()=>{
-modal.style.display='none';
-});
-
-document.getElementById('submitOrder').addEventListener('click',()=>{
-
-const order = {
-product:document.querySelector('.product-btn.active').innerText,
-text:textInput.value,
-font:document.querySelector('.font-btn.active').innerText,
-thread:document.querySelector('.color.active').dataset.color,
-icon:document.querySelector('.icon-btn.active').dataset.icon,
-name:document.getElementById('customerName').value,
-email:document.getElementById('customerEmail').value,
-phone:document.getElementById('customerPhone').value,
-address:document.getElementById('customerAddress').value,
-note:document.getElementById('customerNote').value
-};
-
-console.log(order);
-
-alert('Tu potom napojíte Google Sheets alebo Apps Script API 😄');
-
-/*
-fetch('SEM_DAS_GOOGLE_SCRIPT_URL',{
-method:'POST',
-headers:{
-'Content-Type':'application/json'
-},
-body:JSON.stringify(order)
-})
-*/
 
 });
+
+});
+
 </script>
 
 </body>
 </html>
-```
-
-# ČO MUSÍŠ NAHRAŤ DO ROVNAKÉHO PRIEČINKU
-
-* tricko.svg
-* body.svg
-* uterak.svg
-* brindak.svg
-* hviezda.png
-* srdce.png
-* medved.png
-* zajko.png
-* motyl.png
-
-# ČO SME OPRAVILI
-
-✅ SVG systém namiesto absolute pozícií
-✅ Stabilné na mobile aj PC
-✅ Fixný preview canvas
-✅ Prepínanie produktov
-✅ Modal objednávka
-✅ Ready na Google Sheets API
-✅ Sticky mobile UX
-✅ Profesionálnejší vzhľad
-✅ Architektúra pripravená na budúce upgrady
-
-# ČO MÔŽETE PRIDAŤ NESKÔR
-
-* drag & drop textu
-* resize textu
-* upload vlastného obrázka
-* viac pozícií výšivky
-* live cena
-* animácie stehov
-* export preview obrázka
-* Pay by Square QR
-* reCAPTCHA
-* uloženie návrhu
