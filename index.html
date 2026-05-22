@@ -1,5 +1,5 @@
 <!-- ========================================= -->
-<!-- TVODO CUSTOMIZER V6 -->
+<!-- TVODO CUSTOMIZER V7 -->
 <!-- ========================================= -->
 
 <!DOCTYPE html>
@@ -165,6 +165,14 @@ background:linear-gradient(90deg,var(--pink),var(--blue));
 font-size:14px;
 line-height:1.7;
 color:#666;
+margin-top:6px;
+}
+
+.made-in{
+margin-top:10px;
+font-size:12px;
+color:#999;
+line-height:1.7;
 }
 
 .product-bar{
@@ -230,10 +238,6 @@ max-width:760px;
 transition:0.35s;
 }
 
-.preview-window:hover svg{
-transform:scale(1.01);
-}
-
 #productImage{
 filter:drop-shadow(0 20px 30px rgba(0,0,0,0.08));
 transition:0.35s;
@@ -285,6 +289,27 @@ opacity:0;
 animation:sparkle 0.7s ease;
 }
 
+.preview-badge{
+position:absolute;
+top:18px;
+right:18px;
+padding:10px 14px;
+border-radius:20px;
+background:white;
+font-size:12px;
+font-weight:700;
+box-shadow:0 10px 20px rgba(0,0,0,0.06);
+z-index:10;
+}
+
+.preview-note{
+text-align:center;
+font-size:13px;
+color:#777;
+margin-top:10px;
+line-height:1.7;
+}
+
 .right{
 background:rgba(255,255,255,0.56);
 backdrop-filter:blur(22px);
@@ -329,6 +354,20 @@ margin-top:24px;
 font-size:16px;
 font-weight:700;
 margin-bottom:12px;
+}
+
+.helper{
+font-size:13px;
+line-height:1.7;
+color:#777;
+margin-top:10px;
+}
+
+.warning{
+margin-top:10px;
+color:#ff6c93;
+font-size:13px;
+display:none;
 }
 
 textarea{
@@ -462,6 +501,16 @@ transform:scale(1.08);
 outline:4px solid rgba(125,175,255,0.25);
 }
 
+.quote-box{
+margin-top:18px;
+padding:16px;
+border-radius:18px;
+background:rgba(255,255,255,0.55);
+font-size:13px;
+line-height:1.8;
+color:#777;
+}
+
 .order-btn{
 width:100%;
 border:none;
@@ -479,43 +528,6 @@ margin-top:28px;
 
 .order-btn:hover{
 transform:translateY(-4px);
-}
-
-.helper{
-font-size:13px;
-line-height:1.7;
-color:#777;
-margin-top:10px;
-}
-
-.warning{
-margin-top:10px;
-color:#ff6c93;
-font-size:13px;
-display:none;
-}
-
-.quote-box{
-margin-top:18px;
-padding:16px;
-border-radius:18px;
-background:rgba(255,255,255,0.55);
-font-size:13px;
-line-height:1.8;
-color:#777;
-}
-
-.preview-badge{
-position:absolute;
-top:18px;
-right:18px;
-padding:10px 14px;
-border-radius:20px;
-background:white;
-font-size:12px;
-font-weight:700;
-box-shadow:0 10px 20px rgba(0,0,0,0.06);
-z-index:10;
 }
 
 @media(max-width:1200px){
@@ -583,7 +595,11 @@ TVODO
 </div>
 
 <div class="logo-sub">
-Navrhnite si vlastnú jemnú výšivku presne podľa seba ✨
+Navrhnite si vlastnú jemnú výšivku pre seba alebo ako krásny darček ✨
+</div>
+
+<div class="made-in">
+Vyrobené s láskou na Slovensku 🇸🇰
 </div>
 
 </div>
@@ -610,7 +626,7 @@ Bryndák
 <div class="preview-window">
 
 <div class="preview-badge">
-🪡 Live Preview
+🪡 Náhľad výšivky
 </div>
 
 <div class="sparkle" id="sparkle"></div>
@@ -654,6 +670,10 @@ y="430"></text>
 
 </div>
 
+<div class="preview-note">
+🎀 Výsledná výšivka bude jemná, elegantná a pripravená presne podľa vášho návrhu.
+</div>
+
 </div>
 
 </div>
@@ -661,36 +681,30 @@ y="430"></text>
 <div class="right">
 
 <div class="title">
-Vytvorte si vlastnú výšivku
+Navrhnite si svoju výšivku
 </div>
 
 <div class="subtitle">
-Každý produkt vyrábame individuálne podľa vášho návrhu.
-</div>
-
-<div class="info-box">
-🪡 Jemná výšivka kvalitnými niťami.<br><br>
-✨ Každý kus pripravujeme individuálne.<br><br>
-💌 Náhľad slúži ako realistická vizualizácia vašej výšivky.
+Vytvorte si originálny kúsok presne podľa seba. Každá výšivka je pripravovaná individuálne s dôrazom na detail.
 </div>
 
 <div class="section">
 
 <div class="section-title">
-Text výšivky
+Čo vám vyšijeme?
 </div>
 
 <textarea
 id="textInput"
 maxlength="34"
-placeholder="Napíšte meno alebo krátky text..."></textarea>
+placeholder="Napríklad: Mia, Love, Baby Boy..."></textarea>
 
 <div class="helper">
-Maximálne 3 riadky. So symbolom iba 2 riadky.
+Napíšte meno, venovanie alebo krátky text ktorý chcete vyšiť.
 </div>
 
 <div class="warning" id="warningText">
-⚠ Dlhší text bude vyšitý menším písmom
+⚠ Dlhší text bude automaticky vyšitý menším písmom
 </div>
 
 </div>
@@ -698,7 +712,7 @@ Maximálne 3 riadky. So symbolom iba 2 riadky.
 <div class="section">
 
 <div class="section-title">
-Symbol do výšivky
+Pridajte malý detail ✨
 </div>
 
 <div class="row">
@@ -725,18 +739,22 @@ Symbol do výšivky
 
 </div>
 
+<div class="helper">
+Vyberte si jemný symbol ktorý doplní vašu výšivku.
+</div>
+
 </div>
 
 <div class="section">
 
 <div class="section-title">
-Kde chcete výšivku?
+Kam umiestniť výšivku?
 </div>
 
 <div class="row">
 
 <button class="btn position-btn active" data-position="center">
-Na stred
+Na stred trička
 </button>
 
 <button class="btn position-btn" data-position="chest">
@@ -765,12 +783,16 @@ Biele
 
 </div>
 
+<div class="helper">
+Vyberte si farbu produktu na ktorom bude výšivka vytvorená.
+</div>
+
 </div>
 
 <div class="section">
 
 <div class="section-title">
-Veľkosť produktu
+Vyberte veľkosť
 </div>
 
 <div class="row">
@@ -781,6 +803,10 @@ Veľkosť produktu
 <button class="btn size-btn">XL</button>
 <button class="btn size-btn">2XL</button>
 
+</div>
+
+<div class="helper">
+Veľkosti sa môžu jemne líšiť podľa typu produktu.
 </div>
 
 </div>
@@ -820,6 +846,10 @@ Písaný
 
 </button>
 
+</div>
+
+<div class="helper">
+Každý štýl pôsobí pri výšivke trochu inak — skúste si ten ktorý sa vám páči najviac ✨
 </div>
 
 </div>
@@ -864,10 +894,28 @@ style="background:white;border:2px solid #ddd"></div>
 
 </div>
 
+<div class="helper">
+Tu si vyberáte farbu nite ktorou bude vaša výšivka vyšivaná.
+</div>
+
 </div>
 
 <div class="quote-box">
-✨ Tip: Kratšie mená a jednoduché symboly vyzerajú pri výšivke najluxusnejšie.
+💡 Tip: Kratšie mená a jednoduché symboly pôsobia pri výšivke elegantnejšie a čitateľnejšie.
+</div>
+
+<div class="quote-box">
+✨ Každý návrh vyrábame na objednávku a pripravujeme ho presne pre vás.
+</div>
+
+<div class="info-box" style="margin-top:24px">
+
+🪡 Každú výšivku pripravujeme individuálne podľa vášho návrhu.<br><br>
+
+✨ Náhľad slúži ako vizualizácia — výsledná výšivka môže byť jemne upravená podľa reálneho rámčeka a technológie vyšívania.<br><br>
+
+💌 Jednoduchšie a kratšie návrhy pôsobia pri výšivke najkrajšie.
+
 </div>
 
 <button class="order-btn">
@@ -891,6 +939,7 @@ const warningText = document.getElementById('warningText');
 let currentPosition = 'center';
 let selectedSymbol = '';
 let currentThreadColor = '#ff7cc6';
+let stableFontSize = 42;
 
 const positions = {
 
@@ -950,7 +999,7 @@ sparkle.classList.add('active');
 
 }
 
-function fitTextToZone(){
+function renderText(){
 
 const zone = positions[currentPosition];
 
@@ -965,17 +1014,9 @@ const centerY = zone.y + zone.h/2;
 
 let fontSize = 42;
 
-let maxLines = 3;
+let maxLines = selectedSymbol !== '' ? 2 : 3;
 
-if(selectedSymbol !== ''){
-maxLines = 2;
-}
-
-let symbolOffset = 0;
-
-if(selectedSymbol !== ''){
-symbolOffset = 26;
-}
+let symbolOffset = selectedSymbol !== '' ? 26 : 0;
 
 const words = text.split(' ');
 
@@ -987,7 +1028,7 @@ words.forEach(word=>{
 const testLine =
 (currentLine + ' ' + word).trim();
 
-if(testLine.length > 11){
+if(testLine.length > 10){
 
 if(currentLine !== ''){
 lines.push(currentLine);
@@ -1011,13 +1052,6 @@ lines = lines.slice(0,maxLines);
 
 embroideryText.innerHTML='';
 
-embroideryText.setAttribute('x',centerX);
-
-embroideryText.setAttribute(
-'y',
-centerY + symbolOffset
-);
-
 if(lines.length >= 2){
 fontSize = 34;
 }
@@ -1038,7 +1072,7 @@ document.createElementNS(
 );
 
 const totalHeight =
-(lines.length-1) * 38;
+(lines.length-1) * 36;
 
 tspan.setAttribute('x',centerX);
 
@@ -1050,7 +1084,7 @@ symbolOffset
 -
 (totalHeight/2)
 +
-(index*38)
+(index*36)
 );
 
 tspan.textContent = line;
@@ -1081,7 +1115,27 @@ bbox = embroideryText.getBBox();
 
 }
 
+stableFontSize = fontSize;
+
 });
+
+if(text.length > 18){
+
+warningText.style.display='block';
+
+}else{
+
+warningText.style.display='none';
+
+}
+
+}
+
+function updateVisuals(){
+
+const zone = positions[currentPosition];
+
+const centerX = zone.x + zone.w/2;
 
 if(selectedSymbol !== ''){
 
@@ -1102,9 +1156,6 @@ zone.y + 8
 
 symbolLayer.style.display='block';
 
-symbolLayer.style.animation =
-'symbolDrop 0.55s ease';
-
 symbolLayer.style.filter =
 hexToFilter(currentThreadColor);
 
@@ -1114,19 +1165,10 @@ symbolLayer.style.display='none';
 
 }
 
-if(text.length > 18){
-
-warningText.style.display='block';
-
-}else{
-
-warningText.style.display='none';
-
 }
 
-}
-
-fitTextToZone();
+renderText();
+updateVisuals();
 
 textInput.addEventListener('input',()=>{
 
@@ -1144,7 +1186,7 @@ value.substring(0,maxChars);
 
 }
 
-fitTextToZone();
+renderText();
 
 });
 
@@ -1160,7 +1202,7 @@ btn.classList.add('active');
 embroideryText.style.fontFamily =
 btn.dataset.font;
 
-fitTextToZone();
+renderText();
 
 });
 
@@ -1180,8 +1222,7 @@ currentThreadColor = color.dataset.color;
 embroideryText.style.fill =
 currentThreadColor;
 
-symbolLayer.style.filter =
-hexToFilter(currentThreadColor);
+updateVisuals();
 
 });
 
@@ -1201,31 +1242,13 @@ currentPosition = btn.dataset.position;
 const zone =
 positions[currentPosition];
 
-zoneFrame.setAttribute(
-'x',
-zone.x
-);
+zoneFrame.setAttribute('x',zone.x);
+zoneFrame.setAttribute('y',zone.y);
+zoneFrame.setAttribute('width',zone.w);
+zoneFrame.setAttribute('height',zone.h);
 
-zoneFrame.setAttribute(
-'y',
-zone.y
-);
-
-zoneFrame.setAttribute(
-'width',
-zone.w
-);
-
-zoneFrame.setAttribute(
-'height',
-zone.h
-);
-
-setTimeout(()=>{
-
-fitTextToZone();
-
-},20);
+renderText();
+updateVisuals();
 
 });
 
@@ -1284,7 +1307,11 @@ selectedSymbol = btn.dataset.symbol;
 
 showSparkle();
 
-fitTextToZone();
+symbolLayer.style.animation =
+'symbolDrop 0.55s ease';
+
+renderText();
+updateVisuals();
 
 if(navigator.vibrate){
 navigator.vibrate(18);
