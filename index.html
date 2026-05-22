@@ -142,9 +142,9 @@ padding-bottom:4px;
 }
 
 .product-btn{
-min-width:120px;
+min-width:160px;
 border:none;
-padding:18px 18px;
+padding:18px 22px;
 border-radius:24px;
 background:white;
 font-weight:600;
@@ -162,8 +162,11 @@ font-size:15px;
 transform:translateY(-4px) scale(1.03);
 }
 
-.product-btn span{
-font-size:34px;
+.product-preview-icon{
+width:72px;
+height:72px;
+object-fit:contain;
+filter:drop-shadow(0 10px 16px rgba(0,0,0,0.08));
 }
 
 .product-btn.active{
@@ -554,17 +557,17 @@ Navrhnite si vlastnú jemnú výšivku na oblečenie pre deti aj dospelých ✨
 <div class="product-bar">
 
 <button class="product-btn active" data-product="shirt">
-<span>👕</span>
+<img src="shirt.svg" class="product-preview-icon">
 Tričko
 </button>
 
 <button class="product-btn" data-product="body">
-<span>🍼</span>
+<img src="body.svg" class="product-preview-icon">
 Body
 </button>
 
 <button class="product-btn" data-product="bib">
-<span>🧸</span>
+<img src="bib.svg" class="product-preview-icon">
 Bryndák
 </button>
 
@@ -693,6 +696,64 @@ Písaný
 <div class="section">
 
 <div class="section-head">
+<div class="section-title">Umiestnenie výšivky</div>
+</div>
+
+<div class="row">
+
+<button class="btn position-btn active" data-position="center">
+Na stred
+</button>
+
+<button class="btn position-btn" data-position="chest">
+Na prsia
+</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-head">
+<div class="section-title">Farba trička</div>
+</div>
+
+<div class="row">
+
+<button class="btn shirt-color-btn active" data-shirt="#ffffff">
+Biele
+</button>
+
+<button class="btn shirt-color-btn" data-shirt="#2a2a2a">
+Čierne
+</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-head">
+<div class="section-title">Veľkosť produktu</div>
+</div>
+
+<div class="row">
+
+<button class="btn size-btn active">S</button>
+<button class="btn size-btn">M</button>
+<button class="btn size-btn">L</button>
+<button class="btn size-btn">XL</button>
+<button class="btn size-btn">2XL</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-head">
 <div class="section-title">Farba nite</div>
 
 <div class="info-tip">
@@ -726,6 +787,25 @@ style="background:#f4c542"></div>
 data-color="black"
 style="background:black"></div>
 
+<div class="color"
+data-color="white"
+style="background:white;border:2px solid #ddd"></div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-head">
+<div class="section-title">Symbol do textu</div>
+</div>
+
+<div class="row">
+<button class="btn symbol-btn" data-symbol="♥">♥</button>
+<button class="btn symbol-btn" data-symbol="★">★</button>
+<button class="btn symbol-btn" data-symbol="✿">✿</button>
+<button class="btn symbol-btn" data-symbol="☾">☾</button>
 </div>
 
 </div>
@@ -816,25 +896,37 @@ const products = {
 
 shirt:{
 image:'shirt.svg',
-zone:{x:410,y:260,w:180,h:180}
+shirtColor:'#ffffff',
+positions:{
+center:{x:350,y:320,w:300,h:220},
+chest:{x:520,y:320,w:170,h:170}
+}
 },
 
 body:{
 image:'body.svg',
-zone:{x:420,y:310,w:160,h:160}
+positions:{
+center:{x:420,y:310,w:160,h:160}
+}
 },
 
 bib:{
 image:'bib.svg',
-zone:{x:410,y:300,w:180,h:180}
+positions:{
+center:{x:410,y:300,w:180,h:180}
+}
 }
 
 };
 
+let currentPosition = 'center';
+let currentShirtColor = '#ffffff';
+let insertedSymbol = '';
+
 function fitTextToZone(){
 
 const activeProduct = document.querySelector('.product-btn.active').dataset.product;
-const zone = products[activeProduct].zone;
+const zone = products[activeProduct].positions[currentPosition];
 
 let text = textInput.value.trim();
 
@@ -963,10 +1055,91 @@ btn.addEventListener('click',()=>{
 
  productImage.setAttribute('href',product.image);
 
- zoneFrame.setAttribute('x',product.zone.x);
- zoneFrame.setAttribute('y',product.zone.y);
- zoneFrame.setAttribute('width',product.zone.w);
- zoneFrame.setAttribute('height',product.zone.h);
+ if(!product.positions[currentPosition]){
+ currentPosition = 'center';
+ }
+
+ const zone = product.positions[currentPosition];
+
+ zoneFrame.setAttribute('x',zone.x);
+ zoneFrame.setAttribute('y',zone.y);
+ zoneFrame.setAttribute('width',zone.w);
+ zoneFrame.setAttribute('height',zone.h);
+
+ fitTextToZone();
+
+});
+
+});
+
+document.querySelectorAll('.position-btn').forEach(btn=>{
+
+btn.addEventListener('click',()=>{
+
+ document.querySelectorAll('.position-btn').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+
+ currentPosition = btn.dataset.position;
+
+ const activeProduct = document.querySelector('.product-btn.active').dataset.product;
+ const product = products[activeProduct];
+
+ if(!product.positions[currentPosition]) return;
+
+ const zone = product.positions[currentPosition];
+
+ zoneFrame.setAttribute('x',zone.x);
+ zoneFrame.setAttribute('y',zone.y);
+ zoneFrame.setAttribute('width',zone.w);
+ zoneFrame.setAttribute('height',zone.h);
+
+ fitTextToZone();
+
+});
+
+});
+
+document.querySelectorAll('.shirt-color-btn').forEach(btn=>{
+
+btn.addEventListener('click',()=>{
+
+ document.querySelectorAll('.shirt-color-btn').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+
+ currentShirtColor = btn.dataset.shirt;
+
+ if(currentShirtColor === '#2a2a2a'){
+ productImage.style.filter = 'brightness(0.22) drop-shadow(0 14px 24px rgba(0,0,0,0.18))';
+ }else{
+ productImage.style.filter = 'brightness(1) drop-shadow(0 14px 24px rgba(0,0,0,0.06))';
+ }
+
+});
+
+});
+
+document.querySelectorAll('.size-btn').forEach(btn=>{
+
+btn.addEventListener('click',()=>{
+
+ document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+
+});
+
+});
+
+document.querySelectorAll('.symbol-btn').forEach(btn=>{
+
+btn.addEventListener('click',()=>{
+
+ const symbol = btn.dataset.symbol;
+
+ let value = textInput.value;
+
+ value = value.replace(/[♥★✿☾]/g,'').trim();
+
+ textInput.value = value + ' ' + symbol;
 
  fitTextToZone();
 
