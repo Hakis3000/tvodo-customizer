@@ -1,340 +1,1752 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TVODO – Customizer</title>
+
+<title>TVODO - Vyšívané tričká</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Fredoka:wght@500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
 
-/* ======== POZADIE – pastelové ======== */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+:root{
+
+--pink:#ff7cc6;
+--blue:#7dafff;
+
+--bg1:#fff8fc;
+--bg2:#eef5ff;
+
+}
+
 body{
-    margin:0;
-    font-family:Poppins, sans-serif;
-    background:linear-gradient(135deg, #ffffff, #f7e9ff, #e3f0ff);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    color:#333;
+
+font-family:Poppins,sans-serif;
+
+background:
+linear-gradient(
+135deg,
+var(--bg1),
+var(--bg2)
+);
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+color:#222;
+
 }
 
-/* ======== TOPBAR ======== */
-.topbar{
-    width:100%;
-    height:80px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:25px;
-    background:rgba(255,255,255,0.7);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid rgba(0,0,0,0.05);
-    position:sticky;
-    top:0;
-    z-index:10;
+/* BACKGROUND */
+
+.bg{
+
+position:fixed;
+
+border-radius:50%;
+
+filter:blur(130px);
+
+opacity:0.18;
+
+z-index:-1;
+
 }
 
-.topbar .item{
-    padding:12px 22px;
-    background:white;
-    border-radius:16px;
-    border:2px solid #ffd4f0;
-    cursor:pointer;
-    transition:0.25s;
-    font-weight:600;
-    color:#444;
-    box-shadow:0 4px 0 #f5bde6;
+.bg1{
+
+width:500px;
+height:500px;
+
+background:var(--pink);
+
+top:-200px;
+left:-180px;
+
 }
 
-.topbar .item:hover{
-    transform:translateY(-3px);
-    box-shadow:0 6px 0 #eaa7d8;
+.bg2{
+
+width:500px;
+height:500px;
+
+background:var(--blue);
+
+bottom:-200px;
+right:-180px;
+
 }
 
-/* ======== HLAVNÝ CONTAINER ======== */
-.container{
-    width:1200px;
-    margin-top:40px;
-    display:grid;
-    grid-template-columns:1fr 380px;
-    gap:40px;
+/* ANIMATIONS */
+
+@keyframes glow{
+
+0%{
+
+box-shadow:
+0 0 0 rgba(255,124,198,0);
+
 }
 
-/* ======== PREVIEW BOX ======== */
-.preview-box{
-    width:100%;
-    padding:40px;
-    border-radius:20px;
-    background:white;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
-    display:flex;
-    justify-content:center;
-    align-items:center;
+50%{
+
+box-shadow:
+0 0 26px rgba(255,124,198,0.28);
+
 }
 
-/* ======== PANEL ======== */
-.panel{
-    height:calc(100vh - 140px);
-    overflow-y:auto;
-    padding:25px;
-    border-radius:20px;
-    background:white;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
-    display:flex;
-    flex-direction:column;
-    gap:30px;
+100%{
+
+box-shadow:
+0 0 0 rgba(255,124,198,0);
+
 }
 
-/* ======== SEKČNÉ NADPISY ======== */
+}
+
+@keyframes floaty{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-6px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+@keyframes shimmer{
+
+0%{
+transform:translateX(-100%);
+}
+
+100%{
+transform:translateX(100%);
+}
+
+}
+
+/* MAIN */
+
+.app{
+
+width:100%;
+
+max-width:1800px;
+
+margin:auto;
+
+padding:22px;
+
+display:grid;
+
+grid-template-columns:
+minmax(0,1fr)
+430px;
+
+gap:22px;
+
+align-items:start;
+
+}
+
+/* LEFT */
+
+.left{
+
+position:sticky;
+
+top:22px;
+
+height:calc(100vh - 44px);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+/* PREVIEW CARD */
+
+.preview-card{
+
+width:100%;
+height:100%;
+
+background:
+rgba(255,255,255,0.56);
+
+backdrop-filter:blur(18px);
+
+border:
+1px solid rgba(255,255,255,0.5);
+
+border-radius:34px;
+
+padding:0;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,0.07);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+overflow:hidden;
+
+animation:
+floaty 6s ease-in-out infinite;
+
+}
+
+/* PREVIEW */
+
+.preview{
+
+position:relative;
+
+width:100%;
+
+height:780px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+overflow:hidden;
+
+}
+
+/* SHIRT */
+
+.shirt{
+
+width:1600px;
+
+object-fit:contain;
+
+user-select:none;
+pointer-events:none;
+
+transition:0.3s;
+
+filter:
+drop-shadow(0 24px 40px rgba(0,0,0,0.1));
+
+}
+
+.black-shirt{
+
+filter:
+brightness(0.18)
+drop-shadow(0 24px 40px rgba(0,0,0,0.25));
+
+}
+
+/* EMBROIDERY */
+
+.embroidery-zone{
+
+position:absolute;
+
+top:200px;
+
+left:52%;
+
+transform:translateX(-50%);
+
+width:170px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+gap:0;
+
+z-index:5;
+
+}
+
+/* ICON */
+
+.icon-img{
+
+width:42px;
+height:42px;
+
+object-fit:contain;
+
+display:none;
+
+margin-bottom:-4px;
+
+filter:
+drop-shadow(0 2px 5px rgba(0,0,0,0.12));
+
+}
+
+/* TEXT */
+
+.text{
+
+font-family:'Montserrat';
+
+font-size:18px;
+
+font-weight:700;
+
+line-height:1.08;
+
+text-align:center;
+
+white-space:pre-line;
+
+max-width:100%;
+
+padding:0 4px;
+
+overflow-wrap:break-word;
+
+color:#ff7cc6;
+
+text-shadow:
+0 1px 1px rgba(255,255,255,0.4),
+0 2px 5px rgba(0,0,0,0.08);
+
+transition:0.2s;
+
+}
+
+/* RIGHT PANEL */
+
+.right{
+
+background:
+rgba(255,255,255,0.5);
+
+backdrop-filter:blur(18px);
+
+border:
+1px solid rgba(255,255,255,0.5);
+
+border-radius:34px;
+
+padding:24px;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,0.06);
+
+}
+
+/* TITLE */
+
+.title{
+
+font-size:34px;
+
+font-weight:700;
+
+line-height:1.05;
+
+margin-bottom:8px;
+
+background:
+linear-gradient(
+90deg,
+var(--pink),
+var(--blue)
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.subtitle{
+
+font-size:14px;
+
+line-height:1.7;
+
+color:#666;
+
+margin-bottom:22px;
+
+}
+
+/* INFO BOX */
+
+.handmade{
+
+margin-top:14px;
+
+padding:18px;
+
+border-radius:22px;
+
+background:
+rgba(255,255,255,0.55);
+
+font-size:13px;
+
+line-height:1.8;
+
+color:#666;
+
+border:
+1px solid rgba(255,255,255,0.45);
+
+}
+
+/* SECTION */
+
+.section{
+
+margin-top:24px;
+
+}
+
+.section-head{
+
+display:flex;
+align-items:center;
+gap:8px;
+
+margin-bottom:12px;
+
+}
+
 .section-title{
-    font-weight:700;
-    font-size:18px;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    color:#444;
+
+font-size:15px;
+font-weight:700;
+
 }
 
-/* ======== INFO IKONKA ======== */
-.info{
-    width:18px;
-    height:18px;
-    background:#ff7cc6;
-    color:white;
-    border-radius:50%;
-    font-size:12px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    cursor:pointer;
-    position:relative;
-}
-.info:hover::after{
-    content:attr(data-tip);
-    position:absolute;
-    top:25px;
-    left:0;
-    background:#333;
-    color:white;
-    padding:6px 10px;
-    border-radius:8px;
-    font-size:12px;
-    white-space:nowrap;
+/* TOOLTIP */
+
+.info-tip{
+
+width:18px;
+height:18px;
+
+border-radius:50%;
+
+background:
+linear-gradient(
+135deg,
+var(--pink),
+var(--blue)
+);
+
+color:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:11px;
+font-weight:700;
+
+cursor:pointer;
+
+position:relative;
+
 }
 
-/* ======== 3D TLAČIDLÁ ======== */
-.btn-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
+.tip-box{
+
+position:absolute;
+
+top:-8px;
+left:26px;
+
+width:230px;
+
+padding:12px;
+
+background:white;
+
+border-radius:16px;
+
+font-size:12px;
+
+line-height:1.5;
+
+color:#555;
+
+box-shadow:
+0 16px 34px rgba(0,0,0,0.12);
+
+opacity:0;
+
+pointer-events:none;
+
+transform:translateY(4px);
+
+transition:0.2s;
+
+z-index:100;
+
 }
+
+.info-tip:hover .tip-box{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+/* TEXTAREA */
+
+textarea{
+
+width:100%;
+
+min-height:110px;
+
+padding:16px;
+
+border:none;
+
+outline:none;
+
+resize:none;
+
+border-radius:22px;
+
+font-size:15px;
+
+font-family:Poppins,sans-serif;
+
+background:white;
+
+box-shadow:
+0 8px 18px rgba(0,0,0,0.05);
+
+transition:0.2s;
+
+}
+
+textarea:focus{
+
+box-shadow:
+0 0 0 4px rgba(255,124,198,0.12),
+0 12px 28px rgba(0,0,0,0.08);
+
+transform:translateY(-1px);
+
+}
+
+/* INFO ROW */
+
+.info-row{
+
+display:flex;
+justify-content:space-between;
+
+margin-top:8px;
+
+font-size:13px;
+
+color:#777;
+
+}
+
+/* BUTTON ROW */
+
+.row{
+
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+
+}
+
+/* BUTTON */
 
 .btn{
-    padding:12px 20px;
-    background:#ffffff;
-    border-radius:14px;
-    border:2px solid #e3d9ff;
-    cursor:pointer;
-    transition:0.2s;
-    font-weight:600;
-    color:#444;
-    box-shadow:0 5px 0 #cfc3ff;
+
+border:none;
+
+padding:12px 16px;
+
+border-radius:16px;
+
+background:white;
+
+cursor:pointer;
+
+font-size:14px;
+font-weight:600;
+
+transition:0.2s;
+
+box-shadow:
+0 8px 18px rgba(0,0,0,0.05);
+
 }
 
 .btn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 7px 0 #b7a7ff;
+
+transform:
+translateY(-3px)
+scale(1.03);
+
+box-shadow:
+0 12px 26px rgba(255,124,198,0.16);
+
 }
 
 .btn.active{
-    background:#e8d9ff;
-    border-color:#bfa3ff;
-    transform:translateY(-4px);
-    box-shadow:0 8px 0 #a48cff;
+
+background:
+linear-gradient(
+135deg,
+var(--pink),
+var(--blue)
+);
+
+color:white;
+
 }
 
-/* ======== INPUT ======== */
-input{
-    padding:14px;
-    width:100%;
-    border-radius:14px;
-    border:2px solid #e3d9ff;
-    font-size:16px;
-    background:white;
-    color:#444;
-    box-shadow:0 4px 0 #cfc3ff;
+/* SIZE */
+
+.size-btn{
+
+min-width:64px;
+
 }
 
-input:focus{
-    outline:none;
-    border-color:#bfa3ff;
-    box-shadow:0 5px 0 #b7a7ff;
+/* ICON BUTTONS */
+
+.icon-btn{
+
+width:86px;
+height:86px;
+
+padding:0;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+overflow:hidden;
+
 }
 
-svg{
-    max-width:100%;
-    height:auto;
+.icon-btn img{
+
+width:56px;
+height:56px;
+
+object-fit:contain;
+
+}
+
+/* COLORS */
+
+.colors{
+
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+
+}
+
+.color{
+
+width:46px;
+height:46px;
+
+border-radius:50%;
+
+cursor:pointer;
+
+border:3px solid white;
+
+box-shadow:
+0 8px 16px rgba(0,0,0,0.08);
+
+transition:0.2s;
+
+}
+
+.color:hover{
+
+transform:scale(1.08);
+
+}
+
+.color.active{
+
+outline:4px solid rgba(125,175,255,0.26);
+
+}
+
+/* ORDER BUTTON */
+
+.order-btn{
+
+width:100%;
+
+margin-top:28px;
+
+padding:18px;
+
+border:none;
+
+border-radius:22px;
+
+cursor:pointer;
+
+font-size:16px;
+font-weight:700;
+
+color:white;
+
+background:
+linear-gradient(
+135deg,
+var(--pink),
+var(--blue)
+);
+
+box-shadow:
+0 16px 28px rgba(122,168,255,0.26);
+
+transition:0.2s;
+
+animation:
+glow 3s infinite;
+
+}
+
+.order-btn:hover{
+
+transform:
+translateY(-4px)
+scale(1.01);
+
+}
+
+/* MESSAGE */
+
+.custom-message{
+
+margin-top:20px;
+
+padding:16px;
+
+border-radius:18px;
+
+background:
+rgba(255,255,255,0.58);
+
+border:
+1px solid rgba(255,255,255,0.4);
+
+font-size:13px;
+
+line-height:1.7;
+
+color:#666;
+
+}
+
+/* FEATURES */
+
+.features{
+
+margin-top:22px;
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:12px;
+
+}
+
+.feature{
+
+background:
+rgba(255,255,255,0.56);
+
+border:
+1px solid rgba(255,255,255,0.45);
+
+border-radius:20px;
+
+padding:14px;
+
+display:flex;
+gap:10px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.feature::before{
+
+content:'';
+
+position:absolute;
+
+top:0;
+left:-120%;
+
+width:70%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,0.55),
+transparent
+);
+
+}
+
+.feature:hover::before{
+
+animation:
+shimmer 1.2s;
+
+}
+
+.feature-icon{
+
+width:42px;
+height:42px;
+
+border-radius:14px;
+
+background:white;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:18px;
+
+box-shadow:
+0 6px 14px rgba(0,0,0,0.06);
+
+flex-shrink:0;
+
+}
+
+.feature h3{
+
+font-size:14px;
+
+margin-bottom:2px;
+
+}
+
+.feature p{
+
+font-size:12px;
+
+color:#777;
+
+line-height:1.4;
+
+}
+
+/* MOBILE */
+
+@media(max-width:1200px){
+
+.app{
+
+grid-template-columns:1fr;
+
+}
+
+.left{
+
+position:relative;
+
+top:auto;
+
+height:auto;
+
+}
+
+.preview{
+
+height:520px;
+
+}
+
+.shirt{
+
+width:760px;
+
+}
+
+.embroidery-zone{
+
+top:240px;
+
+left:52%;
+
+width:120px;
+
+}
+
+.text{
+
+font-size:13px;
+
+}
+
+.icon-img{
+
+width:30px;
+height:30px;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.app{
+
+padding:10px;
+
+gap:14px;
+
+}
+
+.preview-card{
+
+border-radius:26px;
+
+}
+
+.right{
+
+padding:18px;
+
+border-radius:26px;
+
+}
+
+.title{
+
+font-size:28px;
+
+}
+
+.features{
+
+grid-template-columns:1fr;
+
+}
+
+.icon-btn{
+
+width:74px;
+height:74px;
+
+}
+
+.icon-btn img{
+
+width:48px;
+height:48px;
+
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- TOPBAR -->
-<div class="topbar">
-    <div class="item">Body</div>
-    <div class="item">Tričko</div>
-    <div class="item">Bryndáčik</div>
-    <div class="item">Uterák</div>
+<div class="bg bg1"></div>
+<div class="bg bg2"></div>
+
+<div class="app">
+
+<!-- LEFT -->
+
+<div class="left">
+
+<div class="preview-card">
+
+<div class="preview">
+
+<img
+src="tricko.svg"
+class="shirt"
+id="shirt"
+>
+
+<div class="embroidery-zone">
+
+<img
+id="iconLayer"
+class="icon-img"
+src=""
+>
+
+<div
+class="text"
+id="textLayer"
+>
 </div>
 
-<!-- HLAVNÝ CONTAINER -->
-<div class="container">
+</div>
 
-    <!-- PREVIEW (TRIČKO) -->
-    <div class="preview-box">
-        <svg id="mainSVG" viewBox="0 0 512 700" width="100%">
+</div>
 
-            <!-- TVOJE SVG TU BUDE VLOŽENÉ -->
+</div>
 
-            <g transform="translate(0,0) scale(1)">
-                <path d="M314.56,48S291.78,56,256,56s-58.56-8-58.56-8a31.94,31.94,0,0,0-10.57,1.8L32,104l16.63,88,48.88,5.52A24,24,0,0,1,118.8,222.1L112,464H400l-6.8-241.9a24,24,0,0,1,21.29-24.58L463.37,192,480,104,325.13,49.8A31.94,31.94,0,0,0,314.56,48Z"
-                      fill="none" stroke="#444" stroke-width="8"/>
-            </g>
+</div>
 
-            <rect id="frame"
-                  x="250" y="200" width="120" height="120"
-                  fill="none"
-                  stroke="#ff7cc6"
-                  stroke-width="2"
-                  stroke-dasharray="1 6"
-                  opacity="0.5"
-                  rx="10"/>
+<!-- RIGHT -->
 
-            <text id="svgText"
-                  x="310" y="240"
-                  text-anchor="middle"
-                  font-family="Poppins"
-                  font-size="26"
-                  font-weight="600"
-                  fill="#444">
+<div class="right">
 
-                <tspan id="line1" x="310" dy="0"></tspan>
-                <tspan id="line2" x="310" dy="28"></tspan>
+<div class="title">
+Vytvor si svoje tričko
+</div>
 
-            </text>
+<div class="subtitle">
+Navrhnite si vlastné vyšívané tričko presne podľa seba.
+</div>
 
-        </svg>
-    </div>
+<div class="handmade">
+🪡 Každé tričko vyrábame individuálne na objednávku.<br><br>
 
-    <!-- PANEL -->
-    <div class="panel">
+✨ Náhľad slúži ako vizualizácia výšivky.<br><br>
 
-        <div>
-            <div class="section-title">
-                Farba trička
-                <div class="info" data-tip="Vyber farbu trička.">i</div>
-            </div>
-            <div class="btn-row" id="shirtColors">
-                <div class="btn" data-color="#ffffff">Biela</div>
-                <div class="btn" data-color="#000000" style="color:white;">Čierna</div>
-            </div>
-        </div>
+💌 Ak chcete väčšiu výšivku alebo vlastný obrázok, napíšte nám správu.
+</div>
 
-        <div>
-            <div class="section-title">
-                Veľkosť
-                <div class="info" data-tip="Vyber veľkosť.">i</div>
-            </div>
-            <div class="btn-row" id="sizes">
-                <div class="btn">S</div>
-                <div class="btn">M</div>
-                <div class="btn">L</div>
-                <div class="btn">XL</div>
-                <div class="btn">2XL</div>
-            </div>
-        </div>
+<!-- FARBA -->
 
-        <div>
-            <div class="section-title">
-                Farba nite
-                <div class="info" data-tip="Vyber farbu výšivky.">i</div>
-            </div>
-            <div class="btn-row" id="threadColors">
-                <div class="btn" data-thread="#444">Tmavá</div>
-                <div class="btn" data-thread="#000000">Čierna</div>
-                <div class="btn" data-thread="#ff7cc6">Ružová</div>
-                <div class="btn" data-thread="#00aaff">Modrá</div>
-            </div>
-        </div>
+<div class="section">
 
-        <div>
-            <div class="section-title">
-                Štýl písma
-                <div class="info" data-tip="Vyber štýl textu.">i</div>
-            </div>
-            <div class="btn-row" id="fonts">
-                <div class="btn" data-font="Poppins">Klasický</div>
-                <div class="btn" data-font="'Comic Sans MS'">Hravý</div>
-                <div class="btn" data-font="'Brush Script MT'">Písaný</div>
-            </div>
-        </div>
+<div class="section-head">
 
-        <div>
-            <div class="section-title">
-                Text
-                <div class="info" data-tip="Napíš text, ktorý sa zobrazí na tričku.">i</div>
-            </div>
-            <input id="textInput" maxlength="16" placeholder="Tvoj text">
-        </div>
+<div class="section-title">
+Farba trička
+</div>
 
-    </div>
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Vyberte si farbu trička. Náhľad výšivky sa automaticky prispôsobí.
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<button
+class="btn shirt-btn active"
+data-shirt="white"
+>
+Biela
+</button>
+
+<button
+class="btn shirt-btn"
+data-shirt="black"
+>
+Čierna
+</button>
+
+</div>
+
+</div>
+
+<!-- SIZE -->
+
+<div class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+Veľkosť
+</div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Dostupné veľkosti od S až po 2XL.
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<button class="btn size-btn">S</button>
+<button class="btn size-btn active">M</button>
+<button class="btn size-btn">L</button>
+<button class="btn size-btn">XL</button>
+<button class="btn size-btn">2XL</button>
+
+</div>
+
+</div>
+
+<!-- TEXT -->
+
+<div class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+Text výšivky
+</div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Text sa automaticky zalomí tak, aby pekne sedel na tričku.
+</div>
+
+</div>
+
+</div>
+
+<textarea
+id="textInput"
+maxlength="40"
+placeholder="Napíšte vlastný text..."
+></textarea>
+
+<div class="info-row">
+
+<div id="counter">
+0 / 40
+</div>
+
+<div>
+Max. 4 riadky
+</div>
+
+</div>
+
+</div>
+
+<!-- FONT -->
+
+<div class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+Štýl výšivky
+</div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Každý štýl vytvorí trochu iný vzhľad výšivky.
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<button
+class="btn font-btn active"
+data-font="Montserrat"
+>
+Moderný
+</button>
+
+<button
+class="btn font-btn"
+data-font="Fredoka"
+>
+Hravý
+</button>
+
+<button
+class="btn font-btn"
+data-font="Dancing Script"
+>
+Písaný
+</button>
+
+</div>
+
+</div>
+
+<!-- COLORS -->
+
+<div class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+Vyberte si niť
+</div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Farba nite sa zobrazí priamo na náhľade trička.
+</div>
+
+</div>
+
+</div>
+
+<div class="colors">
+
+<div
+class="color active"
+data-color="#ff7cc6"
+style="background:#ff7cc6;"
+></div>
+
+<div
+class="color"
+data-color="black"
+style="background:black;"
+></div>
+
+<div
+class="color"
+data-color="white"
+style="
+background:white;
+border:1px solid #ccc;
+"
+></div>
+
+<div
+class="color"
+data-color="#5c86ff"
+style="background:#5c86ff;"
+></div>
+
+<div
+class="color"
+data-color="#69c27d"
+style="background:#69c27d;"
+></div>
+
+<div
+class="color"
+data-color="#f4c542"
+style="background:#f4c542;"
+></div>
+
+</div>
+
+</div>
+
+<!-- ICONS -->
+
+<div class="section">
+
+<div class="section-head">
+
+<div class="section-title">
+Ikonka
+</div>
+
+<div class="info-tip">
+
+i
+
+<div class="tip-box">
+Vyberte si ikonku k výšivke alebo nechajte bez ikonky.
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<button
+class="btn icon-btn active"
+data-icon=""
+>
+✕
+</button>
+
+<button
+class="btn icon-btn"
+data-icon="hviezda.png"
+>
+<img src="hviezda.png">
+</button>
+
+<button
+class="btn icon-btn"
+data-icon="medved.png"
+>
+<img src="medved.png">
+</button>
+
+<button
+class="btn icon-btn"
+data-icon="srdce.png"
+>
+<img src="srdce.png">
+</button>
+
+<button
+class="btn icon-btn"
+data-icon="zajko.png"
+>
+<img src="zajko.png">
+</button>
+
+</div>
+
+</div>
+
+<button class="order-btn">
+🛍️ Pokračovať k objednávke
+</button>
+
+<div class="custom-message">
+Ak máte záujem o väčšiu výšivku alebo vlastný obrázok, napíšte nám správu a pripravíme vám individuálny návrh.
+</div>
+
+<!-- FEATURES -->
+
+<div class="features">
+
+<div class="feature">
+
+<div class="feature-icon">
+🪡
+</div>
+
+<div>
+
+<h3>
+Ručná výroba
+</h3>
+
+<p>
+Každé tričko vyrábame individuálne.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+🚚
+</div>
+
+<div>
+
+<h3>
+Rýchle dodanie
+</h3>
+
+<p>
+Expresné spracovanie objednávok.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+✨
+</div>
+
+<div>
+
+<h3>
+Prémiová výšivka
+</h3>
+
+<p>
+Kvalitné nite s dlhou životnosťou.
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-icon">
+🔒
+</div>
+
+<div>
+
+<h3>
+Bezpečná platba
+</h3>
+
+<p>
+100% zabezpečená objednávka.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 <script>
 
+const textInput =
+document.getElementById("textInput");
+
+const textLayer =
+document.getElementById("textLayer");
+
+const counter =
+document.getElementById("counter");
+
+const iconLayer =
+document.getElementById("iconLayer");
+
+const shirt =
+document.getElementById("shirt");
+
+/* SMART TEXT */
+
+function formatText(value){
+
+const words =
+value.trim().split(/\s+/);
+
+let lines = [];
+let currentLine = '';
+
+words.forEach(word=>{
+
+if(word.length > 10){
+
+if(currentLine !== ''){
+
+lines.push(currentLine);
+
+currentLine = '';
+
+}
+
+lines.push(word);
+
+return;
+
+}
+
+const testLine =
+currentLine === ''
+? word
+: currentLine + ' ' + word;
+
+if(testLine.length <= 10){
+
+currentLine = testLine;
+
+}else{
+
+lines.push(currentLine);
+
+currentLine = word;
+
+}
+
+});
+
+if(currentLine !== ''){
+
+lines.push(currentLine);
+
+}
+
+return lines.slice(0,4).join('\n');
+
+}
+
 /* TEXT */
-const input = document.getElementById("textInput");
-const l1 = document.getElementById("line1");
-const l2 = document.getElementById("line2");
 
-input.addEventListener("input", () => {
-    let text = input.value.trim();
-    const words = text.split(" ");
+textInput.addEventListener(
+"input",
+()=>{
 
-    let line1 = "";
-    let line2 = "";
+const value =
+textInput.value;
 
-    for (let w of words) {
-        if ((line1 + " " + w).trim().length <= 8) {
-            line1 = (line1 + " " + w).trim();
-        } else if ((line2 + " " + w).trim().length <= 8) {
-            line2 = (line2 + " " + w).trim();
-        }
-    }
+const formatted =
+formatText(value);
 
-    l1.textContent = line1;
-    l2.textContent = line2;
+textLayer.innerText =
+formatted;
+
+counter.innerText =
+value.length + " / 40";
+
 });
 
-/* FARBA NITE */
-document.querySelectorAll("#threadColors .btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-        document.querySelectorAll("#threadColors .btn").forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        document.getElementById("svgText").setAttribute("fill", btn.dataset.thread);
-    });
-});
+/* AUTO TYPING */
+
+const demoText =
+"Sem môžete pridať vlastný text ✨";
+
+let typingIndex = 0;
+
+let typingFinished = false;
+
+function typeDemo(){
+
+if(
+typingFinished ||
+textInput.value.length > 0
+){
+return;
+}
+
+textLayer.innerText =
+demoText.substring(0,typingIndex);
+
+typingIndex++;
+
+if(typingIndex <= demoText.length){
+
+setTimeout(typeDemo,70);
+
+}
+
+}
+
+setTimeout(typeDemo,900);
+
+textInput.addEventListener(
+'focus',
+()=>{
+
+typingFinished = true;
+
+if(textInput.value === ''){
+
+textLayer.innerText = '';
+
+}
+
+}
+);
 
 /* FONT */
-document.querySelectorAll("#fonts .btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-        document.querySelectorAll("#fonts .btn").forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        document.getElementById("svgText").setAttribute("font-family", btn.dataset.font);
-    });
+
+document
+.querySelectorAll(".font-btn")
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".font-btn")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+btn.classList.add("active");
+
+textLayer.style.fontFamily =
+btn.dataset.font;
+
+}
+);
+
+});
+
+/* COLORS */
+
+document
+.querySelectorAll(".color")
+.forEach(color=>{
+
+color.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".color")
+.forEach(c=>{
+c.classList.remove("active");
+});
+
+color.classList.add("active");
+
+textLayer.style.color =
+color.dataset.color;
+
+}
+);
+
+});
+
+/* ICONS */
+
+document
+.querySelectorAll(".icon-btn")
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".icon-btn")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+btn.classList.add("active");
+
+const icon =
+btn.dataset.icon;
+
+if(icon === ""){
+
+iconLayer.style.display =
+"none";
+
+iconLayer.src = "";
+
+}else{
+
+iconLayer.style.display =
+"block";
+
+iconLayer.src = icon;
+
+}
+
+}
+);
+
+});
+
+/* SHIRT COLOR */
+
+document
+.querySelectorAll(".shirt-btn")
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".shirt-btn")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+btn.classList.add("active");
+
+const color =
+btn.dataset.shirt;
+
+if(color === "black"){
+
+shirt.classList.add("black-shirt");
+
+}else{
+
+shirt.classList.remove("black-shirt");
+
+}
+
+}
+);
+
+});
+
+/* SIZE */
+
+document
+.querySelectorAll(".size-btn")
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".size-btn")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+btn.classList.add("active");
+
+}
+);
+
 });
 
 </script>
