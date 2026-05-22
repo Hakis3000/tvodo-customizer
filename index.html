@@ -29,30 +29,24 @@ body{
     overflow:hidden;
 }
 
-/* ======== TRIČKO – presne na strede, celé viditeľné ======== */
-.shirt-wrapper{
+/* ======== TRIČKO – presne vystredené, neorezané ======== */
+.product-image{
     position:absolute;
     inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.product-image{
     width:100%;
     height:100%;
     object-fit:contain; /* 🔥 nič sa neoreže */
     pointer-events:none;
 }
 
-/* ======== RÁMČEK – malé ružové bodky ======== */
+/* ======== RÁMČEK – jemné malé ružové bodky ======== */
 .frame-wrapper{
     position:absolute;
 
-    width:26%;          /* jemnejšia veľkosť */
+    width:26%;          /* veľkosť rámčeka */
     aspect-ratio:1/1;
 
-    top:38%;            /* presné umiestnenie podľa obrázka */
+    top:38%;            /* presné umiestnenie */
     left:70%;
     transform:translate(-50%, -50%);
 
@@ -69,8 +63,8 @@ body{
     stroke:#ff7cc6;
     stroke-width:3;
 
-    /* MALÉ BODKY – jemné, nenápadné */
-    stroke-dasharray:0.5 10;
+    /* MALÉ JEMNÉ BODKY */
+    stroke-dasharray:0.5 12;
     stroke-linecap:round;
 
     rx:10;
@@ -84,9 +78,7 @@ body{
 <div class="canvas">
 
     <!-- TRIČKO -->
-    <div class="shirt-wrapper">
-        <img class="product-image" src="tricko.svg">
-    </div>
+    <img class="product-image" src="tricko.svg">
 
     <!-- RÁMČEK -->
     <div class="frame-wrapper">
