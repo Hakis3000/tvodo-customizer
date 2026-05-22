@@ -34,13 +34,11 @@ body{
 .shirt-wrapper{
     position:absolute;
     inset:0;
+
+    /* CENTROVANIE BEZ POSUNU */
     display:flex;
     justify-content:center;
     align-items:center;
-
-    /* POSUN TRIČKA DOPRAVA */
-    left:55%;
-    transform:translateX(-50%);
 
     transform-origin:center center;
     transition:transform 0.2s ease-out;
@@ -49,11 +47,11 @@ body{
 .product-image{
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:contain; /* aby sa nič neodseklo */
     pointer-events:none;
 }
 
-/* ======== RÁMČEK (ružový, bodkovaný, priesvitný) ======== */
+/* ======== RÁMČEK (ružové malé bodky) ======== */
 .frame-wrapper{
     position:absolute;
 
@@ -77,8 +75,12 @@ body{
 .frame-wrapper rect{
     fill:transparent; 
     stroke:#ff7cc6;   
-    stroke-width:6;
-    stroke-dasharray:10 10;
+    stroke-width:4;
+
+    /* MALÉ BODKY */
+    stroke-dasharray:1 12;
+    stroke-linecap:round;
+
     rx:18;
 }
 
@@ -113,15 +115,15 @@ const shirt = document.getElementById("shirtWrapper");
 document.addEventListener("keydown", e=>{
     if(e.key === "+"){
         zoom = Math.min(zoom + 0.1, 3);
-        shirt.style.transform = `scale(${zoom}) translateX(-50%)`;
+        shirt.style.transform = `scale(${zoom})`;
     }
     if(e.key === "-"){
         zoom = Math.max(zoom - 0.1, 0.5);
-        shirt.style.transform = `scale(${zoom}) translateX(-50%)`;
+        shirt.style.transform = `scale(${zoom})`;
     }
     if(e.key === "0"){
         zoom = 1;
-        shirt.style.transform = `scale(1) translateX(-50%)`;
+        shirt.style.transform = `scale(1)`;
     }
 });
 
