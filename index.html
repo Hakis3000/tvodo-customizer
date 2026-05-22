@@ -14,7 +14,6 @@
 <style>
 
 /* sem vložíme nové zoom CSS */
-/* sem vložíme nové zoom CSS */
 #previewZoom {
     touch-action: none;
     transform-origin: center center;
@@ -112,11 +111,11 @@ body{
     align-items:center;
 }
 
-/* PREVIEW (OPRAVENÉ) */
+/* PREVIEW – PC veľké, mobil menšie */
 .preview{
     position:relative;
     width:100%;
-    max-width:600px;
+    max-width:900px;     /* PC veľké tričko */
     aspect-ratio: 5 / 3;
     margin:0 auto;
     display:flex;
@@ -125,7 +124,7 @@ body{
     overflow:hidden;
 }
 
-/* EMBROIDERY */
+/* EMBROIDERY – ikonka nad textom */
 .embroidery-zone{
     position:absolute;
     top:33%;
@@ -133,6 +132,7 @@ body{
     width:28%;
     height:28%;
     display:flex;
+    flex-direction:column;   /* ikonka NAD textom */
     justify-content:center;
     align-items:center;
     text-align:center;
@@ -144,7 +144,7 @@ body{
     height:42px;
     object-fit:contain;
     display:none;
-    margin-bottom:-4px;
+    margin-bottom:6px; /* pekný odstup nad textom */
     filter:drop-shadow(0 2px 5px rgba(0,0,0,0.12));
 }
 
@@ -294,6 +294,7 @@ textarea:focus{
     font-size:13px;
     color:#777;
 }
+
 
 
 /* BUTTON ROW */
