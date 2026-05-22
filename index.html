@@ -24,6 +24,10 @@ box-sizing:border-box;
 --bg2:#eef5ff;
 }
 
+html{
+scroll-behavior:smooth;
+}
+
 body{
 font-family:Poppins,sans-serif;
 background:linear-gradient(135deg,var(--bg1),var(--bg2));
@@ -68,6 +72,17 @@ animation:floaty 12s ease-in-out infinite;
 100%{transform:translateY(0px)}
 }
 
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0px);
+}
+}
+
 .app{
 display:grid;
 grid-template-columns:minmax(0,1fr) 430px;
@@ -76,6 +91,7 @@ padding:20px;
 max-width:1800px;
 margin:auto;
 align-items:start;
+animation:fadeUp 0.7s ease;
 }
 
 .left{
@@ -99,8 +115,9 @@ overflow:hidden;
 }
 
 .logo{
-font-size:42px;
+font-size:44px;
 font-weight:700;
+letter-spacing:-1px;
 background:linear-gradient(90deg,var(--pink),var(--blue));
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
@@ -108,23 +125,22 @@ background:linear-gradient(90deg,var(--pink),var(--blue));
 
 .logo-sub{
 font-size:14px;
-color:#666;
 line-height:1.7;
-margin-top:6px;
+color:#666;
 }
 
 .product-bar{
 display:flex;
 gap:14px;
 overflow:auto;
-padding-bottom:6px;
+padding-bottom:4px;
 }
 
 .product-btn{
-min-width:165px;
+min-width:170px;
 border:none;
 padding:18px 20px;
-border-radius:26px;
+border-radius:28px;
 background:white;
 cursor:pointer;
 font-weight:600;
@@ -148,8 +164,8 @@ box-shadow:0 18px 30px rgba(122,168,255,0.28);
 }
 
 .product-preview-icon{
-width:78px;
-height:78px;
+width:82px;
+height:82px;
 object-fit:contain;
 filter:drop-shadow(0 10px 18px rgba(0,0,0,0.08));
 }
@@ -157,22 +173,16 @@ filter:drop-shadow(0 10px 18px rgba(0,0,0,0.08));
 .preview-window{
 flex:1;
 border-radius:30px;
-background:linear-gradient(135deg,#f4f7ff,#fff0f7);
+background:
+radial-gradient(circle at top left,rgba(255,255,255,0.85),transparent 40%),
+radial-gradient(circle at bottom right,rgba(255,255,255,0.85),transparent 40%),
+linear-gradient(135deg,#f4f7ff,#fff0f7);
 display:flex;
 justify-content:center;
 align-items:center;
 position:relative;
 overflow:hidden;
-}
-
-.preview-window::before{
-content:'';
-position:absolute;
-inset:0;
-background:
-radial-gradient(circle at top left,rgba(255,255,255,0.8),transparent 40%),
-radial-gradient(circle at bottom right,rgba(255,255,255,0.8),transparent 40%);
-pointer-events:none;
+box-shadow:inset 0 0 0 1px rgba(255,255,255,0.6);
 }
 
 .preview-window svg{
@@ -180,23 +190,29 @@ width:100%;
 height:auto;
 aspect-ratio:1/1;
 max-width:760px;
-transition:0.4s;
+transition:0.35s;
 }
 
 .preview-window:hover svg{
-transform:scale(1.015);
+transform:scale(1.012);
 }
 
 #productImage{
 filter:drop-shadow(0 20px 30px rgba(0,0,0,0.08));
+transition:0.35s;
 }
 
 .zone-frame{
 fill:none;
-stroke:rgba(255,124,198,0.22);
+stroke:rgba(255,124,198,0.18);
 stroke-width:2;
 stroke-dasharray:8 8;
-rx:22;
+rx:24;
+transition:0.25s;
+}
+
+.preview-window:hover .zone-frame{
+stroke:rgba(255,124,198,0.34);
 }
 
 #embroideryText{
@@ -206,6 +222,10 @@ font-weight:700;
 fill:#ff7cc6;
 text-anchor:middle;
 dominant-baseline:middle;
+transition:0.25s;
+}
+
+#symbolLayer{
 transition:0.25s;
 }
 
@@ -307,12 +327,19 @@ min-width:120px;
 }
 
 .symbol-btn{
-font-size:22px;
-width:62px;
-height:62px;
+width:66px;
+height:66px;
 display:flex;
 justify-content:center;
 align-items:center;
+padding:0;
+overflow:hidden;
+}
+
+.symbol-btn img{
+width:34px;
+height:34px;
+object-fit:contain;
 }
 
 .colors{
@@ -322,8 +349,8 @@ flex-wrap:wrap;
 }
 
 .color{
-width:50px;
-height:50px;
+width:52px;
+height:52px;
 border-radius:50%;
 cursor:pointer;
 border:3px solid white;
@@ -358,6 +385,13 @@ margin-top:28px;
 transform:translateY(-4px);
 }
 
+.helper{
+font-size:13px;
+line-height:1.7;
+color:#777;
+margin-top:10px;
+}
+
 @media(max-width:1200px){
 
 .app{
@@ -370,7 +404,7 @@ height:auto;
 }
 
 .preview-window{
-height:580px;
+height:600px;
 }
 
 }
@@ -391,11 +425,11 @@ font-size:32px;
 }
 
 .logo{
-font-size:34px;
+font-size:36px;
 }
 
 .product-btn{
-min-width:145px;
+min-width:150px;
 }
 
 .right{
@@ -416,28 +450,41 @@ padding:18px;
 <div class="preview-card">
 
 <div>
-<div class="logo">TVODO</div>
+
+<div class="logo">
+TVODO
+</div>
 
 <div class="logo-sub">
 Navrhnite si vlastnú jemnú výšivku presne podľa seba ✨
 </div>
+
 </div>
 
 <div class="product-bar">
 
 <button class="product-btn active" data-product="shirt">
+
 <img src="shirt.svg" class="product-preview-icon">
+
 Tričko
+
 </button>
 
 <button class="product-btn" data-product="body">
+
 <img src="body.svg" class="product-preview-icon">
+
 Body
+
 </button>
 
 <button class="product-btn" data-product="bib">
+
 <img src="bib.svg" class="product-preview-icon">
+
 Bryndák
+
 </button>
 
 </div>
@@ -464,6 +511,15 @@ x="350"
 y="320"
 width="300"
 height="220"/>
+
+<image
+id="symbolLayer"
+href=""
+x="470"
+y="300"
+width="70"
+height="70"
+display="none"/>
 
 <text
 id="embroideryText"
@@ -505,32 +561,48 @@ id="textInput"
 maxlength="40"
 placeholder="Napíšte meno, venovanie alebo krátky text..."></textarea>
 
+<div class="helper">
+Text sa automaticky prispôsobí veľkosti výšivkovej plochy.
+</div>
+
 </div>
 
 <div class="section">
 
 <div class="section-title">
-Symbol do textu
+Symbol do výšivky
 </div>
 
 <div class="row">
 
-<button class="btn symbol-btn" data-symbol="♥">
-♥
+<button class="btn symbol-btn" data-symbol="srdce.svg">
+
+<img src="srdce.png">
+
 </button>
 
-<button class="btn symbol-btn" data-symbol="★">
-★
+<button class="btn symbol-btn" data-symbol="hviezda.svg">
+
+<img src="hviezda.png">
+
 </button>
 
-<button class="btn symbol-btn" data-symbol="ʕ•ᴥ•ʔ">
-🧸
+<button class="btn symbol-btn" data-symbol="medved.svg">
+
+<img src="medved.png">
+
 </button>
 
-<button class="btn symbol-btn" data-symbol="🐰">
-🐰
+<button class="btn symbol-btn" data-symbol="zajko.svg">
+
+<img src="zajko.png">
+
 </button>
 
+</div>
+
+<div class="helper">
+Možný je maximálne 1 symbol vo výšivke.
 </div>
 
 </div>
@@ -558,16 +630,16 @@ Na prsia
 <div class="section">
 
 <div class="section-title">
-Farba trička
+Farba produktu
 </div>
 
 <div class="row">
 
-<button class="btn shirt-color-btn active" data-shirt="#ffffff">
+<button class="btn shirt-color-btn active" data-shirt="white">
 Biele
 </button>
 
-<button class="btn shirt-color-btn" data-shirt="#1e1e1e">
+<button class="btn shirt-color-btn" data-shirt="black">
 Čierne
 </button>
 
@@ -578,7 +650,7 @@ Biele
 <div class="section">
 
 <div class="section-title">
-Veľkosť trička
+Veľkosť produktu
 </div>
 
 <div class="row">
@@ -688,30 +760,114 @@ const embroideryText = document.getElementById('embroideryText');
 const textInput = document.getElementById('textInput');
 const zoneFrame = document.getElementById('zoneFrame');
 const productImage = document.getElementById('productImage');
+const symbolLayer = document.getElementById('symbolLayer');
 
 let currentPosition = 'center';
 
-const positions = {
+let selectedSymbol = '';
 
-center:{
-x:350,
-y:320,
-w:300,
-h:220
+const products = {
+
+shirt:{
+image:'shirt.svg',
+
+positions:{
+center:{x:350,y:320,w:300,h:220},
+chest:{x:520,y:320,w:170,h:170}
 },
 
-chest:{
-x:520,
-y:320,
-w:170,
-h:170
+colors:['white','black'],
+sizes:['S','M','L','XL','2XL']
+},
+
+body:{
+image:'body.svg',
+
+positions:{
+center:{x:390,y:340,w:220,h:180}
+},
+
+colors:['white'],
+sizes:['56','62','68']
+},
+
+bib:{
+image:'bib.svg',
+
+positions:{
+center:{x:380,y:340,w:240,h:180}
+},
+
+colors:['white'],
+sizes:[]
 }
 
 };
 
+function updateProductOptions(productKey){
+
+const product = products[productKey];
+
+document.querySelectorAll('.shirt-color-btn').forEach(btn=>{
+
+const color = btn.dataset.shirt;
+
+if(product.colors.includes(color)){
+
+btn.style.display='inline-flex';
+
+}else{
+
+btn.style.display='none';
+
+}
+
+});
+
+document.querySelectorAll('.size-btn').forEach(btn=>{
+
+const size = btn.textContent.trim();
+
+if(product.sizes.includes(size)){
+
+btn.style.display='inline-flex';
+
+}else{
+
+btn.style.display='none';
+
+}
+
+});
+
+document.querySelectorAll('.position-btn').forEach(btn=>{
+
+const pos = btn.dataset.position;
+
+if(product.positions[pos]){
+
+btn.style.display='inline-flex';
+
+}else{
+
+btn.style.display='inline-flex';
+btn.disabled = true;
+btn.style.opacity = 0.4;
+
+}
+
+});
+
+}
+
 function fitTextToZone(){
 
-const zone = positions[currentPosition];
+const activeProduct =
+document.querySelector('.product-btn.active').dataset.product;
+
+const product = products[activeProduct];
+
+const zone = product.positions[currentPosition];
 
 let text = textInput.value.trim();
 
@@ -719,16 +875,26 @@ if(text === ''){
 text = 'Sem môžete\npridať text';
 }
 
-const words = text.split(' ');
+let fontSize = 42;
+
+embroideryText.innerHTML='';
+
+const centerX = zone.x + zone.w/2;
+const centerY = zone.y + zone.h/2;
+
+embroideryText.setAttribute('x',centerX);
+embroideryText.setAttribute('y',centerY);
 
 let lines = [];
 let currentLine = '';
+
+const words = text.split(' ');
 
 words.forEach(word=>{
 
 const testLine = currentLine + ' ' + word;
 
-if(testLine.length > 10){
+if(testLine.length > 11){
 
 lines.push(currentLine);
 currentLine = word;
@@ -745,8 +911,6 @@ lines.push(currentLine);
 
 lines = lines.slice(0,4);
 
-let fontSize = 42;
-
 if(lines.length >= 3){
 fontSize = 34;
 }
@@ -755,19 +919,12 @@ if(lines.length >= 4){
 fontSize = 28;
 }
 
-embroideryText.innerHTML='';
-
 embroideryText.style.fontSize = fontSize + 'px';
-
-const centerX = zone.x + zone.w/2;
-const centerY = zone.y + zone.h/2;
-
-embroideryText.setAttribute('x',centerX);
-embroideryText.setAttribute('y',centerY);
 
 lines.forEach((line,index)=>{
 
-const tspan = document.createElementNS(
+const tspan =
+document.createElementNS(
 'http://www.w3.org/2000/svg',
 'tspan'
 );
@@ -775,7 +932,11 @@ const tspan = document.createElementNS(
 const offset = (lines.length-1)*20;
 
 tspan.setAttribute('x',centerX);
-tspan.setAttribute('y',centerY - offset + (index*42));
+
+tspan.setAttribute(
+'y',
+centerY - offset + (index*42)
+);
 
 tspan.textContent = line.trim();
 
@@ -783,11 +944,57 @@ embroideryText.appendChild(tspan);
 
 });
 
+requestAnimationFrame(()=>{
+
+const bbox = embroideryText.getBBox();
+
+while(
+(bbox.width > zone.w - 20 ||
+bbox.height > zone.h - 20)
+&& fontSize > 18
+){
+
+fontSize -= 1;
+
+embroideryText.style.fontSize =
+fontSize + 'px';
+
+break;
+
+}
+
+});
+
+if(selectedSymbol !== ''){
+
+symbolLayer.setAttribute('href',selectedSymbol);
+
+symbolLayer.setAttribute(
+'x',
+centerX - 35
+);
+
+symbolLayer.setAttribute(
+'y',
+zone.y - 70
+);
+
+symbolLayer.style.display='block';
+
+}else{
+
+symbolLayer.style.display='none';
+
+}
+
 }
 
 fitTextToZone();
 
-textInput.addEventListener('input',fitTextToZone);
+textInput.addEventListener(
+'input',
+fitTextToZone
+);
 
 document.querySelectorAll('.font-btn').forEach(btn=>{
 
@@ -798,7 +1005,10 @@ document.querySelectorAll('.font-btn')
 
 btn.classList.add('active');
 
-embroideryText.style.fontFamily = btn.dataset.font;
+embroideryText.style.fontFamily =
+btn.dataset.font;
+
+fitTextToZone();
 
 });
 
@@ -813,7 +1023,8 @@ document.querySelectorAll('.color')
 
 color.classList.add('active');
 
-embroideryText.style.fill = color.dataset.color;
+embroideryText.style.fill =
+color.dataset.color;
 
 });
 
@@ -823,6 +1034,8 @@ document.querySelectorAll('.position-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
 
+if(btn.disabled) return;
+
 document.querySelectorAll('.position-btn')
 .forEach(b=>b.classList.remove('active'));
 
@@ -830,7 +1043,13 @@ btn.classList.add('active');
 
 currentPosition = btn.dataset.position;
 
-const zone = positions[currentPosition];
+const activeProduct =
+document.querySelector('.product-btn.active')
+.dataset.product;
+
+const zone =
+products[activeProduct]
+.positions[currentPosition];
 
 zoneFrame.setAttribute('x',zone.x);
 zoneFrame.setAttribute('y',zone.y);
@@ -854,7 +1073,7 @@ btn.classList.add('active');
 
 const color = btn.dataset.shirt;
 
-if(color === '#1e1e1e'){
+if(color === 'black'){
 
 productImage.style.filter =
 'brightness(0.18) drop-shadow(0 20px 30px rgba(0,0,0,0.18))';
@@ -887,19 +1106,61 @@ document.querySelectorAll('.symbol-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
 
-const symbol = btn.dataset.symbol;
+document.querySelectorAll('.symbol-btn')
+.forEach(b=>b.classList.remove('active'));
 
-let value = textInput.value;
+btn.classList.add('active');
 
-value = value.replace(/[♥★🐰ʕ•ᴥ•ʔ]/g,'').trim();
-
-textInput.value = value + ' ' + symbol;
+selectedSymbol = btn.dataset.symbol;
 
 fitTextToZone();
 
 });
 
 });
+
+document.querySelectorAll('.product-btn').forEach(btn=>{
+
+btn.addEventListener('click',()=>{
+
+document.querySelectorAll('.product-btn')
+.forEach(b=>b.classList.remove('active'));
+
+btn.classList.add('active');
+
+const product = products[btn.dataset.product];
+
+productImage.setAttribute(
+'href',
+product.image
+);
+
+currentPosition = 'center';
+
+document.querySelectorAll('.position-btn')
+.forEach(b=>b.classList.remove('active'));
+
+document.querySelector(
+'.position-btn[data-position="center"]'
+).classList.add('active');
+
+const zone =
+product.positions[currentPosition];
+
+zoneFrame.setAttribute('x',zone.x);
+zoneFrame.setAttribute('y',zone.y);
+zoneFrame.setAttribute('width',zone.w);
+zoneFrame.setAttribute('height',zone.h);
+
+updateProductOptions(btn.dataset.product);
+
+fitTextToZone();
+
+});
+
+});
+
+updateProductOptions('shirt');
 
 </script>
 
