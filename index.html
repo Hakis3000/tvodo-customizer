@@ -48,19 +48,14 @@ body{
 .frame-wrapper{
     position:absolute;
 
-    width:23.4%;        /* 🔥 zmenšené o 10 % */
+    width:23.4%;        /* zmenšené o 10 % */
     aspect-ratio:1/1;
 
-    top:42%;            /* 🔥 posunuté nižšie */
-    left:66%;           /* 🔥 posunuté doľava */
+    top:42%;            /* posunuté nižšie */
+    left:63%;           /* 🔥 posunuté viac doľava */
     transform:translate(-50%, -50%);
 
     pointer-events:none;
-}
-
-.frame-wrapper svg{
-    width:100%;
-    height:100%;
 }
 
 .frame-wrapper rect{
@@ -68,12 +63,13 @@ body{
     stroke:#ff7cc6;
     stroke-width:3;
 
-    /* MALÉ JEMNÉ BODKY */
-    stroke-dasharray:0.5 12;
+    /* 🔥 OVEĽA VIAC MALÝCH BODIEK */
+    stroke-dasharray:0.5 4;
     stroke-linecap:round;
 
     rx:10;
 }
+
 
 </style>
 </head>
