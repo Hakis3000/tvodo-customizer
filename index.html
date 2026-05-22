@@ -1,6 +1,5 @@
 <!-- ========================================= -->
-<!-- TVODO CUSTOMIZER V8 -->
-<!-- FIXED VERSION -->
+<!-- TVODO CUSTOMIZER FINAL V1 -->
 <!-- ========================================= -->
 
 <!DOCTYPE html>
@@ -29,6 +28,10 @@ box-sizing:border-box;
 --blue:#7dafff;
 --bg1:#fff8fc;
 --bg2:#eef5ff;
+}
+
+html{
+scroll-behavior:smooth;
 }
 
 body{
@@ -141,6 +144,10 @@ transition:0.28s;
 box-shadow:0 10px 24px rgba(0,0,0,0.06);
 }
 
+.product-btn:hover{
+transform:translateY(-3px) scale(1.02);
+}
+
 .product-btn.active{
 background:linear-gradient(135deg,var(--pink),var(--blue));
 color:white;
@@ -156,6 +163,8 @@ object-fit:contain;
 flex:1;
 border-radius:30px;
 background:
+radial-gradient(circle at top left,rgba(255,255,255,0.85),transparent 40%),
+radial-gradient(circle at bottom right,rgba(255,255,255,0.85),transparent 40%),
 linear-gradient(135deg,#f4f7ff,#fff0f7);
 display:flex;
 justify-content:center;
@@ -169,6 +178,19 @@ width:100%;
 height:auto;
 aspect-ratio:1/1;
 max-width:760px;
+}
+
+.preview-badge{
+position:absolute;
+top:18px;
+right:18px;
+padding:10px 14px;
+border-radius:20px;
+background:white;
+font-size:12px;
+font-weight:700;
+box-shadow:0 10px 20px rgba(0,0,0,0.06);
+z-index:10;
 }
 
 #productImage{
@@ -196,6 +218,14 @@ stroke-width:1.4;
 
 #symbolLayer{
 transition:0.25s;
+}
+
+.preview-note{
+text-align:center;
+font-size:13px;
+color:#777;
+margin-top:10px;
+line-height:1.7;
 }
 
 .right{
@@ -241,25 +271,49 @@ font-weight:700;
 }
 
 .info-icon{
-width:22px;
-height:22px;
+width:24px;
+height:24px;
 border-radius:50%;
-background:white;
+background:
+linear-gradient(
+145deg,
+#ffffff,
+#e8ecff
+);
+
 display:flex;
 justify-content:center;
 align-items:center;
+
 font-size:12px;
 font-weight:700;
 cursor:pointer;
 position:relative;
-box-shadow:0 5px 12px rgba(0,0,0,0.08);
+
+box-shadow:
+0 4px 10px rgba(0,0,0,0.10),
+inset 0 1px 2px rgba(255,255,255,0.9);
+
+transition:0.25s;
+
+color:#7a8cff;
+}
+
+.info-icon:hover{
+transform:
+translateY(-2px)
+scale(1.06);
+
+box-shadow:
+0 8px 18px rgba(122,140,255,0.22),
+inset 0 1px 2px rgba(255,255,255,0.9);
 }
 
 .info-tooltip{
 position:absolute;
-left:30px;
-top:-5px;
-width:220px;
+left:34px;
+top:-6px;
+width:230px;
 background:white;
 padding:12px;
 border-radius:16px;
@@ -305,6 +359,10 @@ font-weight:600;
 cursor:pointer;
 transition:0.25s;
 box-shadow:0 8px 18px rgba(0,0,0,0.05);
+}
+
+.btn:hover{
+transform:translateY(-3px);
 }
 
 .btn.active{
@@ -356,14 +414,11 @@ color:white;
 background:linear-gradient(135deg,var(--pink),var(--blue));
 cursor:pointer;
 margin-top:28px;
+transition:0.25s;
 }
 
-.preview-note{
-text-align:center;
-font-size:13px;
-color:#777;
-margin-top:10px;
-line-height:1.7;
+.order-btn:hover{
+transform:translateY(-3px);
 }
 
 @media(max-width:1200px){
@@ -427,6 +482,10 @@ Bryndák
 </div>
 
 <div class="preview-window">
+
+<div class="preview-badge">
+🪡 Náhľad výšivky
+</div>
 
 <svg
 id="previewSvg"
@@ -627,6 +686,37 @@ Biele
 <div class="section-header">
 
 <div class="section-title">
+Veľkosť produktu
+</div>
+
+<div class="info-icon">
+i
+
+<div class="info-tooltip">
+Vyberte veľkosť produktu.
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<button class="btn size-btn active">S</button>
+<button class="btn size-btn">M</button>
+<button class="btn size-btn">L</button>
+<button class="btn size-btn">XL</button>
+<button class="btn size-btn">2XL</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-header">
+
+<div class="section-title">
 Štýl výšivky
 </div>
 
@@ -680,35 +770,12 @@ Tu si vyberáte farbu nite ktorou bude výšivka vyšivaná.
 
 <div class="colors">
 
-<div
-class="color active"
-data-color="#ff7cc6"
-style="background:#ff7cc6"></div>
-
-<div
-class="color"
-data-color="#5c86ff"
-style="background:#5c86ff"></div>
-
-<div
-class="color"
-data-color="#69c27d"
-style="background:#69c27d"></div>
-
-<div
-class="color"
-data-color="#f4c542"
-style="background:#f4c542"></div>
-
-<div
-class="color"
-data-color="black"
-style="background:black"></div>
-
-<div
-class="color"
-data-color="white"
-style="background:white;border:2px solid #ddd"></div>
+<div class="color active" data-color="#ff7cc6" style="background:#ff7cc6"></div>
+<div class="color" data-color="#5c86ff" style="background:#5c86ff"></div>
+<div class="color" data-color="#69c27d" style="background:#69c27d"></div>
+<div class="color" data-color="#f4c542" style="background:#f4c542"></div>
+<div class="color" data-color="black" style="background:black"></div>
+<div class="color" data-color="white" style="background:white;border:2px solid #ddd"></div>
 
 </div>
 
@@ -759,7 +826,7 @@ const zone = positions[currentPosition];
 let text = textInput.value.trim();
 
 if(text === ''){
-text = 'Sem môžete\npridať text';
+text = 'Mia';
 }
 
 const centerX = zone.x + zone.w/2;
@@ -769,11 +836,52 @@ let fontSize = 42;
 
 let maxLines = selectedSymbol !== '' ? 2 : 3;
 
-let symbolOffset = selectedSymbol !== '' ? 28 : 0;
+let symbolOffset = selectedSymbol !== '' ? 26 : 0;
 
-const lines = text.split('\n').slice(0,maxLines);
+const words = text.split(' ');
+
+let lines = [];
+let currentLine = '';
+
+words.forEach(word=>{
+
+const testLine =
+(currentLine + ' ' + word).trim();
+
+if(testLine.length > 10){
+
+if(currentLine !== ''){
+lines.push(currentLine);
+}
+
+currentLine = word;
+
+}else{
+
+currentLine = testLine;
+
+}
+
+});
+
+if(currentLine !== ''){
+lines.push(currentLine);
+}
+
+lines = lines.slice(0,maxLines);
 
 embroideryText.innerHTML='';
+
+if(lines.length >= 2){
+fontSize = 34;
+}
+
+if(lines.length >= 3){
+fontSize = 28;
+}
+
+embroideryText.style.fontSize =
+fontSize + 'px';
 
 lines.forEach((line,index)=>{
 
@@ -783,11 +891,20 @@ document.createElementNS(
 'tspan'
 );
 
+const totalHeight =
+(lines.length-1) * 36;
+
 tspan.setAttribute('x',centerX);
 
 tspan.setAttribute(
 'y',
-centerY + symbolOffset + (index*38)
+centerY
++
+symbolOffset
+-
+(totalHeight/2)
++
+(index*36)
 );
 
 tspan.textContent = line;
@@ -796,18 +913,15 @@ embroideryText.appendChild(tspan);
 
 });
 
-embroideryText.style.fontSize =
-fontSize + 'px';
-
 requestAnimationFrame(()=>{
 
 let bbox = embroideryText.getBBox();
 
 while(
 (
-bbox.width > zone.w - 16
+bbox.width > zone.w - 18
 ||
-bbox.height > zone.h - 16
+bbox.height > zone.h - 18
 )
 && fontSize > 16
 ){
@@ -849,9 +963,6 @@ zone.y + 8
 );
 
 symbolLayer.style.display='block';
-
-symbolLayer.style.filter =
-`drop-shadow(0 2px 4px rgba(0,0,0,0.12))`;
 
 }else{
 
@@ -948,11 +1059,192 @@ updateVisuals();
 
 });
 
+document.querySelectorAll('.shirt-color-btn').forEach(btn=>{
+
+btn.addEventListener('click',()=>{
+
+document.querySelectorAll('.shirt-color-btn')
+.forEach(b=>b.classList.remove('active'));
+
+btn.classList.add('active');
+
+const color = btn.dataset.shirt;
+
+if(color === 'black'){
+
+productImage.style.filter =
+'brightness(0.18) drop-shadow(0 20px 30px rgba(0,0,0,0.18))';
+
+}else{
+
+productImage.style.filter =
+'drop-shadow(0 20px 30px rgba(0,0,0,0.08))';
+
+}
+
+});
+
+});
+
+document.querySelectorAll('.size-btn').forEach(btn=>{
+
+btn.addEventListener('click',()=>{
+
+document.querySelectorAll('.size-btn')
+.forEach(b=>b.classList.remove('active'));
+
+btn.classList.add('active');
+
+});
+
+});
+
 document.getElementById('orderButton')
 .addEventListener('click',()=>{
 
-window.location.href =
+const product = 'Tričko';
+
+let productColor = 'Biele';
+
+const activeProductColor =
+document.querySelector('.shirt-color-btn.active');
+
+if(
+activeProductColor &&
+activeProductColor.dataset.shirt === 'black'
+){
+productColor = 'Čierne';
+}
+
+const size =
+document.querySelector('.size-btn.active')
+.textContent.trim();
+
+const text =
+textInput.value.trim() || 'Bez textu';
+
+let font = 'Klasický';
+
+const activeFont =
+document.querySelector('.font-btn.active');
+
+if(activeFont){
+
+if(
+activeFont.dataset.font === 'Fredoka'
+){
+font = 'Hravý';
+}
+
+if(
+activeFont.dataset.font === 'Dancing Script'
+){
+font = 'Písaný';
+}
+
+}
+
+let threadColor = 'Ružová';
+
+switch(currentThreadColor){
+
+case '#5c86ff':
+threadColor = 'Modrá';
+break;
+
+case '#69c27d':
+threadColor = 'Zelená';
+break;
+
+case '#f4c542':
+threadColor = 'Žltá';
+break;
+
+case 'black':
+threadColor = 'Čierna';
+break;
+
+case 'white':
+threadColor = 'Biela';
+break;
+
+}
+
+let symbol = 'Bez symbolu';
+
+switch(selectedSymbol){
+
+case 'srdce.svg':
+symbol = 'Srdce';
+break;
+
+case 'hviezda.svg':
+symbol = 'Hviezda';
+break;
+
+case 'medved.svg':
+symbol = 'Medvedík';
+break;
+
+case 'zajac.svg':
+symbol = 'Zajačik';
+break;
+
+}
+
+let position = 'Na stred';
+
+if(currentPosition === 'chest'){
+position = 'Na prsia';
+}
+
+const formBase =
 'https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/viewform?usp=pp_url';
+
+const orderUrl =
+formBase
+
++
+'&entry.1089188770='
++
+encodeURIComponent(product)
+
++
+'&entry.1452889000='
++
+encodeURIComponent(productColor)
+
++
+'&entry.1444664887='
++
+encodeURIComponent(size)
+
++
+'&entry.673285472='
++
+encodeURIComponent(text)
+
++
+'&entry.564175592='
++
+encodeURIComponent(font)
+
++
+'&entry.377229164='
++
+encodeURIComponent(threadColor)
+
++
+'&entry.1304530760='
++
+encodeURIComponent(symbol)
+
++
+'&entry.1943247834='
++
+encodeURIComponent(position);
+
+window.location.href = orderUrl;
 
 });
 
