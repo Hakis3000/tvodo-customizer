@@ -48,15 +48,17 @@ body{
     pointer-events:none;
 }
 
-/* ======== RÁMČEK (pevný SVG) ======== */
+/* ======== TVOJ RÁMČEK ram.svg ======== */
 .frame-wrapper{
     position:absolute;
-    width:20%;              /* 1/5 šírky trička */
-    aspect-ratio:1/1;       /* štvorec */
-    
+
+    /* veľkosť rámčeka = 1/5 šírky trička */
+    width:20%;
+    aspect-ratio:1/1;
+
     /* pozícia – od stredu hore a doprava */
-    top:30%;                /* posun hore */
-    left:60%;               /* posun doprava */
+    top:35%;          /* posun hore */
+    left:70%;         /* posun doprava */
     transform:translate(-50%, -50%);
 
     pointer-events:none;
@@ -80,7 +82,7 @@ body{
         <img id="productImage" class="product-image" src="tricko.svg">
     </div>
 
-    <!-- TVOJ SVG RÁMČEK -->
+    <!-- TVOJ RÁMČEK -->
     <div class="frame-wrapper">
         <img src="ram.svg">
     </div>
