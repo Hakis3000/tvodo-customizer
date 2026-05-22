@@ -1,11 +1,9 @@
-# TVODO Customizer V3
-
-```html
 <!DOCTYPE html>
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>TVODO - Vyšívaný customizer</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,15 +24,11 @@ box-sizing:border-box;
 --bg2:#eef5ff;
 }
 
-html{
-scroll-behavior:smooth;
-}
-
 body{
 font-family:Poppins,sans-serif;
 background:linear-gradient(135deg,var(--bg1),var(--bg2));
-color:#222;
 overflow-x:hidden;
+color:#222;
 min-height:100vh;
 }
 
@@ -46,11 +40,11 @@ height:500px;
 border-radius:50%;
 background:var(--pink);
 filter:blur(140px);
-opacity:0.14;
+opacity:0.12;
 top:-200px;
 left:-200px;
-animation:floaty 10s ease-in-out infinite;
 z-index:-1;
+animation:floaty 10s ease-in-out infinite;
 }
 
 body::after{
@@ -61,29 +55,17 @@ height:500px;
 border-radius:50%;
 background:var(--blue);
 filter:blur(140px);
-opacity:0.14;
+opacity:0.12;
 bottom:-200px;
 right:-200px;
-animation:floaty 12s ease-in-out infinite;
 z-index:-1;
+animation:floaty 12s ease-in-out infinite;
 }
 
 @keyframes floaty{
 0%{transform:translateY(0px)}
 50%{transform:translateY(-18px)}
 100%{transform:translateY(0px)}
-}
-
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(20px);
-}
-
-to{
-opacity:1;
-transform:translateY(0px);
-}
 }
 
 .app{
@@ -94,7 +76,6 @@ padding:20px;
 max-width:1800px;
 margin:auto;
 align-items:start;
-animation:fadeUp 0.8s ease;
 }
 
 .left{
@@ -120,71 +101,68 @@ overflow:hidden;
 .logo{
 font-size:42px;
 font-weight:700;
-letter-spacing:-1px;
 background:linear-gradient(90deg,var(--pink),var(--blue));
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-margin-bottom:6px;
 }
 
 .logo-sub{
 font-size:14px;
 color:#666;
 line-height:1.7;
-margin-bottom:8px;
+margin-top:6px;
 }
 
 .product-bar{
 display:flex;
 gap:14px;
 overflow:auto;
-padding-bottom:4px;
+padding-bottom:6px;
 }
 
 .product-btn{
-min-width:160px;
+min-width:165px;
 border:none;
-padding:18px 22px;
-border-radius:24px;
+padding:18px 20px;
+border-radius:26px;
 background:white;
-font-weight:600;
 cursor:pointer;
-box-shadow:0 10px 24px rgba(0,0,0,0.06);
-transition:0.28s;
+font-weight:600;
+font-size:15px;
 display:flex;
 flex-direction:column;
 align-items:center;
-gap:8px;
-font-size:15px;
+gap:10px;
+transition:0.28s;
+box-shadow:0 10px 24px rgba(0,0,0,0.06);
 }
 
 .product-btn:hover{
 transform:translateY(-4px) scale(1.03);
 }
 
-.product-preview-icon{
-width:72px;
-height:72px;
-object-fit:contain;
-filter:drop-shadow(0 10px 16px rgba(0,0,0,0.08));
-}
-
 .product-btn.active{
 background:linear-gradient(135deg,var(--pink),var(--blue));
 color:white;
-box-shadow:0 18px 30px rgba(125,175,255,0.3);
+box-shadow:0 18px 30px rgba(122,168,255,0.28);
+}
+
+.product-preview-icon{
+width:78px;
+height:78px;
+object-fit:contain;
+filter:drop-shadow(0 10px 18px rgba(0,0,0,0.08));
 }
 
 .preview-window{
 flex:1;
-border-radius:28px;
-background:linear-gradient(135deg,#f5f7ff,#fff0f7);
-position:relative;
-overflow:hidden;
+border-radius:30px;
+background:linear-gradient(135deg,#f4f7ff,#fff0f7);
 display:flex;
 justify-content:center;
 align-items:center;
-box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7);
+position:relative;
+overflow:hidden;
 }
 
 .preview-window::before{
@@ -202,7 +180,6 @@ width:100%;
 height:auto;
 aspect-ratio:1/1;
 max-width:760px;
-filter:drop-shadow(0 20px 30px rgba(0,0,0,0.08));
 transition:0.4s;
 }
 
@@ -211,7 +188,15 @@ transform:scale(1.015);
 }
 
 #productImage{
-filter:drop-shadow(0 14px 24px rgba(0,0,0,0.06));
+filter:drop-shadow(0 20px 30px rgba(0,0,0,0.08));
+}
+
+.zone-frame{
+fill:none;
+stroke:rgba(255,124,198,0.22);
+stroke-width:2;
+stroke-dasharray:8 8;
+rx:22;
 }
 
 #embroideryText{
@@ -221,24 +206,7 @@ font-weight:700;
 fill:#ff7cc6;
 text-anchor:middle;
 dominant-baseline:middle;
-transition:0.3s;
-}
-
-#embroideryIcon{
-filter:drop-shadow(0 4px 10px rgba(0,0,0,0.12));
-}
-
-.zone-frame{
-fill:none;
-stroke:rgba(255,124,198,0.18);
-stroke-width:2;
-stroke-dasharray:8 8;
-rx:20;
-transition:0.3s;
-}
-
-.preview-window:hover .zone-frame{
-stroke:rgba(255,124,198,0.32);
+transition:0.25s;
 }
 
 .right{
@@ -253,8 +221,8 @@ border:1px solid rgba(255,255,255,0.5);
 .title{
 font-size:40px;
 font-weight:700;
-line-height:1.05;
-margin-bottom:10px;
+line-height:1.08;
+margin-bottom:12px;
 background:linear-gradient(90deg,var(--pink),var(--blue));
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
@@ -264,7 +232,7 @@ background:linear-gradient(90deg,var(--pink),var(--blue));
 font-size:15px;
 line-height:1.8;
 color:#666;
-margin-bottom:22px;
+margin-bottom:24px;
 }
 
 .info-box{
@@ -282,55 +250,29 @@ box-shadow:0 10px 24px rgba(0,0,0,0.03);
 margin-top:24px;
 }
 
-.section-head{
-display:flex;
-align-items:center;
-gap:8px;
-margin-bottom:12px;
-}
-
 .section-title{
 font-size:16px;
 font-weight:700;
+margin-bottom:12px;
 }
 
-.info-tip{
-width:18px;
-height:18px;
-border-radius:50%;
-background:linear-gradient(135deg,var(--pink),var(--blue));
-color:white;
-font-size:11px;
-font-weight:700;
-display:flex;
-justify-content:center;
-align-items:center;
-cursor:pointer;
-position:relative;
-}
-
-.tip-box{
-position:absolute;
-top:-10px;
-left:26px;
-width:230px;
-padding:12px;
-background:white;
-border-radius:16px;
-font-size:12px;
-line-height:1.6;
-color:#666;
-box-shadow:0 14px 30px rgba(0,0,0,0.1);
-opacity:0;
-pointer-events:none;
+textarea{
+width:100%;
+min-height:120px;
+border:none;
+resize:none;
+border-radius:24px;
+padding:18px;
+font-family:Poppins;
+font-size:15px;
+outline:none;
+box-shadow:0 8px 18px rgba(0,0,0,0.05);
 transition:0.25s;
-transform:translateY(4px);
-z-index:100;
 }
 
-.info-tip:hover .tip-box{
-opacity:1;
-transform:translateY(0px);
+textarea:focus{
+transform:translateY(-2px);
+box-shadow:0 12px 26px rgba(255,124,198,0.12);
 }
 
 .row{
@@ -360,23 +302,17 @@ color:white;
 box-shadow:0 14px 28px rgba(122,168,255,0.24);
 }
 
-textarea{
-width:100%;
-min-height:120px;
-border:none;
-resize:none;
-border-radius:24px;
-padding:18px;
-font-family:Poppins;
-font-size:15px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-outline:none;
-transition:0.25s;
+.shirt-color-btn{
+min-width:120px;
 }
 
-textarea:focus{
-transform:translateY(-2px);
-box-shadow:0 12px 26px rgba(255,124,198,0.12);
+.symbol-btn{
+font-size:22px;
+width:62px;
+height:62px;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
 .colors{
@@ -403,37 +339,6 @@ transform:scale(1.08);
 outline:4px solid rgba(125,175,255,0.25);
 }
 
-.icon-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-}
-
-.icon-btn{
-height:92px;
-border:none;
-border-radius:22px;
-background:white;
-cursor:pointer;
-font-size:28px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-transition:0.25s;
-}
-
-.icon-btn:hover{
-transform:translateY(-3px) scale(1.02);
-}
-
-.icon-btn.active{
-background:linear-gradient(135deg,var(--pink),var(--blue));
-color:white;
-box-shadow:0 14px 28px rgba(122,168,255,0.24);
-}
-
-.order-bar{
-margin-top:28px;
-}
-
 .order-btn{
 width:100%;
 border:none;
@@ -446,40 +351,11 @@ background:linear-gradient(135deg,var(--pink),var(--blue));
 cursor:pointer;
 box-shadow:0 18px 30px rgba(122,168,255,0.26);
 transition:0.25s;
+margin-top:28px;
 }
 
 .order-btn:hover{
-transform:translateY(-4px) scale(1.01);
-}
-
-.features{
-margin-top:24px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.feature{
-background:rgba(255,255,255,0.58);
-padding:16px;
-border-radius:22px;
-box-shadow:0 8px 18px rgba(0,0,0,0.04);
-transition:0.25s;
-}
-
-.feature:hover{
 transform:translateY(-4px);
-}
-
-.feature h3{
-font-size:15px;
-margin-bottom:6px;
-}
-
-.feature p{
-font-size:13px;
-line-height:1.6;
-color:#777;
 }
 
 @media(max-width:1200px){
@@ -519,16 +395,7 @@ font-size:34px;
 }
 
 .product-btn{
-min-width:100px;
-padding:16px 14px;
-}
-
-.product-btn span{
-font-size:30px;
-}
-
-.features{
-grid-template-columns:1fr;
+min-width:145px;
 }
 
 .right{
@@ -539,6 +406,7 @@ padding:18px;
 
 </style>
 </head>
+
 <body>
 
 <div class="app">
@@ -549,8 +417,9 @@ padding:18px;
 
 <div>
 <div class="logo">TVODO</div>
+
 <div class="logo-sub">
-Navrhnite si vlastnú jemnú výšivku na oblečenie pre deti aj dospelých ✨
+Navrhnite si vlastnú jemnú výšivku presne podľa seba ✨
 </div>
 </div>
 
@@ -591,24 +460,15 @@ height="860"/>
 <rect
 id="zoneFrame"
 class="zone-frame"
-x="410"
-y="260"
-width="180"
-height="180"/>
-
-<image
-id="embroideryIcon"
-href=""
-x="470"
-y="250"
-width="60"
-height="60"
-display="none"/>
+x="350"
+y="320"
+width="300"
+height="220"/>
 
 <text
 id="embroideryText"
 x="500"
-y="340"></text>
+y="430"></text>
 
 </svg>
 
@@ -625,68 +485,50 @@ Vytvorte si vlastnú výšivku
 </div>
 
 <div class="subtitle">
-Každý produkt pripravujeme individuálne podľa vášho návrhu. Náhľad slúži ako vizualizácia budúcej výšivky.
+Každý produkt vyrábame individuálne podľa vášho návrhu. Náhľad slúži ako vizualizácia budúcej výšivky.
 </div>
 
 <div class="info-box">
 🪡 Jemná výšivka kvalitnými niťami.<br><br>
-✨ Každý kus vyrábame individuálne na objednávku.<br><br>
+✨ Každý kus pripravujeme individuálne na objednávku.<br><br>
 💌 Ak chcete vlastný obrázok alebo väčšiu výšivku, napíšte nám správu.
 </div>
 
 <div class="section">
 
-<div class="section-head">
-<div class="section-title">Text výšivky</div>
-
-<div class="info-tip">
-i
-<div class="tip-box">
-Text sa automaticky prispôsobí veľkosti výšivkovej plochy.
-</div>
-</div>
-
+<div class="section-title">
+Text výšivky
 </div>
 
 <textarea
 id="textInput"
 maxlength="40"
-placeholder="Napíšte meno, krátky text alebo venovanie..."></textarea>
+placeholder="Napíšte meno, venovanie alebo krátky text..."></textarea>
 
 </div>
 
 <div class="section">
 
-<div class="section-head">
-<div class="section-title">Štýl výšivky</div>
-
-<div class="info-tip">
-i
-<div class="tip-box">
-Každý štýl vytvorí trochu iný vzhľad výšivky.
-</div>
-</div>
-
+<div class="section-title">
+Symbol do textu
 </div>
 
 <div class="row">
 
-<button class="btn font-btn active"
-data-font="Montserrat"
-style="font-family:Montserrat">
-Klasický
+<button class="btn symbol-btn" data-symbol="♥">
+♥
 </button>
 
-<button class="btn font-btn"
-data-font="Fredoka"
-style="font-family:Fredoka">
-Hravý
+<button class="btn symbol-btn" data-symbol="★">
+★
 </button>
 
-<button class="btn font-btn"
-data-font="Dancing Script"
-style="font-family:'Dancing Script'">
-Písaný
+<button class="btn symbol-btn" data-symbol="ʕ•ᴥ•ʔ">
+🧸
+</button>
+
+<button class="btn symbol-btn" data-symbol="🐰">
+🐰
 </button>
 
 </div>
@@ -695,8 +537,8 @@ Písaný
 
 <div class="section">
 
-<div class="section-head">
-<div class="section-title">Umiestnenie výšivky</div>
+<div class="section-title">
+Kde chcete výšivku?
 </div>
 
 <div class="row">
@@ -715,8 +557,8 @@ Na prsia
 
 <div class="section">
 
-<div class="section-head">
-<div class="section-title">Farba trička</div>
+<div class="section-title">
+Farba trička
 </div>
 
 <div class="row">
@@ -725,7 +567,7 @@ Na prsia
 Biele
 </button>
 
-<button class="btn shirt-color-btn" data-shirt="#2a2a2a">
+<button class="btn shirt-color-btn" data-shirt="#1e1e1e">
 Čierne
 </button>
 
@@ -735,8 +577,8 @@ Biele
 
 <div class="section">
 
-<div class="section-head">
-<div class="section-title">Veľkosť produktu</div>
+<div class="section-title">
+Veľkosť trička
 </div>
 
 <div class="row">
@@ -753,41 +595,78 @@ Biele
 
 <div class="section">
 
-<div class="section-head">
-<div class="section-title">Farba nite</div>
-
-<div class="info-tip">
-i
-<div class="tip-box">
-Farba nite sa zobrazí priamo na náhľade produktu.
-</div>
+<div class="section-title">
+Štýl výšivky
 </div>
 
+<div class="row">
+
+<button
+class="btn font-btn active"
+data-font="Montserrat"
+style="font-family:Montserrat">
+
+Klasický
+
+</button>
+
+<button
+class="btn font-btn"
+data-font="Fredoka"
+style="font-family:Fredoka">
+
+Hravý
+
+</button>
+
+<button
+class="btn font-btn"
+data-font="Dancing Script"
+style="font-family:'Dancing Script'">
+
+Písaný
+
+</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">
+Farba nite
 </div>
 
 <div class="colors">
 
-<div class="color active"
+<div
+class="color active"
 data-color="#ff7cc6"
 style="background:#ff7cc6"></div>
 
-<div class="color"
+<div
+class="color"
 data-color="#5c86ff"
 style="background:#5c86ff"></div>
 
-<div class="color"
+<div
+class="color"
 data-color="#69c27d"
 style="background:#69c27d"></div>
 
-<div class="color"
+<div
+class="color"
 data-color="#f4c542"
 style="background:#f4c542"></div>
 
-<div class="color"
+<div
+class="color"
 data-color="black"
 style="background:black"></div>
 
-<div class="color"
+<div
+class="color"
 data-color="white"
 style="background:white;border:2px solid #ddd"></div>
 
@@ -795,90 +674,9 @@ style="background:white;border:2px solid #ddd"></div>
 
 </div>
 
-<div class="section">
-
-<div class="section-head">
-<div class="section-title">Symbol do textu</div>
-</div>
-
-<div class="row">
-<button class="btn symbol-btn" data-symbol="♥">♥</button>
-<button class="btn symbol-btn" data-symbol="★">★</button>
-<button class="btn symbol-btn" data-symbol="✿">✿</button>
-<button class="btn symbol-btn" data-symbol="☾">☾</button>
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-head">
-<div class="section-title">Ikonka</div>
-
-<div class="info-tip">
-i
-<div class="tip-box">
-Môžete pridať jemnú ikonku k vašej výšivke.
-</div>
-</div>
-
-</div>
-
-<div class="icon-grid">
-
-<button class="icon-btn active" data-icon="">
-✕
-</button>
-
-<button class="icon-btn" data-icon="hviezda.png">
-⭐
-</button>
-
-<button class="icon-btn" data-icon="srdce.png">
-❤️
-</button>
-
-<button class="icon-btn" data-icon="medved.png">
-🧸
-</button>
-
-<button class="icon-btn" data-icon="zajko.png">
-🐰
-</button>
-
-</div>
-
-</div>
-
-<div class="features">
-
-<div class="feature">
-<h3>🪡 Jemná výšivka</h3>
-<p>Kvalitné nite a detailné spracovanie pre krásny výsledok.</p>
-</div>
-
-<div class="feature">
-<h3>✨ Personalizované</h3>
-<p>Každý produkt pripravujeme individuálne podľa vášho návrhu.</p>
-</div>
-
-<div class="feature">
-<h3>💌 Vyrobené s láskou</h3>
-<p>Každý kus vzniká ručne a s dôrazom na detail.</p>
-</div>
-
-<div class="feature">
-<h3>🚚 Rýchle dodanie</h3>
-<p>Objednávky pripravujeme čo najrýchlejšie.</p>
-</div>
-
-</div>
-
-<div class="order-bar">
 <button class="order-btn">
 🛍️ Pokračovať k objednávke
 </button>
-</div>
 
 </div>
 
@@ -888,45 +686,32 @@ Môžete pridať jemnú ikonku k vašej výšivke.
 
 const embroideryText = document.getElementById('embroideryText');
 const textInput = document.getElementById('textInput');
-const embroideryIcon = document.getElementById('embroideryIcon');
 const zoneFrame = document.getElementById('zoneFrame');
 const productImage = document.getElementById('productImage');
 
-const products = {
+let currentPosition = 'center';
 
-shirt:{
-image:'shirt.svg',
-shirtColor:'#ffffff',
-positions:{
-center:{x:350,y:320,w:300,h:220},
-chest:{x:520,y:320,w:170,h:170}
-}
+const positions = {
+
+center:{
+x:350,
+y:320,
+w:300,
+h:220
 },
 
-body:{
-image:'body.svg',
-positions:{
-center:{x:420,y:310,w:160,h:160}
-}
-},
-
-bib:{
-image:'bib.svg',
-positions:{
-center:{x:410,y:300,w:180,h:180}
-}
+chest:{
+x:520,
+y:320,
+w:170,
+h:170
 }
 
 };
 
-let currentPosition = 'center';
-let currentShirtColor = '#ffffff';
-let insertedSymbol = '';
-
 function fitTextToZone(){
 
-const activeProduct = document.querySelector('.product-btn.active').dataset.product;
-const zone = products[activeProduct].positions[currentPosition];
+const zone = positions[currentPosition];
 
 let text = textInput.value.trim();
 
@@ -935,6 +720,7 @@ text = 'Sem môžete\npridať text';
 }
 
 const words = text.split(' ');
+
 let lines = [];
 let currentLine = '';
 
@@ -943,10 +729,14 @@ words.forEach(word=>{
 const testLine = currentLine + ' ' + word;
 
 if(testLine.length > 10){
+
 lines.push(currentLine);
 currentLine = word;
+
 }else{
+
 currentLine = testLine;
+
 }
 
 });
@@ -966,6 +756,7 @@ fontSize = 28;
 }
 
 embroideryText.innerHTML='';
+
 embroideryText.style.fontSize = fontSize + 'px';
 
 const centerX = zone.x + zone.w/2;
@@ -976,97 +767,53 @@ embroideryText.setAttribute('y',centerY);
 
 lines.forEach((line,index)=>{
 
-const tspan = document.createElementNS('http://www.w3.org/2000/svg','tspan');
+const tspan = document.createElementNS(
+'http://www.w3.org/2000/svg',
+'tspan'
+);
 
 const offset = (lines.length-1)*20;
 
- tspan.setAttribute('x',centerX);
- tspan.setAttribute('y',centerY - offset + (index*42));
- tspan.textContent = line.trim();
+tspan.setAttribute('x',centerX);
+tspan.setAttribute('y',centerY - offset + (index*42));
 
- embroideryText.appendChild(tspan);
+tspan.textContent = line.trim();
+
+embroideryText.appendChild(tspan);
 
 });
 
-embroideryIcon.setAttribute('x',centerX - 30);
-embroideryIcon.setAttribute('y',zone.y - 70);
-
 }
 
-textInput.addEventListener('input',fitTextToZone);
 fitTextToZone();
 
+textInput.addEventListener('input',fitTextToZone);
 
 document.querySelectorAll('.font-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
 
- document.querySelectorAll('.font-btn').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
- embroideryText.style.fontFamily = btn.dataset.font;
+document.querySelectorAll('.font-btn')
+.forEach(b=>b.classList.remove('active'));
+
+btn.classList.add('active');
+
+embroideryText.style.fontFamily = btn.dataset.font;
 
 });
 
 });
-
 
 document.querySelectorAll('.color').forEach(color=>{
 
 color.addEventListener('click',()=>{
 
- document.querySelectorAll('.color').forEach(c=>c.classList.remove('active'));
- color.classList.add('active');
- embroideryText.style.fill = color.dataset.color;
+document.querySelectorAll('.color')
+.forEach(c=>c.classList.remove('active'));
 
-});
+color.classList.add('active');
 
-});
-
-
-document.querySelectorAll('.icon-btn').forEach(btn=>{
-
-btn.addEventListener('click',()=>{
-
- document.querySelectorAll('.icon-btn').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
-
- const icon = btn.dataset.icon;
-
- if(icon === ''){
- embroideryIcon.style.display='none';
- }else{
- embroideryIcon.setAttribute('href',icon);
- embroideryIcon.style.display='block';
- }
-
-});
-
-});
-
-
-document.querySelectorAll('.product-btn').forEach(btn=>{
-
-btn.addEventListener('click',()=>{
-
- document.querySelectorAll('.product-btn').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
-
- const product = products[btn.dataset.product];
-
- productImage.setAttribute('href',product.image);
-
- if(!product.positions[currentPosition]){
- currentPosition = 'center';
- }
-
- const zone = product.positions[currentPosition];
-
- zoneFrame.setAttribute('x',zone.x);
- zoneFrame.setAttribute('y',zone.y);
- zoneFrame.setAttribute('width',zone.w);
- zoneFrame.setAttribute('height',zone.h);
-
- fitTextToZone();
+embroideryText.style.fill = color.dataset.color;
 
 });
 
@@ -1076,24 +823,21 @@ document.querySelectorAll('.position-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
 
- document.querySelectorAll('.position-btn').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
+document.querySelectorAll('.position-btn')
+.forEach(b=>b.classList.remove('active'));
 
- currentPosition = btn.dataset.position;
+btn.classList.add('active');
 
- const activeProduct = document.querySelector('.product-btn.active').dataset.product;
- const product = products[activeProduct];
+currentPosition = btn.dataset.position;
 
- if(!product.positions[currentPosition]) return;
+const zone = positions[currentPosition];
 
- const zone = product.positions[currentPosition];
+zoneFrame.setAttribute('x',zone.x);
+zoneFrame.setAttribute('y',zone.y);
+zoneFrame.setAttribute('width',zone.w);
+zoneFrame.setAttribute('height',zone.h);
 
- zoneFrame.setAttribute('x',zone.x);
- zoneFrame.setAttribute('y',zone.y);
- zoneFrame.setAttribute('width',zone.w);
- zoneFrame.setAttribute('height',zone.h);
-
- fitTextToZone();
+fitTextToZone();
 
 });
 
@@ -1103,16 +847,24 @@ document.querySelectorAll('.shirt-color-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
 
- document.querySelectorAll('.shirt-color-btn').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
+document.querySelectorAll('.shirt-color-btn')
+.forEach(b=>b.classList.remove('active'));
 
- currentShirtColor = btn.dataset.shirt;
+btn.classList.add('active');
 
- if(currentShirtColor === '#2a2a2a'){
- productImage.style.filter = 'brightness(0.22) drop-shadow(0 14px 24px rgba(0,0,0,0.18))';
- }else{
- productImage.style.filter = 'brightness(1) drop-shadow(0 14px 24px rgba(0,0,0,0.06))';
- }
+const color = btn.dataset.shirt;
+
+if(color === '#1e1e1e'){
+
+productImage.style.filter =
+'brightness(0.18) drop-shadow(0 20px 30px rgba(0,0,0,0.18))';
+
+}else{
+
+productImage.style.filter =
+'drop-shadow(0 20px 30px rgba(0,0,0,0.08))';
+
+}
 
 });
 
@@ -1122,8 +874,10 @@ document.querySelectorAll('.size-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
 
- document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
+document.querySelectorAll('.size-btn')
+.forEach(b=>b.classList.remove('active'));
+
+btn.classList.add('active');
 
 });
 
@@ -1133,15 +887,15 @@ document.querySelectorAll('.symbol-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
 
- const symbol = btn.dataset.symbol;
+const symbol = btn.dataset.symbol;
 
- let value = textInput.value;
+let value = textInput.value;
 
- value = value.replace(/[♥★✿☾]/g,'').trim();
+value = value.replace(/[♥★🐰ʕ•ᴥ•ʔ]/g,'').trim();
 
- textInput.value = value + ' ' + symbol;
+textInput.value = value + ' ' + symbol;
 
- fitTextToZone();
+fitTextToZone();
 
 });
 
@@ -1151,14 +905,3 @@ btn.addEventListener('click',()=>{
 
 </body>
 </html>
-```
-
-# SÚBORY KTORÉ MUSIA BYŤ V ROVNAKOM PRIEČINKU
-
-* shirt.svg
-* body.svg
-* bib.svg
-* hviezda.png
-* srdce.png
-* medved.png
-* zajko.png
