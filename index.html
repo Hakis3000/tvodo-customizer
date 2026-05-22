@@ -48,26 +48,34 @@ body{
     pointer-events:none;
 }
 
-/* ======== TVOJ RÁMČEK ram.svg ======== */
+/* ======== RÁMČEK (ram.svg → prerobený na ružový bodkovaný) ======== */
 .frame-wrapper{
     position:absolute;
 
-    /* veľkosť rámčeka = 1/5 šírky trička */
-    width:20%;
+    /* zväčšenie o 100 % (2×) */
+    width:40%;              /* pôvodne 20% = 1/5 trička → teraz 40% */
     aspect-ratio:1/1;
 
-    /* pozícia – od stredu hore a doprava */
-    top:35%;          /* posun hore */
-    left:70%;         /* posun doprava */
+    /* pozícia podľa tvojej fotky */
+    top:28%;                /* hore */
+    left:68%;               /* doprava */
     transform:translate(-50%, -50%);
 
     pointer-events:none;
 }
 
-.frame-wrapper img{
+/* prerobíme ram.svg na ružový bodkovaný rámček */
+.frame-wrapper svg{
     width:100%;
     height:100%;
-    object-fit:contain;
+}
+
+.frame-wrapper rect{
+    fill:transparent; /* priesvitný stred */
+    stroke:#ff7cc6;   /* ružová */
+    stroke-width:6;
+    stroke-dasharray:10 10; /* bodkovaná čiara */
+    rx:18; /* zaoblené rohy */
 }
 
 </style>
@@ -82,9 +90,11 @@ body{
         <img id="productImage" class="product-image" src="tricko.svg">
     </div>
 
-    <!-- TVOJ RÁMČEK -->
+    <!-- TVOJ RÁMČEK (SVG vložený priamo sem) -->
     <div class="frame-wrapper">
-        <img src="ram.svg">
+        <svg viewBox="0 0 100 100">
+            <rect x="0" y="0" width="100" height="100"></rect>
+        </svg>
     </div>
 
 </div>
