@@ -115,7 +115,7 @@ body{
 <div class="canvas">
 
     <!-- TRIČKO -->
-    <img id="productImage" class="product-image" src="tricko.png">
+    <img id="productImage" class="product-image" src="tricko.svg">
 
     <!-- VÝŠIVKOVÝ ŠTVOREC -->
     <div class="embroidery-area">
@@ -133,28 +133,3 @@ body{
 </div>
 
 <script>
-
-/* ======== ZOOM FUNGUJE IBA NA TRIČKO ======== */
-
-let zoom = 1;
-const product = document.getElementById("productImage");
-
-document.getElementById("zoomIn").onclick = ()=>{
-    zoom = Math.min(zoom + 0.1, 3);
-    product.style.transform = `scale(${zoom})`;
-};
-
-document.getElementById("zoomOut").onclick = ()=>{
-    zoom = Math.max(zoom - 0.1, 0.5);
-    product.style.transform = `scale(${zoom})`;
-};
-
-document.getElementById("zoomReset").onclick = ()=>{
-    zoom = 1;
-    product.style.transform = `scale(1)`;
-};
-
-</script>
-
-</body>
-</html>
