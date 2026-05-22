@@ -8,16 +8,14 @@
 <title>TVODO - Vyšívané tričká</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Fredoka:wght@500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
-
-/* sem vložíme nové zoom CSS */
-#previewZoom {
-    touch-action: none;
-    transform-origin: center center;
-    transition: transform 0.1s ease-out;
+/* ZOOM PREVIEW */
+#previewZoom{
+    touch-action:none;
+    transform-origin:center center;
+    transition:transform 0.1s ease-out;
 }
 
 /* RESET */
@@ -40,7 +38,7 @@ html{
 
 body{
     font-family:Poppins,sans-serif;
-    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));
     min-height:100vh;
     overflow-x:hidden;
     color:#222;
@@ -73,20 +71,20 @@ body{
 
 /* ANIMATIONS */
 @keyframes glow{
-    0%{ box-shadow:0 0 0 rgba(255,124,198,0); }
-    50%{ box-shadow:0 0 26px rgba(255,124,198,0.28); }
-    100%{ box-shadow:0 0 0 rgba(255,124,198,0); }
+    0%{box-shadow:0 0 0 rgba(255,124,198,0);}
+    50%{box-shadow:0 0 26px rgba(255,124,198,0.28);}
+    100%{box-shadow:0 0 0 rgba(255,124,198,0);}
 }
 
 @keyframes floaty{
-    0%{ transform:translateY(0px); }
-    50%{ transform:translateY(-6px); }
-    100%{ transform:translateY(0px); }
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+    100%{transform:translateY(0);}
 }
 
 @keyframes shimmer{
-    0%{ transform:translateX(-100%); }
-    100%{ transform:translateX(100%); }
+    0%{transform:translateX(-100%);}
+    100%{transform:translateX(100%);}
 }
 
 /* MAIN LAYOUT */
@@ -101,7 +99,7 @@ body{
     align-items:start;
 }
 
-/* LEFT PANEL – tričko stále viditeľné */
+/* LEFT – tričko stále viditeľné na PC */
 .left{
     position:sticky;
     top:0;
@@ -111,17 +109,46 @@ body{
     align-items:center;
 }
 
-/* PREVIEW – veľké na PC, stabilné */
+/* PREVIEW CARD */
+.preview-card{
+    width:100%;
+    max-width:1100px;
+    background:rgba(255,255,255,0.7);
+    border-radius:32px;
+    padding:24px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.08);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* PREVIEW – veľké na PC */
 .preview{
     position:relative;
     width:100%;
-    max-width:1100px;   /* veľké tričko na PC */
-    aspect-ratio: 5 / 3;
+    max-width:1100px;
+    aspect-ratio:5/3;
     margin:0 auto;
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:hidden;
+}
+
+/* TRIČKO */
+.shirt{
+    width:100%;
+    height:auto;
+    max-width:1100px;
+    object-fit:contain;
+    user-select:none;
+    pointer-events:none;
+    filter:drop-shadow(0 24px 40px rgba(0,0,0,0.25));
+}
+
+/* ČIERNE TRIČKO – invert SVG */
+.black-shirt{
+    filter:invert(1) brightness(0.25) drop-shadow(0 24px 40px rgba(0,0,0,0.4));
 }
 
 /* EMBROIDERY – ikonka nad textom */
@@ -182,7 +209,7 @@ body{
     font-weight:700;
     line-height:1.05;
     margin-bottom:8px;
-    background:linear-gradient(90deg, var(--pink), var(--blue));
+    background:linear-gradient(90deg,var(--pink),var(--blue));
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
@@ -203,433 +230,350 @@ body{
     font-size:13px;
     line-height:1.8;
     color:#666;
-    border:
-
-
-
-/* BUTTON ROW */
-
-.row{
-
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-
+    border:1px solid rgba(255,255,255,0.45);
 }
 
-/* BUTTON */
-
-.btn{
-
-border:none;
-
-padding:12px 16px;
-
-border-radius:16px;
-
-background:white;
-
-cursor:pointer;
-
-font-size:14px;
-font-weight:600;
-
-transition:0.2s;
-
-box-shadow:
-0 8px 18px rgba(0,0,0,0.05);
-
+/* SECTION */
+.section{
+    margin-top:24px;
 }
 
-.btn:hover{
-
-transform:
-translateY(-3px)
-scale(1.03);
-
-box-shadow:
-0 12px 26px rgba(255,124,198,0.16);
-
+.section-head{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:12px;
 }
 
-.btn.active{
-
-background:
-linear-gradient(
-135deg,
-var(--pink),
-var(--blue)
-);
-
-color:white;
-
+.section-title{
+    font-size:15px;
+    font-weight:700;
 }
 
-/* SIZE */
-
-.size-btn{
-
-min-width:64px;
-
-}
-
-/* ICON BUTTONS */
-
-.icon-btn{
-
-width:86px;
-height:86px;
-
-padding:0;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-overflow:hidden;
-
-}
-
-.icon-btn img{
-
-width:56px;
-height:56px;
-
-object-fit:contain;
-
-}
-
-/* COLORS */
-
-.colors{
-
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-
-}
-
-.color{
-
-width:46px;
-height:46px;
-
-border-radius:50%;
-
-cursor:pointer;
-
-border:3px solid white;
-
-box-shadow:
-0 8px 16px rgba(0,0,0,0.08);
-
-transition:0.2s;
-
-}
-
-.color:hover{
-
-transform:scale(1.08);
-
-}
-
-.color.active{
-
-outline:4px solid rgba(125,175,255,0.26);
-
-}
-
-/* ORDER BUTTON */
-
-.order-btn{
-
-width:100%;
-
-margin-top:28px;
-
-padding:18px;
-
-border:none;
-
-border-radius:22px;
-
-cursor:pointer;
-
-font-size:16px;
-font-weight:700;
-
-color:white;
-
-background:
-linear-gradient(
-135deg,
-var(--pink),
-var(--blue)
-);
-
-box-shadow:
-0 16px 28px rgba(122,168,255,0.26);
-
-transition:0.2s;
-
-animation:
-glow 3s infinite;
-
-}
-
-.order-btn:hover{
-
-transform:
-translateY(-4px)
-scale(1.01);
-
-}
-
-/* MESSAGE */
-
-.custom-message{
-
-margin-top:20px;
-
-padding:16px;
-
-border-radius:18px;
-
-background:
-rgba(255,255,255,0.58);
-
-border:
-1px solid rgba(255,255,255,0.4);
-
-font-size:13px;
-
-line-height:1.7;
-
-color:#666;
-
-}
-
-/* FEATURES */
-
-.features{
-
-margin-top:22px;
-
-display:grid;
-
-grid-template-columns:
-1fr 1fr;
-
-gap:12px;
-
-}
-
-.feature{
-
-background:
-rgba(255,255,255,0.56);
-
-border:
-1px solid rgba(255,255,255,0.45);
-
-border-radius:20px;
-
-padding:14px;
-
-display:flex;
-gap:10px;
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-.feature::before{
-
-content:'';
-
-position:absolute;
-
-top:0;
-left:-120%;
-
-width:70%;
-height:100%;
-
-background:
-linear-gradient(
-90deg,
-transparent,
-rgba(255,255,255,0.55),
-transparent
-);
-
-}
-
-.feature:hover::before{
-
-animation:
-shimmer 1.2s;
-
-}
-
-.feature-icon{
-
-width:42px;
-height:42px;
-
-border-radius:14px;
-
-background:white;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-font-size:18px;
-
-box-shadow:
-0 6px 14px rgba(0,0,0,0.06);
-
-flex-shrink:0;
-
-}
-
-.feature h3{
-
-font-size:14px;
-
-margin-bottom:2px;
-
-}
-
-.feature p{
-
-font-size:12px;
-
-color:#777;
-
-line-height:1.4;
-
-}
-
-/* MOBILE */
-
-@media(max-width:1200px){
-
-.app{
-
-grid-template-columns:1fr;
-
-}
-
-.left{
-
-position:relative;
-
-top:auto;
-
-height:auto;
-
-}
-
-.preview{
-
-height:520px;
-
-}
-
-.shirt{
-    width:100%;
-    max-width:600px;
-    height:auto;
-    object-fit:contain;
-    user-select:none;
-    pointer-events:none;
-}
-
-.embroidery-zone{
-    position:absolute;
-    top:33%;
-    left:36%;
-    width:28%;
-    height:28%;
+/* TOOLTIP */
+.info-tip{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--pink),var(--blue));
+    color:white;
     display:flex;
     justify-content:center;
     align-items:center;
-    text-align:center;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+    position:relative;
 }
 
-.text{
-
-font-size:13px;
-
+.tip-box{
+    position:absolute;
+    top:-8px;
+    left:26px;
+    width:230px;
+    padding:12px;
+    background:white;
+    border-radius:16px;
+    font-size:12px;
+    line-height:1.5;
+    color:#555;
+    box-shadow:0 16px 34px rgba(0,0,0,0.12);
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(4px);
+    transition:0.2s;
+    z-index:100;
 }
 
-.icon-img{
-    width:12%;
-    height:auto;
+.info-tip:hover .tip-box{
+    opacity:1;
+    transform:translateY(0);
 }
 
+/* TEXTAREA */
+textarea{
+    width:100%;
+    min-height:110px;
+    padding:16px;
+    border:none;
+    outline:none;
+    resize:none;
+    border-radius:22px;
+    font-size:15px;
+    font-family:Poppins,sans-serif;
+    background:white;
+    box-shadow:0 8px 18px rgba(0,0,0,0.05);
+    transition:0.2s;
 }
 
-@media(max-width:700px){
-
-.app{
-
-padding:10px;
-
-gap:14px;
-
+textarea:focus{
+    box-shadow:
+        0 0 0 4px rgba(255,124,198,0.12),
+        0 12px 28px rgba(0,0,0,0.08);
+    transform:translateY(-1px);
 }
 
-.preview-card{
-
-border-radius:26px;
-
+/* INFO ROW */
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    margin-top:8px;
+    font-size:13px;
+    color:#777;
 }
 
-.right{
-
-padding:18px;
-
-border-radius:26px;
-
+/* BUTTON ROW */
+.row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
-.title{
-
-font-size:28px;
-
+/* BUTTON */
+.btn{
+    border:none;
+    padding:12px 16px;
+    border-radius:16px;
+    background:white;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:0.2s;
+    box-shadow:0 8px 18px rgba(0,0,0,0.05);
 }
 
-.features{
-
-grid-template-columns:1fr;
-
+.btn:hover{
+    transform:translateY(-3px) scale(1.03);
+    box-shadow:0 12px 26px rgba(255,124,198,0.16);
 }
 
+.btn.active{
+    background:linear-gradient(135deg,var(--pink),var(--blue));
+    color:white;
+}
+
+/* SIZE */
+.size-btn{
+    min-width:64px;
+}
+
+/* ICON BUTTONS */
 .icon-btn{
-
-width:74px;
-height:74px;
-
+    width:86px;
+    height:86px;
+    padding:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
 }
 
 .icon-btn img{
-
-width:48px;
-height:48px;
-
+    width:56px;
+    height:56px;
+    object-fit:contain;
 }
 
+/* COLORS */
+.colors{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
 }
 
+.color{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    cursor:pointer;
+    border:3px solid white;
+    box-shadow:0 8px 16px rgba(0,0,0,0.08);
+    transition:0.2s;
+}
+
+.color:hover{
+    transform:scale(1.08);
+}
+
+.color.active{
+    outline:4px solid rgba(125,175,255,0.26);
+}
+
+/* ORDER BUTTON */
+.order-btn{
+    width:100%;
+    margin-top:28px;
+    padding:18px;
+    border:none;
+    border-radius:22px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:700;
+    color:white;
+    background:linear-gradient(135deg,var(--pink),var(--blue));
+    box-shadow:0 16px 28px rgba(122,168,255,0.26);
+    transition:0.2s;
+    animation:glow 3s infinite;
+}
+
+.order-btn:hover{
+    transform:translateY(-4px) scale(1.01);
+}
+
+/* MESSAGE */
+.custom-message{
+    margin-top:20px;
+    padding:16px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.58);
+    border:1px solid rgba(255,255,255,0.4);
+    font-size:13px;
+    line-height:1.7;
+    color:#666;
+}
+
+/* FEATURES */
+.features{
+    margin-top:22px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.feature{
+    background:rgba(255,255,255,0.56);
+    border:1px solid rgba(255,255,255,0.45);
+    border-radius:20px;
+    padding:14px;
+    display:flex;
+    gap:10px;
+    position:relative;
+    overflow:hidden;
+}
+
+.feature::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:70%;
+    height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.55),transparent);
+}
+
+.feature:hover::before{
+    animation:shimmer 1.2s;
+}
+
+.feature-icon{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+    box-shadow:0 6px 14px rgba(0,0,0,0.06);
+    flex-shrink:0;
+}
+
+.feature h3{
+    font-size:14px;
+    margin-bottom:2px;
+}
+
+.feature p{
+    font-size:12px;
+    color:#777;
+    line-height:1.4;
+}
+
+/* TABLET */
+@media(max-width:1200px){
+    .app{
+        grid-template-columns:1fr;
+    }
+
+    .left{
+        position:sticky;
+        top:0;
+        height:70vh;
+    }
+
+    .preview-card{
+        max-width:900px;
+        margin:0 auto;
+    }
+
+    .preview{
+        max-width:900px;
+    }
+}
+
+/* MOBILE */
+@media(max-width:700px){
+    .app{
+        grid-template-columns:1fr;
+        padding:10px;
+        gap:14px;
+    }
+
+    .left{
+        position:sticky;
+        top:0;
+        height:66vh; /* cca 2/3 displeja */
+    }
+
+    .preview-card{
+        border-radius:26px;
+        padding:14px;
+    }
+
+    .preview{
+        max-width:100%;
+        height:100%;
+    }
+
+    .shirt{
+        max-width:100%;
+    }
+
+    .right{
+        padding:18px;
+        border-radius:26px;
+    }
+
+    .title{
+        font-size:28px;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .icon-btn{
+        width:74px;
+        height:74px;
+    }
+
+    .icon-btn img{
+        width:48px;
+        height:48px;
+    }
+
+    .text{
+        font-size:13px;
+    }
+
+    .icon-img{
+        width:12%;
+        height:auto;
+    }
+}
 </style>
 
 </head>
-
 <body>
 
 <div class="bg bg1"></div>
@@ -637,756 +581,496 @@ height:48px;
 
 <div class="app">
 
-<!-- LEFT -->
-
-<div class="left">
-
-<div class="preview-card">
-
-<div class="preview" id="previewZoom">
-
-<img
-src="tricko.svg"
-class="shirt"
-id="shirt"
->
-
-<div class="embroidery-zone">
-
-<img
-id="iconLayer"
-class="icon-img"
-src=""
->
-
-<div
-class="text"
-id="textLayer"
->
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- RIGHT -->
-
-<div class="right">
-
-<div class="title">
-Vytvor si svoje tričko
-</div>
-
-<div class="subtitle">
-Navrhnite si vlastné vyšívané tričko presne podľa seba.
-</div>
-
-<div class="handmade">
-🪡 Každé tričko vyrábame individuálne na objednávku.<br><br>
-
-✨ Náhľad slúži ako vizualizácia výšivky.<br><br>
-
-💌 Ak chcete väčšiu výšivku alebo vlastný obrázok, napíšte nám správu.
-</div>
-
-<!-- FARBA -->
-
-<div class="section">
-
-<div class="section-head">
-
-<div class="section-title">
-Farba trička
-</div>
-
-<div class="info-tip">
-
-i
-
-<div class="tip-box">
-Vyberte si farbu trička. Náhľad výšivky sa automaticky prispôsobí.
-</div>
-
-</div>
-
-</div>
-
-<div class="row">
-
-<button
-class="btn shirt-btn active"
-data-shirt="white"
->
-Biela
-</button>
-
-<button
-class="btn shirt-btn"
-data-shirt="black"
->
-Čierna
-</button>
-
-</div>
-
-</div>
-
-<!-- SIZE -->
-
-<div class="section">
-
-<div class="section-head">
-
-<div class="section-title">
-Veľkosť
-</div>
-
-<div class="info-tip">
-
-i
-
-<div class="tip-box">
-Dostupné veľkosti od S až po 2XL.
-</div>
-
-</div>
-
-</div>
-
-<div class="row">
-
-<button class="btn size-btn">S</button>
-<button class="btn size-btn active">M</button>
-<button class="btn size-btn">L</button>
-<button class="btn size-btn">XL</button>
-<button class="btn size-btn">2XL</button>
-
-</div>
-
-</div>
-
-<!-- TEXT -->
-
-<div class="section">
-
-<div class="section-head">
-
-<div class="section-title">
-Text výšivky
-</div>
-
-<div class="info-tip">
-
-i
-
-<div class="tip-box">
-Text sa automaticky zalomí tak, aby pekne sedel na tričku.
-</div>
-
-</div>
-
-</div>
-
-<textarea
-id="textInput"
-maxlength="40"
-placeholder="Napíšte vlastný text..."
-></textarea>
-
-<div class="info-row">
-
-<div id="counter">
-0 / 40
-</div>
-
-<div>
-Max. 4 riadky
-</div>
-
-</div>
-
-</div>
-
-<!-- FONT -->
-
-<div class="section">
-
-<div class="section-head">
-
-<div class="section-title">
-Štýl výšivky
-</div>
-
-<div class="info-tip">
-
-i
-
-<div class="tip-box">
-Každý štýl vytvorí trochu iný vzhľad výšivky.
-</div>
-
-</div>
-
-</div>
-
-<div class="row">
-
-<button
-class="btn font-btn active"
-data-font="Montserrat"
->
-Moderný
-</button>
-
-<button
-class="btn font-btn"
-data-font="Fredoka"
->
-Hravý
-</button>
-
-<button
-class="btn font-btn"
-data-font="Dancing Script"
->
-Písaný
-</button>
-
-</div>
-
-</div>
-
-<!-- COLORS -->
-
-<div class="section">
-
-<div class="section-head">
-
-<div class="section-title">
-Vyberte si niť
-</div>
-
-<div class="info-tip">
-
-i
-
-<div class="tip-box">
-Farba nite sa zobrazí priamo na náhľade trička.
-</div>
-
-</div>
-
-</div>
-
-<div class="colors">
-
-<div
-class="color active"
-data-color="#ff7cc6"
-style="background:#ff7cc6;"
-></div>
-
-<div
-class="color"
-data-color="black"
-style="background:black;"
-></div>
-
-<div
-class="color"
-data-color="white"
-style="
-background:white;
-border:1px solid #ccc;
-"
-></div>
-
-<div
-class="color"
-data-color="#5c86ff"
-style="background:#5c86ff;"
-></div>
-
-<div
-class="color"
-data-color="#69c27d"
-style="background:#69c27d;"
-></div>
-
-<div
-class="color"
-data-color="#f4c542"
-style="background:#f4c542;"
-></div>
-
-</div>
-
-</div>
-
-<!-- ICONS -->
-
-<div class="section">
-
-<div class="section-head">
-
-<div class="section-title">
-Ikonka
-</div>
-
-<div class="info-tip">
-
-i
-
-<div class="tip-box">
-Vyberte si ikonku k výšivke alebo nechajte bez ikonky.
-</div>
-
-</div>
-
-</div>
-
-<div class="row">
-
-<button
-class="btn icon-btn active"
-data-icon=""
->
-✕
-</button>
-
-<button
-class="btn icon-btn"
-data-icon="hviezda.png"
->
-<img src="hviezda.png">
-</button>
-
-<button
-class="btn icon-btn"
-data-icon="medved.png"
->
-<img src="medved.png">
-</button>
-
-<button
-class="btn icon-btn"
-data-icon="srdce.png"
->
-<img src="srdce.png">
-</button>
-
-<button
-class="btn icon-btn"
-data-icon="zajko.png"
->
-<img src="zajko.png">
-</button>
-
-</div>
-
-</div>
-
-<button onclick="openOrderForm()" class="order-btn">
-  🛍️ Pokračovať k objednávke
-</button>
-
-<div class="custom-message">
-Ak máte záujem o väčšiu výšivku alebo vlastný obrázok, napíšte nám správu a pripravíme vám individuálny návrh.
-</div>
-
-<!-- FEATURES -->
-
-<div class="features">
-
-<div class="feature">
-
-<div class="feature-icon">
-🪡
-</div>
-
-<div>
-
-<h3>
-Ručná výroba
-</h3>
-
-<p>
-Každé tričko vyrábame individuálne.
-</p>
-
-</div>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-🚚
-</div>
-
-<div>
-
-<h3>
-Rýchle dodanie
-</h3>
-
-<p>
-Expresné spracovanie objednávok.
-</p>
-
-</div>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-✨
-</div>
-
-<div>
-
-<h3>
-Prémiová výšivka
-</h3>
-
-<p>
-Kvalitné nite s dlhou životnosťou.
-</p>
-
-</div>
-
-</div>
-
-<div class="feature">
-
-<div class="feature-icon">
-🔒
-</div>
-
-<div>
-
-<h3>
-Bezpečná platba
-</h3>
-
-<p>
-100% zabezpečená objednávka.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+    <!-- LEFT -->
+    <div class="left">
+        <div class="preview-card">
+            <div class="preview" id="previewZoom">
+
+                <img
+                    src="tricko.svg"
+                    class="shirt"
+                    id="shirt"
+                >
+
+                <div class="embroidery-zone">
+                    <img
+                        id="iconLayer"
+                        class="icon-img"
+                        src=""
+                    >
+                    <div
+                        class="text"
+                        id="textLayer"
+                    ></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+
+        <div class="title">
+            Vytvor si svoje tričko
+        </div>
+
+        <div class="subtitle">
+            Navrhnite si vlastné vyšívané tričko presne podľa seba.
+        </div>
+
+        <div class="handmade">
+            🪡 Každé tričko vyrábame individuálne na objednávku.<br><br>
+            ✨ Náhľad slúži ako vizualizácia výšivky.<br><br>
+            💌 Ak chcete väčšiu výšivku alebo vlastný obrázok, napíšte nám správu.
+        </div>
+
+        <!-- FARBA -->
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    Farba trička
+                </div>
+                <div class="info-tip">
+                    i
+                    <div class="tip-box">
+                        Vyberte si farbu trička. Náhľad výšivky sa automaticky prispôsobí.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <button
+                    class="btn shirt-btn active"
+                    data-shirt="white"
+                >
+                    Biela
+                </button>
+
+                <button
+                    class="btn shirt-btn"
+                    data-shirt="black"
+                >
+                    Čierna
+                </button>
+            </div>
+        </div>
+
+        <!-- SIZE -->
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    Veľkosť
+                </div>
+                <div class="info-tip">
+                    i
+                    <div class="tip-box">
+                        Dostupné veľkosti od S až po 2XL.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <button class="btn size-btn">S</button>
+                <button class="btn size-btn active">M</button>
+                <button class="btn size-btn">L</button>
+                <button class="btn size-btn">XL</button>
+                <button class="btn size-btn">2XL</button>
+            </div>
+        </div>
+
+        <!-- TEXT -->
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    Text výšivky
+                </div>
+                <div class="info-tip">
+                    i
+                    <div class="tip-box">
+                        Text sa automaticky zalomí tak, aby pekne sedel na tričku.
+                    </div>
+                </div>
+            </div>
+
+            <textarea
+                id="textInput"
+                maxlength="40"
+                placeholder="Napíšte vlastný text..."
+            ></textarea>
+
+            <div class="info-row">
+                <div id="counter">
+                    0 / 40
+                </div>
+                <div>
+                    Max. 4 riadky
+                </div>
+            </div>
+        </div>
+
+        <!-- FONT -->
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    Štýl výšivky
+                </div>
+                <div class="info-tip">
+                    i
+                    <div class="tip-box">
+                        Každý štýl vytvorí trochu iný vzhľad výšivky.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <button
+                    class="btn font-btn active"
+                    data-font="Montserrat"
+                >
+                    Moderný
+                </button>
+
+                <button
+                    class="btn font-btn"
+                    data-font="Fredoka"
+                >
+                    Hravý
+                </button>
+
+                <button
+                    class="btn font-btn"
+                    data-font="'Dancing Script'"
+                >
+                    Písaný
+                </button>
+            </div>
+        </div>
+
+        <!-- COLORS -->
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    Vyberte si niť
+                </div>
+                <div class="info-tip">
+                    i
+                    <div class="tip-box">
+                        Farba nite sa zobrazí priamo na náhľade trička.
+                    </div>
+                </div>
+            </div>
+
+            <div class="colors">
+                <div
+                    class="color active"
+                    data-color="#ff7cc6"
+                    style="background:#ff7cc6;"
+                ></div>
+
+                <div
+                    class="color"
+                    data-color="black"
+                    style="background:black;"
+                ></div>
+
+                <div
+                    class="color"
+                    data-color="white"
+                    style="background:white;border:1px solid #ccc;"
+                ></div>
+
+                <div
+                    class="color"
+                    data-color="#5c86ff"
+                    style="background:#5c86ff;"
+                ></div>
+
+                <div
+                    class="color"
+                    data-color="#69c27d"
+                    style="background:#69c27d;"
+                ></div>
+
+                <div
+                    class="color"
+                    data-color="#f4c542"
+                    style="background:#f4c542;"
+                ></div>
+            </div>
+        </div>
+
+        <!-- ICONS -->
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    Ikonka
+                </div>
+                <div class="info-tip">
+                    i
+                    <div class="tip-box">
+                        Vyberte si ikonku k výšivke alebo nechajte bez ikonky.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <button
+                    class="btn icon-btn active"
+                    data-icon=""
+                >
+                    ✕
+                </button>
+
+                <button
+                    class="btn icon-btn"
+                    data-icon="hviezda.png"
+                >
+                    <img src="hviezda.png">
+                </button>
+
+                <button
+                    class="btn icon-btn"
+                    data-icon="medved.png"
+                >
+                    <img src="medved.png">
+                </button>
+
+                <button
+                    class="btn icon-btn"
+                    data-icon="srdce.png"
+                >
+                    <img src="srdce.png">
+                </button>
+
+                <button
+                    class="btn icon-btn"
+                    data-icon="zajko.png"
+                >
+                    <img src="zajko.png">
+                </button>
+            </div>
+        </div>
+
+        <button onclick="openOrderForm()" class="order-btn">
+            🛍️ Pokračovať k objednávke
+        </button>
+
+        <div class="custom-message">
+            Ak máte záujem o väčšiu výšivku alebo vlastný obrázok, napíšte nám správu a pripravíme vám individuálny návrh.
+        </div>
+
+        <!-- FEATURES -->
+        <div class="features">
+
+            <div class="feature">
+                <div class="feature-icon">
+                    🪡
+                </div>
+                <div>
+                    <h3>Ručná výroba</h3>
+                    <p>Každé tričko vyrábame individuálne.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    🚚
+                </div>
+                <div>
+                    <h3>Rýchle dodanie</h3>
+                    <p>Expresné spracovanie objednávok.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    ✨
+                </div>
+                <div>
+                    <h3>Prémiová výšivka</h3>
+                    <p>Kvalitné nite s dlhou životnosťou.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    🔒
+                </div>
+                <div>
+                    <h3>Bezpečná platba</h3>
+                    <p>100% zabezpečená objednávka.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 <script>
-
-const textInput =
-document.getElementById("textInput");
-
-const textLayer =
-document.getElementById("textLayer");
-
-const counter =
-document.getElementById("counter");
-
-const iconLayer =
-document.getElementById("iconLayer");
-
-const shirt =
-document.getElementById("shirt");
+const textInput = document.getElementById("textInput");
+const textLayer = document.getElementById("textLayer");
+const counter = document.getElementById("counter");
+const iconLayer = document.getElementById("iconLayer");
+const shirt = document.getElementById("shirt");
 
 /* SMART TEXT */
-
 function formatText(value){
+    const words = value.trim().split(/\s+/);
+    let lines = [];
+    let currentLine = '';
 
-const words =
-value.trim().split(/\s+/);
+    words.forEach(word=>{
+        if(word.length > 10){
+            if(currentLine !== ''){
+                lines.push(currentLine);
+                currentLine = '';
+            }
+            lines.push(word);
+            return;
+        }
 
-let lines = [];
-let currentLine = '';
+        const testLine = currentLine === '' ? word : currentLine + ' ' + word;
 
-words.forEach(word=>{
+        if(testLine.length <= 10){
+            currentLine = testLine;
+        }else{
+            lines.push(currentLine);
+            currentLine = word;
+        }
+    });
 
-if(word.length > 10){
+    if(currentLine !== ''){
+        lines.push(currentLine);
+    }
 
-if(currentLine !== ''){
-
-lines.push(currentLine);
-
-currentLine = '';
-
-}
-
-lines.push(word);
-
-return;
-
-}
-
-const testLine =
-currentLine === ''
-? word
-: currentLine + ' ' + word;
-
-if(testLine.length <= 10){
-
-currentLine = testLine;
-
-}else{
-
-lines.push(currentLine);
-
-currentLine = word;
-
-}
-
-});
-
-if(currentLine !== ''){
-
-lines.push(currentLine);
-
-}
-
-return lines.slice(0,4).join('\n');
-
+    return lines.slice(0,4).join('\n');
 }
 
 /* TEXT */
-
-textInput.addEventListener(
-"input",
-()=>{
-
-const value =
-textInput.value;
-
-const formatted =
-formatText(value);
-
-textLayer.innerText =
-formatted;
-
-counter.innerText =
-value.length + " / 40";
-
+textInput.addEventListener("input", ()=>{
+    const value = textInput.value;
+    const formatted = formatText(value);
+    textLayer.innerText = formatted;
+    counter.innerText = value.length + " / 40";
 });
 
 /* AUTO TYPING */
-
-const demoText =
-"Sem môžete pridať vlastný text ✨";
-
+const demoText = "Sem môžete pridať vlastný text ✨";
 let typingIndex = 0;
-
 let typingFinished = false;
 
 function typeDemo(){
+    if(typingFinished || textInput.value.length > 0){
+        return;
+    }
 
-if(
-typingFinished ||
-textInput.value.length > 0
-){
-return;
-}
+    textLayer.innerText = demoText.substring(0,typingIndex);
+    typingIndex++;
 
-textLayer.innerText =
-demoText.substring(0,typingIndex);
-
-typingIndex++;
-
-if(typingIndex <= demoText.length){
-
-setTimeout(typeDemo,70);
-
-}
-
+    if(typingIndex <= demoText.length){
+        setTimeout(typeDemo,70);
+    }
 }
 
 setTimeout(typeDemo,900);
 
-textInput.addEventListener(
-'focus',
-()=>{
-
-typingFinished = true;
-
-if(textInput.value === ''){
-
-textLayer.innerText = '';
-
-}
-
-}
-);
+textInput.addEventListener('focus',()=>{
+    typingFinished = true;
+    if(textInput.value === ''){
+        textLayer.innerText = '';
+    }
+});
 
 /* FONT */
-
 document
-.querySelectorAll(".font-btn")
-.forEach(btn=>{
+    .querySelectorAll(".font-btn")
+    .forEach(btn=>{
+        btn.addEventListener("click",()=>{
+            document
+                .querySelectorAll(".font-btn")
+                .forEach(b=>b.classList.remove("active"));
 
-btn.addEventListener(
-"click",
-()=>{
-
-document
-.querySelectorAll(".font-btn")
-.forEach(b=>{
-b.classList.remove("active");
-});
-
-btn.classList.add("active");
-
-textLayer.style.fontFamily =
-btn.dataset.font;
-
-}
-);
-
-});
+            btn.classList.add("active");
+            textLayer.style.fontFamily = btn.dataset.font;
+        });
+    });
 
 /* COLORS */
-
 document
-.querySelectorAll(".color")
-.forEach(color=>{
+    .querySelectorAll(".color")
+    .forEach(color=>{
+        color.addEventListener("click",()=>{
+            document
+                .querySelectorAll(".color")
+                .forEach(c=>c.classList.remove("active"));
 
-color.addEventListener(
-"click",
-()=>{
-
-document
-.querySelectorAll(".color")
-.forEach(c=>{
-c.classList.remove("active");
-});
-
-color.classList.add("active");
-
-textLayer.style.color =
-color.dataset.color;
-
-}
-);
-
-});
+            color.classList.add("active");
+            textLayer.style.color = color.dataset.color;
+        });
+    });
 
 /* ICONS */
-
 document
-.querySelectorAll(".icon-btn")
-.forEach(btn=>{
+    .querySelectorAll(".icon-btn")
+    .forEach(btn=>{
+        btn.addEventListener("click",()=>{
+            document
+                .querySelectorAll(".icon-btn")
+                .forEach(b=>b.classList.remove("active"));
 
-btn.addEventListener(
-"click",
-()=>{
+            btn.classList.add("active");
 
-document
-.querySelectorAll(".icon-btn")
-.forEach(b=>{
-b.classList.remove("active");
-});
+            const icon = btn.dataset.icon;
 
-btn.classList.add("active");
-
-const icon =
-btn.dataset.icon;
-
-if(icon === ""){
-
-iconLayer.style.display =
-"none";
-
-iconLayer.src = "";
-
-}else{
-
-iconLayer.style.display =
-"block";
-
-iconLayer.src = icon;
-
-}
-
-}
-);
-
-});
+            if(icon === ""){
+                iconLayer.style.display = "none";
+                iconLayer.src = "";
+            }else{
+                iconLayer.style.display = "block";
+                iconLayer.src = icon;
+            }
+        });
+    });
 
 /* SHIRT COLOR */
-
 document
-.querySelectorAll(".shirt-btn")
-.forEach(btn=>{
+    .querySelectorAll(".shirt-btn")
+    .forEach(btn=>{
+        btn.addEventListener("click",()=>{
+            document
+                .querySelectorAll(".shirt-btn")
+                .forEach(b=>b.classList.remove("active"));
 
-btn.addEventListener(
-"click",
-()=>{
+            btn.classList.add("active");
 
-document
-.querySelectorAll(".shirt-btn")
-.forEach(b=>{
-b.classList.remove("active");
-});
+            const color = btn.dataset.shirt;
 
-btn.classList.add("active");
-
-const color =
-btn.dataset.shirt;
-
-if(color === "black"){
-
-shirt.classList.add("black-shirt");
-
-}else{
-
-shirt.classList.remove("black-shirt");
-
-}
-
-}
-);
-
-});
+            if(color === "black"){
+                shirt.classList.add("black-shirt");
+            }else{
+                shirt.classList.remove("black-shirt");
+            }
+        });
+    });
 
 /* SIZE */
-
 document
-.querySelectorAll(".size-btn")
-.forEach(btn=>{
+    .querySelectorAll(".size-btn")
+    .forEach(btn=>{
+        btn.addEventListener("click",()=>{
+            document
+                .querySelectorAll(".size-btn")
+                .forEach(b=>b.classList.remove("active"));
 
-btn.addEventListener(
-"click",
-()=>{
+            btn.classList.add("active");
+        });
+    });
 
-document
-.querySelectorAll(".size-btn")
-.forEach(b=>{
-b.classList.remove("active");
-});
-
-btn.classList.add("active");
-
-}
-);
-
-});
-
-/* SEM VLOŽ FUNKCIU ↓↓↓ */
-
+/* OBJEDNÁVKA */
 function openOrderForm() {
-
     const threadNames = {
         "#ff7cc6": "ružová",
         "black": "čierna",
@@ -1406,26 +1090,21 @@ function openOrderForm() {
 
     const icon = document.querySelector(".icon-btn.active")?.dataset.icon || "";
 
-const url =
-    "https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/viewform?usp=pp_url"
-    + "&entry.1089188770=" + encodeURIComponent("Tricko")   // 🔥 Produkt – správne ID
-    + "&entry.1452889000=" + encodeURIComponent(color)
-    + "&entry.1444664887=" + encodeURIComponent(size)
-    + "&entry.673285472=" + encodeURIComponent(text)
-    + "&entry.564175592=" + encodeURIComponent(font)
-    + "&entry.377229164=" + encodeURIComponent(thread)
-    + "&entry.1304530760=" + encodeURIComponent(icon);
-
-
+    const url =
+        "https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/viewform?usp=pp_url"
+        + "&entry.1089188770=" + encodeURIComponent("Tricko")
+        + "&entry.1452889000=" + encodeURIComponent(color)
+        + "&entry.1444664887=" + encodeURIComponent(size)
+        + "&entry.673285472=" + encodeURIComponent(text)
+        + "&entry.564175592=" + encodeURIComponent(font)
+        + "&entry.377229164=" + encodeURIComponent(thread)
+        + "&entry.1304530760=" + encodeURIComponent(icon);
 
     window.location.href = url;
 }
-
-/* KONIEC FUNKCIE ↑↑↑ */
-
-
 </script>
-  <script>
+
+<script>
 let scale = 1;
 let lastScale = 1;
 let startDistance = 0;
@@ -1483,6 +1162,6 @@ preview.addEventListener("touchend", () => {
     lastScale = scale;
 });
 </script>
+
 </body>
 </html>
-
