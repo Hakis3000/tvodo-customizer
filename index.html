@@ -83,6 +83,12 @@ transform:translateY(0px);
 }
 }
 
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.03)}
+100%{transform:scale(1)}
+}
+
 .app{
 display:grid;
 grid-template-columns:minmax(0,1fr) 430px;
@@ -185,6 +191,27 @@ overflow:hidden;
 box-shadow:inset 0 0 0 1px rgba(255,255,255,0.6);
 }
 
+.preview-window::before{
+content:'';
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+45deg,
+transparent 0%,
+rgba(255,255,255,0.25) 50%,
+transparent 100%
+);
+transform:translateX(-100%);
+animation:shine 6s infinite;
+}
+
+@keyframes shine{
+100%{
+transform:translateX(100%);
+}
+}
+
 .preview-window svg{
 width:100%;
 height:auto;
@@ -212,7 +239,7 @@ transition:0.25s;
 }
 
 .preview-window:hover .zone-frame{
-stroke:rgba(255,124,198,0.34);
+stroke:rgba(255,124,198,0.36);
 }
 
 #embroideryText{
@@ -227,6 +254,7 @@ transition:0.25s;
 
 #symbolLayer{
 transition:0.25s;
+animation:pulse 3s infinite;
 }
 
 .right{
@@ -322,13 +350,9 @@ color:white;
 box-shadow:0 14px 28px rgba(122,168,255,0.24);
 }
 
-.shirt-color-btn{
-min-width:120px;
-}
-
 .symbol-btn{
-width:66px;
-height:66px;
+width:68px;
+height:68px;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -337,8 +361,8 @@ overflow:hidden;
 }
 
 .symbol-btn img{
-width:34px;
-height:34px;
+width:40px;
+height:40px;
 object-fit:contain;
 }
 
@@ -390,6 +414,16 @@ font-size:13px;
 line-height:1.7;
 color:#777;
 margin-top:10px;
+}
+
+.extra-note{
+margin-top:16px;
+padding:14px;
+border-radius:18px;
+background:rgba(255,255,255,0.55);
+font-size:13px;
+line-height:1.7;
+color:#777;
 }
 
 @media(max-width:1200px){
@@ -507,10 +541,10 @@ height="860"/>
 <rect
 id="zoneFrame"
 class="zone-frame"
-x="350"
-y="320"
-width="300"
-height="220"/>
+x="385"
+y="340"
+width="230"
+height="170"/>
 
 <image
 id="symbolLayer"
@@ -547,7 +581,7 @@ Každý produkt vyrábame individuálne podľa vášho návrhu. Náhľad slúži
 <div class="info-box">
 🪡 Jemná výšivka kvalitnými niťami.<br><br>
 ✨ Každý kus pripravujeme individuálne na objednávku.<br><br>
-💌 Ak chcete vlastný obrázok alebo väčšiu výšivku, napíšte nám správu.
+💌 Každý návrh je unikátny a pripravovaný s dôrazom na detail.
 </div>
 
 <div class="section">
@@ -575,27 +609,31 @@ Symbol do výšivky
 
 <div class="row">
 
+<button class="btn symbol-btn active" data-symbol="">
+✕
+</button>
+
 <button class="btn symbol-btn" data-symbol="srdce.svg">
 
-<img src="srdce.png">
+<img src="srdce.svg">
 
 </button>
 
 <button class="btn symbol-btn" data-symbol="hviezda.svg">
 
-<img src="hviezda.png">
+<img src="hviezda.svg">
 
 </button>
 
 <button class="btn symbol-btn" data-symbol="medved.svg">
 
-<img src="medved.png">
+<img src="medved.svg">
 
 </button>
 
-<button class="btn symbol-btn" data-symbol="zajko.svg">
+<button class="btn symbol-btn" data-symbol="zajac.svg">
 
-<img src="zajko.png">
+<img src="zajac.svg">
 
 </button>
 
@@ -744,6 +782,10 @@ style="background:white;border:2px solid #ddd"></div>
 
 </div>
 
+<div class="extra-note">
+✨ Symbol aj text automaticky používajú rovnakú farbu nite.
+</div>
+
 </div>
 
 <button class="order-btn">
@@ -763,111 +805,44 @@ const productImage = document.getElementById('productImage');
 const symbolLayer = document.getElementById('symbolLayer');
 
 let currentPosition = 'center';
-
 let selectedSymbol = '';
+let currentThreadColor = '#ff7cc6';
 
-const products = {
+const positions = {
 
-shirt:{
-image:'shirt.svg',
-
-positions:{
-center:{x:350,y:320,w:300,h:220},
-chest:{x:520,y:320,w:170,h:170}
+center:{
+x:385,
+y:340,
+w:230,
+h:170
 },
 
-colors:['white','black'],
-sizes:['S','M','L','XL','2XL']
-},
-
-body:{
-image:'body.svg',
-
-positions:{
-center:{x:390,y:340,w:220,h:180}
-},
-
-colors:['white'],
-sizes:['56','62','68']
-},
-
-bib:{
-image:'bib.svg',
-
-positions:{
-center:{x:380,y:340,w:240,h:180}
-},
-
-colors:['white'],
-sizes:[]
+chest:{
+x:530,
+y:320,
+w:160,
+h:160
 }
 
 };
 
-function updateProductOptions(productKey){
+function updateSymbolColor(color){
 
-const product = products[productKey];
+if(selectedSymbol === '') return;
 
-document.querySelectorAll('.shirt-color-btn').forEach(btn=>{
+symbolLayer.style.filter = `
+drop-shadow(0 4px 8px rgba(0,0,0,0.08))
+brightness(0)
+saturate(100%)
+`;
 
-const color = btn.dataset.shirt;
-
-if(product.colors.includes(color)){
-
-btn.style.display='inline-flex';
-
-}else{
-
-btn.style.display='none';
-
-}
-
-});
-
-document.querySelectorAll('.size-btn').forEach(btn=>{
-
-const size = btn.textContent.trim();
-
-if(product.sizes.includes(size)){
-
-btn.style.display='inline-flex';
-
-}else{
-
-btn.style.display='none';
-
-}
-
-});
-
-document.querySelectorAll('.position-btn').forEach(btn=>{
-
-const pos = btn.dataset.position;
-
-if(product.positions[pos]){
-
-btn.style.display='inline-flex';
-
-}else{
-
-btn.style.display='inline-flex';
-btn.disabled = true;
-btn.style.opacity = 0.4;
-
-}
-
-});
+symbolLayer.style.opacity = '0.95';
 
 }
 
 function fitTextToZone(){
 
-const activeProduct =
-document.querySelector('.product-btn.active').dataset.product;
-
-const product = products[activeProduct];
-
-const zone = product.positions[currentPosition];
+const zone = positions[currentPosition];
 
 let text = textInput.value.trim();
 
@@ -946,7 +921,7 @@ embroideryText.appendChild(tspan);
 
 requestAnimationFrame(()=>{
 
-const bbox = embroideryText.getBBox();
+let bbox = embroideryText.getBBox();
 
 while(
 (bbox.width > zone.w - 20 ||
@@ -959,7 +934,7 @@ fontSize -= 1;
 embroideryText.style.fontSize =
 fontSize + 'px';
 
-break;
+bbox = embroideryText.getBBox();
 
 }
 
@@ -976,7 +951,7 @@ centerX - 35
 
 symbolLayer.setAttribute(
 'y',
-zone.y - 70
+zone.y - 78
 );
 
 symbolLayer.style.display='block';
@@ -1023,8 +998,12 @@ document.querySelectorAll('.color')
 
 color.classList.add('active');
 
+currentThreadColor = color.dataset.color;
+
 embroideryText.style.fill =
-color.dataset.color;
+currentThreadColor;
+
+updateSymbolColor(currentThreadColor);
 
 });
 
@@ -1034,8 +1013,6 @@ document.querySelectorAll('.position-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
 
-if(btn.disabled) return;
-
 document.querySelectorAll('.position-btn')
 .forEach(b=>b.classList.remove('active'));
 
@@ -1043,13 +1020,8 @@ btn.classList.add('active');
 
 currentPosition = btn.dataset.position;
 
-const activeProduct =
-document.querySelector('.product-btn.active')
-.dataset.product;
-
 const zone =
-products[activeProduct]
-.positions[currentPosition];
+positions[currentPosition];
 
 zoneFrame.setAttribute('x',zone.x);
 zoneFrame.setAttribute('y',zone.y);
@@ -1118,49 +1090,6 @@ fitTextToZone();
 });
 
 });
-
-document.querySelectorAll('.product-btn').forEach(btn=>{
-
-btn.addEventListener('click',()=>{
-
-document.querySelectorAll('.product-btn')
-.forEach(b=>b.classList.remove('active'));
-
-btn.classList.add('active');
-
-const product = products[btn.dataset.product];
-
-productImage.setAttribute(
-'href',
-product.image
-);
-
-currentPosition = 'center';
-
-document.querySelectorAll('.position-btn')
-.forEach(b=>b.classList.remove('active'));
-
-document.querySelector(
-'.position-btn[data-position="center"]'
-).classList.add('active');
-
-const zone =
-product.positions[currentPosition];
-
-zoneFrame.setAttribute('x',zone.x);
-zoneFrame.setAttribute('y',zone.y);
-zoneFrame.setAttribute('width',zone.w);
-zoneFrame.setAttribute('height',zone.h);
-
-updateProductOptions(btn.dataset.product);
-
-fitTextToZone();
-
-});
-
-});
-
-updateProductOptions('shirt');
 
 </script>
 
