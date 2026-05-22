@@ -95,25 +95,32 @@ body{
     left:63%;
     transform:translate(-50%, -50%);
     width:23.4%;
-    height:auto;
-
-    font-size:clamp(10px, 1.8vw, 22px);
-    font-weight:600;
-    text-align:center;
-    line-height:1.1;
-
-    white-space:pre-wrap;       /* rešpektuje medzery a enter */
-    word-break:keep-all;        /* neláme slová */
-    overflow-wrap:break-word;   /* ak treba, zalomí celé slovo */
-    overflow:hidden;            /* nič neprelezie */
 
     display:flex;
     justify-content:center;
     align-items:center;
+    text-align:center;
     flex-direction:column;
+
+    font-size:2.2vw;        /* relatívne k rámčeku */
+    line-height:1.1;
+    font-weight:600;
+
+    white-space:normal;
+    word-break:break-word;
+    overflow-wrap:break-word;
+    overflow:hidden;
 
     pointer-events:none;
 }
+
+/* 🔥 mobilná verzia – menší viewport = menší text */
+@media (max-width: 600px){
+    .text-preview{
+        font-size:3.8vw;
+    }
+}
+
 
 
 </style>
@@ -162,7 +169,7 @@ input.addEventListener("input", () => {
     // Enter = nový riadok
     text = text.replace(/\n/g, "\n");
 
-    // rozdelenie podľa slov (max 2 riadky)
+    // rozdelenie podľa slov
     const words = text.split(" ");
     let line1 = "";
     let line2 = "";
@@ -177,6 +184,7 @@ input.addEventListener("input", () => {
 
     preview.textContent = line2 ? line1 + "\n" + line2 : line1;
 });
+
 </script>
 
 </body>
