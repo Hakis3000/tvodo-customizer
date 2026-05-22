@@ -6,7 +6,6 @@
 <title>TVODO – Customizer</title>
 
 <style>
-
 body{
     margin:0;
     background:#f3f3f3;
@@ -18,11 +17,11 @@ body{
     overflow:hidden;
 }
 
-/* ======== PEVNÝ PAPIER (CANVAS) ======== */
+/* pevný papier */
 .canvas{
     width:100%;
     max-width:520px;
-    aspect-ratio: 3 / 4;
+    aspect-ratio:3 / 4;
     background:white;
     border-radius:22px;
     box-shadow:0 20px 40px rgba(0,0,0,0.15);
@@ -30,29 +29,32 @@ body{
     overflow:hidden;
 }
 
-/* ======== TRIČKO – zoomuje sa iba ono ======== */
+/* tričko vyplní celý papier, bez zoomu */
 .product-image{
+    position:absolute;
+    inset:0;
     width:100%;
     height:100%;
-    object-fit:cover; /* 🔥 tričko vyplní celý papier */
-    transform-origin:center center;
-    transition:transform 0.2s ease-out;
-    position:absolute;
-    top:0;
-    left:0;
+    object-fit:cover;
+    pointer-events:none;
 }
 
-/* ======== VÝŠIVKOVÝ ŠTVOREC 11×11 cm ======== */
+/* FIXNÝ ŠTVOREC – tu bude výšivka
+   11 cm ≈ 416 px, môžeš doladiť */
 .embroidery-area{
     position:absolute;
-    width:416px;   /* 11 cm */
-    height:416px;  /* 11 cm */
-    top:180px;     /* nastavíme podľa trička */
+    width:416px;
+    height:416px;
+    /* tu doladíme polohu na prsiach */
+    top:170px;      /* posuň hore/dole */
     left:50%;
     transform:translateX(-50%);
-    border:2px dashed rgba(255, 124, 198, 0.45);
-    border-radius:14px;
+
+    border:2px dashed rgba(255,124,198,0.55);
+    border-radius:18px;
+    box-sizing:border-box;
     pointer-events:none;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -61,7 +63,6 @@ body{
     overflow:hidden;
 }
 
-/* ikonka */
 .icon-layer{
     width:60px;
     height:60px;
@@ -70,9 +71,8 @@ body{
     margin-bottom:8px;
 }
 
-/* text */
 .text-layer{
-    font-family:'Montserrat';
+    font-family:'Montserrat', sans-serif;
     font-size:22px;
     font-weight:700;
     color:#ff7cc6;
@@ -80,33 +80,6 @@ body{
     text-align:center;
     line-height:1.1;
 }
-
-/* ======== ZOOM TLAČIDLÁ ======== */
-.zoom-controls{
-    position:absolute;
-    bottom:16px;
-    right:16px;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-.zoom-controls button{
-    width:42px;
-    height:42px;
-    border:none;
-    border-radius:12px;
-    background:#ffffff;
-    box-shadow:0 4px 10px rgba(0,0,0,0.15);
-    font-size:22px;
-    cursor:pointer;
-    transition:0.15s;
-}
-
-.zoom-controls button:hover{
-    transform:scale(1.08);
-}
-
 </style>
 </head>
 
@@ -117,19 +90,17 @@ body{
     <!-- TRIČKO -->
     <img id="productImage" class="product-image" src="tricko.svg">
 
-    <!-- VÝŠIVKOVÝ ŠTVOREC -->
+    <!-- FIXNÝ VÝŠIVKOVÝ ŠTVOREC -->
     <div class="embroidery-area">
         <img id="iconLayer" class="icon-layer" src="">
         <div id="textLayer" class="text-layer"></div>
     </div>
 
-    <!-- ZOOM -->
-    <div class="zoom-controls">
-        <button id="zoomIn">+</button>
-        <button id="zoomOut">−</button>
-        <button id="zoomReset">⟳</button>
-    </div>
-
 </div>
 
 <script>
+// zatiaľ žiadny zoom – štvorec ostáva 100 % fixný
+</script>
+
+</body>
+</html>
