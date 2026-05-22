@@ -29,7 +29,7 @@ body{
     overflow:hidden;
 }
 
-/* ======== TRIČKO – presne na strede, neorezané ======== */
+/* ======== TRIČKO – presne na strede, celé viditeľné ======== */
 .shirt-wrapper{
     position:absolute;
     inset:0;
@@ -49,11 +49,11 @@ body{
 .frame-wrapper{
     position:absolute;
 
-    width:28%;          /* veľkosť rámčeka */
+    width:26%;          /* jemnejšia veľkosť */
     aspect-ratio:1/1;
 
-    top:40%;            /* posun nižšie */
-    left:68%;           /* posun doprava */
+    top:38%;            /* presné umiestnenie podľa obrázka */
+    left:70%;
     transform:translate(-50%, -50%);
 
     pointer-events:none;
@@ -67,13 +67,13 @@ body{
 .frame-wrapper rect{
     fill:transparent;
     stroke:#ff7cc6;
-    stroke-width:4;
+    stroke-width:3;
 
-    /* MALÉ BODKY */
-    stroke-dasharray:1 14;
+    /* MALÉ BODKY – jemné, nenápadné */
+    stroke-dasharray:0.5 10;
     stroke-linecap:round;
 
-    rx:14;
+    rx:10;
 }
 
 </style>
