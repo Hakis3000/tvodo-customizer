@@ -1,12 +1,18 @@
+<!-- ========================================= -->
+<!-- TVODO EMBROIDERY CUSTOMIZER V5 -->
+<!-- ========================================= -->
+
 <!DOCTYPE html>
 <html lang="sk">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>TVODO - Vyšívaný customizer</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Fredoka:wght@500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
@@ -83,10 +89,36 @@ transform:translateY(0px);
 }
 }
 
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.03)}
-100%{transform:scale(1)}
+@keyframes symbolDrop{
+0%{
+opacity:0;
+transform:translateY(-60px) scale(0.5) rotate(-12deg);
+filter:blur(8px);
+}
+60%{
+opacity:1;
+transform:translateY(10px) scale(1.1);
+filter:blur(0px);
+}
+100%{
+opacity:1;
+transform:translateY(0px) scale(1);
+}
+}
+
+@keyframes sparkle{
+0%{
+opacity:0;
+transform:scale(0.5);
+}
+50%{
+opacity:1;
+transform:scale(1.2);
+}
+100%{
+opacity:0;
+transform:scale(1.6);
+}
 }
 
 .app{
@@ -121,7 +153,7 @@ overflow:hidden;
 }
 
 .logo{
-font-size:44px;
+font-size:46px;
 font-weight:700;
 letter-spacing:-1px;
 background:linear-gradient(90deg,var(--pink),var(--blue));
@@ -173,7 +205,6 @@ box-shadow:0 18px 30px rgba(122,168,255,0.28);
 width:82px;
 height:82px;
 object-fit:contain;
-filter:drop-shadow(0 10px 18px rgba(0,0,0,0.08));
 }
 
 .preview-window{
@@ -191,27 +222,6 @@ overflow:hidden;
 box-shadow:inset 0 0 0 1px rgba(255,255,255,0.6);
 }
 
-.preview-window::before{
-content:'';
-position:absolute;
-inset:0;
-background:
-linear-gradient(
-45deg,
-transparent 0%,
-rgba(255,255,255,0.25) 50%,
-transparent 100%
-);
-transform:translateX(-100%);
-animation:shine 6s infinite;
-}
-
-@keyframes shine{
-100%{
-transform:translateX(100%);
-}
-}
-
 .preview-window svg{
 width:100%;
 height:auto;
@@ -221,7 +231,7 @@ transition:0.35s;
 }
 
 .preview-window:hover svg{
-transform:scale(1.012);
+transform:scale(1.01);
 }
 
 #productImage{
@@ -231,7 +241,7 @@ transition:0.35s;
 
 .zone-frame{
 fill:none;
-stroke:rgba(255,124,198,0.18);
+stroke:rgba(255,124,198,0.16);
 stroke-width:2;
 stroke-dasharray:8 8;
 rx:24;
@@ -250,11 +260,29 @@ fill:#ff7cc6;
 text-anchor:middle;
 dominant-baseline:middle;
 transition:0.25s;
+paint-order:stroke;
+stroke:rgba(255,255,255,0.35);
+stroke-width:1.4;
+letter-spacing:0.5px;
 }
 
 #symbolLayer{
-transition:0.25s;
-animation:pulse 3s infinite;
+transition:0.3s;
+transform-origin:center;
+}
+
+.sparkle{
+position:absolute;
+width:22px;
+height:22px;
+border-radius:50%;
+background:white;
+pointer-events:none;
+opacity:0;
+}
+
+.sparkle.active{
+animation:sparkle 0.7s ease;
 }
 
 .right{
@@ -291,7 +319,6 @@ line-height:1.9;
 font-size:14px;
 color:#666;
 margin-bottom:24px;
-box-shadow:0 10px 24px rgba(0,0,0,0.03);
 }
 
 .section{
@@ -416,7 +443,7 @@ color:#777;
 margin-top:10px;
 }
 
-.extra-note{
+.live-size{
 margin-top:16px;
 padding:14px;
 border-radius:18px;
@@ -424,6 +451,13 @@ background:rgba(255,255,255,0.55);
 font-size:13px;
 line-height:1.7;
 color:#777;
+}
+
+.warning{
+margin-top:10px;
+color:#ff6c93;
+font-size:13px;
+display:none;
 }
 
 @media(max-width:1200px){
@@ -473,6 +507,7 @@ padding:18px;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -497,33 +532,26 @@ Navrhnite si vlastnú jemnú výšivku presne podľa seba ✨
 
 <div class="product-bar">
 
-<button class="product-btn active" data-product="shirt">
-
+<button class="product-btn active">
 <img src="shirt.svg" class="product-preview-icon">
-
 Tričko
-
 </button>
 
-<button class="product-btn" data-product="body">
-
+<button class="product-btn">
 <img src="body.svg" class="product-preview-icon">
-
 Body
-
 </button>
 
-<button class="product-btn" data-product="bib">
-
+<button class="product-btn">
 <img src="bib.svg" class="product-preview-icon">
-
 Bryndák
-
 </button>
 
 </div>
 
 <div class="preview-window">
+
+<div class="sparkle" id="sparkle"></div>
 
 <svg
 id="previewSvg"
@@ -550,9 +578,9 @@ height="170"/>
 id="symbolLayer"
 href=""
 x="470"
-y="300"
-width="70"
-height="70"
+y="330"
+width="50"
+height="50"
 display="none"/>
 
 <text
@@ -575,13 +603,13 @@ Vytvorte si vlastnú výšivku
 </div>
 
 <div class="subtitle">
-Každý produkt vyrábame individuálne podľa vášho návrhu. Náhľad slúži ako vizualizácia budúcej výšivky.
+Každý produkt vyrábame individuálne podľa vášho návrhu.
 </div>
 
 <div class="info-box">
 🪡 Jemná výšivka kvalitnými niťami.<br><br>
-✨ Každý kus pripravujeme individuálne na objednávku.<br><br>
-💌 Každý návrh je unikátny a pripravovaný s dôrazom na detail.
+✨ Každý kus pripravujeme individuálne.<br><br>
+💌 Náhľad slúži ako realistická vizualizácia vašej výšivky.
 </div>
 
 <div class="section">
@@ -593,10 +621,14 @@ Text výšivky
 <textarea
 id="textInput"
 maxlength="40"
-placeholder="Napíšte meno, venovanie alebo krátky text..."></textarea>
+placeholder="Napíšte meno alebo krátky text..."></textarea>
 
 <div class="helper">
-Text sa automaticky prispôsobí veľkosti výšivkovej plochy.
+Text sa automaticky prispôsobí výšivkovej ploche.
+</div>
+
+<div class="warning" id="warningText">
+⚠ Dlhší text bude vyšitý menším písmom
 </div>
 
 </div>
@@ -614,33 +646,21 @@ Symbol do výšivky
 </button>
 
 <button class="btn symbol-btn" data-symbol="srdce.svg">
-
 <img src="srdce.svg">
-
 </button>
 
 <button class="btn symbol-btn" data-symbol="hviezda.svg">
-
 <img src="hviezda.svg">
-
 </button>
 
 <button class="btn symbol-btn" data-symbol="medved.svg">
-
 <img src="medved.svg">
-
 </button>
 
 <button class="btn symbol-btn" data-symbol="zajac.svg">
-
 <img src="zajac.svg">
-
 </button>
 
-</div>
-
-<div class="helper">
-Možný je maximálne 1 symbol vo výšivke.
 </div>
 
 </div>
@@ -782,8 +802,8 @@ style="background:white;border:2px solid #ddd"></div>
 
 </div>
 
-<div class="extra-note">
-✨ Symbol aj text automaticky používajú rovnakú farbu nite.
+<div class="live-size">
+📏 Výšivka približne 8–10 cm podľa zvoleného textu.
 </div>
 
 </div>
@@ -803,6 +823,8 @@ const textInput = document.getElementById('textInput');
 const zoneFrame = document.getElementById('zoneFrame');
 const productImage = document.getElementById('productImage');
 const symbolLayer = document.getElementById('symbolLayer');
+const sparkle = document.getElementById('sparkle');
+const warningText = document.getElementById('warningText');
 
 let currentPosition = 'center';
 let selectedSymbol = '';
@@ -826,17 +848,42 @@ h:160
 
 };
 
-function updateSymbolColor(color){
+function hexToFilter(hex){
 
-if(selectedSymbol === '') return;
+if(hex === '#ff7cc6'){
+return 'brightness(0) saturate(100%) invert(69%) sepia(49%) saturate(1272%) hue-rotate(292deg)';
+}
 
-symbolLayer.style.filter = `
-drop-shadow(0 4px 8px rgba(0,0,0,0.08))
-brightness(0)
-saturate(100%)
-`;
+if(hex === '#5c86ff'){
+return 'brightness(0) saturate(100%) invert(48%) sepia(81%) saturate(1071%) hue-rotate(199deg)';
+}
 
-symbolLayer.style.opacity = '0.95';
+if(hex === '#69c27d'){
+return 'brightness(0) saturate(100%) invert(67%) sepia(17%) saturate(818%) hue-rotate(76deg)';
+}
+
+if(hex === '#f4c542'){
+return 'brightness(0) saturate(100%) invert(82%) sepia(44%) saturate(1175%) hue-rotate(337deg)';
+}
+
+if(hex === 'black'){
+return 'brightness(0)';
+}
+
+if(hex === 'white'){
+return 'brightness(0) invert(1)';
+}
+
+return '';
+}
+
+function showSparkle(){
+
+sparkle.classList.remove('active');
+
+void sparkle.offsetWidth;
+
+sparkle.classList.add('active');
 
 }
 
@@ -857,8 +904,14 @@ embroideryText.innerHTML='';
 const centerX = zone.x + zone.w/2;
 const centerY = zone.y + zone.h/2;
 
+let symbolOffset = 0;
+
+if(selectedSymbol !== ''){
+symbolOffset = 28;
+}
+
 embroideryText.setAttribute('x',centerX);
-embroideryText.setAttribute('y',centerY);
+embroideryText.setAttribute('y',centerY + symbolOffset);
 
 let lines = [];
 let currentLine = '';
@@ -894,6 +947,12 @@ if(lines.length >= 4){
 fontSize = 28;
 }
 
+if(text.length > 18){
+warningText.style.display='block';
+}else{
+warningText.style.display='none';
+}
+
 embroideryText.style.fontSize = fontSize + 'px';
 
 lines.forEach((line,index)=>{
@@ -910,7 +969,7 @@ tspan.setAttribute('x',centerX);
 
 tspan.setAttribute(
 'y',
-centerY - offset + (index*42)
+centerY + symbolOffset - offset + (index*42)
 );
 
 tspan.textContent = line.trim();
@@ -946,15 +1005,21 @@ symbolLayer.setAttribute('href',selectedSymbol);
 
 symbolLayer.setAttribute(
 'x',
-centerX - 35
+centerX - 25
 );
 
 symbolLayer.setAttribute(
 'y',
-zone.y - 78
+zone.y + 8
 );
 
 symbolLayer.style.display='block';
+
+symbolLayer.style.animation =
+'symbolDrop 0.6s ease';
+
+symbolLayer.style.filter =
+hexToFilter(currentThreadColor);
 
 }else{
 
@@ -1003,7 +1068,8 @@ currentThreadColor = color.dataset.color;
 embroideryText.style.fill =
 currentThreadColor;
 
-updateSymbolColor(currentThreadColor);
+symbolLayer.style.filter =
+hexToFilter(currentThreadColor);
 
 });
 
@@ -1085,7 +1151,13 @@ btn.classList.add('active');
 
 selectedSymbol = btn.dataset.symbol;
 
+showSparkle();
+
 fitTextToZone();
+
+if(navigator.vibrate){
+navigator.vibrate(18);
+}
 
 });
 
