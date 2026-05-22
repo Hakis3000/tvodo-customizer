@@ -19,18 +19,6 @@ body{
 }
 
 /* ======== PAPIER ======== */
-.canvas{
-    width:100%;
-    max-width:520px;
-    aspect-ratio:3/4;
-    background:white;
-    border-radius:22px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.15);
-    position:relative;
-    overflow:hidden;
-}
-
-/* ======== TRIČKO (zoomuje sa) ======== */
 .shirt-wrapper{
     position:absolute;
     inset:0;
@@ -39,7 +27,26 @@ body{
     align-items:center;
     transform-origin:center center;
     transition:transform 0.2s ease-out;
+
+    left:55%;                 /* posun doprava */
+    transform:translateX(-50%);
 }
+
+
+/* ======== TRIČKO (zoomuje sa) ======== */
+.frame-wrapper{
+    position:absolute;
+
+    width:28%;               /* zmenšené o 30% */
+    aspect-ratio:1/1;
+
+    top:40%;                 /* posunuté nižšie */
+    left:68%;                /* ostáva doprava */
+    transform:translate(-50%, -50%);
+
+    pointer-events:none;
+}
+
 
 .product-image{
     width:100%;
