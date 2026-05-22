@@ -15,7 +15,6 @@ body{
     justify-content:center;
     align-items:center;
     height:100vh;
-    overflow:hidden;
 }
 
 /* ======== PAPIER ======== */
@@ -30,38 +29,31 @@ body{
     overflow:hidden;
 }
 
-/* ======== TRIČKO (zoomuje sa) ======== */
+/* ======== TRIČKO – presne na strede, neorezané ======== */
 .shirt-wrapper{
     position:absolute;
     inset:0;
-
-    /* CENTROVANIE BEZ POSUNU */
     display:flex;
     justify-content:center;
     align-items:center;
-
-    transform-origin:center center;
-    transition:transform 0.2s ease-out;
 }
 
 .product-image{
     width:100%;
     height:100%;
-    object-fit:contain; /* aby sa nič neodseklo */
+    object-fit:contain; /* 🔥 nič sa neoreže */
     pointer-events:none;
 }
 
-/* ======== RÁMČEK (ružové malé bodky) ======== */
+/* ======== RÁMČEK – malé ružové bodky ======== */
 .frame-wrapper{
     position:absolute;
 
-    /* ZMENŠENIE O 30 % → pôvodne 40%, teraz 28% */
-    width:28%;
+    width:28%;          /* veľkosť rámčeka */
     aspect-ratio:1/1;
 
-    /* POSUN NIŽŠIE A DOPRAVA */
-    top:40%;
-    left:68%;
+    top:40%;            /* posun nižšie */
+    left:68%;           /* posun doprava */
     transform:translate(-50%, -50%);
 
     pointer-events:none;
@@ -73,15 +65,15 @@ body{
 }
 
 .frame-wrapper rect{
-    fill:transparent; 
-    stroke:#ff7cc6;   
+    fill:transparent;
+    stroke:#ff7cc6;
     stroke-width:4;
 
     /* MALÉ BODKY */
-    stroke-dasharray:1 12;
+    stroke-dasharray:1 14;
     stroke-linecap:round;
 
-    rx:18;
+    rx:14;
 }
 
 </style>
@@ -92,8 +84,8 @@ body{
 <div class="canvas">
 
     <!-- TRIČKO -->
-    <div class="shirt-wrapper" id="shirtWrapper">
-        <img id="productImage" class="product-image" src="tricko.svg">
+    <div class="shirt-wrapper">
+        <img class="product-image" src="tricko.svg">
     </div>
 
     <!-- RÁMČEK -->
@@ -104,30 +96,6 @@ body{
     </div>
 
 </div>
-
-<script>
-
-/* ======== ZOOM IBA NA TRIČKO ======== */
-
-let zoom = 1;
-const shirt = document.getElementById("shirtWrapper");
-
-document.addEventListener("keydown", e=>{
-    if(e.key === "+"){
-        zoom = Math.min(zoom + 0.1, 3);
-        shirt.style.transform = `scale(${zoom})`;
-    }
-    if(e.key === "-"){
-        zoom = Math.max(zoom - 0.1, 0.5);
-        shirt.style.transform = `scale(${zoom})`;
-    }
-    if(e.key === "0"){
-        zoom = 1;
-        shirt.style.transform = `scale(1)`;
-    }
-});
-
-</script>
 
 </body>
 </html>
