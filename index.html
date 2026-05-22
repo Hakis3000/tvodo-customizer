@@ -97,12 +97,15 @@ body{
     width:23.4%;
     height:auto;
 
-    font-size:22px;            /* veľkosť pre 8 znakov */
+    font-size:clamp(10px, 1.8vw, 22px);
     font-weight:600;
     text-align:center;
     line-height:1.1;
-    word-break:break-word;
-    overflow:hidden;
+
+    white-space:pre-wrap;       /* rešpektuje medzery a enter */
+    word-break:keep-all;        /* neláme slová */
+    overflow-wrap:break-word;   /* ak treba, zalomí celé slovo */
+    overflow:hidden;            /* nič neprelezie */
 
     display:flex;
     justify-content:center;
@@ -111,6 +114,7 @@ body{
 
     pointer-events:none;
 }
+
 
 </style>
 </head>
@@ -153,14 +157,25 @@ const input = document.getElementById("textInput");
 const preview = document.getElementById("previewText");
 
 input.addEventListener("input", () => {
-    const text = input.value;
+    let text = input.value;
 
-    // automatické zalomenie na 2 riadky
-    if(text.length > 8){
-        preview.innerHTML = text.slice(0,8) + "<br>" + text.slice(8,16);
-    } else {
-        preview.textContent = text;
+    // Enter = nový riadok
+    text = text.replace(/\n/g, "\n");
+
+    // rozdelenie podľa slov (max 2 riadky)
+    const words = text.split(" ");
+    let line1 = "";
+    let line2 = "";
+
+    for (let w of words) {
+        if ((line1 + " " + w).trim().length <= 8) {
+            line1 = (line1 + " " + w).trim();
+        } else if ((line2 + " " + w).trim().length <= 8) {
+            line2 = (line2 + " " + w).trim();
+        }
     }
+
+    preview.textContent = line2 ? line1 + "\n" + line2 : line1;
 });
 </script>
 
