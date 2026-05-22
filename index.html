@@ -6,6 +6,7 @@
 <title>TVODO – Customizer</title>
 
 <style>
+
 body{
     margin:0;
     background:#f3f3f3;
@@ -17,11 +18,11 @@ body{
     overflow:hidden;
 }
 
-/* pevný papier */
+/* ======== PAPIER ======== */
 .canvas{
     width:100%;
     max-width:520px;
-    aspect-ratio:3 / 4;
+    aspect-ratio:3/4;
     background:white;
     border-radius:22px;
     box-shadow:0 20px 40px rgba(0,0,0,0.15);
@@ -29,57 +30,44 @@ body{
     overflow:hidden;
 }
 
-/* tričko vyplní celý papier, bez zoomu */
-.product-image{
+/* ======== TRIČKO (zoomuje sa) ======== */
+.shirt-wrapper{
     position:absolute;
     inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transform-origin:center center;
+    transition:transform 0.2s ease-out;
+}
+
+.product-image{
     width:100%;
     height:100%;
     object-fit:cover;
     pointer-events:none;
 }
 
-/* FIXNÝ ŠTVOREC – tu bude výšivka
-   11 cm ≈ 416 px, môžeš doladiť */
-.embroidery-area{
+/* ======== RÁMČEK (pevný SVG) ======== */
+.frame-wrapper{
     position:absolute;
-    width:416px;
-    height:416px;
-    /* tu doladíme polohu na prsiach */
-    top:170px;      /* posuň hore/dole */
-    left:50%;
-    transform:translateX(-50%);
+    width:20%;              /* 1/5 šírky trička */
+    aspect-ratio:1/1;       /* štvorec */
+    
+    /* pozícia – od stredu hore a doprava */
+    top:30%;                /* posun hore */
+    left:60%;               /* posun doprava */
+    transform:translate(-50%, -50%);
 
-    border:2px dashed rgba(255,124,198,0.55);
-    border-radius:18px;
-    box-sizing:border-box;
     pointer-events:none;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    overflow:hidden;
 }
 
-.icon-layer{
-    width:60px;
-    height:60px;
+.frame-wrapper img{
+    width:100%;
+    height:100%;
     object-fit:contain;
-    display:none;
-    margin-bottom:8px;
 }
 
-.text-layer{
-    font-family:'Montserrat', sans-serif;
-    font-size:22px;
-    font-weight:700;
-    color:#ff7cc6;
-    white-space:pre-line;
-    text-align:center;
-    line-height:1.1;
-}
 </style>
 </head>
 
@@ -88,18 +76,39 @@ body{
 <div class="canvas">
 
     <!-- TRIČKO -->
-    <img id="productImage" class="product-image" src="tricko.svg">
+    <div class="shirt-wrapper" id="shirtWrapper">
+        <img id="productImage" class="product-image" src="tricko.svg">
+    </div>
 
-    <!-- FIXNÝ VÝŠIVKOVÝ ŠTVOREC -->
-    <div class="embroidery-area">
-        <img id="iconLayer" class="icon-layer" src="">
-        <div id="textLayer" class="text-layer"></div>
+    <!-- TVOJ SVG RÁMČEK -->
+    <div class="frame-wrapper">
+        <img src="ram.svg">
     </div>
 
 </div>
 
 <script>
-// zatiaľ žiadny zoom – štvorec ostáva 100 % fixný
+
+/* ======== ZOOM IBA NA TRIČKO ======== */
+
+let zoom = 1;
+const shirt = document.getElementById("shirtWrapper");
+
+document.addEventListener("keydown", e=>{
+    if(e.key === "+"){
+        zoom = Math.min(zoom + 0.1, 3);
+        shirt.style.transform = `scale(${zoom})`;
+    }
+    if(e.key === "-"){
+        zoom = Math.max(zoom - 0.1, 0.5);
+        shirt.style.transform = `scale(${zoom})`;
+    }
+    if(e.key === "0"){
+        zoom = 1;
+        shirt.style.transform = `scale(1)`;
+    }
+});
+
 </script>
 
 </body>
