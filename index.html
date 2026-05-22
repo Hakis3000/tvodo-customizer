@@ -6,74 +6,109 @@
 <title>TVODO – Customizer</title>
 
 <style>
+
+/* ======== POZADIE STRÁNKY ======== */
 body{
     margin:0;
-    background:#f3f3f3;
     font-family:Poppins, sans-serif;
     display:flex;
     flex-direction:column;
     align-items:center;
     height:100vh;
+
+    /* pastelový gradient */
+    background:linear-gradient(135deg, #ffe6f5, #d9eaff);
+    animation:bgMove 12s infinite alternate ease-in-out;
+}
+
+@keyframes bgMove{
+    0%{ background-position:0% 50%; }
+    100%{ background-position:100% 50%; }
 }
 
 /* ======== HORNÁ LIŠTA ======== */
 .topbar{
     width:100%;
-    height:70px;
-    background:white;
+    height:80px;
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(10px);
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:30px;
-    border-bottom:2px solid #eee;
-    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    gap:25px;
+    border-bottom:2px solid rgba(255,255,255,0.4);
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+    position:sticky;
+    top:0;
     z-index:10;
 }
 
 .topbar .item{
-    padding:10px 18px;
-    background:#ffe6f5;
-    border-radius:12px;
+    padding:12px 22px;
+    background:#ffffff;
+    border-radius:14px;
     font-weight:600;
     cursor:pointer;
-    transition:0.2s;
-    border:1px solid #ffb8e6;
+    transition:0.25s;
+    border:2px solid #ffb8e6;
+    color:#444;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
 
 .topbar .item:hover{
     background:#ffcef0;
-    transform:translateY(-2px);
+    transform:translateY(-4px) scale(1.05);
+    box-shadow:0 6px 14px rgba(0,0,0,0.15);
 }
 
-/* ======== OBSAH POD LIŠTOU ======== */
+/* ======== HLAVNÝ OBSAH ======== */
 .main{
-    margin-top:20px;
+    margin-top:30px;
     display:flex;
     justify-content:center;
     align-items:flex-start;
-    gap:30px;
+    gap:40px;
 }
 
 /* ======== INPUT PANEL ======== */
 .controls{
     display:flex;
     flex-direction:column;
-    gap:10px;
-    width:200px;
+    gap:12px;
+    width:220px;
+    background:white;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    animation:fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; transform:translateY(20px); }
+    to{ opacity:1; transform:translateY(0); }
 }
 
 .controls input{
-    padding:10px;
+    padding:12px;
     font-size:18px;
-    border-radius:8px;
+    border-radius:10px;
     border:2px solid #ccc;
+    transition:0.2s;
+}
+
+.controls input:focus{
+    border-color:#ff7cc6;
+    box-shadow:0 0 8px rgba(255,124,198,0.4);
+    outline:none;
 }
 
 /* ======== CANVAS ======== */
 .canvas{
     width:100%;
     max-width:520px;
+    animation:fadeIn 0.8s ease-out;
 }
+
 </style>
 </head>
 
