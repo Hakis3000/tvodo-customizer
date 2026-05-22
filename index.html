@@ -918,7 +918,7 @@ Tu si vyberáte farbu nite ktorou bude vaša výšivka vyšivaná.
 
 </div>
 
-<button class="order-btn">
+<button class="order-btn" id="orderButton">
 🛍️ Pokračovať k objednávke
 </button>
 
@@ -1310,7 +1310,7 @@ showSparkle();
 symbolLayer.style.animation =
 'symbolDrop 0.55s ease';
 
-renderText();
+enderText();
 updateVisuals();
 
 if(navigator.vibrate){
@@ -1320,6 +1320,194 @@ navigator.vibrate(18);
 });
 
 });
+
+
+
+// =========================================
+// ORDER BUTTON → GOOGLE FORM
+// =========================================
+
+document.getElementById('orderButton')
+.addEventListener('click',()=>{
+
+// PRODUCT
+
+const product = 'Tričko';
+
+
+// PRODUCT COLOR
+
+let productColor = 'Biele';
+
+const activeProductColor =
+document.querySelector('.shirt-color-btn.active');
+
+if(
+activeProductColor &&
+activeProductColor.dataset.shirt === 'black'
+){
+productColor = 'Čierne';
+}
+
+
+// SIZE
+
+const size =
+document.querySelector('.size-btn.active')
+.textContent.trim();
+
+
+// TEXT
+
+const text =
+textInput.value.trim() || 'Bez textu';
+
+
+// FONT
+
+let font = 'Klasický';
+
+const activeFont =
+document.querySelector('.font-btn.active');
+
+if(activeFont){
+
+if(
+activeFont.dataset.font === 'Fredoka'
+){
+font = 'Hravý';
+}
+
+if(
+activeFont.dataset.font === 'Dancing Script'
+){
+font = 'Písaný';
+}
+
+}
+
+
+// THREAD COLOR
+
+let threadColor = 'Ružová';
+
+switch(currentThreadColor){
+
+case '#5c86ff':
+threadColor = 'Modrá';
+break;
+
+case '#69c27d':
+threadColor = 'Zelená';
+break;
+
+case '#f4c542':
+threadColor = 'Žltá';
+break;
+
+case 'black':
+threadColor = 'Čierna';
+break;
+
+case 'white':
+threadColor = 'Biela';
+break;
+
+}
+
+
+// SYMBOL
+
+let symbol = 'Bez symbolu';
+
+switch(selectedSymbol){
+
+case 'srdce.svg':
+symbol = 'Srdce';
+break;
+
+case 'hviezda.svg':
+symbol = 'Hviezda';
+break;
+
+case 'medved.svg':
+symbol = 'Medvedík';
+break;
+
+case 'zajac.svg':
+symbol = 'Zajačik';
+break;
+
+}
+
+
+// POSITION
+
+let position = 'Na stred';
+
+if(currentPosition === 'chest'){
+position = 'Na prsia';
+}
+
+
+// GOOGLE FORM URL
+
+const formBase =
+'https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/viewform?usp=pp_url';
+
+
+// BUILD URL
+
+const orderUrl =
+formBase
+
++
+'&entry.1089188770='
++
+encodeURIComponent(product)
+
++
+'&entry.1452889000='
++
+encodeURIComponent(productColor)
+
++
+'&entry.1444664887='
++
+encodeURIComponent(size)
+
++
+'&entry.673285472='
++
+encodeURIComponent(text)
+
++
+'&entry.564175592='
++
+encodeURIComponent(font)
+
++
+'&entry.377229164='
++
+encodeURIComponent(threadColor)
+
++
+'&entry.1304530760='
++
+encodeURIComponent(symbol)
+
++
+'&entry.1943247834='
++
+encodeURIComponent(position);
+
+
+// OPEN FORM
+
+window.location.href = orderUrl;
+
+});
+
 
 </script>
 
