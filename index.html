@@ -41,10 +41,21 @@ scroll-behavior:smooth;
 
 body{
 font-family:Poppins,sans-serif;
-background:linear-gradient(135deg,var(--bg1),var(--bg2));
+background:
+radial-gradient(circle at 18% 12%,rgba(255,124,198,.22),transparent 28%),
+radial-gradient(circle at 82% 18%,rgba(125,175,255,.22),transparent 30%),
+radial-gradient(circle at 50% 88%,rgba(105,194,125,.12),transparent 26%),
+linear-gradient(135deg,var(--bg1),var(--bg2));
+background-size:160% 160%;
+animation:softBackgroundShift 14s ease-in-out infinite;
 overflow-x:hidden;
 color:var(--text);
 min-height:100vh;
+}
+
+@keyframes softBackgroundShift{
+0%,100%{background-position:0% 20%,100% 0%,50% 100%,0% 50%;}
+50%{background-position:35% 0%,72% 28%,42% 82%,100% 50%;}
 }
 
 body::before,
@@ -107,6 +118,24 @@ display:flex;
 flex-direction:column;
 gap:8px;
 overflow:hidden;
+position:relative;
+}
+
+.preview-card::before,
+.right::before{
+content:'';
+position:absolute;
+inset:0;
+border-radius:inherit;
+pointer-events:none;
+background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.5) 18%,transparent 36%);
+transform:translateX(-130%);
+animation:panelSheen 9s ease-in-out infinite;
+}
+
+@keyframes panelSheen{
+0%,72%{transform:translateX(-130%);}
+88%,100%{transform:translateX(130%);}
 }
 
 .top-info{
@@ -160,6 +189,8 @@ font-weight:700;
 cursor:pointer;
 box-shadow:0 8px 18px rgba(0,0,0,0.05);
 transition:.22s;
+position:relative;
+overflow:hidden;
 }
 
 .mini-btn:hover{
@@ -194,10 +225,37 @@ align-items:center;
 gap:5px;
 transition:0.28s;
 box-shadow:0 10px 24px rgba(0,0,0,0.06);
+position:relative;
+overflow:hidden;
 }
 
 .product-btn:hover{
 transform:translateY(-3px) scale(1.02);
+}
+
+.product-btn::after,
+.btn::after,
+.mini-btn::after,
+.order-btn::after,
+.order-submit::after{
+content:'';
+position:absolute;
+top:-45%;
+left:-75%;
+width:45%;
+height:190%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.72),transparent);
+transform:rotate(24deg);
+transition:.55s;
+pointer-events:none;
+}
+
+.product-btn:hover::after,
+.btn:hover::after,
+.mini-btn:hover::after,
+.order-btn:hover::after,
+.order-submit:hover::after{
+left:130%;
 }
 
 .product-btn.active{
@@ -227,6 +285,53 @@ position:relative;
 overflow:hidden;
 }
 
+.stitch-sparkles{
+position:absolute;
+inset:0;
+pointer-events:none;
+z-index:1;
+}
+
+.stitch-sparkles span{
+position:absolute;
+width:8px;
+height:8px;
+border-radius:50%;
+background:white;
+box-shadow:0 0 16px rgba(255,124,198,0.55);
+opacity:.72;
+animation:sparkleFloat 4.8s ease-in-out infinite;
+}
+
+.stitch-sparkles span:nth-child(1){
+top:18%;
+left:18%;
+animation-delay:.2s;
+}
+
+.stitch-sparkles span:nth-child(2){
+top:28%;
+right:19%;
+animation-delay:1.3s;
+}
+
+.stitch-sparkles span:nth-child(3){
+left:22%;
+bottom:24%;
+animation-delay:2.2s;
+}
+
+.stitch-sparkles span:nth-child(4){
+right:24%;
+bottom:18%;
+animation-delay:3s;
+}
+
+@keyframes sparkleFloat{
+0%,100%{transform:translateY(0) scale(.78);opacity:.25;}
+45%{transform:translateY(-12px) scale(1.12);opacity:.9;}
+}
+
 .preview-window::after{
 content:'Zivy nahlad';
 position:absolute;
@@ -249,11 +354,20 @@ max-width:none;
 max-height:none;
 object-fit:contain;
 transition:.3s;
+position:relative;
+z-index:2;
 }
 
 #productImage{
 transition:0.35s;
 filter:drop-shadow(0 20px 30px rgba(0,0,0,0.08));
+animation:productFloat 5.6s ease-in-out infinite;
+transform-origin:center;
+}
+
+@keyframes productFloat{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-8px);}
 }
 
 .zone-frame{
@@ -271,6 +385,12 @@ paint-order:stroke;
 stroke:rgba(255,255,255,0.35);
 stroke-width:1.4;
 transition:.2s;
+animation:textGlow 3.8s ease-in-out infinite;
+}
+
+@keyframes textGlow{
+0%,100%{filter:drop-shadow(0 0 0 rgba(255,124,198,0));}
+50%{filter:drop-shadow(0 0 10px rgba(255,124,198,0.25));}
 }
 
 #symbolLayer{
@@ -286,6 +406,7 @@ padding:18px;
 box-shadow:0 20px 50px rgba(0,0,0,0.06);
 border:1px solid rgba(255,255,255,0.5);
 overflow-y:auto;
+position:relative;
 }
 
 .title{
@@ -438,6 +559,8 @@ font-weight:600;
 cursor:pointer;
 transition:0.25s;
 box-shadow:0 8px 18px rgba(0,0,0,0.05);
+position:relative;
+overflow:hidden;
 }
 
 .btn:hover{
@@ -462,6 +585,17 @@ padding:0;
 width:36px;
 height:36px;
 transition:.2s;
+animation:iconCutePulse 4.6s ease-in-out infinite;
+}
+
+.symbol-btn:hover img{
+transform:scale(1.14) rotate(-6deg);
+filter:drop-shadow(0 0 8px rgba(255,124,198,.32));
+}
+
+@keyframes iconCutePulse{
+0%,100%{transform:translateY(0) scale(1);}
+50%{transform:translateY(-2px) scale(1.04);}
 }
 
 .symbol-btn[data-symbol="srdce.svg"] img{
@@ -494,6 +628,20 @@ cursor:pointer;
 border:3px solid white;
 box-shadow:0 8px 18px rgba(0,0,0,0.08);
 transition:.2s;
+position:relative;
+overflow:hidden;
+}
+
+.color::after{
+content:'';
+position:absolute;
+inset:8px auto auto 9px;
+width:16px;
+height:10px;
+border-radius:999px;
+background:rgba(255,255,255,.58);
+filter:blur(.4px);
+transform:rotate(-24deg);
 }
 
 .color:hover{
@@ -517,10 +665,141 @@ cursor:pointer;
 margin-top:24px;
 transition:0.25s;
 box-shadow:0 14px 30px rgba(255,124,198,0.28);
+position:relative;
+overflow:hidden;
 }
 
 .order-btn:hover{
 transform:translateY(-3px);
+}
+
+.order-modal{
+position:fixed;
+inset:0;
+z-index:50;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:18px;
+background:rgba(34,34,34,.32);
+backdrop-filter:blur(14px);
+}
+
+.order-modal[hidden]{
+display:none;
+}
+
+.order-panel{
+width:min(560px,100%);
+max-height:92vh;
+overflow:auto;
+border-radius:24px;
+background:rgba(255,255,255,.94);
+box-shadow:0 24px 70px rgba(0,0,0,.18);
+padding:22px;
+}
+
+.order-head{
+display:flex;
+align-items:flex-start;
+justify-content:space-between;
+gap:16px;
+margin-bottom:16px;
+}
+
+.order-title{
+font-size:24px;
+font-weight:800;
+line-height:1.15;
+background:linear-gradient(90deg,var(--pink),var(--blue));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.order-close{
+width:36px;
+height:36px;
+border:none;
+border-radius:50%;
+background:white;
+cursor:pointer;
+font-size:18px;
+font-weight:800;
+box-shadow:0 8px 18px rgba(0,0,0,0.08);
+}
+
+.order-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.order-field{
+display:flex;
+flex-direction:column;
+gap:6px;
+font-size:13px;
+font-weight:700;
+color:#555;
+}
+
+.order-field.full{
+grid-column:1/-1;
+}
+
+.order-field input,
+.order-field textarea{
+width:100%;
+border:none;
+border-radius:16px;
+background:white;
+box-shadow:0 8px 18px rgba(0,0,0,0.05);
+padding:13px 14px;
+font-family:Poppins,sans-serif;
+font-size:14px;
+outline:none;
+}
+
+.order-field textarea{
+min-height:92px;
+resize:vertical;
+}
+
+.order-summary-box{
+white-space:pre-line;
+border-radius:16px;
+background:linear-gradient(135deg,#f8fbff,#fff5fb);
+padding:14px;
+font-size:13px;
+line-height:1.65;
+color:#444;
+box-shadow:inset 0 0 0 1px rgba(125,175,255,0.16);
+}
+
+.order-submit{
+width:100%;
+border:none;
+margin-top:16px;
+padding:16px;
+border-radius:20px;
+font-size:16px;
+font-weight:800;
+color:white;
+background:linear-gradient(135deg,var(--pink),var(--blue));
+cursor:pointer;
+box-shadow:0 14px 30px rgba(255,124,198,0.28);
+position:relative;
+overflow:hidden;
+}
+
+@media(prefers-reduced-motion:reduce){
+*,
+*::before,
+*::after{
+animation-duration:.01ms !important;
+animation-iteration-count:1 !important;
+scroll-behavior:auto !important;
+}
 }
 
 .right::-webkit-scrollbar{
@@ -736,6 +1015,15 @@ border-radius:18px;
 margin-top:16px;
 }
 
+.order-grid{
+grid-template-columns:1fr;
+}
+
+.order-panel{
+padding:18px;
+border-radius:20px;
+}
+
 }
 
 </style>
@@ -780,6 +1068,13 @@ Brynd&#225;k
 </div>
 
 <div class="preview-window">
+
+<div class="stitch-sparkles" aria-hidden="true">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
 
 <svg id="previewSvg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
 
@@ -919,6 +1214,64 @@ Brynd&#225;k
 
 </div>
 
+<div class="order-modal" id="orderModal" hidden>
+<div class="order-panel" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+<div class="order-head">
+<div>
+<div class="order-title" id="orderTitle">Dokon&#269;enie objedn&#225;vky</div>
+<div class="subtitle">Skontrolujte v&#253;ber a dopl&#328;te kontaktn&#233; &#250;daje.</div>
+</div>
+<button class="order-close" id="closeOrderModal" type="button" aria-label="Zatvori&#357;">&#215;</button>
+</div>
+
+<form id="orderForm">
+<div class="order-grid">
+<label class="order-field">
+Meno
+<input id="customerName" name="meno" autocomplete="name" required>
+</label>
+
+<label class="order-field">
+E-mail
+<input id="customerEmail" name="email" type="email" autocomplete="email" required>
+</label>
+
+<label class="order-field">
+Telef&#243;n
+<input id="customerPhone" name="telefon" type="tel" autocomplete="tel">
+</label>
+
+<label class="order-field">
+Mesto
+<input id="customerCity" name="mesto" autocomplete="address-level2">
+</label>
+
+<label class="order-field full">
+Pozn&#225;mka
+<textarea id="customerNote" name="poznamka" placeholder="Napr. term&#237;n, dar&#269;ekov&#233; balenie alebo in&#225; prosba."></textarea>
+</label>
+
+<div class="order-field full">
+S&#250;hrn produktu
+<div class="order-summary-box" id="orderSummaryBox"></div>
+</div>
+</div>
+
+<input type="hidden" name="produkt" id="orderProduct">
+<input type="hidden" name="text_vysivky" id="orderEmbroideryText">
+<input type="hidden" name="velkost" id="orderSize">
+<input type="hidden" name="farba_produktu" id="orderProductColor">
+<input type="hidden" name="miesto_vysivky" id="orderPosition">
+<input type="hidden" name="farba_nite" id="orderThreadColor">
+<input type="hidden" name="pismo" id="orderFont">
+<input type="hidden" name="symbol" id="orderSymbol">
+<input type="hidden" name="cena" id="orderPrice">
+
+<button class="order-submit" type="submit">Odosla&#357; objedn&#225;vku</button>
+</form>
+</div>
+</div>
+
 <script>
 
 const embroideryText = document.getElementById('embroideryText');
@@ -928,6 +1281,8 @@ const symbolLayer = document.getElementById('symbolLayer');
 const charCount = document.getElementById('charCount');
 const summaryText = document.getElementById('summaryText');
 const priceText = document.getElementById('priceText');
+const orderModal = document.getElementById('orderModal');
+const orderSummaryBox = document.getElementById('orderSummaryBox');
 
 let currentPosition = 'center';
 let selectedSymbol = '';
@@ -935,6 +1290,10 @@ let currentThreadColor = '#ff7cc6';
 let currentProduct = 'Tri\u010dko';
 let currentShirtColor = 'Biele';
 let currentSize = 'S';
+let currentFont = 'Montserrat';
+let hasUserTyped = false;
+let defaultPreviewText = '';
+let defaultTypingTimer = null;
 
 const productConfig = {
 'Tri\u010dko':{
@@ -973,7 +1332,7 @@ const zone = product.positions[currentPosition] || product.positions.center;
 let text = textInput.value.trim();
 
 if(text === ''){
-text = 'Va\u0161a v\u00fd\u0161ivka';
+text = defaultPreviewText || 'Va\u0161a v\u00fd\u0161ivka';
 }
 
 const centerX = zone.x + zone.w/2;
@@ -1096,6 +1455,87 @@ productImage.style.filter = 'drop-shadow(0 20px 30px rgba(0,0,0,0.08))';
 }
 }
 
+function startDefaultTyping(){
+clearInterval(defaultTypingTimer);
+hasUserTyped = false;
+defaultPreviewText = '';
+const fullText = 'Va\u0161a v\u00fd\u0161ivka';
+let index = 0;
+renderText();
+defaultTypingTimer = setInterval(()=>{
+if(hasUserTyped || textInput.value.trim() !== ''){
+clearInterval(defaultTypingTimer);
+return;
+}
+defaultPreviewText = fullText.slice(0,index + 1);
+renderText();
+index++;
+if(index >= fullText.length){
+clearInterval(defaultTypingTimer);
+}
+},95);
+}
+
+function getPositionLabel(){
+return currentPosition === 'center' ? 'Na stred' : 'Na prsia';
+}
+
+function getSymbolLabel(){
+if(selectedSymbol === ''){
+return 'Bez symbolu';
+}
+return selectedSymbol.replace('.svg','');
+}
+
+function buildOrderDetails(){
+const text = textInput.value.trim() || 'Va\u0161a v\u00fd\u0161ivka';
+return {
+product:currentProduct,
+text,
+size:currentSize,
+productColor:currentShirtColor,
+position:getPositionLabel(),
+threadColor:currentThreadColor,
+font:currentFont,
+symbol:getSymbolLabel(),
+price:priceText.textContent
+};
+}
+
+function updateOrderForm(){
+const details = buildOrderDetails();
+document.getElementById('orderProduct').value = details.product;
+document.getElementById('orderEmbroideryText').value = details.text;
+document.getElementById('orderSize').value = details.size;
+document.getElementById('orderProductColor').value = details.productColor;
+document.getElementById('orderPosition').value = details.position;
+document.getElementById('orderThreadColor').value = details.threadColor;
+document.getElementById('orderFont').value = details.font;
+document.getElementById('orderSymbol').value = details.symbol;
+document.getElementById('orderPrice').value = details.price;
+
+orderSummaryBox.textContent =
+'Produkt: ' + details.product + '\n'
++ 'Text v\u00fd\u0161ivky: ' + details.text + '\n'
++ 'Ve\u013ekos\u0165: ' + details.size + '\n'
++ 'Farba produktu: ' + details.productColor + '\n'
++ 'Miesto v\u00fd\u0161ivky: ' + details.position + '\n'
++ 'Farba nite: ' + details.threadColor + '\n'
++ 'P\u00edsmo: ' + details.font + '\n'
++ 'Symbol: ' + details.symbol + '\n'
++ 'Cena: ' + details.price;
+}
+
+function openOrderModal(){
+updateOrderForm();
+orderModal.hidden = false;
+document.getElementById('customerName').focus();
+}
+
+function closeOrderModal(){
+orderModal.hidden = true;
+}
+
 function resetCustomizer(){
 textInput.value = '';
 currentPosition = 'center';
@@ -1104,6 +1544,7 @@ currentThreadColor = '#ff7cc6';
 currentProduct = 'Tri\u010dko';
 currentShirtColor = 'Biele';
 currentSize = 'S';
+currentFont = 'Montserrat';
 
 document.querySelectorAll('.active').forEach(el=>el.classList.remove('active'));
 document.querySelector('.product-btn[data-name="Tri\u010dko"]').classList.add('active');
@@ -1123,23 +1564,27 @@ embroideryText.style.fill = currentThreadColor;
 setProductImage('shirt.svg');
 syncProductOptions();
 applyShirtColor();
-renderText();
 updateVisuals();
 updateSummary();
+startDefaultTyping();
 }
 
-renderText();
 updateVisuals();
 syncProductOptions();
 updateSummary();
+startDefaultTyping();
 
 textInput.addEventListener('input',()=>{
+hasUserTyped = true;
+clearInterval(defaultTypingTimer);
 renderText();
 updateSummary();
 });
 
 document.querySelectorAll('.preset-btn').forEach(btn=>{
 btn.addEventListener('click',()=>{
+hasUserTyped = true;
+clearInterval(defaultTypingTimer);
 textInput.value = btn.dataset.text.slice(0,34);
 renderText();
 updateSummary();
@@ -1165,7 +1610,8 @@ document.querySelectorAll('.font-btn').forEach(btn=>{
 btn.addEventListener('click',()=>{
 document.querySelectorAll('.font-btn').forEach(b=>b.classList.remove('active'));
 btn.classList.add('active');
-embroideryText.style.fontFamily = btn.dataset.font;
+currentFont = btn.dataset.font;
+embroideryText.style.fontFamily = currentFont;
 renderText();
 });
 });
@@ -1235,15 +1681,26 @@ document.querySelectorAll('[data-reset-customizer]').forEach(btn=>{
 btn.addEventListener('click',resetCustomizer);
 });
 
-document.getElementById('orderButton').addEventListener('click',()=>{
-const text = textInput.value.trim() || 'Va\u0161a v\u00fd\u0161ivka';
-alert(
-'Objedn\u00e1vka bude \u010doskoro napojen\u00e1.\n\n'
-+ 'Produkt: ' + currentProduct + '\n'
-+ 'Text: ' + text + '\n'
-+ 'Ve\u013ekos\u0165: ' + currentSize + '\n'
-+ 'Farba: ' + currentShirtColor
-);
+document.getElementById('orderButton').addEventListener('click',openOrderModal);
+
+document.getElementById('closeOrderModal').addEventListener('click',closeOrderModal);
+
+orderModal.addEventListener('click',event=>{
+if(event.target === orderModal){
+closeOrderModal();
+}
+});
+
+document.addEventListener('keydown',event=>{
+if(event.key === 'Escape' && !orderModal.hidden){
+closeOrderModal();
+}
+});
+
+document.getElementById('orderForm').addEventListener('submit',event=>{
+event.preventDefault();
+updateOrderForm();
+alert('Objedn\u00e1vka je pripraven\u00e1 na odoslanie. Teraz sta\u010d\u00ed napoji\u0165 formul\u00e1r na e-mail alebo objedn\u00e1vkov\u00fd syst\u00e9m.');
 });
 
 </script>
