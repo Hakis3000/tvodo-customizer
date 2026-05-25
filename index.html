@@ -275,38 +275,22 @@ width:24px;
 height:24px;
 border-radius:50%;
 background:
-linear-gradient(
-145deg,
-#ffffff,
-#e8ecff
-);
-
+linear-gradient(145deg,#ffffff,#e8ecff);
 display:flex;
 justify-content:center;
 align-items:center;
-
 font-size:12px;
 font-weight:700;
 cursor:pointer;
 position:relative;
-
-box-shadow:
-0 4px 10px rgba(0,0,0,0.10),
-inset 0 1px 2px rgba(255,255,255,0.9);
-
+box-shadow:0 4px 10px rgba(0,0,0,0.10), inset 0 1px 2px rgba(255,255,255,0.9);
 transition:0.25s;
-
 color:#7a8cff;
 }
 
 .info-icon:hover{
-transform:
-translateY(-2px)
-scale(1.06);
-
-box-shadow:
-0 8px 18px rgba(122,140,255,0.22),
-inset 0 1px 2px rgba(255,255,255,0.9);
+transform:translateY(-2px) scale(1.06);
+box-shadow:0 8px 18px rgba(122,140,255,0.22), inset 0 1px 2px rgba(255,255,255,0.9);
 }
 
 .info-tooltip{
@@ -385,46 +369,6 @@ height:40px;
 transition:0.25s;
 }
 
-.symbol-btn[data-symbol="srdce.svg"] img{
-filter:
-brightness(0)
-saturate(100%)
-invert(67%)
-sepia(51%)
-saturate(1452%)
-hue-rotate(292deg);
-}
-
-.symbol-btn[data-symbol="hviezda.svg"] img{
-filter:
-brightness(0)
-saturate(100%)
-invert(82%)
-sepia(44%)
-saturate(1175%)
-hue-rotate(337deg);
-}
-
-.symbol-btn[data-symbol="medved.svg"] img{
-filter:
-brightness(0)
-saturate(100%)
-invert(67%)
-sepia(17%)
-saturate(818%)
-hue-rotate(76deg);
-}
-
-.symbol-btn[data-symbol="zajac.svg"] img{
-filter:
-brightness(0)
-saturate(100%)
-invert(48%)
-sepia(81%)
-saturate(1071%)
-hue-rotate(199deg);
-}
-
 .colors{
 display:flex;
 gap:12px;
@@ -462,181 +406,86 @@ transition:0.25s;
 transform:translateY(-3px);
 }
 
+/* TABLET */
 @media(max-width:1200px){
-
 .app{
 grid-template-columns:1fr;
 }
-
 .left{
 position:relative;
 height:auto;
 }
-
 }
-/* ========================= */
-/*  MENŠIE MONITORY (PC)     */
-/* ========================= */
 
+/* MENŠIE MONITORY */
 @media(max-width:1500px){
-  .app{
-    grid-template-columns: 1fr 360px;
-  }
+.app{
+grid-template-columns:1fr 360px;
 }
-/* ========================= */
-/*  MOBILNÝ LAYOUT (2/3 + 1/3) */
-/* ========================= */
+}
 
+/* MOBIL – JEDINÝ SPRÁVNY BLOK */
 @media(max-width:768px){
 
-  /* TVODO nápis = ultra tenký */
-  .preview-card{
-    padding-top:1vh;
-  }
-
-  .logo{
-    font-size:20px;
-    margin-bottom:2px;
-  }
-
-  .logo-sub{
-    font-size:11px;
-    margin-bottom:2px;
-  }
-
-  .made-in{
-    font-size:10px;
-    margin-bottom:4px;
-  }
-
-  /* produktová lišta – malá, pod TVODO */
-  .product-bar{
-    height:7vh;
-    display:flex;
-    align-items:center;
-    gap:6px;
-    padding:2px 4px;
-    overflow-x:auto;
-    background:white;
-    border-bottom:1px solid #eee;
-  }
-
-  .product-bar::-webkit-scrollbar{
-    display:none;
-  }
-
-  .product-btn{
-    min-width:70px;
-    padding:4px 6px;
-    font-size:10px;
-    border-radius:12px;
-  }
-
-  .product-preview-icon{
-    width:22px;
-    height:22px;
-  }
-
-  /* náhľad = veľký */
-  .left{
-    height:60vh;
-  }
-
-  /* spodné nástroje */
-  .right{
-    height:30vh;
-    overflow-y:auto;
-    padding-bottom:20px;
-  }
+.preview-card{
+padding-top:1vh;
 }
 
-
-/* ========================= */
-/*  ÚPRAVA HORNEJ LIŠTY      */
-/* ========================= */
-
-/* menšie monitory */
-@media(max-width:1500px){
-  .product-bar{
-    gap:10px;
-  }
-  .product-btn{
-    min-width:140px;
-    padding:14px 16px;
-  }
-  .product-preview-icon{
-    width:60px;
-    height:60px;
-  }
+.logo{
+font-size:20px;
+margin-bottom:2px;
 }
 
-/* ešte menšie monitory */
-@media(max-width:1200px){
-  .product-btn{
-    min-width:120px;
-    padding:12px 14px;
-  }
-  .product-preview-icon{
-    width:50px;
-    height:50px;
-  }
+.logo-sub{
+font-size:11px;
+margin-bottom:2px;
 }
 
-/* mobil */
-@media(max-width:768px){
-  .product-bar{
-    padding:6px 0;
-    gap:8px;
-    overflow-x:auto;
-    scrollbar-width:none;
-  }
-  .product-bar::-webkit-scrollbar{
-    display:none;
-  }
-  .product-btn{
-    min-width:110px;
-    padding:10px 12px;
-    border-radius:20px;
-  }
-  .product-preview-icon{
-    width:46px;
-    height:46px;
-  }
-}
-/* ========================= */
-/*  EXTRA – ULTRA KOMPAKTNÁ LIŠTA NA MENŠÍCH MONITOROCH */
-/* ========================= */
-
-@media(max-width:1100px){
-  .product-bar{
-    gap:6px;
-    padding:4px 0;
-  }
-  .product-btn{
-    min-width:100px;
-    padding:10px 12px;
-    border-radius:18px;
-    font-size:13px;
-  }
-  .product-preview-icon{
-    width:42px;
-    height:42px;
-  }
+.made-in{
+font-size:10px;
+margin-bottom:4px;
 }
 
-@media(max-width:900px){
-  .product-btn{
-    min-width:90px;
-    padding:8px 10px;
-    font-size:12px;
-  }
-  .product-preview-icon{
-    width:38px;
-    height:38px;
-  }
+.product-bar{
+height:7vh;
+display:flex;
+align-items:center;
+gap:6px;
+padding:2px 4px;
+overflow-x:auto;
+background:white;
+border-bottom:1px solid #eee;
+}
+
+.product-bar::-webkit-scrollbar{
+display:none;
+}
+
+.product-btn{
+min-width:70px;
+padding:4px 6px;
+font-size:10px;
+border-radius:12px;
+}
+
+.product-preview-icon{
+width:22px;
+height:22px;
+}
+
+.left{
+height:60vh;
+}
+
+.right{
+height:30vh;
+overflow-y:auto;
+padding-bottom:20px;
+}
 }
 
 </style>
+
 
 </head>
 
