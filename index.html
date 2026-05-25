@@ -489,69 +489,67 @@ height:auto;
 
 @media(max-width:768px){
 
-  /* horná lišta = 1/10 */
+  /* TVODO nápis = ultra tenký */
+  .preview-card{
+    padding-top:1vh;
+  }
+
+  .logo{
+    font-size:20px;
+    margin-bottom:2px;
+  }
+
+  .logo-sub{
+    font-size:11px;
+    margin-bottom:2px;
+  }
+
+  .made-in{
+    font-size:10px;
+    margin-bottom:4px;
+  }
+
+  /* produktová lišta – malá, pod TVODO */
   .product-bar{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    height:10vh;
+    height:7vh;
     display:flex;
     align-items:center;
-    gap:8px;
-    padding:4px 6px;
-    background:white;
+    gap:6px;
+    padding:2px 4px;
     overflow-x:auto;
-    scrollbar-width:none;
+    background:white;
     border-bottom:1px solid #eee;
-    z-index:999;
   }
 
   .product-bar::-webkit-scrollbar{
     display:none;
   }
 
-  /* posunieme obsah dole o výšku lišty */
-  .app{
-    padding-top:10vh;
-  }
-
-  /* stred = 6/10 */
-  .left{
-    height:60vh;
-    flex:none;
-  }
-
-  .preview-card{
-    height:100%;
-  }
-
-  .preview-window{
-    height:100%;
-  }
-
-  /* spodok = 3/10 */
-  .right{
-    height:30vh;
-    flex:none;
-    overflow-y:auto;
-    padding-bottom:20px;
-  }
-
-  /* zmenšené tlačidlá ako na e-shopoch */
   .product-btn{
-    min-width:80px;
-    padding:6px 8px;
-    border-radius:14px;
-    font-size:11px;
-    white-space:nowrap;
+    min-width:70px;
+    padding:4px 6px;
+    font-size:10px;
+    border-radius:12px;
   }
 
   .product-preview-icon{
-    width:28px;
-    height:28px;
+    width:22px;
+    height:22px;
+  }
+
+  /* náhľad = veľký */
+  .left{
+    height:60vh;
+  }
+
+  /* spodné nástroje */
+  .right{
+    height:30vh;
+    overflow-y:auto;
+    padding-bottom:20px;
   }
 }
+
 
 /* ========================= */
 /*  ÚPRAVA HORNEJ LIŠTY      */
