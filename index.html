@@ -1918,6 +1918,21 @@ previewSvg:getPreviewSvgMarkup()
 };
 }
 
+function publicCartItems(){
+return cartItems.map(item=>({
+product:item.product,
+text:item.text,
+size:item.size,
+productColor:item.productColor,
+position:item.position,
+threadColor:item.threadColor,
+font:item.font,
+symbol:item.symbol,
+price:item.price,
+priceLabel:item.priceLabel
+}));
+}
+
 function currentItemSignature(){
 return currentItem().signature;
 }
@@ -1933,17 +1948,17 @@ return (index + 1) + '. ' + item.product + ' / ' + item.size + ' / ' + item.prod
 
 function itemProductionLine(item,index,orderCode){
 return [
-orderCode,
-index + 1,
+'Obj. ' + orderCode,
+'Polo\u017eka ' + (index + 1),
 item.product,
-item.size,
-item.productColor,
-item.text,
+'Ve\u013ekos\u0165: ' + item.size,
+'Produkt: ' + item.productColor,
+'Text: ' + item.text,
 item.position,
-item.threadColor,
-item.font,
-item.symbol,
-item.priceLabel
+'Ni\u0165: ' + item.threadColor,
+'P\u00edsmo: ' + item.font,
+'Symbol: ' + item.symbol,
+'Cena: ' + item.priceLabel
 ].join(' | ');
 }
 
@@ -2073,7 +2088,7 @@ document.getElementById('orderFont').value = details.font;
 document.getElementById('orderSymbol').value = details.symbol;
 document.getElementById('orderPrice').value = details.price;
 document.getElementById('orderPreviewSvg').value = getPreviewSvgMarkup();
-document.getElementById('orderItemsJson').value = JSON.stringify(cartItems);
+document.getElementById('orderItemsJson').value = JSON.stringify(publicCartItems());
 document.getElementById('orderItemsText').value = cartItems.map((item,index)=>itemSummary(item,index)).join('\n\n');
 document.getElementById('orderItemsCount').value = String(cartItems.length);
 document.getElementById('orderShipping').value = money(SHIPPING_PRICE);
@@ -2176,8 +2191,8 @@ const systemSummary =
 + 'Platba: ' + formData.get('platba') + '\n'
 + 'Poplatok platby: ' + formData.get('platba_poplatok') + '\n'
 + 'Suma spolu: ' + formData.get('suma_spolu') + '\n'
-+ 'Vytvorene: ' + new Date().toLocaleString('sk-SK') + '\n\n'
-+ 'JSON:\n' + formData.get('polozky_json');
++ 'Vytvorene: ' + new Date().toLocaleString('sk-SK') + '\n'
++ 'Zdroj: tvodo.sk';
 
 return {
 [GOOGLE_FORM_FIELDS.interneCislo]:orderCode,
@@ -2196,7 +2211,7 @@ return {
 [GOOGLE_FORM_FIELDS.platba]:formData.get('platba') || '',
 [GOOGLE_FORM_FIELDS.poplatokPlatby]:formData.get('platba_poplatok') || '',
 [GOOGLE_FORM_FIELDS.sumaSpolu]:money(totals.total),
-[GOOGLE_FORM_FIELDS.poznamka]:(formData.get('poznamka') || '') + '\n\nVyrobny format:\n' + productionText,
+[GOOGLE_FORM_FIELDS.poznamka]:formData.get('poznamka') || '',
 [GOOGLE_FORM_FIELDS.system]:systemSummary
 };
 }
