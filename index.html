@@ -1,5 +1,5 @@
 <!-- ========================================= -->
-<!-- TVODO CUSTOMIZER FINAL V4 -->
+<!-- TVODO CUSTOMIZER FINAL V4 FIXED -->
 <!-- ========================================= -->
 
 <!DOCTYPE html>
@@ -93,7 +93,7 @@ height:calc(100vh - 40px);
 transition:.35s;
 }
 
-/* COMPACT */
+/* HIDE ON SCROLL */
 
 .left.compact .top-info{
 opacity:0;
@@ -203,7 +203,7 @@ object-fit:contain;
 .preview-window{
 flex:1;
 border-radius:30px;
-padding:12px;
+padding:20px;
 background:
 radial-gradient(circle at top left,rgba(255,255,255,0.85),transparent 40%),
 radial-gradient(circle at bottom right,rgba(255,255,255,0.85),transparent 40%),
@@ -438,6 +438,7 @@ width:100%;
 height:50vh;
 padding:10px;
 z-index:20;
+transition:.35s;
 }
 
 /* CARD */
@@ -636,14 +637,6 @@ y="60"
 width="760"
 height="860"/>
 
-<rect
-id="zoneFrame"
-class="zone-frame"
-x="420"
-y="340"
-width="160"
-height="160"/>
-
 <image
 id="symbolLayer"
 href=""
@@ -675,7 +668,7 @@ Navrhnite si svoju výšivku
 </div>
 
 <div class="subtitle">
-Vytvorte si originálny kúsok ✨
+Vytvorte si originálny kúsok presne podľa seba ✨
 </div>
 
 <div class="section">
@@ -691,143 +684,6 @@ placeholder="Sem môžete zadať meno, venovanie alebo vlastný text ✨"></text
 
 </div>
 
-<div class="section">
-
-<div class="section-title">
-Vyberte si detail
-</div>
-
-<div class="row">
-
-<button class="btn symbol-btn active" data-symbol="">
-✕
-</button>
-
-<button class="btn symbol-btn" data-symbol="srdce.svg">
-<img src="srdce.svg">
-</button>
-
-<button class="btn symbol-btn" data-symbol="hviezda.svg">
-<img src="hviezda.svg">
-</button>
-
-<button class="btn symbol-btn" data-symbol="medved.svg">
-<img src="medved.svg">
-</button>
-
-<button class="btn symbol-btn" data-symbol="zajac.svg">
-<img src="zajac.svg">
-</button>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-title">
-Miesto výšivky
-</div>
-
-<div class="row">
-
-<button class="btn position-btn active" data-position="center">
-Na stred
-</button>
-
-<button class="btn position-btn" data-position="chest">
-Na prsia
-</button>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-title">
-Farba trička
-</div>
-
-<div class="row">
-
-<button class="btn shirt-color-btn active" data-shirt="white">
-Biele
-</button>
-
-<button class="btn shirt-color-btn" data-shirt="black">
-Čierne
-</button>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-title">
-Veľkosť
-</div>
-
-<div class="row">
-
-<button class="btn size-btn active">S</button>
-<button class="btn size-btn">M</button>
-<button class="btn size-btn">L</button>
-<button class="btn size-btn">XL</button>
-<button class="btn size-btn">2XL</button>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-title">
-Štýl písma
-</div>
-
-<div class="row">
-
-<button class="btn font-btn active" data-font="Montserrat">
-Klasický
-</button>
-
-<button class="btn font-btn" data-font="Fredoka">
-Hravý
-</button>
-
-<button class="btn font-btn" data-font="Dancing Script">
-Písaný
-</button>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-title">
-Farba nite
-</div>
-
-<div class="colors">
-
-<div class="color active" data-color="#ff7cc6" style="background:#ff7cc6"></div>
-<div class="color" data-color="#5c86ff" style="background:#5c86ff"></div>
-<div class="color" data-color="#69c27d" style="background:#69c27d"></div>
-<div class="color" data-color="#f4c542" style="background:#f4c542"></div>
-<div class="color" data-color="black" style="background:black"></div>
-<div class="color" data-color="white" style="background:white;border:2px solid #ddd"></div>
-
-</div>
-
-</div>
-
-<button class="order-btn" id="orderButton">
-Dokončiť objednávku
-</button>
-
 </div>
 
 </div>
@@ -836,7 +692,6 @@ Dokončiť objednávku
 
 const embroideryText = document.getElementById('embroideryText');
 const textInput = document.getElementById('textInput');
-const productImage = document.getElementById('productImage');
 const symbolLayer = document.getElementById('symbolLayer');
 
 let currentPosition = 'center';
@@ -966,8 +821,10 @@ break;
 
 }
 
-symbolLayer.style.filter =
-symbolFilter;
+symbolLayer.setAttribute(
+'style',
+'filter:' + symbolFilter
+);
 
 }else{
 
@@ -980,137 +837,11 @@ symbolLayer.style.display='none';
 renderText();
 updateVisuals();
 
-/* INPUT */
+/* TEXT */
 
 textInput.addEventListener('input',()=>{
 
 renderText();
-
-});
-
-/* FONT */
-
-document.querySelectorAll('.font-btn').forEach(btn=>{
-
-btn.addEventListener('click',()=>{
-
-document.querySelectorAll('.font-btn')
-.forEach(b=>b.classList.remove('active'));
-
-btn.classList.add('active');
-
-embroideryText.style.fontFamily =
-btn.dataset.font;
-
-renderText();
-
-});
-
-});
-
-/* COLORS */
-
-document.querySelectorAll('.color').forEach(color=>{
-
-color.addEventListener('click',()=>{
-
-document.querySelectorAll('.color')
-.forEach(c=>c.classList.remove('active'));
-
-color.classList.add('active');
-
-currentThreadColor = color.dataset.color;
-
-embroideryText.style.fill =
-currentThreadColor;
-
-updateVisuals();
-
-});
-
-});
-
-/* POSITION */
-
-document.querySelectorAll('.position-btn').forEach(btn=>{
-
-btn.addEventListener('click',()=>{
-
-document.querySelectorAll('.position-btn')
-.forEach(b=>b.classList.remove('active'));
-
-btn.classList.add('active');
-
-currentPosition = btn.dataset.position;
-
-renderText();
-updateVisuals();
-
-});
-
-});
-
-/* SYMBOL */
-
-document.querySelectorAll('.symbol-btn').forEach(btn=>{
-
-btn.addEventListener('click',()=>{
-
-document.querySelectorAll('.symbol-btn')
-.forEach(b=>b.classList.remove('active'));
-
-btn.classList.add('active');
-
-selectedSymbol = btn.dataset.symbol;
-
-renderText();
-updateVisuals();
-
-});
-
-});
-
-/* SHIRT COLOR */
-
-document.querySelectorAll('.shirt-color-btn').forEach(btn=>{
-
-btn.addEventListener('click',()=>{
-
-document.querySelectorAll('.shirt-color-btn')
-.forEach(b=>b.classList.remove('active'));
-
-btn.classList.add('active');
-
-const color = btn.dataset.shirt;
-
-if(color === 'black'){
-
-productImage.style.filter =
-'brightness(0.18) drop-shadow(0 20px 30px rgba(0,0,0,0.18))';
-
-}else{
-
-productImage.style.filter =
-'drop-shadow(0 20px 30px rgba(0,0,0,0.08))';
-
-}
-
-});
-
-});
-
-/* SIZE */
-
-document.querySelectorAll('.size-btn').forEach(btn=>{
-
-btn.addEventListener('click',()=>{
-
-document.querySelectorAll('.size-btn')
-.forEach(b=>b.classList.remove('active'));
-
-btn.classList.add('active');
-
-});
 
 });
 
@@ -1124,8 +855,6 @@ document.getElementById('leftPanel');
 
 scrollPanel.addEventListener('scroll',()=>{
 
-if(window.innerWidth <= 768){
-
 if(scrollPanel.scrollTop > 30){
 
 leftPanel.classList.add('compact');
@@ -1135,17 +864,6 @@ leftPanel.classList.add('compact');
 leftPanel.classList.remove('compact');
 
 }
-
-}
-
-});
-
-/* ORDER */
-
-document.getElementById('orderButton')
-.addEventListener('click',()=>{
-
-alert('Objednávka bude čoskoro napojená ✨');
 
 });
 
