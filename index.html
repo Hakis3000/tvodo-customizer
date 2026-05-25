@@ -1445,6 +1445,7 @@ Nevyp&#314;&#328;ajte
 
 <button class="order-submit" type="submit">Odosla&#357; objedn&#225;vku</button>
 </form>
+<iframe name="orderSubmitFrame" id="orderSubmitFrame" hidden></iframe>
 </div>
 </div>
 
@@ -1906,6 +1907,26 @@ function closeOrderModal(){
 orderModal.hidden = true;
 }
 
+function submitOrderNative(formData){
+const nativeForm = document.createElement('form');
+nativeForm.method = 'POST';
+nativeForm.action = ORDER_ENDPOINT;
+nativeForm.target = 'orderSubmitFrame';
+nativeForm.style.display = 'none';
+
+formData.forEach((value,key)=>{
+const input = document.createElement('input');
+input.type = 'hidden';
+input.name = key;
+input.value = value;
+nativeForm.appendChild(input);
+});
+
+document.body.appendChild(nativeForm);
+nativeForm.submit();
+setTimeout(()=>nativeForm.remove(),1000);
+}
+
 function resetCustomizer(){
 textInput.value = '';
 currentPosition = 'center';
@@ -2109,18 +2130,11 @@ alert('Objedn\u00e1vkov\u00fd formul\u00e1r je pripraven\u00fd. E\u0161te treba 
 return;
 }
 
-fetch(ORDER_ENDPOINT,{
-method:'POST',
-mode:'no-cors',
-body:formData
-}).then(()=>{
+submitOrderNative(formData);
 alert('Objedn\u00e1vka bola odoslan\u00e1. Potvrdenie a platobn\u00e9 \u00fadaje pr\u00eddu na e-mail.');
 closeOrderModal();
 form.reset();
 resetWholeOrder();
-}).catch(()=>{
-alert('Objedn\u00e1vku sa nepodarilo odosla\u0165. Sk\u00faste to pros\u00edm znova alebo n\u00e1s kontaktujte e-mailom.');
-});
 });
 
 </script>
