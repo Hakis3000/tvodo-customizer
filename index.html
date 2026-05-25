@@ -866,10 +866,6 @@ const zone = positions[currentPosition];
 
 let text = textInput.value.trim();
 
-if(text === ''){
-text = 'Mia';
-}
-
 const centerX = zone.x + zone.w/2;
 const centerY = zone.y + zone.h/2;
 
@@ -1337,6 +1333,40 @@ window.location.href = orderUrl;
 });
 
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    const textElement = document.getElementById("embroideryText");
+    const input = document.getElementById("textInput");
+
+    const animatedText = "Začnite písať svoj text →";
+    let index = 0;
+    let typingActive = true;
+
+    // Skryj defaultné "Mia" pri štarte
+    textElement.textContent = "";
+
+    function typeWriter() {
+        if (!typingActive) return;
+
+        if (index < animatedText.length) {
+            textElement.textContent = animatedText.substring(0, index + 1);
+            index++;
+            setTimeout(typeWriter, 55);
+        }
+    }
+
+    // Spusti animáciu po načítaní
+    typeWriter();
+
+    // Keď používateľ začne písať → animácia sa vypne
+    input.addEventListener("input", () => {
+        typingActive = false;
+        textElement.textContent = input.value;
+    });
+
+});
+</script>
+  
 </body>
 </html>
