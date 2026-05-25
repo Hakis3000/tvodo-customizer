@@ -1514,18 +1514,24 @@ let defaultTypingTimer = null;
 let pageStartedAt = Date.now();
 const ORDER_ENDPOINT = 'https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/formResponse';
 const GOOGLE_FORM_FIELDS = {
-meno:'entry.2066108657',
-email:'entry.308207795',
-telefon:'entry.142736474',
-adresa:'entry.463667227',
-packeta:'entry.1089188770',
-polozky:'entry.1452889000',
-suma:'entry.1444664887',
-platba:'entry.673285472',
-doprava:'entry.564175592',
-poznamka:'entry.377229164',
-nahlad:'entry.1304530760',
-system:'entry.1943247834'
+interneCislo:'entry.1943247834',
+meno:'entry.531831178',
+email:'entry.1398844849',
+telefon:'entry.2014121079',
+ulica:'entry.993318312',
+mesto:'entry.1875698237',
+psc:'entry.638573013',
+packeta:'entry.380080131',
+polozky:'entry.1722810673',
+vyrobnyFormat:'entry.320001101',
+pocetProduktov:'entry.830177637',
+produktySpolu:'entry.992906407',
+doprava:'entry.127799863',
+platba:'entry.1735533612',
+poplatokPlatby:'entry.736069030',
+sumaSpolu:'entry.2136560085',
+poznamka:'entry.1618273239',
+system:'entry.387972403'
 };
 const ORDER_NUMBER_PREFIX = 'TV';
 const SHIPPING_PRICE = 3.40;
@@ -2174,17 +2180,23 @@ const systemSummary =
 + 'JSON:\n' + formData.get('polozky_json');
 
 return {
-[GOOGLE_FORM_FIELDS.meno]:(formData.get('meno') || '') + ' / ' + orderCode,
+[GOOGLE_FORM_FIELDS.interneCislo]:orderCode,
+[GOOGLE_FORM_FIELDS.meno]:formData.get('meno') || '',
 [GOOGLE_FORM_FIELDS.email]:formData.get('email') || '',
 [GOOGLE_FORM_FIELDS.telefon]:formData.get('telefon') || '',
-[GOOGLE_FORM_FIELDS.adresa]:deliveryBlock,
+[GOOGLE_FORM_FIELDS.ulica]:formData.get('ulica') || '',
+[GOOGLE_FORM_FIELDS.mesto]:formData.get('mesto') || '',
+[GOOGLE_FORM_FIELDS.psc]:formData.get('psc') || '',
 [GOOGLE_FORM_FIELDS.packeta]:formData.get('packeta') || '',
 [GOOGLE_FORM_FIELDS.polozky]:fullOrderText,
-[GOOGLE_FORM_FIELDS.suma]:money(totals.total),
-[GOOGLE_FORM_FIELDS.platba]:formData.get('platba') || '',
+[GOOGLE_FORM_FIELDS.vyrobnyFormat]:productionText,
+[GOOGLE_FORM_FIELDS.pocetProduktov]:String(cartItems.length),
+[GOOGLE_FORM_FIELDS.produktySpolu]:money(totals.itemsTotal),
 [GOOGLE_FORM_FIELDS.doprava]:formData.get('doprava') || '',
+[GOOGLE_FORM_FIELDS.platba]:formData.get('platba') || '',
+[GOOGLE_FORM_FIELDS.poplatokPlatby]:formData.get('platba_poplatok') || '',
+[GOOGLE_FORM_FIELDS.sumaSpolu]:money(totals.total),
 [GOOGLE_FORM_FIELDS.poznamka]:(formData.get('poznamka') || '') + '\n\nVyrobny format:\n' + productionText,
-[GOOGLE_FORM_FIELDS.nahlad]:'Nahlad z webu - SVG nahlad nezapisujeme do Google Formu, aby objednavka spolahlivo presla.',
 [GOOGLE_FORM_FIELDS.system]:systemSummary
 };
 }
