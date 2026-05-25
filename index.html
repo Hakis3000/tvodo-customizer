@@ -831,6 +831,38 @@ Dokončiť objednávku
 </div>
 
 <script>
+  
+// TYPEWRITER – bezpečná verzia bez závislostí
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("textInput");
+    const animatedText = "Začnite písať svoj text →";
+    let index = 0;
+    let typingActive = true;
+
+    input.value = "";
+
+    function typeWriter() {
+        if (!typingActive) return;
+        if (index < animatedText.length) {
+            input.value = animatedText.substring(0, index + 1);
+            index++;
+            setTimeout(typeWriter, 55);
+        }
+    }
+
+    typeWriter();
+
+    input.addEventListener("input", () => {
+        typingActive = false;
+    });
+
+    input.addEventListener("focus", () => {
+        if (typingActive) {
+            typingActive = false;
+            input.value = "";
+        }
+    });
+});
 
 const embroideryText = document.getElementById('embroideryText');
 const textInput = document.getElementById('textInput');
@@ -860,125 +892,96 @@ h:160
 
 };
 
-function renderText(){
+function renderText() {
 
-const zone = positions[currentPosition];
+    const zone = positions[currentPosition];
+    let text = textInput.value.trim();
 
-let text = textInput.value.trim();
+    // ak je pole prázdne → zobraz neviditeľný placeholder, aby sa nerozbil bbox
+    if (text === '') {
+        embroideryText.innerHTML = '<tspan x="0" y="0" opacity="0">.</tspan>';
+        return;
+    }
 
-if(text === ''){
-text = 'Mia';
+    const centerX = zone.x + zone.w / 2;
+    const centerY = zone.y + zone.h / 2;
+
+    let fontSize = 42;
+    let maxLines = selectedSymbol !== '' ? 2 : 3;
+    let symbolOffset = selectedSymbol !== '' ? 26 : 0;
+
+    const words = text.split(' ');
+    let lines = [];
+    let currentLine = '';
+
+    // rozdeľ text na riadky max 10 znakov
+    words.forEach(word => {
+        const testLine = (currentLine + ' ' + word).trim();
+        if (testLine.length > 10) {
+            if (currentLine !== '') lines.push(currentLine);
+            currentLine = word;
+        } else {
+            currentLine = testLine;
+        }
+    });
+
+    if (currentLine !== '') lines.push(currentLine);
+    lines = lines.slice(0, maxLines);
+
+    // uprav veľkosť podľa počtu riadkov
+    if (lines.length >= 2) fontSize = 34;
+    if (lines.length >= 3) fontSize = 28;
+
+    embroideryText.innerHTML = '';
+    embroideryText.style.fontSize = fontSize + 'px';
+
+    // farba nite
+    let fillColor = '#ff7cc6';
+    if (currentThreadColor === 'blue') fillColor = '#7dafff';
+    if (currentThreadColor === 'green') fillColor = '#7adf9b';
+    if (currentThreadColor === 'yellow') fillColor = '#ffd76b';
+    if (currentThreadColor === 'black') fillColor = '#111111';
+    if (currentThreadColor === 'white') fillColor = '#ffffff';
+
+    embroideryText.setAttribute("fill", fillColor);
+
+    // font
+    if (currentFont === 'Klasický') {
+        embroideryText.style.fontFamily = 'Montserrat, sans-serif';
+        embroideryText.style.fontWeight = '700';
+    } else if (currentFont === 'Hravý') {
+        embroideryText.style.fontFamily = 'Fredoka, cursive';
+        embroideryText.style.fontWeight = '600';
+    } else if (currentFont === 'Písaný') {
+        embroideryText.style.fontFamily = '"Dancing Script", cursive';
+        embroideryText.style.fontWeight = '700';
+    }
+
+    // výpočet pozície
+    const totalLines = lines.length;
+    const lineHeight = fontSize * 1.25;
+    const startY = centerY - ((totalLines - 1) * lineHeight) / 2 + symbolOffset;
+
+    // vytvor tspany
+    lines.forEach((line, index) => {
+        const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+        tspan.setAttribute("x", centerX);
+        tspan.setAttribute("y", startY + index * lineHeight);
+        tspan.textContent = line;
+        embroideryText.appendChild(tspan);
+    });
+
+    // automatické zmenšovanie ak je text príliš veľký
+    requestAnimationFrame(() => {
+        let bbox = embroideryText.getBBox();
+        while ((bbox.width > zone.w - 18 || bbox.height > zone.h - 18) && fontSize > 16) {
+            fontSize -= 1;
+            embroideryText.style.fontSize = fontSize + 'px';
+            bbox = embroideryText.getBBox();
+        }
+    });
 }
 
-const centerX = zone.x + zone.w/2;
-const centerY = zone.y + zone.h/2;
-
-let fontSize = 42;
-
-let maxLines = selectedSymbol !== '' ? 2 : 3;
-
-let symbolOffset = selectedSymbol !== '' ? 26 : 0;
-
-const words = text.split(' ');
-
-let lines = [];
-let currentLine = '';
-
-words.forEach(word=>{
-
-const testLine =
-(currentLine + ' ' + word).trim();
-
-if(testLine.length > 10){
-
-if(currentLine !== ''){
-lines.push(currentLine);
-}
-
-currentLine = word;
-
-}else{
-
-currentLine = testLine;
-
-}
-
-});
-
-if(currentLine !== ''){
-lines.push(currentLine);
-}
-
-lines = lines.slice(0,maxLines);
-
-embroideryText.innerHTML='';
-
-if(lines.length >= 2){
-fontSize = 34;
-}
-
-if(lines.length >= 3){
-fontSize = 28;
-}
-
-embroideryText.style.fontSize =
-fontSize + 'px';
-
-lines.forEach((line,index)=>{
-
-const tspan =
-document.createElementNS(
-'http://www.w3.org/2000/svg',
-'tspan'
-);
-
-const totalHeight =
-(lines.length-1) * 36;
-
-tspan.setAttribute('x',centerX);
-
-tspan.setAttribute(
-'y',
-centerY
-+
-symbolOffset
--
-(totalHeight/2)
-+
-(index*36)
-);
-
-tspan.textContent = line;
-
-embroideryText.appendChild(tspan);
-
-});
-
-requestAnimationFrame(()=>{
-
-let bbox = embroideryText.getBBox();
-
-while(
-(
-bbox.width > zone.w - 18
-||
-bbox.height > zone.h - 18
-)
-&& fontSize > 16
-){
-
-fontSize -= 1;
-
-embroideryText.style.fontSize =
-fontSize + 'px';
-
-bbox = embroideryText.getBBox();
-
-}
-
-});
-
-}
 
 function updateVisuals(){
 
