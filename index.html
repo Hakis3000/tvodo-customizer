@@ -751,6 +751,33 @@ gap:10px;
 margin-top:10px;
 }
 
+.preview-list{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+gap:12px;
+}
+
+.preview-item{
+border-radius:16px;
+background:linear-gradient(135deg,#f8fbff,#fff5fb);
+box-shadow:inset 0 0 0 1px rgba(125,175,255,0.16);
+padding:10px;
+}
+
+.preview-item svg{
+width:100%;
+height:auto;
+display:block;
+}
+
+.preview-caption{
+font-size:12px;
+font-weight:700;
+line-height:1.35;
+color:#555;
+margin-top:6px;
+}
+
 .cart-item{
 border-radius:16px;
 background:linear-gradient(135deg,#f8fbff,#fff5fb);
@@ -1344,7 +1371,7 @@ Brynd&#225;k
 <div class="order-head">
 <div>
 <div class="order-title" id="orderTitle">Dokon&#269;enie objedn&#225;vky</div>
-<div class="subtitle">Skontrolujte v&#253;ber a dopl&#328;te kontaktn&#233; &#250;daje.</div>
+<div class="subtitle">Skontrolujte polo&#382;ky v objedn&#225;vke a dopl&#328;te kontaktn&#233; &#250;daje.</div>
 </div>
 <button class="order-close" id="closeOrderModal" type="button" aria-label="Zatvori&#357;">&#215;</button>
 </div>
@@ -1392,12 +1419,17 @@ Pozn&#225;mka
 </label>
 
 <div class="order-field full">
-S&#250;hrn produktu
+N&#225;h&#318;ad objedn&#225;vky
+<div class="preview-list" id="orderPreviewList"></div>
+</div>
+
+<div class="order-field full">
+S&#250;hrn objedn&#225;vky
 <div class="order-summary-box" id="orderSummaryBox"></div>
 </div>
 
 <div class="order-field full">
-Polo&#382;ky v objedn&#225;vke
+Polo&#382;ky v ko&#353;&#237;ku
 <div class="cart-list" id="orderCartList"></div>
 </div>
 
@@ -1464,6 +1496,7 @@ const orderModal = document.getElementById('orderModal');
 const orderSummaryBox = document.getElementById('orderSummaryBox');
 const orderCartList = document.getElementById('orderCartList');
 const orderTotalBox = document.getElementById('orderTotalBox');
+const orderPreviewList = document.getElementById('orderPreviewList');
 const cartMini = document.getElementById('cartMini');
 const cartMiniTitle = document.getElementById('cartMiniTitle');
 const cartMiniText = document.getElementById('cartMiniText');
@@ -1494,6 +1527,7 @@ poznamka:'entry.377229164',
 nahlad:'entry.1304530760',
 system:'entry.1943247834'
 };
+const ORDER_NUMBER_PREFIX = 'TV';
 const SHIPPING_PRICE = 3.40;
 const COD_PRICE = 1.00;
 let cartItems = [];
@@ -1536,6 +1570,20 @@ const productBasePrices = {
 'Tri\u010dko':24.90,
 'Body':22.90,
 'Brynd\u00e1k':18.90
+};
+
+const threadColorNames = {
+'#ff7cc6':'Ru\u017eov\u00e1',
+'#5c86ff':'Modr\u00e1',
+'#69c27d':'Zelen\u00e1',
+'#f4c542':'\u017dlt\u00e1',
+'black':'\u010cierna',
+'white':'Biela'
+};
+
+const productColorNames = {
+'Biele':'Biele',
+'\u010cierne':'\u010cierne'
 };
 
 const symbolGlyphs = {
@@ -1827,6 +1875,14 @@ function money(value){
 return value.toFixed(2).replace('.',',') + ' \u20ac';
 }
 
+function getThreadColorName(color){
+return threadColorNames[color] || color;
+}
+
+function getProductColorName(color){
+return productColorNames[color] || color;
+}
+
 function currentItem(){
 const details = buildOrderDetails();
 return {
@@ -1847,6 +1903,7 @@ size:details.size,
 productColor:details.productColor,
 position:details.position,
 threadColor:details.threadColor,
+threadColorValue:currentThreadColor,
 font:details.font,
 symbol:details.symbol,
 price:productBasePrices[details.product] || 0,
@@ -1866,6 +1923,35 @@ return (index + 1) + '. ' + item.product + ' / ' + item.size + ' / ' + item.prod
 + '\nNi\u0165: ' + item.threadColor
 + '\nSymbol: ' + item.symbol
 + '\nCena: ' + item.priceLabel;
+}
+
+function itemProductionLine(item,index,orderCode){
+return [
+orderCode,
+index + 1,
+item.product,
+item.size,
+item.productColor,
+item.text,
+item.position,
+item.threadColor,
+item.font,
+item.symbol,
+item.priceLabel
+].join(' | ');
+}
+
+function createClientOrderCode(){
+const now = new Date();
+const pad = value => String(value).padStart(2,'0');
+return ORDER_NUMBER_PREFIX
++ String(now.getFullYear()).slice(2)
++ pad(now.getMonth() + 1)
++ pad(now.getDate())
++ '-'
++ pad(now.getHours())
++ pad(now.getMinutes())
++ pad(now.getSeconds());
 }
 
 function updateCartMini(){
@@ -1927,6 +2013,21 @@ orderCartList.appendChild(row);
 });
 }
 
+function renderOrderPreviews(){
+orderPreviewList.innerHTML = '';
+cartItems.forEach((item,index)=>{
+const wrap = document.createElement('div');
+wrap.className = 'preview-item';
+wrap.innerHTML = item.previewSvg || '';
+
+const caption = document.createElement('div');
+caption.className = 'preview-caption';
+caption.textContent = (index + 1) + '. ' + item.product + ' / ' + item.size + ' / ' + item.text;
+wrap.appendChild(caption);
+orderPreviewList.appendChild(wrap);
+});
+}
+
 function calculateTotals(){
 const itemsTotal = cartItems.reduce((sum,item)=>sum + item.price,0);
 const paymentMethod = document.getElementById('paymentMethod')?.value || 'Prevod na ucet';
@@ -1941,9 +2042,9 @@ return {
 product:currentProduct,
 text,
 size:currentSize,
-productColor:currentShirtColor,
+productColor:getProductColorName(currentShirtColor),
 position:getPositionLabel(),
-threadColor:currentThreadColor,
+threadColor:getThreadColorName(currentThreadColor),
 font:currentFont,
 symbol:getSymbolLabel(),
 price:priceText.textContent
@@ -1954,6 +2055,7 @@ function updateOrderForm(){
 ensureCartHasItem();
 const details = buildOrderDetails();
 const totals = calculateTotals();
+const orderCode = createClientOrderCode();
 
 document.getElementById('orderProduct').value = details.product;
 document.getElementById('orderEmbroideryText').value = details.text;
@@ -1974,12 +2076,25 @@ document.getElementById('orderTotal').value = money(totals.total);
 document.getElementById('orderStartedAt').value = String(pageStartedAt);
 
 renderOrderCart();
+renderOrderPreviews();
 
-orderSummaryBox.textContent = cartItems.map((item,index)=>itemSummary(item,index)).join('\n\n');
+orderSummaryBox.textContent = buildReadableOrderSummary(totals,orderCode);
 
 orderTotalBox.textContent =
 'Produkty spolu: ' + money(totals.itemsTotal) + '\n'
 + 'Packeta: ' + money(SHIPPING_PRICE) + '\n'
++ 'Platba: ' + totals.paymentMethod + (totals.paymentFee > 0 ? ' +' + money(totals.paymentFee) : '') + '\n'
++ 'Spolu na \u00fahradu: ' + money(totals.total);
+}
+
+function buildReadableOrderSummary(totals,orderCode){
+return 'Intern\u00e9 \u010d\u00edslo: ' + orderCode + '\n\n'
++ 'POLO\u017dKY:\n'
++ cartItems.map((item,index)=>itemSummary(item,index)).join('\n\n')
++ '\n\nS\u00daHRN:\n'
++ 'Po\u010det produktov: ' + cartItems.length + '\n'
++ 'Produkty spolu: ' + money(totals.itemsTotal) + '\n'
++ 'Doprava Packeta: ' + money(SHIPPING_PRICE) + '\n'
 + 'Platba: ' + totals.paymentMethod + (totals.paymentFee > 0 ? ' +' + money(totals.paymentFee) : '') + '\n'
 + 'Spolu na \u00fahradu: ' + money(totals.total);
 }
@@ -2018,31 +2133,57 @@ setTimeout(()=>nativeForm.remove(),1000);
 }
 
 function buildGoogleFormPayload(formData){
+const totals = calculateTotals();
+const orderCode = createClientOrderCode();
 const address = [
 formData.get('ulica'),
 formData.get('mesto'),
 formData.get('psc')
 ].filter(Boolean).join(', ');
+const customerBlock =
+'Meno: ' + (formData.get('meno') || '') + '\n'
++ 'Email: ' + (formData.get('email') || '') + '\n'
++ 'Telefon: ' + (formData.get('telefon') || '');
+
+const deliveryBlock =
+'Adresa: ' + address + '\n'
++ 'Packeta: ' + (formData.get('packeta') || '');
+
+const itemsText = cartItems.map((item,index)=>itemSummary(item,index)).join('\n\n');
+const productionText = cartItems.map((item,index)=>itemProductionLine(item,index,orderCode)).join('\n');
+const fullOrderText =
+'OBJEDNAVKA ' + orderCode + '\n\n'
++ customerBlock + '\n\n'
++ deliveryBlock + '\n\n'
++ 'POLOZKY:\n' + itemsText + '\n\n'
++ 'VYROBNY FORMAT:\n' + productionText + '\n\n'
++ 'SPOLU:\n'
++ 'Produkty: ' + money(totals.itemsTotal) + '\n'
++ 'Packeta: ' + money(SHIPPING_PRICE) + '\n'
++ 'Platba: ' + totals.paymentMethod + (totals.paymentFee > 0 ? ' +' + money(totals.paymentFee) : '') + '\n'
++ 'Suma: ' + money(totals.total);
 
 const systemSummary =
-'Pocet poloziek: ' + formData.get('pocet_poloziek') + '\n'
+'Interne cislo: ' + orderCode + '\n'
++ 'Pocet poloziek: ' + formData.get('pocet_poloziek') + '\n'
 + 'Doprava: ' + formData.get('doprava') + '\n'
 + 'Platba: ' + formData.get('platba') + '\n'
 + 'Poplatok platby: ' + formData.get('platba_poplatok') + '\n'
 + 'Suma spolu: ' + formData.get('suma_spolu') + '\n'
-+ 'Vytvorene: ' + new Date().toLocaleString('sk-SK');
++ 'Vytvorene: ' + new Date().toLocaleString('sk-SK') + '\n\n'
++ 'JSON:\n' + formData.get('polozky_json');
 
 return {
-[GOOGLE_FORM_FIELDS.meno]:formData.get('meno') || '',
+[GOOGLE_FORM_FIELDS.meno]:(formData.get('meno') || '') + ' / ' + orderCode,
 [GOOGLE_FORM_FIELDS.email]:formData.get('email') || '',
 [GOOGLE_FORM_FIELDS.telefon]:formData.get('telefon') || '',
-[GOOGLE_FORM_FIELDS.adresa]:address,
+[GOOGLE_FORM_FIELDS.adresa]:deliveryBlock,
 [GOOGLE_FORM_FIELDS.packeta]:formData.get('packeta') || '',
-[GOOGLE_FORM_FIELDS.polozky]:formData.get('polozky_text') || '',
-[GOOGLE_FORM_FIELDS.suma]:formData.get('suma_spolu') || '',
+[GOOGLE_FORM_FIELDS.polozky]:fullOrderText,
+[GOOGLE_FORM_FIELDS.suma]:money(totals.total),
 [GOOGLE_FORM_FIELDS.platba]:formData.get('platba') || '',
 [GOOGLE_FORM_FIELDS.doprava]:formData.get('doprava') || '',
-[GOOGLE_FORM_FIELDS.poznamka]:formData.get('poznamka') || '',
+[GOOGLE_FORM_FIELDS.poznamka]:(formData.get('poznamka') || '') + '\n\nVyrobny format:\n' + productionText,
 [GOOGLE_FORM_FIELDS.nahlad]:'Nahlad z webu - SVG nahlad nezapisujeme do Google Formu, aby objednavka spolahlivo presla.',
 [GOOGLE_FORM_FIELDS.system]:systemSummary
 };
