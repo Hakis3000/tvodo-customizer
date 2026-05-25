@@ -1,5 +1,5 @@
 <!-- ========================================= -->
-<!-- TVODO CUSTOMIZER FINAL V3 PRO -->
+<!-- TVODO CUSTOMIZER FINAL V4 -->
 <!-- ========================================= -->
 
 <!DOCTYPE html>
@@ -93,18 +93,23 @@ height:calc(100vh - 40px);
 transition:.35s;
 }
 
-/* HIDE HEADER ON SCROLL */
+/* COMPACT */
 
 .left.compact .top-info{
 opacity:0;
 height:0;
 overflow:hidden;
-pointer-events:none;
 margin:0;
+pointer-events:none;
 }
 
 .left.compact .product-bar{
-margin-top:0;
+opacity:0;
+height:0;
+overflow:hidden;
+margin:0;
+padding:0;
+pointer-events:none;
 }
 
 /* CARD */
@@ -116,10 +121,10 @@ background:rgba(255,255,255,0.56);
 backdrop-filter:blur(22px);
 border:1px solid rgba(255,255,255,0.55);
 box-shadow:0 20px 50px rgba(0,0,0,0.08);
-padding:14px;
+padding:12px;
 display:flex;
 flex-direction:column;
-gap:12px;
+gap:10px;
 overflow:hidden;
 }
 
@@ -150,9 +155,9 @@ margin-top:4px;
 
 .product-bar{
 display:flex;
-gap:10px;
+gap:8px;
 overflow:auto;
-padding-bottom:4px;
+padding-bottom:2px;
 scrollbar-width:none;
 transition:.35s;
 }
@@ -162,23 +167,24 @@ display:none;
 }
 
 .product-btn{
-min-width:145px;
+min-width:92px;
 border:none;
-padding:14px;
-border-radius:22px;
+padding:8px;
+border-radius:18px;
 background:white;
 cursor:pointer;
 font-weight:600;
+font-size:11px;
 display:flex;
 flex-direction:column;
 align-items:center;
-gap:8px;
+gap:4px;
 transition:0.28s;
 box-shadow:0 10px 24px rgba(0,0,0,0.06);
 }
 
 .product-btn:hover{
-transform:translateY(-3px) scale(1.02);
+transform:translateY(-3px);
 }
 
 .product-btn.active{
@@ -187,8 +193,8 @@ color:white;
 }
 
 .product-preview-icon{
-width:68px;
-height:68px;
+width:36px;
+height:36px;
 object-fit:contain;
 }
 
@@ -197,7 +203,7 @@ object-fit:contain;
 .preview-window{
 flex:1;
 border-radius:30px;
-padding:20px;
+padding:12px;
 background:
 radial-gradient(circle at top left,rgba(255,255,255,0.85),transparent 40%),
 radial-gradient(circle at bottom right,rgba(255,255,255,0.85),transparent 40%),
@@ -221,8 +227,6 @@ transition:.3s;
 transition:0.35s;
 filter:drop-shadow(0 20px 30px rgba(0,0,0,0.08));
 }
-
-/* REMOVE FRAME */
 
 .zone-frame{
 display:none;
@@ -363,48 +367,6 @@ height:40px;
 transition:.2s;
 }
 
-/* ORIGINAL ICON COLORS BACK */
-
-.symbol-btn[data-symbol="srdce.svg"] img{
-filter:
-brightness(0)
-saturate(100%)
-invert(67%)
-sepia(51%)
-saturate(1452%)
-hue-rotate(292deg);
-}
-
-.symbol-btn[data-symbol="hviezda.svg"] img{
-filter:
-brightness(0)
-saturate(100%)
-invert(82%)
-sepia(44%)
-saturate(1175%)
-hue-rotate(337deg);
-}
-
-.symbol-btn[data-symbol="medved.svg"] img{
-filter:
-brightness(0)
-saturate(100%)
-invert(67%)
-sepia(17%)
-saturate(818%)
-hue-rotate(76deg);
-}
-
-.symbol-btn[data-symbol="zajac.svg"] img{
-filter:
-brightness(0)
-saturate(100%)
-invert(48%)
-sepia(81%)
-saturate(1071%)
-hue-rotate(199deg);
-}
-
 /* COLORS */
 
 .colors{
@@ -448,10 +410,6 @@ transition:0.25s;
 box-shadow:0 14px 30px rgba(255,124,198,0.28);
 }
 
-.order-btn:hover{
-transform:translateY(-3px);
-}
-
 /* MOBILE */
 
 @media(max-width:768px){
@@ -473,46 +431,48 @@ gap:0;
 /* TOP */
 
 .left{
-position:sticky;
+position:fixed;
 top:0;
-height:58vh;
+left:0;
+width:100%;
+height:50vh;
 padding:10px;
-z-index:10;
+z-index:20;
 }
 
 /* CARD */
 
 .preview-card{
 height:100%;
-border-radius:0 0 30px 30px;
-padding:10px;
-gap:10px;
+border-radius:0 0 26px 26px;
+padding:8px;
+gap:8px;
 }
 
-/* HEADER */
+/* LOGO */
 
 .logo{
-font-size:30px;
+font-size:24px;
 }
 
 .logo-sub{
-font-size:11px;
-line-height:1.4;
+font-size:10px;
+line-height:1.3;
 }
 
 /* PRODUCT BAR */
 
 .product-btn{
-min-width:110px;
-padding:10px;
-border-radius:18px;
-font-size:12px;
-gap:4px;
+min-width:82px;
+padding:6px;
+border-radius:14px;
+font-size:10px;
+gap:2px;
 }
 
 .product-preview-icon{
-width:48px;
-height:48px;
+width:28px;
+height:28px;
 }
 
 /* PREVIEW */
@@ -520,75 +480,89 @@ height:48px;
 .preview-window{
 flex:1;
 min-height:0;
-padding:10px;
+padding:0;
+border-radius:24px;
 }
 
 .preview-window svg{
 max-width:100%;
 max-height:100%;
+transform:scale(1.05);
 }
 
 /* RIGHT */
 
 .right{
-height:42vh;
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:50vh;
 overflow-y:auto;
-border-radius:30px 30px 0 0;
-padding:20px;
-margin-top:-8px;
+border-radius:28px 28px 0 0;
+padding:18px;
+padding-bottom:120px;
+z-index:30;
+background:rgba(255,255,255,0.92);
+backdrop-filter:blur(20px);
 }
 
 /* TITLES */
 
 .title{
-font-size:28px;
-margin-bottom:6px;
+font-size:24px;
+margin-bottom:4px;
 }
 
 .subtitle{
-font-size:13px;
-line-height:1.5;
-margin-bottom:18px;
+font-size:12px;
+line-height:1.4;
+margin-bottom:14px;
 }
 
 /* INPUT */
 
 textarea{
-min-height:90px;
+min-height:84px;
 font-size:15px;
-padding:16px;
+padding:15px;
+border-radius:20px;
 }
 
 /* BUTTONS */
 
 .btn{
-padding:12px 14px;
-font-size:14px;
-border-radius:16px;
+padding:11px 13px;
+font-size:13px;
+border-radius:14px;
 }
 
 .symbol-btn{
-width:58px;
-height:58px;
+width:54px;
+height:54px;
 }
 
 .symbol-btn img{
-width:34px;
-height:34px;
+width:30px;
+height:30px;
 }
 
+/* COLORS */
+
 .color{
-width:44px;
-height:44px;
+width:40px;
+height:40px;
 }
 
 /* ORDER */
 
 .order-btn{
-padding:16px;
-font-size:16px;
+padding:15px;
+font-size:15px;
 border-radius:18px;
-margin-top:22px;
+margin-top:20px;
+}
+
 }
 
 /* SCROLLBAR */
@@ -600,8 +574,6 @@ width:4px;
 .right::-webkit-scrollbar-thumb{
 background:rgba(0,0,0,0.12);
 border-radius:20px;
-}
-
 }
 
 </style>
@@ -625,7 +597,7 @@ TVODO
 </div>
 
 <div class="logo-sub">
-Personalizovaná jemná výšivka pre výnimočné momenty ✨
+Personalizovaná jemná výšivka ✨
 </div>
 
 </div>
@@ -703,7 +675,7 @@ Navrhnite si svoju výšivku
 </div>
 
 <div class="subtitle">
-Vytvorte si originálny kúsok presne podľa seba ✨
+Vytvorte si originálny kúsok ✨
 </div>
 
 <div class="section">
@@ -889,7 +861,7 @@ h:160
 
 };
 
-/* RENDER TEXT */
+/* TEXT */
 
 function renderText(){
 
@@ -904,58 +876,7 @@ text = 'Vaša výšivka';
 const centerX = zone.x + zone.w/2;
 const centerY = zone.y + zone.h/2;
 
-let fontSize = 42;
-
-let maxLines = selectedSymbol !== '' ? 2 : 3;
-
-let symbolOffset = selectedSymbol !== '' ? 26 : 0;
-
-const words = text.split(' ');
-
-let lines = [];
-let currentLine = '';
-
-words.forEach(word=>{
-
-const testLine =
-(currentLine + ' ' + word).trim();
-
-if(testLine.length > 10){
-
-if(currentLine !== ''){
-lines.push(currentLine);
-}
-
-currentLine = word;
-
-}else{
-
-currentLine = testLine;
-
-}
-
-});
-
-if(currentLine !== ''){
-lines.push(currentLine);
-}
-
-lines = lines.slice(0,maxLines);
-
 embroideryText.innerHTML='';
-
-if(lines.length >= 2){
-fontSize = 34;
-}
-
-if(lines.length >= 3){
-fontSize = 28;
-}
-
-embroideryText.style.fontSize =
-fontSize + 'px';
-
-lines.forEach((line,index)=>{
 
 const tspan =
 document.createElementNS(
@@ -963,31 +884,20 @@ document.createElementNS(
 'tspan'
 );
 
-const totalHeight =
-(lines.length-1) * 36;
-
 tspan.setAttribute('x',centerX);
 
 tspan.setAttribute(
 'y',
-centerY
-+
-symbolOffset
--
-(totalHeight/2)
-+
-(index*36)
+selectedSymbol !== '' ? centerY + 26 : centerY
 );
 
-tspan.textContent = line;
+tspan.textContent = text;
 
 embroideryText.appendChild(tspan);
 
-});
-
 }
 
-/* UPDATE SYMBOL */
+/* SYMBOL */
 
 function updateVisuals(){
 
@@ -1014,6 +924,51 @@ zone.y + 8
 
 symbolLayer.style.display='block';
 
+let symbolFilter = '';
+
+switch(currentThreadColor){
+
+case '#ff7cc6':
+
+symbolFilter =
+'brightness(0) saturate(100%) invert(67%) sepia(51%) saturate(1452%) hue-rotate(292deg)';
+break;
+
+case '#5c86ff':
+
+symbolFilter =
+'brightness(0) saturate(100%) invert(48%) sepia(81%) saturate(1071%) hue-rotate(199deg)';
+break;
+
+case '#69c27d':
+
+symbolFilter =
+'brightness(0) saturate(100%) invert(67%) sepia(17%) saturate(818%) hue-rotate(76deg)';
+break;
+
+case '#f4c542':
+
+symbolFilter =
+'brightness(0) saturate(100%) invert(82%) sepia(44%) saturate(1175%) hue-rotate(337deg)';
+break;
+
+case 'black':
+
+symbolFilter =
+'brightness(0)';
+break;
+
+case 'white':
+
+symbolFilter =
+'brightness(0) invert(1)';
+break;
+
+}
+
+symbolLayer.style.filter =
+symbolFilter;
+
 }else{
 
 symbolLayer.style.display='none';
@@ -1022,12 +977,10 @@ symbolLayer.style.display='none';
 
 }
 
-/* INIT */
-
 renderText();
 updateVisuals();
 
-/* TEXT INPUT */
+/* INPUT */
 
 textInput.addEventListener('input',()=>{
 
@@ -1055,7 +1008,7 @@ renderText();
 
 });
 
-/* THREAD COLOR */
+/* COLORS */
 
 document.querySelectorAll('.color').forEach(color=>{
 
@@ -1071,15 +1024,7 @@ currentThreadColor = color.dataset.color;
 embroideryText.style.fill =
 currentThreadColor;
 
-/* ICON COLOR CHANGES TOO */
-
-const icons = document.querySelectorAll('.symbol-btn img');
-
-icons.forEach(icon=>{
-
-icon.style.filter = '';
-
-});
+updateVisuals();
 
 });
 
@@ -1169,7 +1114,7 @@ btn.classList.add('active');
 
 });
 
-/* HIDE TOP ON SCROLL */
+/* SCROLL */
 
 const scrollPanel =
 document.getElementById('scrollPanel');
@@ -1179,13 +1124,17 @@ document.getElementById('leftPanel');
 
 scrollPanel.addEventListener('scroll',()=>{
 
-if(scrollPanel.scrollTop > 40){
+if(window.innerWidth <= 768){
+
+if(scrollPanel.scrollTop > 30){
 
 leftPanel.classList.add('compact');
 
 }else{
 
 leftPanel.classList.remove('compact');
+
+}
 
 }
 
