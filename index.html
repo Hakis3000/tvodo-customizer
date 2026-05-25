@@ -1,5 +1,5 @@
 <!-- ========================================= -->
-<!-- TVODO CUSTOMIZER FINAL V2 PRO -->
+<!-- TVODO CUSTOMIZER FINAL V3 PRO -->
 <!-- ========================================= -->
 
 <!DOCTYPE html>
@@ -7,7 +7,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>TVODO - Personalizovaná výšivka</title>
 
@@ -43,7 +43,7 @@ color:#222;
 min-height:100vh;
 }
 
-/* BACKGROUND BLOBS */
+/* BG */
 
 body::before{
 content:'';
@@ -90,6 +90,21 @@ margin:auto;
 position:sticky;
 top:20px;
 height:calc(100vh - 40px);
+transition:.35s;
+}
+
+/* HIDE HEADER ON SCROLL */
+
+.left.compact .top-info{
+opacity:0;
+height:0;
+overflow:hidden;
+pointer-events:none;
+margin:0;
+}
+
+.left.compact .product-bar{
+margin-top:0;
 }
 
 /* CARD */
@@ -104,11 +119,15 @@ box-shadow:0 20px 50px rgba(0,0,0,0.08);
 padding:14px;
 display:flex;
 flex-direction:column;
-gap:10px;
+gap:12px;
 overflow:hidden;
 }
 
-/* LOGO */
+/* HEADER */
+
+.top-info{
+transition:.35s;
+}
 
 .logo{
 font-size:34px;
@@ -127,12 +146,6 @@ color:#666;
 margin-top:4px;
 }
 
-.made-in{
-margin-top:4px;
-font-size:11px;
-color:#999;
-}
-
 /* PRODUCT BAR */
 
 .product-bar{
@@ -141,6 +154,7 @@ gap:10px;
 overflow:auto;
 padding-bottom:4px;
 scrollbar-width:none;
+transition:.35s;
 }
 
 .product-bar::-webkit-scrollbar{
@@ -200,31 +214,7 @@ width:100%;
 height:auto;
 aspect-ratio:1/1;
 max-width:760px;
-animation:fadeIn .4s ease;
-}
-
-@keyframes fadeIn{
-from{
-opacity:0;
-transform:scale(.97);
-}
-to{
-opacity:1;
-transform:scale(1);
-}
-}
-
-.preview-badge{
-position:absolute;
-top:18px;
-right:18px;
-padding:10px 14px;
-border-radius:20px;
-background:white;
-font-size:12px;
-font-weight:700;
-box-shadow:0 10px 20px rgba(0,0,0,0.06);
-z-index:10;
+transition:.3s;
 }
 
 #productImage{
@@ -232,12 +222,13 @@ transition:0.35s;
 filter:drop-shadow(0 20px 30px rgba(0,0,0,0.08));
 }
 
+/* REMOVE FRAME */
+
 .zone-frame{
-fill:none;
-stroke:rgba(255,124,198,0.22);
-stroke-width:2;
-stroke-dasharray:8 8;
+display:none;
 }
+
+/* TEXT */
 
 #embroideryText{
 font-size:42px;
@@ -252,19 +243,13 @@ stroke-width:1.4;
 transition:.2s;
 }
 
+/* SYMBOL */
+
 #symbolLayer{
 transition:0.25s;
 }
 
-.preview-note{
-text-align:center;
-font-size:13px;
-color:#777;
-margin-top:4px;
-line-height:1.6;
-}
-
-/* RIGHT PANEL */
+/* RIGHT */
 
 .right{
 background:rgba(255,255,255,0.56);
@@ -301,63 +286,10 @@ margin-bottom:24px;
 margin-top:24px;
 }
 
-.section-header{
-display:flex;
-align-items:center;
-gap:8px;
-margin-bottom:10px;
-}
-
 .section-title{
 font-size:16px;
 font-weight:700;
-}
-
-/* TOOLTIP */
-
-.info-icon{
-width:24px;
-height:24px;
-border-radius:50%;
-background:linear-gradient(145deg,#ffffff,#e8ecff);
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:12px;
-font-weight:700;
-cursor:pointer;
-position:relative;
-box-shadow:
-0 4px 10px rgba(0,0,0,0.10),
-inset 0 1px 2px rgba(255,255,255,0.9);
-transition:0.25s;
-color:#7a8cff;
-}
-
-.info-icon:hover{
-transform:translateY(-2px) scale(1.06);
-}
-
-.info-tooltip{
-position:absolute;
-left:34px;
-top:-6px;
-width:230px;
-background:white;
-padding:12px;
-border-radius:16px;
-font-size:12px;
-line-height:1.6;
-color:#666;
-opacity:0;
-pointer-events:none;
-transition:0.2s;
-box-shadow:0 10px 24px rgba(0,0,0,0.10);
-z-index:50;
-}
-
-.info-icon:hover .info-tooltip{
-opacity:1;
+margin-bottom:10px;
 }
 
 /* INPUT */
@@ -414,7 +346,7 @@ background:linear-gradient(135deg,var(--pink),var(--blue));
 color:white;
 }
 
-/* SYMBOLS */
+/* SYMBOL BUTTONS */
 
 .symbol-btn{
 width:68px;
@@ -428,7 +360,49 @@ padding:0;
 .symbol-btn img{
 width:40px;
 height:40px;
-transition:0.25s;
+transition:.2s;
+}
+
+/* ORIGINAL ICON COLORS BACK */
+
+.symbol-btn[data-symbol="srdce.svg"] img{
+filter:
+brightness(0)
+saturate(100%)
+invert(67%)
+sepia(51%)
+saturate(1452%)
+hue-rotate(292deg);
+}
+
+.symbol-btn[data-symbol="hviezda.svg"] img{
+filter:
+brightness(0)
+saturate(100%)
+invert(82%)
+sepia(44%)
+saturate(1175%)
+hue-rotate(337deg);
+}
+
+.symbol-btn[data-symbol="medved.svg"] img{
+filter:
+brightness(0)
+saturate(100%)
+invert(67%)
+sepia(17%)
+saturate(818%)
+hue-rotate(76deg);
+}
+
+.symbol-btn[data-symbol="zajac.svg"] img{
+filter:
+brightness(0)
+saturate(100%)
+invert(48%)
+sepia(81%)
+saturate(1071%)
+hue-rotate(199deg);
 }
 
 /* COLORS */
@@ -476,23 +450,9 @@ box-shadow:0 14px 30px rgba(255,124,198,0.28);
 
 .order-btn:hover{
 transform:translateY(-3px);
-box-shadow:0 20px 36px rgba(125,175,255,0.28);
 }
 
 /* MOBILE */
-
-@media(max-width:1200px){
-
-.app{
-grid-template-columns:1fr;
-}
-
-.left{
-position:relative;
-height:auto;
-}
-
-}
 
 @media(max-width:768px){
 
@@ -500,10 +460,6 @@ html,
 body{
 height:100%;
 overflow:hidden;
-}
-
-body{
-padding:0;
 }
 
 .app{
@@ -514,22 +470,29 @@ padding:0;
 gap:0;
 }
 
+/* TOP */
+
 .left{
-position:relative;
-height:60vh;
+position:sticky;
 top:0;
+height:58vh;
 padding:10px;
+z-index:10;
 }
+
+/* CARD */
 
 .preview-card{
 height:100%;
-border-radius:0 0 28px 28px;
+border-radius:0 0 30px 30px;
 padding:10px;
-gap:8px;
+gap:10px;
 }
 
+/* HEADER */
+
 .logo{
-font-size:28px;
+font-size:30px;
 }
 
 .logo-sub{
@@ -537,14 +500,7 @@ font-size:11px;
 line-height:1.4;
 }
 
-.made-in{
-display:none;
-}
-
-.product-bar{
-gap:8px;
-padding-bottom:0;
-}
+/* PRODUCT BAR */
 
 .product-btn{
 min-width:110px;
@@ -559,10 +515,12 @@ width:48px;
 height:48px;
 }
 
+/* PREVIEW */
+
 .preview-window{
 flex:1;
 min-height:0;
-border-radius:24px;
+padding:10px;
 }
 
 .preview-window svg{
@@ -570,13 +528,17 @@ max-width:100%;
 max-height:100%;
 }
 
+/* RIGHT */
+
 .right{
-height:40vh;
+height:42vh;
 overflow-y:auto;
-border-radius:28px 28px 0 0;
+border-radius:30px 30px 0 0;
 padding:20px;
-margin-top:-10px;
+margin-top:-8px;
 }
+
+/* TITLES */
 
 .title{
 font-size:28px;
@@ -589,11 +551,15 @@ line-height:1.5;
 margin-bottom:18px;
 }
 
+/* INPUT */
+
 textarea{
 min-height:90px;
 font-size:15px;
 padding:16px;
 }
+
+/* BUTTONS */
 
 .btn{
 padding:12px 14px;
@@ -616,6 +582,8 @@ width:44px;
 height:44px;
 }
 
+/* ORDER */
+
 .order-btn{
 padding:16px;
 font-size:16px;
@@ -623,8 +591,10 @@ border-radius:18px;
 margin-top:22px;
 }
 
+/* SCROLLBAR */
+
 .right::-webkit-scrollbar{
-width:6px;
+width:4px;
 }
 
 .right::-webkit-scrollbar-thumb{
@@ -644,11 +614,11 @@ border-radius:20px;
 
 <!-- LEFT -->
 
-<div class="left">
+<div class="left" id="leftPanel">
 
 <div class="preview-card">
 
-<div>
+<div class="top-info">
 
 <div class="logo">
 TVODO
@@ -656,10 +626,6 @@ TVODO
 
 <div class="logo-sub">
 Personalizovaná jemná výšivka pre výnimočné momenty ✨
-</div>
-
-<div class="made-in">
-Vyrobené s láskou na Slovensku 🇸🇰
 </div>
 
 </div>
@@ -684,10 +650,6 @@ Bryndák
 </div>
 
 <div class="preview-window">
-
-<div class="preview-badge">
-🪡 Náhľad výšivky
-</div>
 
 <svg
 id="previewSvg"
@@ -728,17 +690,13 @@ y="430"></text>
 
 </div>
 
-<div class="preview-note">
-🎀 Výšivku pripravíme presne podľa vášho návrhu
-</div>
-
 </div>
 
 </div>
 
 <!-- RIGHT -->
 
-<div class="right">
+<div class="right" id="scrollPanel">
 
 <div class="title">
 Navrhnite si svoju výšivku
@@ -750,21 +708,8 @@ Vytvorte si originálny kúsok presne podľa seba ✨
 
 <div class="section">
 
-<div class="section-header">
-
 <div class="section-title">
 Čo vám máme vyššiť?
-</div>
-
-<div class="info-icon">
-i
-
-<div class="info-tooltip">
-Meno, venovanie alebo krátky text podľa vášho želania
-</div>
-
-</div>
-
 </div>
 
 <textarea
@@ -776,12 +721,8 @@ placeholder="Sem môžete zadať meno, venovanie alebo vlastný text ✨"></text
 
 <div class="section">
 
-<div class="section-header">
-
 <div class="section-title">
 Vyberte si detail
-</div>
-
 </div>
 
 <div class="row">
@@ -812,10 +753,8 @@ Vyberte si detail
 
 <div class="section">
 
-<div class="section-header">
 <div class="section-title">
 Miesto výšivky
-</div>
 </div>
 
 <div class="row">
@@ -834,10 +773,8 @@ Na prsia
 
 <div class="section">
 
-<div class="section-header">
 <div class="section-title">
 Farba trička
-</div>
 </div>
 
 <div class="row">
@@ -856,10 +793,8 @@ Biele
 
 <div class="section">
 
-<div class="section-header">
 <div class="section-title">
 Veľkosť
-</div>
 </div>
 
 <div class="row">
@@ -876,10 +811,8 @@ Veľkosť
 
 <div class="section">
 
-<div class="section-header">
 <div class="section-title">
 Štýl písma
-</div>
 </div>
 
 <div class="row">
@@ -902,10 +835,8 @@ Písaný
 
 <div class="section">
 
-<div class="section-header">
 <div class="section-title">
 Farba nite
-</div>
 </div>
 
 <div class="colors">
@@ -933,7 +864,6 @@ Dokončiť objednávku
 
 const embroideryText = document.getElementById('embroideryText');
 const textInput = document.getElementById('textInput');
-const zoneFrame = document.getElementById('zoneFrame');
 const productImage = document.getElementById('productImage');
 const symbolLayer = document.getElementById('symbolLayer');
 
@@ -958,6 +888,8 @@ h:160
 }
 
 };
+
+/* RENDER TEXT */
 
 function renderText(){
 
@@ -1053,31 +985,9 @@ embroideryText.appendChild(tspan);
 
 });
 
-requestAnimationFrame(()=>{
-
-let bbox = embroideryText.getBBox();
-
-while(
-(
-bbox.width > zone.w - 18
-||
-bbox.height > zone.h - 18
-)
-&& fontSize > 16
-){
-
-fontSize -= 1;
-
-embroideryText.style.fontSize =
-fontSize + 'px';
-
-bbox = embroideryText.getBBox();
-
 }
 
-});
-
-}
+/* UPDATE SYMBOL */
 
 function updateVisuals(){
 
@@ -1112,14 +1022,20 @@ symbolLayer.style.display='none';
 
 }
 
+/* INIT */
+
 renderText();
 updateVisuals();
+
+/* TEXT INPUT */
 
 textInput.addEventListener('input',()=>{
 
 renderText();
 
 });
+
+/* FONT */
 
 document.querySelectorAll('.font-btn').forEach(btn=>{
 
@@ -1139,6 +1055,8 @@ renderText();
 
 });
 
+/* THREAD COLOR */
+
 document.querySelectorAll('.color').forEach(color=>{
 
 color.addEventListener('click',()=>{
@@ -1153,9 +1071,21 @@ currentThreadColor = color.dataset.color;
 embroideryText.style.fill =
 currentThreadColor;
 
+/* ICON COLOR CHANGES TOO */
+
+const icons = document.querySelectorAll('.symbol-btn img');
+
+icons.forEach(icon=>{
+
+icon.style.filter = '';
+
 });
 
 });
+
+});
+
+/* POSITION */
 
 document.querySelectorAll('.position-btn').forEach(btn=>{
 
@@ -1168,17 +1098,14 @@ btn.classList.add('active');
 
 currentPosition = btn.dataset.position;
 
-const zone =
-positions[currentPosition];
-
-zoneFrame.setAttribute('x',zone.x);
-zoneFrame.setAttribute('y',zone.y);
-
 renderText();
+updateVisuals();
 
 });
 
 });
+
+/* SYMBOL */
 
 document.querySelectorAll('.symbol-btn').forEach(btn=>{
 
@@ -1197,6 +1124,8 @@ updateVisuals();
 });
 
 });
+
+/* SHIRT COLOR */
 
 document.querySelectorAll('.shirt-color-btn').forEach(btn=>{
 
@@ -1225,6 +1154,8 @@ productImage.style.filter =
 
 });
 
+/* SIZE */
+
 document.querySelectorAll('.size-btn').forEach(btn=>{
 
 btn.addEventListener('click',()=>{
@@ -1238,18 +1169,34 @@ btn.classList.add('active');
 
 });
 
+/* HIDE TOP ON SCROLL */
+
+const scrollPanel =
+document.getElementById('scrollPanel');
+
+const leftPanel =
+document.getElementById('leftPanel');
+
+scrollPanel.addEventListener('scroll',()=>{
+
+if(scrollPanel.scrollTop > 40){
+
+leftPanel.classList.add('compact');
+
+}else{
+
+leftPanel.classList.remove('compact');
+
+}
+
+});
+
+/* ORDER */
+
 document.getElementById('orderButton')
 .addEventListener('click',()=>{
 
-document.getElementById('orderButton').innerHTML =
-'⏳ Presmerovanie...';
-
-setTimeout(()=>{
-
-window.location.href =
-'https://tvodo.sk';
-
-},700);
+alert('Objednávka bude čoskoro napojená ✨');
 
 });
 
