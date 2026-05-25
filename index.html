@@ -1358,7 +1358,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (index < animatedText.length) {
             input.value = animatedText.substring(0, index + 1);
             index++;
-            renderText(); // drží text v rámčeku
+            renderText();
             setTimeout(typeWriter, 55);
         }
     }
@@ -1366,14 +1366,24 @@ document.addEventListener("DOMContentLoaded", function () {
     // Spusti animáciu
     typeWriter();
 
-    // Keď používateľ začne písať → vypni animáciu
+    // Keď zákazník začne písať → vypni animáciu
     input.addEventListener("input", () => {
         typingActive = false;
         renderText();
     });
 
+    // Keď zákazník klikne do poľa → vymaž animovaný text
+    input.addEventListener("focus", () => {
+        if (typingActive) {
+            typingActive = false;
+            input.value = "";
+            renderText();
+        }
+    });
+
 });
 </script>
+
 
   
 </body>
