@@ -489,27 +489,37 @@ height:auto;
 
 @media(max-width:768px){
 
-  body{
-    overflow:hidden;
-  }
-
-  .app{
-    display:flex;
-    flex-direction:column;
-    height:100vh;
-  }
-
-  .left{
-    flex:2;
-    position:relative;
-    height:auto;
+  /* horná lišta = 1/10 */
+  .product-bar{
+    position:fixed;
     top:0;
+    left:0;
+    right:0;
+    height:10vh;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:4px 6px;
+    background:white;
+    overflow-x:auto;
+    scrollbar-width:none;
+    border-bottom:1px solid #eee;
+    z-index:999;
   }
 
-  .right{
-    flex:1;
-    overflow-y:auto;
-    padding-bottom:40px;
+  .product-bar::-webkit-scrollbar{
+    display:none;
+  }
+
+  /* posunieme obsah dole o výšku lišty */
+  .app{
+    padding-top:10vh;
+  }
+
+  /* stred = 6/10 */
+  .left{
+    height:60vh;
+    flex:none;
   }
 
   .preview-card{
@@ -519,7 +529,30 @@ height:auto;
   .preview-window{
     height:100%;
   }
+
+  /* spodok = 3/10 */
+  .right{
+    height:30vh;
+    flex:none;
+    overflow-y:auto;
+    padding-bottom:20px;
+  }
+
+  /* zmenšené tlačidlá ako na e-shopoch */
+  .product-btn{
+    min-width:80px;
+    padding:6px 8px;
+    border-radius:14px;
+    font-size:11px;
+    white-space:nowrap;
+  }
+
+  .product-preview-icon{
+    width:28px;
+    height:28px;
+  }
 }
+
 /* ========================= */
 /*  ÚPRAVA HORNEJ LIŠTY      */
 /* ========================= */
@@ -615,25 +648,39 @@ height:auto;
 
 <div class="left">
 
+<!-- produktová lišta – IBA JEDNA -->
+<div class="product-bar">
+    <button class="product-btn active">
+        <img src="shirt.svg" class="product-preview-icon">
+        Tričko
+    </button>
+
+    <button class="product-btn">
+        <img src="body.svg" class="product-preview-icon">
+        Body
+    </button>
+
+    <button class="product-btn">
+        <img src="bib.svg" class="product-preview-icon">
+        Bryndák
+    </button>
+</div>
+
+<!-- až potom začína preview-card -->
 <div class="preview-card">
 
-<div>
+    <div class="logo">TVODO</div>
 
-<div class="logo">
-TVODO
-</div>
+    <div class="logo-sub">
+        Personalizovaná jemná výšivka pre výnimočné momenty. ✨
+    </div>
 
-<div class="logo-sub">
-Personalizovaná jemná výšivka pre výnimočné momenty. ✨
-</div>
-
-<div class="made-in">
-Vyrobené s láskou na Slovensku 🇸🇰
-</div>
+    <div class="made-in">
+        Vyrobené s láskou na Slovensku 🇸🇰
+    </div>
 
 </div>
 
-<div class="product-bar">
 
 <button class="product-btn active">
 <img src="shirt.svg" class="product-preview-icon">
