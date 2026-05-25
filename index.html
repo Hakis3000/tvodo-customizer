@@ -862,60 +862,66 @@ h:160
 
 function renderText(){
 
-const zone = positions[currentPosition];
+    const zone = positions[currentPosition];
 
-let text = textInput.value.trim();
+    let text = textInput.value.trim();
 
-const centerX = zone.x + zone.w/2;
-const centerY = zone.y + zone.h/2;
+    // Ak je text prázdny → vlož neviditeľný placeholder
+    if (text === '') {
+        embroideryText.innerHTML = '<tspan x="0" y="0" opacity="0">.</tspan>';
+        return;
+    }
 
-let fontSize = 42;
+    embroideryText.innerHTML = '';
 
-let maxLines = selectedSymbol !== '' ? 2 : 3;
+    const centerX = zone.x + zone.w/2;
+    const centerY = zone.y + zone.h/2;
 
-let symbolOffset = selectedSymbol !== '' ? 26 : 0;
+    let fontSize = 42;
+    let maxLines = selectedSymbol !== '' ? 2 : 3;
+    let symbolOffset = selectedSymbol !== '' ? 26 : 0;
 
-const words = text.split(' ');
+    const words = text.split(' ');
 
-let lines = [];
-let currentLine = '';
+    let lines = [];
+    let currentLine = '';
 
-words.forEach(word=>{
+    words.forEach(word => {
 
-const testLine =
-(currentLine + ' ' + word).trim();
+        const testLine = (currentLine + ' ' + word).trim();
 
-if(testLine.length > 10){
+        if (testLine.length > 10) {
 
-if(currentLine !== ''){
-lines.push(currentLine);
-}
+            if (currentLine !== '') {
+                lines.push(currentLine);
+            }
 
-currentLine = word;
+            currentLine = word;
 
-}else{
+        } else {
 
-currentLine = testLine;
+            currentLine = testLine;
 
-}
+        }
 
-});
+    });
 
-if(currentLine !== ''){
-lines.push(currentLine);
-}
+    if (currentLine !== '') {
+        lines.push(currentLine);
+    }
 
-lines = lines.slice(0,maxLines);
+    lines = lines.slice(0, maxLines);
 
-embroideryText.innerHTML='';
+    embroideryText.innerHTML = '';
 
-if(lines.length >= 2){
-fontSize = 34;
-}
+    if (lines.length >= 2) {
+        fontSize = 34;
+    }
 
-if(lines.length >= 3){
-fontSize = 28;
-}
+    if (lines.length >= 3) {
+        fontSize = 28;
+    }
+
 
 embroideryText.style.fontSize =
 fontSize + 'px';
@@ -1336,37 +1342,39 @@ window.location.href = orderUrl;
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const textElement = document.getElementById("embroideryText");
     const input = document.getElementById("textInput");
 
     const animatedText = "Začnite písať svoj text →";
     let index = 0;
     let typingActive = true;
 
-    // Skryj defaultné "Mia" pri štarte
-    textElement.textContent = "";
+    // Vymaž pôvodný text
+    input.value = "";
+    renderText();
 
     function typeWriter() {
         if (!typingActive) return;
 
         if (index < animatedText.length) {
-            textElement.textContent = animatedText.substring(0, index + 1);
+            input.value = animatedText.substring(0, index + 1);
             index++;
+            renderText(); // drží text v rámčeku
             setTimeout(typeWriter, 55);
         }
     }
 
-    // Spusti animáciu po načítaní
+    // Spusti animáciu
     typeWriter();
 
-    // Keď používateľ začne písať → animácia sa vypne
+    // Keď používateľ začne písať → vypni animáciu
     input.addEventListener("input", () => {
         typingActive = false;
-        textElement.textContent = input.value;
+        renderText();
     });
 
 });
 </script>
+
   
 </body>
 </html>
