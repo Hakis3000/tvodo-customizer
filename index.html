@@ -399,6 +399,16 @@ animation:textGlow 3.8s ease-in-out infinite;
 transition:0.25s;
 }
 
+#symbolSvgGroup{
+transition:.25s;
+color:#ff7cc6;
+filter:drop-shadow(0 0 5px rgba(255,255,255,.45));
+}
+
+#symbolSvgGroup *{
+fill:currentColor;
+}
+
 #symbolText{
 font-size:46px;
 font-family:Poppins,sans-serif;
@@ -1188,6 +1198,7 @@ Brynd&#225;k
 <rect id="zoneFrame" class="zone-frame" x="420" y="340" width="160" height="160"/>
 
 <image id="symbolLayer" href="" x="470" y="330" width="50" height="50" display="none"/>
+<g id="symbolSvgGroup" display="none"></g>
 <text id="symbolText" x="500" y="360" display="none"></text>
 
 <text id="embroideryText" x="500" y="430"></text>
@@ -1420,6 +1431,8 @@ Cena spolu
 <input type="hidden" name="cena" id="orderPrice">
 <input type="hidden" name="nahlad_svg" id="orderPreviewSvg">
 <input type="hidden" name="polozky_json" id="orderItemsJson">
+<input type="hidden" name="polozky_text" id="orderItemsText">
+<input type="hidden" name="pocet_poloziek" id="orderItemsCount">
 <input type="hidden" name="doprava" id="orderShipping">
 <input type="hidden" name="platba_poplatok" id="orderPaymentFee">
 <input type="hidden" name="suma_spolu" id="orderTotal">
@@ -1441,6 +1454,7 @@ const embroideryText = document.getElementById('embroideryText');
 const textInput = document.getElementById('textInput');
 const productImage = document.getElementById('productImage');
 const symbolLayer = document.getElementById('symbolLayer');
+const symbolSvgGroup = document.getElementById('symbolSvgGroup');
 const symbolText = document.getElementById('symbolText');
 const charCount = document.getElementById('charCount');
 const summaryText = document.getElementById('summaryText');
@@ -1464,7 +1478,7 @@ let hasUserTyped = false;
 let defaultPreviewText = '';
 let defaultTypingTimer = null;
 let pageStartedAt = Date.now();
-const ORDER_ENDPOINT = 'https://script.google.com/macros/s/AKfycbydaFDubckiR8QuKfClbUgz5nEycUAs24yMKXsFJCZ4Jkq2RrOMCx62h9fBVr3R8HPN/exec';
+const ORDER_ENDPOINT = '';
 const SHIPPING_PRICE = 3.40;
 const COD_PRICE = 1.00;
 let cartItems = [];
@@ -1476,21 +1490,24 @@ positions:{
 center:{x:420,y:340,w:160,h:160},
 chest:{x:530,y:320,w:160,h:160}
 },
-colors:['white','black']
+colors:['white','black'],
+sizes:['S','M','L','XL','2XL']
 },
 'Body':{
 image:'body.svg',
 positions:{
 center:{x:420,y:380,w:160,h:160}
 },
-colors:['white']
+colors:['white'],
+sizes:['0-3 mes.','3-6 mes.','6-12 mes.','12-18 mes.','18-24 mes.']
 },
 'Brynd\u00e1k':{
 image:'bib.svg',
 positions:{
 center:{x:420,y:465,w:160,h:160}
 },
-colors:['white']
+colors:['white'],
+sizes:['Unisex']
 }
 };
 
@@ -1528,7 +1545,7 @@ const centerY = zone.y + zone.h/2;
 let fontSize = 42;
 let maxLines = selectedSymbol !== '' ? 2 : 3;
 let symbolOffset = selectedSymbol !== '' ? 26 : 0;
-const maxCharsPerLine = currentFont === 'Dancing Script' ? 9 : 10;
+const maxCharsPerLine = currentFont === 'Dancing Script' ? 11 : 13;
 const words = text.split(' ');
 let lines = [];
 let currentLine = '';
@@ -1590,15 +1607,46 @@ const centerX = zone.x + zone.w/2;
 
 if(selectedSymbol !== ''){
 symbolLayer.style.display='none';
-symbolText.textContent = symbolGlyphs[selectedSymbol] || '\u2726';
-symbolText.setAttribute('x',centerX);
-symbolText.setAttribute('y',zone.y + 32);
-symbolText.style.fill = currentThreadColor;
-symbolText.style.display='block';
+symbolText.style.display='none';
+loadSymbolSvg(selectedSymbol,centerX,zone.y + 8);
 }else{
 symbolLayer.style.display='none';
 symbolText.style.display='none';
+symbolSvgGroup.setAttribute('display','none');
+symbolSvgGroup.innerHTML = '';
 }
+}
+
+function loadSymbolSvg(symbol,centerX,y){
+fetch(symbol)
+.then(response=>response.text())
+.then(svgText=>{
+if(selectedSymbol !== symbol){
+return;
+}
+const doc = new DOMParser().parseFromString(svgText,'image/svg+xml');
+const svg = doc.querySelector('svg');
+if(!svg){
+return;
+}
+symbolSvgGroup.innerHTML = '';
+[...svg.childNodes].forEach(node=>{
+if(node.nodeType === 1){
+symbolSvgGroup.appendChild(document.importNode(node,true));
+}
+});
+symbolSvgGroup.setAttribute('transform','translate(' + (centerX - 25) + ' ' + y + ') scale(0.5)');
+symbolSvgGroup.style.color = currentThreadColor;
+symbolSvgGroup.setAttribute('display','block');
+})
+.catch(()=>{
+symbolSvgGroup.setAttribute('display','none');
+symbolText.textContent = symbolGlyphs[selectedSymbol] || '\u2726';
+symbolText.setAttribute('x',centerX);
+symbolText.setAttribute('y',y + 24);
+symbolText.style.fill = currentThreadColor;
+symbolText.style.display='block';
+});
 }
 
 function updateSummary(){
@@ -1637,6 +1685,24 @@ currentShirtColor = 'Biele';
 document.querySelectorAll('.shirt-color-btn').forEach(btn=>btn.classList.remove('active'));
 document.querySelector('.shirt-color-btn[data-shirt="white"]').classList.add('active');
 }
+
+if(!product.sizes.includes(currentSize)){
+currentSize = product.sizes[0];
+}
+
+document.querySelectorAll('.size-btn').forEach((btn,index)=>{
+const size = product.sizes[index];
+if(size){
+btn.hidden = false;
+btn.disabled = false;
+btn.textContent = size;
+btn.classList.toggle('active',size === currentSize);
+}else{
+btn.hidden = true;
+btn.disabled = true;
+btn.classList.remove('active');
+}
+});
 }
 
 function setProductImage(src){
@@ -1812,6 +1878,8 @@ document.getElementById('orderSymbol').value = details.symbol;
 document.getElementById('orderPrice').value = details.price;
 document.getElementById('orderPreviewSvg').value = getPreviewSvgMarkup();
 document.getElementById('orderItemsJson').value = JSON.stringify(cartItems);
+document.getElementById('orderItemsText').value = cartItems.map((item,index)=>itemSummary(item,index)).join('\n\n');
+document.getElementById('orderItemsCount').value = String(cartItems.length);
 document.getElementById('orderShipping').value = money(SHIPPING_PRICE);
 document.getElementById('orderPaymentFee').value = money(totals.paymentFee);
 document.getElementById('orderTotal').value = money(totals.total);
@@ -1864,6 +1932,7 @@ color.classList.add('active');
 embroideryText.style.fontFamily = 'Montserrat';
 embroideryText.style.fill = currentThreadColor;
 symbolText.style.fill = currentThreadColor;
+symbolSvgGroup.style.color = currentThreadColor;
 setProductImage('shirt.svg');
 syncProductOptions();
 applyShirtColor();
@@ -1932,6 +2001,7 @@ color.classList.add('active');
 currentThreadColor = color.dataset.color;
 embroideryText.style.fill = currentThreadColor;
 symbolText.style.fill = currentThreadColor;
+symbolSvgGroup.style.color = currentThreadColor;
 });
 });
 
