@@ -1479,7 +1479,21 @@ let hasUserTyped = false;
 let defaultPreviewText = '';
 let defaultTypingTimer = null;
 let pageStartedAt = Date.now();
-const ORDER_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxyEBVJwzOsZ_DYhJspo_Ajy-e87bKoXO-2Qppwsno94ouVmigMXY0tjJZD8xQg0Up0/exec';
+const ORDER_ENDPOINT = 'https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/formResponse';
+const GOOGLE_FORM_FIELDS = {
+meno:'entry.2066108657',
+email:'entry.308207795',
+telefon:'entry.142736474',
+adresa:'entry.463667227',
+packeta:'entry.1089188770',
+polozky:'entry.1452889000',
+suma:'entry.1444664887',
+platba:'entry.673285472',
+doprava:'entry.564175592',
+poznamka:'entry.377229164',
+nahlad:'entry.1304530760',
+system:'entry.1943247834'
+};
 const SHIPPING_PRICE = 3.40;
 const COD_PRICE = 1.00;
 let cartItems = [];
@@ -1543,10 +1557,10 @@ text = defaultPreviewText || 'Va\u0161a v\u00fd\u0161ivka';
 const centerX = zone.x + zone.w/2;
 const centerY = zone.y + zone.h/2;
 
-let fontSize = 42;
+let fontSize = selectedSymbol !== '' ? 36 : 40;
 let maxLines = selectedSymbol !== '' ? 2 : 3;
 let symbolOffset = selectedSymbol !== '' ? 26 : 0;
-const maxCharsPerLine = currentFont === 'Dancing Script' ? 11 : 13;
+const maxCharsPerLine = currentFont === 'Dancing Script' ? 10 : 12;
 const words = text.split(' ');
 let lines = [];
 let currentLine = '';
@@ -1572,11 +1586,11 @@ lines = lines.slice(0,maxLines);
 embroideryText.innerHTML='';
 
 if(lines.length >= 2){
-fontSize = 34;
+fontSize = selectedSymbol !== '' ? 30 : 32;
 }
 
 if(lines.length >= 3){
-fontSize = 28;
+fontSize = 26;
 }
 
 const longestLine = lines.reduce((max,line)=>Math.max(max,line.length),0);
@@ -1589,16 +1603,58 @@ fontSize = Math.min(fontSize,36);
 }
 
 embroideryText.style.fontSize = fontSize + 'px';
+const lineHeight = Math.round(fontSize * 0.92);
 
 lines.forEach((line,index)=>{
 const tspan = document.createElementNS('http://www.w3.org/2000/svg','tspan');
-const totalHeight = (lines.length-1) * 36;
+const totalHeight = (lines.length-1) * lineHeight;
 
 tspan.setAttribute('x',centerX);
-tspan.setAttribute('y',centerY + symbolOffset - (totalHeight/2) + (index*36));
+tspan.setAttribute('y',centerY + symbolOffset - (totalHeight/2) + (index*lineHeight));
 tspan.textContent = line;
 embroideryText.appendChild(tspan);
 });
+
+fitTextInsideZone(zone,lines.length,symbolOffset);
+}
+
+function fitTextInsideZone(zone,lineCount,symbolOffset){
+let size = parseFloat(embroideryText.style.fontSize) || 30;
+const maxWidth = zone.w * 0.9;
+const maxHeight = zone.h * (selectedSymbol !== '' ? 0.58 : 0.82);
+let guard = 0;
+
+while(guard < 28){
+const tspans = [...embroideryText.querySelectorAll('tspan')];
+const widest = tspans.reduce((max,tspan)=>{
+const length = typeof tspan.getComputedTextLength === 'function'
+? tspan.getComputedTextLength()
+: (tspan.textContent.length * size * 0.58);
+return Math.max(max,length);
+},0);
+const lineHeight = size * 0.92;
+const totalHeight = Math.max(lineHeight,lineHeight * lineCount);
+
+if(widest <= maxWidth && totalHeight <= maxHeight){
+break;
+}
+
+size = Math.max(18,size - 1.5);
+embroideryText.style.fontSize = size + 'px';
+const centerX = zone.x + zone.w/2;
+const centerY = zone.y + zone.h/2;
+const newLineHeight = Math.round(size * 0.92);
+const totalOffset = (lineCount - 1) * newLineHeight;
+tspans.forEach((tspan,index)=>{
+tspan.setAttribute('x',centerX);
+tspan.setAttribute('y',centerY + symbolOffset - (totalOffset/2) + (index * newLineHeight));
+});
+
+if(size <= 18){
+break;
+}
+guard++;
+}
 }
 
 function updateVisuals(){
@@ -1633,7 +1689,14 @@ return;
 symbolSvgGroup.innerHTML = '';
 [...svg.childNodes].forEach(node=>{
 if(node.nodeType === 1){
-symbolSvgGroup.appendChild(document.importNode(node,true));
+const imported = document.importNode(node,true);
+imported.querySelectorAll?.('*').forEach(child=>{
+child.removeAttribute('style');
+child.setAttribute('fill','currentColor');
+});
+imported.removeAttribute('style');
+imported.setAttribute('fill','currentColor');
+symbolSvgGroup.appendChild(imported);
 }
 });
 symbolSvgGroup.setAttribute('transform','translate(' + (centerX - 25) + ' ' + y + ') scale(0.5)');
@@ -1768,6 +1831,16 @@ function currentItem(){
 const details = buildOrderDetails();
 return {
 id:Date.now() + '-' + Math.random().toString(16).slice(2),
+signature:[
+details.product,
+details.text,
+details.size,
+details.productColor,
+details.position,
+details.threadColor,
+details.font,
+details.symbol
+].join('|'),
 product:details.product,
 text:details.text,
 size:details.size,
@@ -1780,6 +1853,10 @@ price:productBasePrices[details.product] || 0,
 priceLabel:money(productBasePrices[details.product] || 0),
 previewSvg:getPreviewSvgMarkup()
 };
+}
+
+function currentItemSignature(){
+return currentItem().signature;
 }
 
 function itemSummary(item,index){
@@ -1806,8 +1883,18 @@ cartMiniText.textContent = 'Produkty spolu: ' + money(itemsTotal) + ' + doprava 
 }
 
 function addCurrentItemToCart(){
-cartItems.push(currentItem());
+const item = currentItem();
+cartItems.push(item);
 updateCartMini();
+}
+
+function ensureCurrentItemInCart(){
+const item = currentItem();
+const lastItem = cartItems[cartItems.length - 1];
+if(!lastItem || lastItem.signature !== item.signature){
+cartItems.push(item);
+updateCartMini();
+}
 }
 
 function removeCartItem(id){
@@ -1898,6 +1985,7 @@ orderTotalBox.textContent =
 }
 
 function openOrderModal(){
+ensureCurrentItemInCart();
 updateOrderForm();
 orderModal.hidden = false;
 document.getElementById('customerName').focus();
@@ -1914,7 +2002,9 @@ nativeForm.action = ORDER_ENDPOINT;
 nativeForm.target = 'orderSubmitFrame';
 nativeForm.style.display = 'none';
 
-formData.forEach((value,key)=>{
+const mappedData = buildGoogleFormPayload(formData);
+
+Object.entries(mappedData).forEach(([key,value])=>{
 const input = document.createElement('input');
 input.type = 'hidden';
 input.name = key;
@@ -1925,6 +2015,37 @@ nativeForm.appendChild(input);
 document.body.appendChild(nativeForm);
 nativeForm.submit();
 setTimeout(()=>nativeForm.remove(),1000);
+}
+
+function buildGoogleFormPayload(formData){
+const address = [
+formData.get('ulica'),
+formData.get('mesto'),
+formData.get('psc')
+].filter(Boolean).join(', ');
+
+const systemSummary =
+'Pocet poloziek: ' + formData.get('pocet_poloziek') + '\n'
++ 'Doprava: ' + formData.get('doprava') + '\n'
++ 'Platba: ' + formData.get('platba') + '\n'
++ 'Poplatok platby: ' + formData.get('platba_poplatok') + '\n'
++ 'Suma spolu: ' + formData.get('suma_spolu') + '\n'
++ 'Vytvorene: ' + new Date().toLocaleString('sk-SK');
+
+return {
+[GOOGLE_FORM_FIELDS.meno]:formData.get('meno') || '',
+[GOOGLE_FORM_FIELDS.email]:formData.get('email') || '',
+[GOOGLE_FORM_FIELDS.telefon]:formData.get('telefon') || '',
+[GOOGLE_FORM_FIELDS.adresa]:address,
+[GOOGLE_FORM_FIELDS.packeta]:formData.get('packeta') || '',
+[GOOGLE_FORM_FIELDS.polozky]:formData.get('polozky_text') || '',
+[GOOGLE_FORM_FIELDS.suma]:formData.get('suma_spolu') || '',
+[GOOGLE_FORM_FIELDS.platba]:formData.get('platba') || '',
+[GOOGLE_FORM_FIELDS.doprava]:formData.get('doprava') || '',
+[GOOGLE_FORM_FIELDS.poznamka]:formData.get('poznamka') || '',
+[GOOGLE_FORM_FIELDS.nahlad]:'Nahlad z webu - SVG nahlad nezapisujeme do Google Formu, aby objednavka spolahlivo presla.',
+[GOOGLE_FORM_FIELDS.system]:systemSummary
+};
 }
 
 function resetCustomizer(){
@@ -2023,6 +2144,7 @@ currentThreadColor = color.dataset.color;
 embroideryText.style.fill = currentThreadColor;
 symbolText.style.fill = currentThreadColor;
 symbolSvgGroup.style.color = currentThreadColor;
+updateVisuals();
 });
 });
 
@@ -2094,9 +2216,7 @@ document.getElementById('paymentMethod').addEventListener('change',updateOrderFo
 document.getElementById('closeOrderModal').addEventListener('click',closeOrderModal);
 
 orderModal.addEventListener('click',event=>{
-if(event.target === orderModal){
-closeOrderModal();
-}
+// Zatvaranie mimo panela vypiname, aby sa formular nezatvaral pri pisani na mobile.
 });
 
 document.addEventListener('keydown',event=>{
