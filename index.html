@@ -236,6 +236,7 @@ transform:translateY(-3px) scale(1.02);
 .product-btn::after,
 .btn::after,
 .mini-btn::after,
+.add-cart-btn::after,
 .order-btn::after,
 .order-submit::after{
 content:'';
@@ -253,6 +254,7 @@ pointer-events:none;
 .product-btn:hover::after,
 .btn:hover::after,
 .mini-btn:hover::after,
+.add-cart-btn:hover::after,
 .order-btn:hover::after,
 .order-submit:hover::after{
 left:130%;
@@ -395,6 +397,19 @@ animation:textGlow 3.8s ease-in-out infinite;
 
 #symbolLayer{
 transition:0.25s;
+}
+
+#symbolText{
+font-size:46px;
+font-family:Poppins,sans-serif;
+font-weight:700;
+fill:#ff7cc6;
+text-anchor:middle;
+dominant-baseline:middle;
+paint-order:stroke;
+stroke:rgba(255,255,255,0.55);
+stroke-width:1.4;
+transition:.2s;
 }
 
 .right{
@@ -673,6 +688,82 @@ overflow:hidden;
 transform:translateY(-3px);
 }
 
+.cart-actions{
+display:grid;
+grid-template-columns:1fr;
+gap:10px;
+margin-top:22px;
+}
+
+.add-cart-btn{
+width:100%;
+border:none;
+padding:15px;
+border-radius:20px;
+font-size:15px;
+font-weight:800;
+color:#4f5b70;
+background:white;
+cursor:pointer;
+transition:.25s;
+box-shadow:0 10px 24px rgba(0,0,0,0.06);
+position:relative;
+overflow:hidden;
+}
+
+.add-cart-btn:hover{
+transform:translateY(-3px);
+}
+
+.cart-mini{
+margin-top:12px;
+border-radius:18px;
+background:white;
+box-shadow:0 8px 18px rgba(0,0,0,0.05);
+padding:12px;
+font-size:13px;
+color:#555;
+display:none;
+}
+
+.cart-mini.active{
+display:block;
+}
+
+.cart-mini strong{
+color:#222;
+}
+
+.cart-list{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:10px;
+}
+
+.cart-item{
+border-radius:16px;
+background:linear-gradient(135deg,#f8fbff,#fff5fb);
+padding:12px;
+font-size:13px;
+line-height:1.55;
+position:relative;
+}
+
+.remove-cart-item{
+position:absolute;
+right:8px;
+top:8px;
+width:28px;
+height:28px;
+border:none;
+border-radius:50%;
+background:white;
+cursor:pointer;
+font-weight:800;
+box-shadow:0 6px 14px rgba(0,0,0,0.08);
+}
+
 .order-modal{
 position:fixed;
 inset:0;
@@ -748,7 +839,8 @@ grid-column:1/-1;
 }
 
 .order-field input,
-.order-field textarea{
+.order-field textarea,
+.order-field select{
 width:100%;
 border:none;
 border-radius:16px;
@@ -758,6 +850,19 @@ padding:13px 14px;
 font-family:Poppins,sans-serif;
 font-size:14px;
 outline:none;
+}
+
+.order-field input:invalid{
+box-shadow:0 0 0 2px rgba(255,124,198,.28),0 8px 18px rgba(0,0,0,0.05);
+}
+
+.spam-field{
+position:absolute;
+left:-9999px;
+width:1px;
+height:1px;
+opacity:0;
+pointer-events:none;
 }
 
 .order-field textarea{
@@ -1083,6 +1188,7 @@ Brynd&#225;k
 <rect id="zoneFrame" class="zone-frame" x="420" y="340" width="160" height="160"/>
 
 <image id="symbolLayer" href="" x="470" y="330" width="50" height="50" display="none"/>
+<text id="symbolText" x="500" y="360" display="none"></text>
 
 <text id="embroideryText" x="500" y="430"></text>
 
@@ -1208,7 +1314,15 @@ Brynd&#225;k
 </div>
 </div>
 
+<div class="cart-mini" id="cartMini">
+<strong id="cartMiniTitle">Objedn&#225;vka je pr&#225;zdna</strong>
+<div id="cartMiniText">Pridajte prv&#253; produkt do objedn&#225;vky.</div>
+</div>
+
+<div class="cart-actions">
+<button class="add-cart-btn" id="addToCartButton" type="button">Prida&#357; produkt do objedn&#225;vky</button>
 <button class="order-btn" id="orderButton" type="button">Dokon&#269;i&#357; objedn&#225;vku</button>
+</div>
 
 </div>
 
@@ -1238,12 +1352,27 @@ E-mail
 
 <label class="order-field">
 Telef&#243;n
-<input id="customerPhone" name="telefon" type="tel" autocomplete="tel">
+<input id="customerPhone" name="telefon" type="tel" autocomplete="tel" required>
+</label>
+
+<label class="order-field">
+Ulica a &#269;&#237;slo
+<input id="customerStreet" name="ulica" autocomplete="street-address" required>
 </label>
 
 <label class="order-field">
 Mesto
-<input id="customerCity" name="mesto" autocomplete="address-level2">
+<input id="customerCity" name="mesto" autocomplete="address-level2" required>
+</label>
+
+<label class="order-field">
+PS&#268;
+<input id="customerZip" name="psc" autocomplete="postal-code" required>
+</label>
+
+<label class="order-field full">
+Packeta / Z&#225;sielkov&#328;a
+<input id="customerPacketa" name="packeta" placeholder="N&#225;zov alebo adresa v&#253;dajn&#233;ho miesta" required>
 </label>
 
 <label class="order-field full">
@@ -1254,6 +1383,29 @@ Pozn&#225;mka
 <div class="order-field full">
 S&#250;hrn produktu
 <div class="order-summary-box" id="orderSummaryBox"></div>
+</div>
+
+<div class="order-field full">
+Polo&#382;ky v objedn&#225;vke
+<div class="cart-list" id="orderCartList"></div>
+</div>
+
+<label class="order-field">
+Doprava
+<input value="Packeta - 3,40 &#8364;" readonly>
+</label>
+
+<label class="order-field">
+Platba
+<select id="paymentMethod" name="platba">
+<option value="Prevod na ucet">Prevod na &#250;&#269;et</option>
+<option value="Dobierka">Dobierka +1,00 &#8364;</option>
+</select>
+</label>
+
+<div class="order-field full">
+Cena spolu
+<div class="order-summary-box" id="orderTotalBox"></div>
 </div>
 </div>
 
@@ -1266,6 +1418,17 @@ S&#250;hrn produktu
 <input type="hidden" name="pismo" id="orderFont">
 <input type="hidden" name="symbol" id="orderSymbol">
 <input type="hidden" name="cena" id="orderPrice">
+<input type="hidden" name="nahlad_svg" id="orderPreviewSvg">
+<input type="hidden" name="polozky_json" id="orderItemsJson">
+<input type="hidden" name="doprava" id="orderShipping">
+<input type="hidden" name="platba_poplatok" id="orderPaymentFee">
+<input type="hidden" name="suma_spolu" id="orderTotal">
+<input type="hidden" name="antispam_started_at" id="orderStartedAt">
+
+<label class="spam-field">
+Nevyp&#314;&#328;ajte
+<input id="websiteField" name="website" tabindex="-1" autocomplete="off">
+</label>
 
 <button class="order-submit" type="submit">Odosla&#357; objedn&#225;vku</button>
 </form>
@@ -1278,11 +1441,17 @@ const embroideryText = document.getElementById('embroideryText');
 const textInput = document.getElementById('textInput');
 const productImage = document.getElementById('productImage');
 const symbolLayer = document.getElementById('symbolLayer');
+const symbolText = document.getElementById('symbolText');
 const charCount = document.getElementById('charCount');
 const summaryText = document.getElementById('summaryText');
 const priceText = document.getElementById('priceText');
 const orderModal = document.getElementById('orderModal');
 const orderSummaryBox = document.getElementById('orderSummaryBox');
+const orderCartList = document.getElementById('orderCartList');
+const orderTotalBox = document.getElementById('orderTotalBox');
+const cartMini = document.getElementById('cartMini');
+const cartMiniTitle = document.getElementById('cartMiniTitle');
+const cartMiniText = document.getElementById('cartMiniText');
 
 let currentPosition = 'center';
 let selectedSymbol = '';
@@ -1294,6 +1463,11 @@ let currentFont = 'Montserrat';
 let hasUserTyped = false;
 let defaultPreviewText = '';
 let defaultTypingTimer = null;
+let pageStartedAt = Date.now();
+const ORDER_ENDPOINT = 'https://script.google.com/macros/s/AKfycbydaFDubckiR8QuKfClbUgz5nEycUAs24yMKXsFJCZ4Jkq2RrOMCx62h9fBVr3R8HPN/exec';
+const SHIPPING_PRICE = 3.40;
+const COD_PRICE = 1.00;
+let cartItems = [];
 
 const productConfig = {
 'Tri\u010dko':{
@@ -1326,6 +1500,19 @@ const productPrices = {
 'Brynd\u00e1k':'od 18,90 \u20ac'
 };
 
+const productBasePrices = {
+'Tri\u010dko':24.90,
+'Body':22.90,
+'Brynd\u00e1k':18.90
+};
+
+const symbolGlyphs = {
+'srdce.svg':'\u2665',
+'hviezda.svg':'\u2605',
+'medved.svg':'\u25cf',
+'zajac.svg':'\u25c6'
+};
+
 function renderText(){
 const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
 const zone = product.positions[currentPosition] || product.positions.center;
@@ -1341,6 +1528,7 @@ const centerY = zone.y + zone.h/2;
 let fontSize = 42;
 let maxLines = selectedSymbol !== '' ? 2 : 3;
 let symbolOffset = selectedSymbol !== '' ? 26 : 0;
+const maxCharsPerLine = currentFont === 'Dancing Script' ? 9 : 10;
 const words = text.split(' ');
 let lines = [];
 let currentLine = '';
@@ -1348,7 +1536,7 @@ let currentLine = '';
 words.forEach(word=>{
 const testLine = (currentLine + ' ' + word).trim();
 
-if(testLine.length > 10){
+if(testLine.length > maxCharsPerLine){
 if(currentLine !== ''){
 lines.push(currentLine);
 }
@@ -1373,6 +1561,15 @@ if(lines.length >= 3){
 fontSize = 28;
 }
 
+const longestLine = lines.reduce((max,line)=>Math.max(max,line.length),0);
+if(longestLine > maxCharsPerLine){
+fontSize = Math.max(20,fontSize - ((longestLine - maxCharsPerLine) * 2));
+}
+
+if(currentFont === 'Dancing Script'){
+fontSize = Math.min(fontSize,36);
+}
+
 embroideryText.style.fontSize = fontSize + 'px';
 
 lines.forEach((line,index)=>{
@@ -1392,12 +1589,15 @@ const zone = product.positions[currentPosition] || product.positions.center;
 const centerX = zone.x + zone.w/2;
 
 if(selectedSymbol !== ''){
-symbolLayer.setAttribute('href',selectedSymbol);
-symbolLayer.setAttribute('x',centerX - 24);
-symbolLayer.setAttribute('y',zone.y + 8);
-symbolLayer.style.display='block';
+symbolLayer.style.display='none';
+symbolText.textContent = symbolGlyphs[selectedSymbol] || '\u2726';
+symbolText.setAttribute('x',centerX);
+symbolText.setAttribute('y',zone.y + 32);
+symbolText.style.fill = currentThreadColor;
+symbolText.style.display='block';
 }else{
 symbolLayer.style.display='none';
+symbolText.style.display='none';
 }
 }
 
@@ -1487,6 +1687,100 @@ return 'Bez symbolu';
 return selectedSymbol.replace('.svg','');
 }
 
+function getPreviewSvgMarkup(){
+const clone = document.getElementById('previewSvg').cloneNode(true);
+clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+return new XMLSerializer().serializeToString(clone);
+}
+
+function money(value){
+return value.toFixed(2).replace('.',',') + ' \u20ac';
+}
+
+function currentItem(){
+const details = buildOrderDetails();
+return {
+id:Date.now() + '-' + Math.random().toString(16).slice(2),
+product:details.product,
+text:details.text,
+size:details.size,
+productColor:details.productColor,
+position:details.position,
+threadColor:details.threadColor,
+font:details.font,
+symbol:details.symbol,
+price:productBasePrices[details.product] || 0,
+priceLabel:money(productBasePrices[details.product] || 0),
+previewSvg:getPreviewSvgMarkup()
+};
+}
+
+function itemSummary(item,index){
+return (index + 1) + '. ' + item.product + ' / ' + item.size + ' / ' + item.productColor
++ '\nText: ' + item.text
++ '\nMiesto: ' + item.position
++ '\nNi\u0165: ' + item.threadColor
++ '\nSymbol: ' + item.symbol
++ '\nCena: ' + item.priceLabel;
+}
+
+function updateCartMini(){
+if(cartItems.length === 0){
+cartMini.classList.remove('active');
+cartMiniTitle.textContent = 'Objedn\u00e1vka je pr\u00e1zdna';
+cartMiniText.textContent = 'Pridajte prv\u00fd produkt do objedn\u00e1vky.';
+return;
+}
+
+const itemsTotal = cartItems.reduce((sum,item)=>sum + item.price,0);
+cartMini.classList.add('active');
+cartMiniTitle.textContent = 'V objedn\u00e1vke: ' + cartItems.length + ' produkt' + (cartItems.length > 1 ? 'y' : '');
+cartMiniText.textContent = 'Produkty spolu: ' + money(itemsTotal) + ' + doprava od ' + money(SHIPPING_PRICE);
+}
+
+function addCurrentItemToCart(){
+cartItems.push(currentItem());
+updateCartMini();
+}
+
+function removeCartItem(id){
+cartItems = cartItems.filter(item=>item.id !== id);
+updateCartMini();
+updateOrderForm();
+}
+
+function ensureCartHasItem(){
+if(cartItems.length === 0){
+cartItems.push(currentItem());
+updateCartMini();
+}
+}
+
+function renderOrderCart(){
+orderCartList.innerHTML = '';
+cartItems.forEach((item,index)=>{
+const row = document.createElement('div');
+row.className = 'cart-item';
+row.textContent = itemSummary(item,index);
+
+const remove = document.createElement('button');
+remove.type = 'button';
+remove.className = 'remove-cart-item';
+remove.textContent = '\u00d7';
+remove.addEventListener('click',()=>removeCartItem(item.id));
+row.appendChild(remove);
+orderCartList.appendChild(row);
+});
+}
+
+function calculateTotals(){
+const itemsTotal = cartItems.reduce((sum,item)=>sum + item.price,0);
+const paymentMethod = document.getElementById('paymentMethod')?.value || 'Prevod na ucet';
+const paymentFee = paymentMethod === 'Dobierka' ? COD_PRICE : 0;
+const total = itemsTotal + SHIPPING_PRICE + paymentFee;
+return {itemsTotal,paymentMethod,paymentFee,total};
+}
+
 function buildOrderDetails(){
 const text = textInput.value.trim() || 'Va\u0161a v\u00fd\u0161ivka';
 return {
@@ -1503,7 +1797,10 @@ price:priceText.textContent
 }
 
 function updateOrderForm(){
+ensureCartHasItem();
 const details = buildOrderDetails();
+const totals = calculateTotals();
+
 document.getElementById('orderProduct').value = details.product;
 document.getElementById('orderEmbroideryText').value = details.text;
 document.getElementById('orderSize').value = details.size;
@@ -1513,17 +1810,22 @@ document.getElementById('orderThreadColor').value = details.threadColor;
 document.getElementById('orderFont').value = details.font;
 document.getElementById('orderSymbol').value = details.symbol;
 document.getElementById('orderPrice').value = details.price;
+document.getElementById('orderPreviewSvg').value = getPreviewSvgMarkup();
+document.getElementById('orderItemsJson').value = JSON.stringify(cartItems);
+document.getElementById('orderShipping').value = money(SHIPPING_PRICE);
+document.getElementById('orderPaymentFee').value = money(totals.paymentFee);
+document.getElementById('orderTotal').value = money(totals.total);
+document.getElementById('orderStartedAt').value = String(pageStartedAt);
 
-orderSummaryBox.textContent =
-'Produkt: ' + details.product + '\n'
-+ 'Text v\u00fd\u0161ivky: ' + details.text + '\n'
-+ 'Ve\u013ekos\u0165: ' + details.size + '\n'
-+ 'Farba produktu: ' + details.productColor + '\n'
-+ 'Miesto v\u00fd\u0161ivky: ' + details.position + '\n'
-+ 'Farba nite: ' + details.threadColor + '\n'
-+ 'P\u00edsmo: ' + details.font + '\n'
-+ 'Symbol: ' + details.symbol + '\n'
-+ 'Cena: ' + details.price;
+renderOrderCart();
+
+orderSummaryBox.textContent = cartItems.map((item,index)=>itemSummary(item,index)).join('\n\n');
+
+orderTotalBox.textContent =
+'Produkty spolu: ' + money(totals.itemsTotal) + '\n'
++ 'Packeta: ' + money(SHIPPING_PRICE) + '\n'
++ 'Platba: ' + totals.paymentMethod + (totals.paymentFee > 0 ? ' +' + money(totals.paymentFee) : '') + '\n'
++ 'Spolu na \u00fahradu: ' + money(totals.total);
 }
 
 function openOrderModal(){
@@ -1561,12 +1863,19 @@ color.classList.add('active');
 
 embroideryText.style.fontFamily = 'Montserrat';
 embroideryText.style.fill = currentThreadColor;
+symbolText.style.fill = currentThreadColor;
 setProductImage('shirt.svg');
 syncProductOptions();
 applyShirtColor();
 updateVisuals();
 updateSummary();
 startDefaultTyping();
+}
+
+function resetWholeOrder(){
+cartItems = [];
+updateCartMini();
+resetCustomizer();
 }
 
 updateVisuals();
@@ -1622,6 +1931,7 @@ document.querySelectorAll('.color').forEach(c=>c.classList.remove('active'));
 color.classList.add('active');
 currentThreadColor = color.dataset.color;
 embroideryText.style.fill = currentThreadColor;
+symbolText.style.fill = currentThreadColor;
 });
 });
 
@@ -1681,7 +1991,14 @@ document.querySelectorAll('[data-reset-customizer]').forEach(btn=>{
 btn.addEventListener('click',resetCustomizer);
 });
 
+document.getElementById('addToCartButton').addEventListener('click',()=>{
+addCurrentItemToCart();
+cartMiniText.textContent = 'Produkt bol pridan\u00fd. M\u00f4\u017eete naklika\u0165 \u010fal\u0161\u00ed alebo dokon\u010di\u0165 objedn\u00e1vku.';
+});
+
 document.getElementById('orderButton').addEventListener('click',openOrderModal);
+
+document.getElementById('paymentMethod').addEventListener('change',updateOrderForm);
 
 document.getElementById('closeOrderModal').addEventListener('click',closeOrderModal);
 
@@ -1700,7 +2017,40 @@ closeOrderModal();
 document.getElementById('orderForm').addEventListener('submit',event=>{
 event.preventDefault();
 updateOrderForm();
-alert('Objedn\u00e1vka je pripraven\u00e1 na odoslanie. Teraz sta\u010d\u00ed napoji\u0165 formul\u00e1r na e-mail alebo objedn\u00e1vkov\u00fd syst\u00e9m.');
+const form = event.currentTarget;
+const formData = new FormData(form);
+
+if(document.getElementById('websiteField').value.trim() !== ''){
+return;
+}
+
+if(Date.now() - pageStartedAt < 3500){
+alert('Sk\u00faste objedn\u00e1vku odosla\u0165 e\u0161te raz o p\u00e1r sek\u00fand.');
+return;
+}
+
+if(!form.checkValidity()){
+form.reportValidity();
+return;
+}
+
+if(ORDER_ENDPOINT === ''){
+alert('Objedn\u00e1vkov\u00fd formul\u00e1r je pripraven\u00fd. E\u0161te treba doplni\u0165 Google Apps Script odkaz, aby sa objedn\u00e1vky zapisovali do tabu\u013eky a odosielali e-maily.');
+return;
+}
+
+fetch(ORDER_ENDPOINT,{
+method:'POST',
+mode:'no-cors',
+body:formData
+}).then(()=>{
+alert('Objedn\u00e1vka bola odoslan\u00e1. Potvrdenie a platobn\u00e9 \u00fadaje pr\u00eddu na e-mail.');
+closeOrderModal();
+form.reset();
+resetWholeOrder();
+}).catch(()=>{
+alert('Objedn\u00e1vku sa nepodarilo odosla\u0165. Sk\u00faste to pros\u00edm znova alebo n\u00e1s kontaktujte e-mailom.');
+});
 });
 
 </script>
