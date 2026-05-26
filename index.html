@@ -8,8 +8,11 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ff7cc6">
 
 <title>TVODO - Personalizovan&#225; v&#253;&#353;ivka</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="tvodo-icon.svg" type="image/svg+xml">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Fredoka:wght@500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
@@ -764,6 +767,56 @@ overflow:hidden;
 transform:translateY(-3px);
 }
 
+.ai-helper{
+margin-top:12px;
+border-radius:18px;
+background:white;
+padding:12px;
+box-shadow:0 8px 18px rgba(0,0,0,0.05);
+}
+
+.ai-line{
+min-height:22px;
+font-size:13px;
+font-weight:800;
+color:#33415c;
+margin-bottom:10px;
+}
+
+.ai-helper input{
+width:100%;
+border:none;
+border-radius:14px;
+background:#f7f9ff;
+padding:12px;
+font:inherit;
+outline:none;
+box-shadow:inset 0 0 0 1px rgba(125,175,255,0.18);
+}
+
+.ai-helper-actions{
+display:flex;
+gap:8px;
+margin-top:10px;
+}
+
+.ai-helper-actions button{
+flex:1;
+border:none;
+border-radius:999px;
+padding:10px 12px;
+font-size:13px;
+font-weight:800;
+cursor:pointer;
+background:#f5f7ff;
+color:#33415c;
+}
+
+.ai-helper-actions button.primary{
+background:linear-gradient(135deg,var(--pink),var(--blue));
+color:white;
+}
+
 .bundle-panel{
 display:none;
 margin-top:12px;
@@ -1008,12 +1061,23 @@ width:124px;
 height:124px;
 border-radius:12px;
 background:#f6f6f6;
+object-fit:contain;
 }
 
 .payment-result-text{
 font-size:13px;
 line-height:1.55;
 color:#444;
+white-space:pre-line;
+}
+
+.payment-qr-link{
+display:inline-block;
+margin-top:8px;
+font-size:12px;
+font-weight:800;
+color:#3f68d8;
+text-decoration:none;
 }
 
 .order-submit{
@@ -1367,6 +1431,15 @@ Brynd&#225;k
 </div>
 
 <button class="smart-design-btn" id="smartDesignButton" type="button">Navrhni mi dizajn</button>
+
+<div class="ai-helper">
+<div class="ai-line" id="aiLine"></div>
+<input id="recipientPrompt" maxlength="40" placeholder="Napr. pre mamu, tatina, dc&#233;rku, vn&#250;&#269;ika...">
+<div class="ai-helper-actions">
+<button class="primary" id="guidedDesignButton" type="button">Navrhn&#250;&#357;</button>
+<button id="anotherDesignButton" type="button">In&#253; n&#225;vrh</button>
+</div>
+</div>
 </div>
 
 <div class="section">
@@ -1554,7 +1627,10 @@ Cena spolu
 <div class="payment-note">Pri produktoch vyr&#225;ban&#253;ch na &#382;elanie za&#269;&#237;na v&#253;roba a&#382; po prip&#237;san&#237; platby. Platobn&#233; &#250;daje a QR k&#243;d sa zobrazia po odoslan&#237; objedn&#225;vky.</div>
 <div class="payment-result" id="paymentResult">
 <img id="paymentQrImage" alt="QR platba">
+<div>
 <div class="payment-result-text" id="paymentResultText"></div>
+<a class="payment-qr-link" id="paymentQrLink" href="#" target="_blank" rel="noopener">Otvori&#357; QR k&#243;d</a>
+</div>
 </div>
 </div>
 </div>
@@ -1612,6 +1688,9 @@ const bundleActions = document.getElementById('bundleActions');
 const paymentResult = document.getElementById('paymentResult');
 const paymentQrImage = document.getElementById('paymentQrImage');
 const paymentResultText = document.getElementById('paymentResultText');
+const paymentQrLink = document.getElementById('paymentQrLink');
+const aiLine = document.getElementById('aiLine');
+const recipientPrompt = document.getElementById('recipientPrompt');
 
 let currentPosition = 'center';
 let selectedSymbol = '';
@@ -1625,6 +1704,8 @@ let defaultPreviewText = '';
 let defaultTypingTimer = null;
 let pageStartedAt = Date.now();
 let activeOrderCode = '';
+let guidedDesignIndex = 0;
+let aiTypingTimer = null;
 const ORDER_ENDPOINT = 'https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/formResponse';
 const GOOGLE_FORM_FIELDS = {
 interneCislo:'entry.1943247834',
@@ -1719,6 +1800,19 @@ const bundleIdeas = {
 ]
 };
 
+const guidedDesigns = [
+{keys:['mama','mamka','mamicka','maminka','mamina'],texts:['Mami, si naj','Mama boss','Laska od srdca','Najlepsia mama','Mama, dakujem'],font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg'},
+{keys:['tata','otec','ocko','tatino','tatko'],texts:['Tata boss','Najlepsi tato','Ocko hrdina','Tata na jednotku','Super tato'],font:'Fredoka',color:'#5c86ff',symbol:'hviezda.svg'},
+{keys:['dcera','dcerka','dievca','dievcatko','princezna'],texts:['Mala hviezda','Mini laska','Princezna','Srdce rodiny','Nasa radost'],font:'Fredoka',color:'#ff7cc6',symbol:'hviezda.svg'},
+{keys:['syn','sinko','chlapec','chlapcek'],texts:['Mini boss','Maly hrdina','Tym tato','Velky sen','Nasa radost'],font:'Fredoka',color:'#5c86ff',symbol:'medved.svg'},
+{keys:['vnuk','vnucik','vnucka','vnuca'],texts:['Babka ma lubi','Dedko ma lubi','Nase stastie','Maly poklad','Rodinny poklad'],font:'Fredoka',color:'#69c27d',symbol:'srdce.svg'},
+{keys:['babka','stara mama','babicka'],texts:['Babka je top','Laska od babky','Naj babka','Babka boss','Objatie od babky'],font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg'},
+{keys:['dedko','stary otec','dedusko'],texts:['Dedko je top','Dedko hrdina','Naj dedko','Dedko boss','Objatie od dedka'],font:'Fredoka',color:'black',symbol:'hviezda.svg'},
+{keys:['baby','babo','mimino','novorodenec','krst'],texts:['Vitaj na svete','Maly zazrak','Nase babatko','Mini clovek','Velka laska'],font:'Dancing Script',color:'#f4c542',symbol:'srdce.svg'},
+{keys:['svadba','vyrocie','partner','laska'],texts:['Navzdy spolu','Moja laska','Spolu je naj','Ty a ja','Nase navzdy'],font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg'},
+{keys:['kamka','kamoska','sestra','brat'],texts:['Tym navzdy','Bestie','Srdcovka','Mini chaos','Spolu silnejsi'],font:'Fredoka',color:'#69c27d',symbol:'hviezda.svg'}
+];
+
 const threadColorNames = {
 '#ff7cc6':'Ru\u017eov\u00e1',
 '#5c86ff':'Modr\u00e1',
@@ -1811,6 +1905,12 @@ embroideryText.appendChild(tspan);
 });
 
 fitTextInsideZone(zone,lines.length,symbolOffset);
+requestAnimationFrame(()=>{
+fitTextInsideZone(zone,lines.length,symbolOffset);
+});
+if(document.fonts && typeof document.fonts.ready?.then === 'function'){
+document.fonts.ready.then(()=>fitTextInsideZone(zone,lines.length,symbolOffset));
+}
 }
 
 function fitTextInsideZone(zone,lineCount,symbolOffset){
@@ -1818,9 +1918,14 @@ let size = parseFloat(embroideryText.style.fontSize) || 30;
 const maxWidth = zone.w * 0.9;
 const maxHeight = zone.h * (selectedSymbol !== '' ? 0.58 : 0.82);
 let guard = 0;
+const centerX = zone.x + zone.w/2;
+const centerY = zone.y + zone.h/2;
 
 while(guard < 28){
 const tspans = [...embroideryText.querySelectorAll('tspan')];
+if(tspans.length === 0){
+return;
+}
 const widest = tspans.reduce((max,tspan)=>{
 const length = typeof tspan.getComputedTextLength === 'function'
 ? tspan.getComputedTextLength()
@@ -1836,8 +1941,6 @@ break;
 
 size = Math.max(18,size - 1.5);
 embroideryText.style.fontSize = size + 'px';
-const centerX = zone.x + zone.w/2;
-const centerY = zone.y + zone.h/2;
 const newLineHeight = Math.round(size * 0.92);
 const totalOffset = (lineCount - 1) * newLineHeight;
 tspans.forEach((tspan,index)=>{
@@ -1850,6 +1953,13 @@ break;
 }
 guard++;
 }
+
+const finalLineHeight = Math.round(size * 0.92);
+const finalOffset = (lineCount - 1) * finalLineHeight;
+[...embroideryText.querySelectorAll('tspan')].forEach((tspan,index)=>{
+tspan.setAttribute('x',centerX);
+tspan.setAttribute('y',centerY + symbolOffset - (finalOffset/2) + (index * finalLineHeight));
+});
 }
 
 function updateVisuals(){
@@ -2137,6 +2247,43 @@ updateSummary();
 saveCurrentDesign();
 }
 
+function typeAiLine(text){
+clearInterval(aiTypingTimer);
+aiLine.textContent = '';
+let index = 0;
+aiTypingTimer = setInterval(()=>{
+aiLine.textContent = text.slice(0,index + 1);
+index++;
+if(index >= text.length){
+clearInterval(aiTypingTimer);
+}
+},32);
+}
+
+function findGuidedDesign(prompt){
+const normalized = prompt.toLowerCase();
+return guidedDesigns.find(group=>group.keys.some(key=>normalized.includes(key))) || guidedDesigns[guidedDesignIndex % guidedDesigns.length];
+}
+
+function applyGuidedDesign(moveNext){
+const group = findGuidedDesign(recipientPrompt.value || '');
+const text = group.texts[guidedDesignIndex % group.texts.length];
+const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
+textInput.value = text.slice(0,34);
+currentFont = group.font;
+currentThreadColor = group.color;
+selectedSymbol = group.symbol;
+currentPosition = product.positions.center ? 'center' : Object.keys(product.positions)[0];
+hasUserTyped = true;
+clearInterval(defaultTypingTimer);
+applyCurrentStateToControls();
+saveCurrentDesign();
+typeAiLine('Skusil som: "' + text + '". Ked nesedi, klikni Iny navrh.');
+if(moveNext){
+guidedDesignIndex++;
+}
+}
+
 function currentItem(){
 const details = buildOrderDetails();
 return {
@@ -2404,6 +2551,7 @@ orderTotalBox.textContent =
 + 'Packeta: ' + (totals.shipping === 0 ? 'zdarma' : money(totals.shipping)) + '\n'
 + 'Platba: ' + totals.paymentMethod + (totals.paymentFee > 0 ? ' +' + money(totals.paymentFee) : '') + '\n'
 + 'Spolu na \u00fahradu: ' + money(totals.total);
+showPaymentResult(false);
 }
 
 function buildReadableOrderSummary(totals,orderCode){
@@ -2483,7 +2631,8 @@ const fullOrderText =
 + 'Platba: ' + totals.paymentMethod + (totals.paymentFee > 0 ? ' +' + money(totals.paymentFee) : '') + '\n'
 + 'Suma: ' + money(totals.total) + '\n'
 + 'Vyroba zacina az po pripisani platby.\n\n'
-+ 'PLATOBNE UDAJE / QR TEXT:\n' + buildPaymentText(orderCode,totals.total);
++ 'PLATOBNE UDAJE / QR TEXT:\n' + buildPaymentText(orderCode,totals.total) + '\n'
++ 'QR URL: ' + buildQrImageUrl(orderCode,totals.total);
 
 const systemSummary =
 'Interne cislo: ' + orderCode + '\n'
@@ -2521,27 +2670,59 @@ function buildPaymentText(orderCode,total){
 if(PAYMENT_IBAN.trim() === ''){
 return 'Dopl\u0148te IBAN v kon\u0161tante PAYMENT_IBAN, aby QR k\u00f3d smeroval na skuto\u010dn\u00fa platbu.';
 }
+const amount = total.toFixed(2);
 return [
-'Platba za objedn\u00e1vku ' + orderCode,
-'Suma: ' + money(total),
-'IBAN: ' + PAYMENT_IBAN,
-'Variabiln\u00fd symbol: ' + orderCode,
-'Pr\u00edjemca: ' + PAYMENT_ACCOUNT_NAME
+'BCD',
+'002',
+'1',
+'SCT',
+'',
+PAYMENT_ACCOUNT_NAME,
+PAYMENT_IBAN,
+'EUR' + amount,
+'',
+'',
+orderCode,
+'Objednavka ' + orderCode
 ].join('\n');
 }
 
-function showPaymentResult(){
+function buildPlainPaymentText(orderCode,total){
+return [
+'Objednavka: ' + orderCode,
+'Suma: ' + money(total),
+'IBAN: ' + PAYMENT_IBAN.replace(/(.{4})/g,'$1 ').trim(),
+'Prijemca: ' + PAYMENT_ACCOUNT_NAME,
+'Sprava pre prijemcu: Objednavka ' + orderCode
+].join('\n');
+}
+
+function buildQrImageUrl(orderCode,total){
+return 'https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=12&data=' + encodeURIComponent(buildPaymentText(orderCode,total));
+}
+
+function showPaymentResult(isSubmitted){
 const totals = calculateTotals();
 const orderCode = activeOrderCode || createClientOrderCode();
 activeOrderCode = orderCode;
-const paymentText = buildPaymentText(orderCode,totals.total);
 paymentResult.classList.add('active');
-paymentQrImage.src = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=' + encodeURIComponent(paymentText);
+const qrUrl = buildQrImageUrl(orderCode,totals.total);
+paymentQrImage.onerror = ()=>{
+paymentQrImage.style.display = 'none';
+paymentQrLink.textContent = 'QR sa nepodarilo nacitat, otvorit platobne udaje';
+};
+paymentQrImage.onload = ()=>{
+paymentQrImage.style.display = 'block';
+paymentQrLink.textContent = 'Otvori\u0165 QR k\u00f3d';
+};
+paymentQrImage.src = qrUrl;
 paymentResultText.textContent =
-'Objedn\u00e1vka ' + orderCode + ' bola odoslan\u00e1.\n'
+(isSubmitted ? 'Objedn\u00e1vka ' + orderCode + ' bola odoslan\u00e1.\n' : 'Platba k objedn\u00e1vke ' + orderCode + '\n')
 + 'Na \u00fahradu: ' + money(totals.total) + '\n'
 + 'V\u00fdroba za\u010dne a\u017e po prip\u00edsan\u00ed platby.\n'
-+ (PAYMENT_IBAN.trim() === '' ? 'E\u0161te treba doplni\u0165 IBAN pre re\u00e1lny platobn\u00fd QR k\u00f3d.' : 'QR k\u00f3d pou\u017eite na platbu prevodom.');
++ (PAYMENT_IBAN.trim() === '' ? 'E\u0161te treba doplni\u0165 IBAN pre re\u00e1lny platobn\u00fd QR k\u00f3d.' : 'QR k\u00f3d pou\u017eite na platbu prevodom.')
++ '\n\n' + buildPlainPaymentText(orderCode,totals.total);
+paymentQrLink.href = qrUrl;
 }
 
 function resetCustomizer(){
@@ -2573,6 +2754,7 @@ applyCurrentStateToControls();
 if(!restoredDesign){
 startDefaultTyping();
 }
+typeAiLine('Ahoj, pre koho chces vysivku?');
 
 textInput.addEventListener('input',()=>{
 hasUserTyped = true;
@@ -2604,6 +2786,15 @@ hasUserTyped = true;
 clearInterval(defaultTypingTimer);
 applyCurrentStateToControls();
 saveCurrentDesign();
+});
+
+document.getElementById('guidedDesignButton').addEventListener('click',()=>applyGuidedDesign(true));
+document.getElementById('anotherDesignButton').addEventListener('click',()=>applyGuidedDesign(true));
+recipientPrompt.addEventListener('keydown',event=>{
+if(event.key === 'Enter'){
+event.preventDefault();
+applyGuidedDesign(true);
+}
 });
 
 document.querySelectorAll('.product-btn').forEach(btn=>{
@@ -2743,9 +2934,13 @@ return;
 }
 
 submitOrderNative(formData);
-showPaymentResult();
+showPaymentResult(true);
 alert('Objedn\u00e1vka bola odoslan\u00e1. QR platba je zobrazen\u00e1 v s\u00fahrne objedn\u00e1vky.');
 });
+
+if('serviceWorker' in navigator && location.protocol === 'https:'){
+navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
 
 </script>
 
