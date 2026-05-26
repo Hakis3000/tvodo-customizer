@@ -1080,6 +1080,27 @@ color:#3f68d8;
 text-decoration:none;
 }
 
+.runtime-status{
+position:fixed;
+left:10px;
+bottom:10px;
+z-index:999;
+max-width:calc(100vw - 20px);
+border-radius:12px;
+background:#fff;
+color:#222;
+font-size:12px;
+font-weight:800;
+padding:8px 10px;
+box-shadow:0 8px 24px rgba(0,0,0,0.14);
+display:none;
+}
+
+.runtime-status.error{
+display:block;
+color:#a4002f;
+}
+
 .order-submit{
 width:100%;
 border:none;
@@ -1381,16 +1402,21 @@ Brynd&#225;k
 </div>
 
 <svg id="previewSvg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+<defs>
+<clipPath id="embroideryClip">
+<rect id="embroideryClipRect" x="420" y="340" width="160" height="160" rx="8"/>
+</clipPath>
+</defs>
 
 <image id="productImage" href="shirt.svg" x="120" y="60" width="760" height="860"/>
 
 <rect id="zoneFrame" class="zone-frame" x="420" y="340" width="160" height="160"/>
 
 <image id="symbolLayer" href="" x="470" y="330" width="50" height="50" display="none"/>
-<g id="symbolSvgGroup" display="none"></g>
-<text id="symbolText" x="500" y="360" display="none"></text>
+<g id="symbolSvgGroup" display="none" clip-path="url(#embroideryClip)"></g>
+<text id="symbolText" x="500" y="360" display="none" clip-path="url(#embroideryClip)"></text>
 
-<text id="embroideryText" x="500" y="430"></text>
+<text id="embroideryText" x="500" y="430" clip-path="url(#embroideryClip)"></text>
 
 </svg>
 
@@ -1430,13 +1456,12 @@ Brynd&#225;k
 <button class="preset-btn" type="button" data-text="Nav&#382;dy spolu">Nav&#382;dy spolu</button>
 </div>
 
-<button class="smart-design-btn" id="smartDesignButton" type="button">Navrhni mi dizajn</button>
+<button class="smart-design-btn" id="smartDesignButton" type="button">N&#225;hodn&#253; pekn&#253; dizajn</button>
 
 <div class="ai-helper">
 <div class="ai-line" id="aiLine"></div>
-<input id="recipientPrompt" maxlength="40" placeholder="Napr. pre mamu, tatina, dc&#233;rku, vn&#250;&#269;ika...">
 <div class="ai-helper-actions">
-<button class="primary" id="guidedDesignButton" type="button">Navrhn&#250;&#357;</button>
+<button class="primary" id="guidedDesignButton" type="button">Vygenerova&#357; n&#225;vrh</button>
 <button id="anotherDesignButton" type="button">In&#253; n&#225;vrh</button>
 </div>
 </div>
@@ -1664,7 +1689,25 @@ Nevyp&#314;&#328;ajte
 </div>
 </div>
 
+<div class="runtime-status" id="runtimeStatus"></div>
+
 <script>
+
+window.addEventListener('error',event=>{
+const status = document.getElementById('runtimeStatus');
+if(status){
+status.className = 'runtime-status error';
+status.textContent = 'Chyba stranky: ' + (event.message || 'neznamy problem');
+}
+});
+
+window.addEventListener('unhandledrejection',event=>{
+const status = document.getElementById('runtimeStatus');
+if(status){
+status.className = 'runtime-status error';
+status.textContent = 'Chyba nacitania: ' + ((event.reason && event.reason.message) || 'neznamy problem');
+}
+});
 
 const embroideryText = document.getElementById('embroideryText');
 const textInput = document.getElementById('textInput');
@@ -1690,7 +1733,7 @@ const paymentQrImage = document.getElementById('paymentQrImage');
 const paymentResultText = document.getElementById('paymentResultText');
 const paymentQrLink = document.getElementById('paymentQrLink');
 const aiLine = document.getElementById('aiLine');
-const recipientPrompt = document.getElementById('recipientPrompt');
+const embroideryClipRect = document.getElementById('embroideryClipRect');
 
 let currentPosition = 'center';
 let selectedSymbol = '';
@@ -1704,7 +1747,7 @@ let defaultPreviewText = '';
 let defaultTypingTimer = null;
 let pageStartedAt = Date.now();
 let activeOrderCode = '';
-let guidedDesignIndex = 0;
+let randomDesignIndex = 0;
 let aiTypingTimer = null;
 const ORDER_ENDPOINT = 'https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/formResponse';
 const GOOGLE_FORM_FIELDS = {
@@ -1781,7 +1824,16 @@ const smartDesigns = [
 {text:'L\u00e1ska',font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg',position:'center'},
 {text:'Mami\u010dka',font:'Montserrat',color:'black',symbol:'srdce.svg',position:'chest'},
 {text:'Nav\u017edy spolu',font:'Dancing Script',color:'#69c27d',symbol:'zajac.svg',position:'center'},
-{text:'Mal\u00fd poklad',font:'Fredoka',color:'#f4c542',symbol:'medved.svg',position:'center'}
+{text:'Mal\u00fd poklad',font:'Fredoka',color:'#f4c542',symbol:'medved.svg',position:'center'},
+{text:'Vitaj na svete',font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg',position:'center'},
+{text:'Mama boss',font:'Fredoka',color:'black',symbol:'srdce.svg',position:'center'},
+{text:'Tata boss',font:'Fredoka',color:'#5c86ff',symbol:'hviezda.svg',position:'center'},
+{text:'Mala hviezda',font:'Fredoka',color:'#f4c542',symbol:'hviezda.svg',position:'center'},
+{text:'Nase stastie',font:'Dancing Script',color:'#69c27d',symbol:'srdce.svg',position:'center'},
+{text:'Super tato',font:'Montserrat',color:'black',symbol:'medved.svg',position:'chest'},
+{text:'Naj mama',font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg',position:'chest'},
+{text:'Maly hrdina',font:'Fredoka',color:'#5c86ff',symbol:'medved.svg',position:'center'},
+{text:'Velka laska',font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg',position:'center'}
 ];
 
 const bundleIdeas = {
@@ -1799,19 +1851,6 @@ const bundleIdeas = {
 {label:'Prida\u0165 brynd\u00e1k',product:'Brynd\u00e1k',text:'Mini'}
 ]
 };
-
-const guidedDesigns = [
-{keys:['mama','mamka','mamicka','maminka','mamina'],texts:['Mami, si naj','Mama boss','Laska od srdca','Najlepsia mama','Mama, dakujem'],font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg'},
-{keys:['tata','otec','ocko','tatino','tatko'],texts:['Tata boss','Najlepsi tato','Ocko hrdina','Tata na jednotku','Super tato'],font:'Fredoka',color:'#5c86ff',symbol:'hviezda.svg'},
-{keys:['dcera','dcerka','dievca','dievcatko','princezna'],texts:['Mala hviezda','Mini laska','Princezna','Srdce rodiny','Nasa radost'],font:'Fredoka',color:'#ff7cc6',symbol:'hviezda.svg'},
-{keys:['syn','sinko','chlapec','chlapcek'],texts:['Mini boss','Maly hrdina','Tym tato','Velky sen','Nasa radost'],font:'Fredoka',color:'#5c86ff',symbol:'medved.svg'},
-{keys:['vnuk','vnucik','vnucka','vnuca'],texts:['Babka ma lubi','Dedko ma lubi','Nase stastie','Maly poklad','Rodinny poklad'],font:'Fredoka',color:'#69c27d',symbol:'srdce.svg'},
-{keys:['babka','stara mama','babicka'],texts:['Babka je top','Laska od babky','Naj babka','Babka boss','Objatie od babky'],font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg'},
-{keys:['dedko','stary otec','dedusko'],texts:['Dedko je top','Dedko hrdina','Naj dedko','Dedko boss','Objatie od dedka'],font:'Fredoka',color:'black',symbol:'hviezda.svg'},
-{keys:['baby','babo','mimino','novorodenec','krst'],texts:['Vitaj na svete','Maly zazrak','Nase babatko','Mini clovek','Velka laska'],font:'Dancing Script',color:'#f4c542',symbol:'srdce.svg'},
-{keys:['svadba','vyrocie','partner','laska'],texts:['Navzdy spolu','Moja laska','Spolu je naj','Ty a ja','Nase navzdy'],font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg'},
-{keys:['kamka','kamoska','sestra','brat'],texts:['Tym navzdy','Bestie','Srdcovka','Mini chaos','Spolu silnejsi'],font:'Fredoka',color:'#69c27d',symbol:'hviezda.svg'}
-];
 
 const threadColorNames = {
 '#ff7cc6':'Ru\u017eov\u00e1',
@@ -1846,120 +1885,86 @@ text = defaultPreviewText || 'Va\u0161a v\u00fd\u0161ivka';
 const centerX = zone.x + zone.w/2;
 const centerY = zone.y + zone.h/2;
 
-let fontSize = selectedSymbol !== '' ? 36 : 40;
-let maxLines = selectedSymbol !== '' ? 2 : 3;
-let symbolOffset = selectedSymbol !== '' ? 26 : 0;
-const maxCharsPerLine = currentFont === 'Dancing Script' ? 10 : 12;
-const words = text.split(' ');
-let lines = [];
+const maxLines = selectedSymbol !== '' ? 2 : 3;
+const maxCharsPerLine = currentFont === 'Dancing Script' ? 9 : 11;
+const lines = splitTextToLines(text,maxCharsPerLine,maxLines);
+embroideryText.innerHTML='';
+updateEmbroideryClip(zone);
+
+const fontSize = calculateStableFontSize(lines,zone,selectedSymbol !== '');
+
+embroideryText.style.fontSize = fontSize + 'px';
+embroideryText.style.fontFamily = currentFont;
+embroideryText.style.fill = currentThreadColor;
+embroideryText.setAttribute('text-anchor','middle');
+embroideryText.setAttribute('dominant-baseline','middle');
+
+const lineHeight = Math.round(fontSize * 1.05);
+const symbolOffset = selectedSymbol !== '' ? Math.round(zone.h * 0.17) : 0;
+const totalHeight = (lines.length - 1) * lineHeight;
+
+lines.forEach((line,index)=>{
+const tspan = document.createElementNS('http://www.w3.org/2000/svg','tspan');
+tspan.setAttribute('x',centerX);
+tspan.setAttribute('y',centerY + symbolOffset - (totalHeight/2) + (index*lineHeight));
+tspan.textContent = line;
+embroideryText.appendChild(tspan);
+});
+}
+
+function splitTextToLines(text,maxCharsPerLine,maxLines){
+const words = text.split(/\s+/).filter(Boolean);
+const lines = [];
 let currentLine = '';
 
 words.forEach(word=>{
-const testLine = (currentLine + ' ' + word).trim();
-
-if(testLine.length > maxCharsPerLine){
-if(currentLine !== ''){
+if(word.length > maxCharsPerLine){
+if(currentLine){
 lines.push(currentLine);
+currentLine = '';
 }
+for(let i = 0; i < word.length; i += maxCharsPerLine){
+lines.push(word.slice(i,i + maxCharsPerLine));
+}
+return;
+}
+
+const testLine = (currentLine + ' ' + word).trim();
+if(testLine.length > maxCharsPerLine && currentLine){
+lines.push(currentLine);
 currentLine = word;
 }else{
 currentLine = testLine;
 }
 });
 
-if(currentLine !== ''){
+if(currentLine){
 lines.push(currentLine);
 }
 
-lines = lines.slice(0,maxLines);
-embroideryText.innerHTML='';
-
-if(lines.length >= 2){
-fontSize = selectedSymbol !== '' ? 30 : 32;
+return lines.slice(0,maxLines);
 }
 
-if(lines.length >= 3){
-fontSize = 26;
+function calculateStableFontSize(lines,zone,hasSymbol){
+const longestLine = lines.reduce((max,line)=>Math.max(max,line.length),1);
+const availableWidth = zone.w * 0.68;
+const availableHeight = zone.h * (hasSymbol ? 0.42 : 0.68);
+const fontFactor = currentFont === 'Dancing Script' ? 0.74 : 0.68;
+const byWidth = availableWidth / (longestLine * fontFactor);
+const byHeight = availableHeight / Math.max(lines.length,1);
+const maxSize = hasSymbol ? 24 : 30;
+const minSize = 16;
+return Math.floor(Math.max(minSize,Math.min(maxSize,byWidth,byHeight)));
 }
 
-const longestLine = lines.reduce((max,line)=>Math.max(max,line.length),0);
-if(longestLine > maxCharsPerLine){
-fontSize = Math.max(20,fontSize - ((longestLine - maxCharsPerLine) * 2));
-}
-
-if(currentFont === 'Dancing Script'){
-fontSize = Math.min(fontSize,36);
-}
-
-embroideryText.style.fontSize = fontSize + 'px';
-const lineHeight = Math.round(fontSize * 0.92);
-
-lines.forEach((line,index)=>{
-const tspan = document.createElementNS('http://www.w3.org/2000/svg','tspan');
-const totalHeight = (lines.length-1) * lineHeight;
-
-tspan.setAttribute('x',centerX);
-tspan.setAttribute('y',centerY + symbolOffset - (totalHeight/2) + (index*lineHeight));
-tspan.textContent = line;
-embroideryText.appendChild(tspan);
-});
-
-fitTextInsideZone(zone,lines.length,symbolOffset);
-requestAnimationFrame(()=>{
-fitTextInsideZone(zone,lines.length,symbolOffset);
-});
-if(document.fonts && typeof document.fonts.ready?.then === 'function'){
-document.fonts.ready.then(()=>fitTextInsideZone(zone,lines.length,symbolOffset));
-}
-}
-
-function fitTextInsideZone(zone,lineCount,symbolOffset){
-let size = parseFloat(embroideryText.style.fontSize) || 30;
-const maxWidth = zone.w * 0.9;
-const maxHeight = zone.h * (selectedSymbol !== '' ? 0.58 : 0.82);
-let guard = 0;
-const centerX = zone.x + zone.w/2;
-const centerY = zone.y + zone.h/2;
-
-while(guard < 28){
-const tspans = [...embroideryText.querySelectorAll('tspan')];
-if(tspans.length === 0){
+function updateEmbroideryClip(zone){
+if(!embroideryClipRect){
 return;
 }
-const widest = tspans.reduce((max,tspan)=>{
-const length = typeof tspan.getComputedTextLength === 'function'
-? tspan.getComputedTextLength()
-: (tspan.textContent.length * size * 0.58);
-return Math.max(max,length);
-},0);
-const lineHeight = size * 0.92;
-const totalHeight = Math.max(lineHeight,lineHeight * lineCount);
-
-if(widest <= maxWidth && totalHeight <= maxHeight){
-break;
-}
-
-size = Math.max(18,size - 1.5);
-embroideryText.style.fontSize = size + 'px';
-const newLineHeight = Math.round(size * 0.92);
-const totalOffset = (lineCount - 1) * newLineHeight;
-tspans.forEach((tspan,index)=>{
-tspan.setAttribute('x',centerX);
-tspan.setAttribute('y',centerY + symbolOffset - (totalOffset/2) + (index * newLineHeight));
-});
-
-if(size <= 18){
-break;
-}
-guard++;
-}
-
-const finalLineHeight = Math.round(size * 0.92);
-const finalOffset = (lineCount - 1) * finalLineHeight;
-[...embroideryText.querySelectorAll('tspan')].forEach((tspan,index)=>{
-tspan.setAttribute('x',centerX);
-tspan.setAttribute('y',centerY + symbolOffset - (finalOffset/2) + (index * finalLineHeight));
-});
+embroideryClipRect.setAttribute('x',zone.x);
+embroideryClipRect.setAttribute('y',zone.y);
+embroideryClipRect.setAttribute('width',zone.w);
+embroideryClipRect.setAttribute('height',zone.h);
 }
 
 function updateVisuals(){
@@ -1995,10 +2000,12 @@ symbolSvgGroup.innerHTML = '';
 [...svg.childNodes].forEach(node=>{
 if(node.nodeType === 1){
 const imported = document.importNode(node,true);
-imported.querySelectorAll?.('*').forEach(child=>{
+if(typeof imported.querySelectorAll === 'function'){
+imported.querySelectorAll('*').forEach(child=>{
 child.removeAttribute('style');
 child.setAttribute('fill','currentColor');
 });
+}
 imported.removeAttribute('style');
 imported.setAttribute('fill','currentColor');
 symbolSvgGroup.appendChild(imported);
@@ -2049,7 +2056,8 @@ btn.hidden = !isAllowed;
 btn.disabled = !isAllowed;
 });
 
-if(!product.colors.includes(document.querySelector('.shirt-color-btn.active')?.dataset.shirt)){
+const activeShirtColorButton = document.querySelector('.shirt-color-btn.active');
+if(!product.colors.includes(activeShirtColorButton ? activeShirtColorButton.dataset.shirt : '')){
 currentShirtColor = 'Biele';
 document.querySelectorAll('.shirt-color-btn').forEach(btn=>btn.classList.remove('active'));
 document.querySelector('.shirt-color-btn[data-shirt="white"]').classList.add('active');
@@ -2260,28 +2268,30 @@ clearInterval(aiTypingTimer);
 },32);
 }
 
-function findGuidedDesign(prompt){
-const normalized = prompt.toLowerCase();
-return guidedDesigns.find(group=>group.keys.some(key=>normalized.includes(key))) || guidedDesigns[guidedDesignIndex % guidedDesigns.length];
+function pickRandomDesign(){
+const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
+const allowedDesigns = smartDesigns.filter(design=>!!product.positions[design.position]);
+const pool = allowedDesigns.length ? allowedDesigns : smartDesigns;
+randomDesignIndex = (randomDesignIndex + 1) % pool.length;
+return pool[Math.floor(Math.random() * pool.length)];
 }
 
-function applyGuidedDesign(moveNext){
-const group = findGuidedDesign(recipientPrompt.value || '');
-const text = group.texts[guidedDesignIndex % group.texts.length];
+function applyRandomDesign(){
+const design = pickRandomDesign();
 const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
-textInput.value = text.slice(0,34);
-currentFont = group.font;
-currentThreadColor = group.color;
-selectedSymbol = group.symbol;
+textInput.value = design.text.slice(0,34);
+currentFont = design.font;
+currentThreadColor = design.color;
+selectedSymbol = design.symbol;
 currentPosition = product.positions.center ? 'center' : Object.keys(product.positions)[0];
+if(product.positions[design.position]){
+currentPosition = design.position;
+}
 hasUserTyped = true;
 clearInterval(defaultTypingTimer);
 applyCurrentStateToControls();
 saveCurrentDesign();
-typeAiLine('Skusil som: "' + text + '". Ked nesedi, klikni Iny navrh.');
-if(moveNext){
-guidedDesignIndex++;
-}
+typeAiLine('Nahodny navrh: "' + design.text + '". Ked nesedi, klikni Iny navrh.');
 }
 
 function currentItem(){
@@ -2387,7 +2397,8 @@ cartMiniText.textContent = idea.label + ' je pridan\u00e9 v objedn\u00e1vke.';
 
 function renderBundleIdeas(){
 const productsInCart = new Set(cartItems.map(item=>item.product));
-const lastProduct = cartItems[cartItems.length - 1]?.product || currentProduct;
+const lastCartItem = cartItems[cartItems.length - 1];
+const lastProduct = (lastCartItem && lastCartItem.product) || currentProduct;
 const ideas = (bundleIdeas[lastProduct] || []).filter(idea=>!productsInCart.has(idea.product) || idea.product === 'Tri\u010dko');
 
 bundleActions.innerHTML = '';
@@ -2493,7 +2504,8 @@ orderPreviewList.appendChild(wrap);
 
 function calculateTotals(){
 const itemsTotal = cartItems.reduce((sum,item)=>sum + item.price,0);
-const paymentMethod = document.getElementById('paymentMethod')?.value || 'Prevod na \u00fa\u010det vopred';
+const paymentMethodInput = document.getElementById('paymentMethod');
+const paymentMethod = (paymentMethodInput && paymentMethodInput.value) || 'Prevod na \u00fa\u010det vopred';
 const shipping = itemsTotal >= FREE_SHIPPING_LIMIT ? 0 : SHIPPING_PRICE;
 const paymentFee = 0;
 const total = itemsTotal + shipping + paymentFee;
@@ -2754,7 +2766,7 @@ applyCurrentStateToControls();
 if(!restoredDesign){
 startDefaultTyping();
 }
-typeAiLine('Ahoj, pre koho chces vysivku?');
+typeAiLine('Klikni a vyberiem nahodny pekny navrh.');
 
 textInput.addEventListener('input',()=>{
 hasUserTyped = true;
@@ -2772,30 +2784,11 @@ afterDesignChange();
 });
 
 document.getElementById('smartDesignButton').addEventListener('click',()=>{
-const allowedDesigns = smartDesigns.filter(design=>{
-const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
-return !!product.positions[design.position];
-});
-const design = allowedDesigns[Math.floor(Math.random() * allowedDesigns.length)] || smartDesigns[0];
-textInput.value = design.text.slice(0,34);
-currentFont = design.font;
-currentThreadColor = design.color;
-selectedSymbol = design.symbol;
-currentPosition = design.position;
-hasUserTyped = true;
-clearInterval(defaultTypingTimer);
-applyCurrentStateToControls();
-saveCurrentDesign();
+applyRandomDesign();
 });
 
-document.getElementById('guidedDesignButton').addEventListener('click',()=>applyGuidedDesign(true));
-document.getElementById('anotherDesignButton').addEventListener('click',()=>applyGuidedDesign(true));
-recipientPrompt.addEventListener('keydown',event=>{
-if(event.key === 'Enter'){
-event.preventDefault();
-applyGuidedDesign(true);
-}
-});
+document.getElementById('guidedDesignButton').addEventListener('click',applyRandomDesign);
+document.getElementById('anotherDesignButton').addEventListener('click',applyRandomDesign);
 
 document.querySelectorAll('.product-btn').forEach(btn=>{
 btn.addEventListener('click',()=>{
