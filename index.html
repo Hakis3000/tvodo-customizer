@@ -744,6 +744,65 @@ display:block;
 color:#222;
 }
 
+.smart-design-btn{
+width:100%;
+border:none;
+padding:14px 16px;
+border-radius:20px;
+font-size:15px;
+font-weight:800;
+color:white;
+background:linear-gradient(135deg,#222,#5c86ff);
+box-shadow:0 12px 24px rgba(0,0,0,0.1);
+cursor:pointer;
+transition:0.25s;
+position:relative;
+overflow:hidden;
+}
+
+.smart-design-btn:hover{
+transform:translateY(-3px);
+}
+
+.bundle-panel{
+display:none;
+margin-top:12px;
+border-radius:18px;
+background:white;
+box-shadow:0 8px 18px rgba(0,0,0,0.05);
+padding:12px;
+font-size:13px;
+color:#555;
+}
+
+.bundle-panel.active{
+display:block;
+}
+
+.bundle-title{
+font-weight:800;
+color:#222;
+margin-bottom:8px;
+}
+
+.bundle-actions{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+}
+
+.bundle-chip{
+border:none;
+border-radius:999px;
+background:#f5f7ff;
+color:#33415c;
+font-weight:800;
+font-size:12px;
+padding:9px 12px;
+cursor:pointer;
+box-shadow:inset 0 0 0 1px rgba(125,175,255,0.16);
+}
+
 .cart-list{
 display:flex;
 flex-direction:column;
@@ -916,6 +975,45 @@ font-size:13px;
 line-height:1.65;
 color:#444;
 box-shadow:inset 0 0 0 1px rgba(125,175,255,0.16);
+}
+
+.payment-note{
+margin-top:10px;
+border-radius:16px;
+background:#f7fbff;
+padding:12px;
+font-size:13px;
+line-height:1.55;
+color:#445;
+box-shadow:inset 0 0 0 1px rgba(125,175,255,0.18);
+}
+
+.payment-result{
+margin-top:12px;
+display:none;
+gap:12px;
+align-items:center;
+border-radius:16px;
+background:white;
+padding:12px;
+box-shadow:0 8px 18px rgba(0,0,0,0.05);
+}
+
+.payment-result.active{
+display:flex;
+}
+
+.payment-result img{
+width:124px;
+height:124px;
+border-radius:12px;
+background:#f6f6f6;
+}
+
+.payment-result-text{
+font-size:13px;
+line-height:1.55;
+color:#444;
 }
 
 .order-submit{
@@ -1267,6 +1365,8 @@ Brynd&#225;k
 <button class="preset-btn" type="button" data-text="Mini boss">Mini boss</button>
 <button class="preset-btn" type="button" data-text="Nav&#382;dy spolu">Nav&#382;dy spolu</button>
 </div>
+
+<button class="smart-design-btn" id="smartDesignButton" type="button">Navrhni mi dizajn</button>
 </div>
 
 <div class="section">
@@ -1357,6 +1457,11 @@ Brynd&#225;k
 <div id="cartMiniText">Pridajte prv&#253; produkt do objedn&#225;vky.</div>
 </div>
 
+<div class="bundle-panel" id="bundlePanel">
+<div class="bundle-title">Hodilo by sa k tomu</div>
+<div class="bundle-actions" id="bundleActions"></div>
+</div>
+
 <div class="cart-actions">
 <button class="add-cart-btn" id="addToCartButton" type="button">Prida&#357; produkt do objedn&#225;vky</button>
 <button class="order-btn" id="orderButton" type="button">Dokon&#269;i&#357; objedn&#225;vku</button>
@@ -1435,20 +1540,22 @@ Polo&#382;ky v ko&#353;&#237;ku
 
 <label class="order-field">
 Doprava
-<input value="Packeta - 3,40 &#8364;" readonly>
+<input id="shippingMethod" value="Packeta - 3,40 &#8364;" readonly>
 </label>
 
 <label class="order-field">
 Platba
-<select id="paymentMethod" name="platba">
-<option value="Prevod na ucet">Prevod na &#250;&#269;et</option>
-<option value="Dobierka">Dobierka +1,00 &#8364;</option>
-</select>
+<input id="paymentMethod" name="platba" value="Prevod na &#250;&#269;et vopred" readonly>
 </label>
 
 <div class="order-field full">
 Cena spolu
 <div class="order-summary-box" id="orderTotalBox"></div>
+<div class="payment-note">Pri produktoch vyr&#225;ban&#253;ch na &#382;elanie za&#269;&#237;na v&#253;roba a&#382; po prip&#237;san&#237; platby. Platobn&#233; &#250;daje a QR k&#243;d sa zobrazia po odoslan&#237; objedn&#225;vky.</div>
+<div class="payment-result" id="paymentResult">
+<img id="paymentQrImage" alt="QR platba">
+<div class="payment-result-text" id="paymentResultText"></div>
+</div>
 </div>
 </div>
 
@@ -1500,6 +1607,11 @@ const orderPreviewList = document.getElementById('orderPreviewList');
 const cartMini = document.getElementById('cartMini');
 const cartMiniTitle = document.getElementById('cartMiniTitle');
 const cartMiniText = document.getElementById('cartMiniText');
+const bundlePanel = document.getElementById('bundlePanel');
+const bundleActions = document.getElementById('bundleActions');
+const paymentResult = document.getElementById('paymentResult');
+const paymentQrImage = document.getElementById('paymentQrImage');
+const paymentResultText = document.getElementById('paymentResultText');
 
 let currentPosition = 'center';
 let selectedSymbol = '';
@@ -1512,6 +1624,7 @@ let hasUserTyped = false;
 let defaultPreviewText = '';
 let defaultTypingTimer = null;
 let pageStartedAt = Date.now();
+let activeOrderCode = '';
 const ORDER_ENDPOINT = 'https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/formResponse';
 const GOOGLE_FORM_FIELDS = {
 interneCislo:'entry.1943247834',
@@ -1535,7 +1648,11 @@ system:'entry.387972403'
 };
 const ORDER_NUMBER_PREFIX = 'TV';
 const SHIPPING_PRICE = 3.40;
-const COD_PRICE = 1.00;
+const FREE_SHIPPING_LIMIT = 50;
+const SAVED_DESIGN_KEY = 'tvodo_saved_design_v1';
+// Testovaci osobny ucet. Po spusteni podnikania vymenit za biznis ucet.
+const PAYMENT_IBAN = 'SK1009000000005154416378';
+const PAYMENT_ACCOUNT_NAME = 'Compe\u013e Miroslav';
 let cartItems = [];
 
 const productConfig = {
@@ -1576,6 +1693,30 @@ const productBasePrices = {
 'Tri\u010dko':24.90,
 'Body':22.90,
 'Brynd\u00e1k':18.90
+};
+
+const smartDesigns = [
+{text:'Mini boss',font:'Fredoka',color:'#5c86ff',symbol:'hviezda.svg',position:'center'},
+{text:'L\u00e1ska',font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg',position:'center'},
+{text:'Mami\u010dka',font:'Montserrat',color:'black',symbol:'srdce.svg',position:'chest'},
+{text:'Nav\u017edy spolu',font:'Dancing Script',color:'#69c27d',symbol:'zajac.svg',position:'center'},
+{text:'Mal\u00fd poklad',font:'Fredoka',color:'#f4c542',symbol:'medved.svg',position:'center'}
+];
+
+const bundleIdeas = {
+'Body':[
+{label:'Prida\u0165 brynd\u00e1k',product:'Brynd\u00e1k',text:'Mini'},
+{label:'Tri\u010dko mama',product:'Tri\u010dko',text:'Mama'},
+{label:'Tri\u010dko tata',product:'Tri\u010dko',text:'Tata'}
+],
+'Brynd\u00e1k':[
+{label:'Prida\u0165 body',product:'Body',text:'Mini'},
+{label:'Tri\u010dko mama',product:'Tri\u010dko',text:'Mama'}
+],
+'Tri\u010dko':[
+{label:'Prida\u0165 body',product:'Body',text:'Mini'},
+{label:'Prida\u0165 brynd\u00e1k',product:'Brynd\u00e1k',text:'Mini'}
+]
 };
 
 const threadColorNames = {
@@ -1889,6 +2030,113 @@ function getProductColorName(color){
 return productColorNames[color] || color;
 }
 
+function safeStorageSet(key,value){
+try{
+localStorage.setItem(key,value);
+}catch(error){}
+}
+
+function safeStorageGet(key){
+try{
+return localStorage.getItem(key);
+}catch(error){
+return null;
+}
+}
+
+function safeStorageRemove(key){
+try{
+localStorage.removeItem(key);
+}catch(error){}
+}
+
+function selectButton(selector,matcher){
+document.querySelectorAll(selector).forEach(btn=>{
+btn.classList.toggle('active',matcher(btn));
+});
+}
+
+function applyCurrentStateToControls(){
+const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
+selectButton('.product-btn',btn=>btn.dataset.name === currentProduct);
+setProductImage(product.image || 'shirt.svg');
+syncProductOptions();
+selectButton('.font-btn',btn=>btn.dataset.font === currentFont);
+selectButton('.color',btn=>btn.dataset.color === currentThreadColor);
+selectButton('.position-btn',btn=>btn.dataset.position === currentPosition);
+selectButton('.symbol-btn',btn=>btn.dataset.symbol === selectedSymbol);
+selectButton('.shirt-color-btn',btn=>btn.textContent.trim() === currentShirtColor);
+selectButton('.size-btn',btn=>btn.textContent.trim() === currentSize);
+embroideryText.style.fontFamily = currentFont;
+embroideryText.style.fill = currentThreadColor;
+symbolText.style.fill = currentThreadColor;
+symbolSvgGroup.style.color = currentThreadColor;
+applyShirtColor();
+renderText();
+updateVisuals();
+updateSummary();
+updateCartMini();
+}
+
+function saveCurrentDesign(){
+safeStorageSet(SAVED_DESIGN_KEY,JSON.stringify({
+text:textInput.value,
+currentProduct,
+currentPosition,
+selectedSymbol,
+currentThreadColor,
+currentShirtColor,
+currentSize,
+currentFont
+}));
+}
+
+function restoreSavedDesign(){
+const saved = safeStorageGet(SAVED_DESIGN_KEY);
+if(!saved){
+return false;
+}
+try{
+const state = JSON.parse(saved);
+if(state.text){
+textInput.value = String(state.text).slice(0,34);
+hasUserTyped = true;
+}
+if(productConfig[state.currentProduct]){
+currentProduct = state.currentProduct;
+}
+if(typeof state.currentPosition === 'string'){
+currentPosition = state.currentPosition;
+}
+if(typeof state.selectedSymbol === 'string'){
+selectedSymbol = state.selectedSymbol;
+}
+if(threadColorNames[state.currentThreadColor]){
+currentThreadColor = state.currentThreadColor;
+}
+if(typeof state.currentShirtColor === 'string'){
+currentShirtColor = state.currentShirtColor;
+}
+if(typeof state.currentSize === 'string'){
+currentSize = state.currentSize;
+}
+if(typeof state.currentFont === 'string'){
+currentFont = state.currentFont;
+}
+return true;
+}catch(error){
+safeStorageRemove(SAVED_DESIGN_KEY);
+return false;
+}
+}
+
+function afterDesignChange(){
+renderText();
+updateVisuals();
+updateSummary();
+saveCurrentDesign();
+}
+
 function currentItem(){
 const details = buildOrderDetails();
 return {
@@ -1975,23 +2223,68 @@ return ORDER_NUMBER_PREFIX
 + pad(now.getSeconds());
 }
 
+function applyBundleIdea(idea){
+currentProduct = idea.product;
+textInput.value = idea.text.slice(0,34);
+hasUserTyped = true;
+clearInterval(defaultTypingTimer);
+currentPosition = 'center';
+const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
+currentSize = product.sizes[0];
+currentShirtColor = 'Biele';
+applyCurrentStateToControls();
+saveCurrentDesign();
+addCurrentItemToCart();
+cartMiniText.textContent = idea.label + ' je pridan\u00e9 v objedn\u00e1vke.';
+}
+
+function renderBundleIdeas(){
+const productsInCart = new Set(cartItems.map(item=>item.product));
+const lastProduct = cartItems[cartItems.length - 1]?.product || currentProduct;
+const ideas = (bundleIdeas[lastProduct] || []).filter(idea=>!productsInCart.has(idea.product) || idea.product === 'Tri\u010dko');
+
+bundleActions.innerHTML = '';
+if(ideas.length === 0){
+bundlePanel.classList.remove('active');
+return;
+}
+
+ideas.slice(0,3).forEach(idea=>{
+const btn = document.createElement('button');
+btn.type = 'button';
+btn.className = 'bundle-chip';
+btn.textContent = idea.label;
+btn.addEventListener('click',()=>applyBundleIdea(idea));
+bundleActions.appendChild(btn);
+});
+bundlePanel.classList.add('active');
+}
+
 function updateCartMini(){
 if(cartItems.length === 0){
 cartMini.classList.remove('active');
+bundlePanel.classList.remove('active');
+bundleActions.innerHTML = '';
 cartMiniTitle.textContent = 'Objedn\u00e1vka je pr\u00e1zdna';
 cartMiniText.textContent = 'Pridajte prv\u00fd produkt do objedn\u00e1vky.';
 return;
 }
 
 const itemsTotal = cartItems.reduce((sum,item)=>sum + item.price,0);
+const missingForFreeShipping = Math.max(0,FREE_SHIPPING_LIMIT - itemsTotal);
 cartMini.classList.add('active');
 cartMiniTitle.textContent = 'V objedn\u00e1vke: ' + cartItems.length + ' produkt' + (cartItems.length > 1 ? 'y' : '');
-cartMiniText.textContent = 'Produkty spolu: ' + money(itemsTotal) + ' + doprava od ' + money(SHIPPING_PRICE);
+cartMiniText.textContent = missingForFreeShipping > 0
+? 'Produkty spolu: ' + money(itemsTotal) + '. Ch\u00fdba v\u00e1m u\u017e len ' + money(missingForFreeShipping) + ' do dopravy zdarma.'
+: 'Produkty spolu: ' + money(itemsTotal) + '. Doprava zdarma je akt\u00edvna.';
+renderBundleIdeas();
 }
 
 function addCurrentItemToCart(){
 const item = currentItem();
 cartItems.push(item);
+activeOrderCode = '';
+paymentResult.classList.remove('active');
 updateCartMini();
 }
 
@@ -2006,6 +2299,8 @@ updateCartMini();
 
 function removeCartItem(id){
 cartItems = cartItems.filter(item=>item.id !== id);
+activeOrderCode = '';
+paymentResult.classList.remove('active');
 updateCartMini();
 updateOrderForm();
 }
@@ -2051,10 +2346,11 @@ orderPreviewList.appendChild(wrap);
 
 function calculateTotals(){
 const itemsTotal = cartItems.reduce((sum,item)=>sum + item.price,0);
-const paymentMethod = document.getElementById('paymentMethod')?.value || 'Prevod na ucet';
-const paymentFee = paymentMethod === 'Dobierka' ? COD_PRICE : 0;
-const total = itemsTotal + SHIPPING_PRICE + paymentFee;
-return {itemsTotal,paymentMethod,paymentFee,total};
+const paymentMethod = document.getElementById('paymentMethod')?.value || 'Prevod na \u00fa\u010det vopred';
+const shipping = itemsTotal >= FREE_SHIPPING_LIMIT ? 0 : SHIPPING_PRICE;
+const paymentFee = 0;
+const total = itemsTotal + shipping + paymentFee;
+return {itemsTotal,paymentMethod,paymentFee,shipping,total};
 }
 
 function buildOrderDetails(){
@@ -2076,7 +2372,8 @@ function updateOrderForm(){
 ensureCartHasItem();
 const details = buildOrderDetails();
 const totals = calculateTotals();
-const orderCode = createClientOrderCode();
+const orderCode = activeOrderCode || createClientOrderCode();
+activeOrderCode = orderCode;
 
 document.getElementById('orderProduct').value = details.product;
 document.getElementById('orderEmbroideryText').value = details.text;
@@ -2091,10 +2388,11 @@ document.getElementById('orderPreviewSvg').value = getPreviewSvgMarkup();
 document.getElementById('orderItemsJson').value = JSON.stringify(publicCartItems());
 document.getElementById('orderItemsText').value = cartItems.map((item,index)=>itemSummary(item,index)).join('\n\n');
 document.getElementById('orderItemsCount').value = String(cartItems.length);
-document.getElementById('orderShipping').value = money(SHIPPING_PRICE);
+document.getElementById('orderShipping').value = totals.shipping === 0 ? 'Zdarma' : money(totals.shipping);
 document.getElementById('orderPaymentFee').value = money(totals.paymentFee);
 document.getElementById('orderTotal').value = money(totals.total);
 document.getElementById('orderStartedAt').value = String(pageStartedAt);
+document.getElementById('shippingMethod').value = totals.shipping === 0 ? 'Packeta - zdarma' : 'Packeta - ' + money(totals.shipping);
 
 renderOrderCart();
 renderOrderPreviews();
@@ -2103,7 +2401,7 @@ orderSummaryBox.textContent = buildReadableOrderSummary(totals,orderCode);
 
 orderTotalBox.textContent =
 'Produkty spolu: ' + money(totals.itemsTotal) + '\n'
-+ 'Packeta: ' + money(SHIPPING_PRICE) + '\n'
++ 'Packeta: ' + (totals.shipping === 0 ? 'zdarma' : money(totals.shipping)) + '\n'
 + 'Platba: ' + totals.paymentMethod + (totals.paymentFee > 0 ? ' +' + money(totals.paymentFee) : '') + '\n'
 + 'Spolu na \u00fahradu: ' + money(totals.total);
 }
@@ -2115,7 +2413,7 @@ return 'Intern\u00e9 \u010d\u00edslo: ' + orderCode + '\n\n'
 + '\n\nS\u00daHRN:\n'
 + 'Po\u010det produktov: ' + cartItems.length + '\n'
 + 'Produkty spolu: ' + money(totals.itemsTotal) + '\n'
-+ 'Doprava Packeta: ' + money(SHIPPING_PRICE) + '\n'
++ 'Doprava Packeta: ' + (totals.shipping === 0 ? 'zdarma' : money(totals.shipping)) + '\n'
 + 'Platba: ' + totals.paymentMethod + (totals.paymentFee > 0 ? ' +' + money(totals.paymentFee) : '') + '\n'
 + 'Spolu na \u00fahradu: ' + money(totals.total);
 }
@@ -2155,7 +2453,8 @@ setTimeout(()=>nativeForm.remove(),1000);
 
 function buildGoogleFormPayload(formData){
 const totals = calculateTotals();
-const orderCode = createClientOrderCode();
+const orderCode = activeOrderCode || createClientOrderCode();
+activeOrderCode = orderCode;
 const address = [
 formData.get('ulica'),
 formData.get('mesto'),
@@ -2180,9 +2479,11 @@ const fullOrderText =
 + 'VYROBNY FORMAT:\n' + productionText + '\n\n'
 + 'SPOLU:\n'
 + 'Produkty: ' + money(totals.itemsTotal) + '\n'
-+ 'Packeta: ' + money(SHIPPING_PRICE) + '\n'
++ 'Packeta: ' + (totals.shipping === 0 ? 'zdarma' : money(totals.shipping)) + '\n'
 + 'Platba: ' + totals.paymentMethod + (totals.paymentFee > 0 ? ' +' + money(totals.paymentFee) : '') + '\n'
-+ 'Suma: ' + money(totals.total);
++ 'Suma: ' + money(totals.total) + '\n'
++ 'Vyroba zacina az po pripisani platby.\n\n'
++ 'PLATOBNE UDAJE / QR TEXT:\n' + buildPaymentText(orderCode,totals.total);
 
 const systemSummary =
 'Interne cislo: ' + orderCode + '\n'
@@ -2216,6 +2517,33 @@ return {
 };
 }
 
+function buildPaymentText(orderCode,total){
+if(PAYMENT_IBAN.trim() === ''){
+return 'Dopl\u0148te IBAN v kon\u0161tante PAYMENT_IBAN, aby QR k\u00f3d smeroval na skuto\u010dn\u00fa platbu.';
+}
+return [
+'Platba za objedn\u00e1vku ' + orderCode,
+'Suma: ' + money(total),
+'IBAN: ' + PAYMENT_IBAN,
+'Variabiln\u00fd symbol: ' + orderCode,
+'Pr\u00edjemca: ' + PAYMENT_ACCOUNT_NAME
+].join('\n');
+}
+
+function showPaymentResult(){
+const totals = calculateTotals();
+const orderCode = activeOrderCode || createClientOrderCode();
+activeOrderCode = orderCode;
+const paymentText = buildPaymentText(orderCode,totals.total);
+paymentResult.classList.add('active');
+paymentQrImage.src = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=' + encodeURIComponent(paymentText);
+paymentResultText.textContent =
+'Objedn\u00e1vka ' + orderCode + ' bola odoslan\u00e1.\n'
++ 'Na \u00fahradu: ' + money(totals.total) + '\n'
++ 'V\u00fdroba za\u010dne a\u017e po prip\u00edsan\u00ed platby.\n'
++ (PAYMENT_IBAN.trim() === '' ? 'E\u0161te treba doplni\u0165 IBAN pre re\u00e1lny platobn\u00fd QR k\u00f3d.' : 'QR k\u00f3d pou\u017eite na platbu prevodom.');
+}
+
 function resetCustomizer(){
 textInput.value = '';
 currentPosition = 'center';
@@ -2225,48 +2553,31 @@ currentProduct = 'Tri\u010dko';
 currentShirtColor = 'Biele';
 currentSize = 'S';
 currentFont = 'Montserrat';
-
-document.querySelectorAll('.active').forEach(el=>el.classList.remove('active'));
-document.querySelector('.product-btn[data-name="Tri\u010dko"]').classList.add('active');
-document.querySelector('.symbol-btn[data-symbol=""]').classList.add('active');
-document.querySelector('.position-btn[data-position="center"]').classList.add('active');
-document.querySelector('.shirt-color-btn[data-shirt="white"]').classList.add('active');
-document.querySelector('.size-btn').classList.add('active');
-document.querySelector('.font-btn[data-font="Montserrat"]').classList.add('active');
-document.querySelectorAll('.color').forEach(color=>{
-if(color.dataset.color === '#ff7cc6'){
-color.classList.add('active');
-}
-});
-
-embroideryText.style.fontFamily = 'Montserrat';
-embroideryText.style.fill = currentThreadColor;
-symbolText.style.fill = currentThreadColor;
-symbolSvgGroup.style.color = currentThreadColor;
-setProductImage('shirt.svg');
-syncProductOptions();
-applyShirtColor();
-updateVisuals();
-updateSummary();
+safeStorageRemove(SAVED_DESIGN_KEY);
+applyCurrentStateToControls();
 startDefaultTyping();
 }
 
 function resetWholeOrder(){
 cartItems = [];
+activeOrderCode = '';
+paymentResult.classList.remove('active');
+paymentQrImage.removeAttribute('src');
+paymentResultText.textContent = '';
 updateCartMini();
 resetCustomizer();
 }
 
-updateVisuals();
-syncProductOptions();
-updateSummary();
+const restoredDesign = restoreSavedDesign();
+applyCurrentStateToControls();
+if(!restoredDesign){
 startDefaultTyping();
+}
 
 textInput.addEventListener('input',()=>{
 hasUserTyped = true;
 clearInterval(defaultTypingTimer);
-renderText();
-updateSummary();
+afterDesignChange();
 });
 
 document.querySelectorAll('.preset-btn').forEach(btn=>{
@@ -2274,9 +2585,25 @@ btn.addEventListener('click',()=>{
 hasUserTyped = true;
 clearInterval(defaultTypingTimer);
 textInput.value = btn.dataset.text.slice(0,34);
-renderText();
-updateSummary();
+afterDesignChange();
 });
+});
+
+document.getElementById('smartDesignButton').addEventListener('click',()=>{
+const allowedDesigns = smartDesigns.filter(design=>{
+const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
+return !!product.positions[design.position];
+});
+const design = allowedDesigns[Math.floor(Math.random() * allowedDesigns.length)] || smartDesigns[0];
+textInput.value = design.text.slice(0,34);
+currentFont = design.font;
+currentThreadColor = design.color;
+selectedSymbol = design.symbol;
+currentPosition = design.position;
+hasUserTyped = true;
+clearInterval(defaultTypingTimer);
+applyCurrentStateToControls();
+saveCurrentDesign();
 });
 
 document.querySelectorAll('.product-btn').forEach(btn=>{
@@ -2288,9 +2615,7 @@ const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
 setProductImage(product.image || btn.dataset.product);
 syncProductOptions();
 applyShirtColor();
-renderText();
-updateVisuals();
-updateSummary();
+afterDesignChange();
 });
 });
 
@@ -2300,7 +2625,7 @@ document.querySelectorAll('.font-btn').forEach(b=>b.classList.remove('active'));
 btn.classList.add('active');
 currentFont = btn.dataset.font;
 embroideryText.style.fontFamily = currentFont;
-renderText();
+afterDesignChange();
 });
 });
 
@@ -2312,7 +2637,7 @@ currentThreadColor = color.dataset.color;
 embroideryText.style.fill = currentThreadColor;
 symbolText.style.fill = currentThreadColor;
 symbolSvgGroup.style.color = currentThreadColor;
-updateVisuals();
+afterDesignChange();
 });
 });
 
@@ -2322,9 +2647,7 @@ document.querySelectorAll('.position-btn').forEach(b=>b.classList.remove('active
 btn.classList.add('active');
 currentPosition = btn.dataset.position;
 syncProductOptions();
-renderText();
-updateVisuals();
-updateSummary();
+afterDesignChange();
 });
 });
 
@@ -2333,8 +2656,7 @@ btn.addEventListener('click',()=>{
 document.querySelectorAll('.symbol-btn').forEach(b=>b.classList.remove('active'));
 btn.classList.add('active');
 selectedSymbol = btn.dataset.symbol;
-renderText();
-updateVisuals();
+afterDesignChange();
 });
 });
 
@@ -2345,6 +2667,7 @@ btn.classList.add('active');
 currentShirtColor = btn.textContent.trim();
 syncProductOptions();
 applyShirtColor();
+saveCurrentDesign();
 });
 });
 
@@ -2354,6 +2677,7 @@ document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));
 btn.classList.add('active');
 currentSize = btn.textContent.trim();
 updateSummary();
+saveCurrentDesign();
 });
 });
 
@@ -2419,10 +2743,8 @@ return;
 }
 
 submitOrderNative(formData);
-alert('Objedn\u00e1vka bola odoslan\u00e1. Potvrdenie a platobn\u00e9 \u00fadaje pr\u00eddu na e-mail.');
-closeOrderModal();
-form.reset();
-resetWholeOrder();
+showPaymentResult();
+alert('Objedn\u00e1vka bola odoslan\u00e1. QR platba je zobrazen\u00e1 v s\u00fahrne objedn\u00e1vky.');
 });
 
 </script>
