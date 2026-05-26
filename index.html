@@ -384,10 +384,26 @@ fill:#ff7cc6;
 text-anchor:middle;
 dominant-baseline:middle;
 paint-order:stroke;
-stroke:rgba(255,255,255,0.35);
-stroke-width:1.4;
+stroke:rgba(90,56,78,0.22);
+stroke-width:0.9;
+stroke-linejoin:round;
 transition:.2s;
 animation:textGlow 3.8s ease-in-out infinite;
+filter:url(#embroideryThread);
+}
+
+#embroideryText .stitch-shadow{
+opacity:.28;
+transform:translate(1.4px,1.4px);
+}
+
+#embroideryText .stitch-main{
+letter-spacing:.4px;
+}
+
+#embroideryText .stitch-highlight{
+opacity:.42;
+transform:translate(-.9px,-.9px);
 }
 
 @keyframes textGlow{
@@ -397,12 +413,13 @@ animation:textGlow 3.8s ease-in-out infinite;
 
 #symbolLayer{
 transition:0.25s;
+filter:none;
 }
 
 #symbolSvgGroup{
 transition:.25s;
 color:#ff7cc6;
-filter:drop-shadow(0 0 5px rgba(255,255,255,.45));
+filter:url(#embroideryThread);
 }
 
 #symbolSvgGroup *{
@@ -1358,13 +1375,18 @@ Brynd&#225;k
 <clipPath id="embroideryClip">
 <rect id="embroideryClipRect" x="420" y="340" width="160" height="160" rx="8"/>
 </clipPath>
+<filter id="embroideryThread" x="-12%" y="-12%" width="124%" height="124%">
+<feTurbulence type="fractalNoise" baseFrequency="0.9 0.08" numOctaves="2" seed="8" result="threadNoise"/>
+<feDisplacementMap in="SourceGraphic" in2="threadNoise" scale="0.65" xChannelSelector="R" yChannelSelector="G" result="stitched"/>
+<feDropShadow dx="0.7" dy="0.9" stdDeviation="0.45" flood-color="#5d4354" flood-opacity="0.24"/>
+</filter>
 </defs>
 
 <image id="productImage" href="shirt.svg" x="120" y="60" width="760" height="860"/>
 
 <rect id="zoneFrame" class="zone-frame" x="420" y="340" width="160" height="160"/>
 
-<image id="symbolLayer" href="" x="470" y="330" width="50" height="50" display="none"/>
+<image id="symbolLayer" href="" x="470" y="330" width="50" height="50" display="none" style="color:#ff7cc6"/>
 <g id="symbolSvgGroup" display="none" clip-path="url(#embroideryClip)"></g>
 <text id="symbolText" x="500" y="360" display="none" clip-path="url(#embroideryClip)"></text>
 
@@ -1842,16 +1864,54 @@ embroideryText.setAttribute('text-anchor','middle');
 embroideryText.setAttribute('dominant-baseline','middle');
 
 const lineHeight = Math.round(fontSize * 1.05);
-const symbolOffset = selectedSymbol !== '' ? Math.round(zone.h * 0.17) : 0;
+const symbolOffset = selectedSymbol !== '' ? Math.round(zone.h * 0.1) : 0;
 const totalHeight = (lines.length - 1) * lineHeight;
 
 lines.forEach((line,index)=>{
+const baseY = centerY + symbolOffset - (totalHeight/2) + (index*lineHeight);
+const shadow = document.createElementNS('http://www.w3.org/2000/svg','tspan');
+shadow.setAttribute('class','stitch-shadow');
+shadow.setAttribute('x',centerX);
+shadow.setAttribute('y',baseY);
+shadow.setAttribute('fill',darkenThreadColor(currentThreadColor));
+shadow.textContent = line;
+embroideryText.appendChild(shadow);
+
 const tspan = document.createElementNS('http://www.w3.org/2000/svg','tspan');
+tspan.setAttribute('class','stitch-main');
 tspan.setAttribute('x',centerX);
-tspan.setAttribute('y',centerY + symbolOffset - (totalHeight/2) + (index*lineHeight));
+tspan.setAttribute('y',baseY);
 tspan.textContent = line;
 embroideryText.appendChild(tspan);
+
+const highlight = document.createElementNS('http://www.w3.org/2000/svg','tspan');
+highlight.setAttribute('class','stitch-highlight');
+highlight.setAttribute('x',centerX);
+highlight.setAttribute('y',baseY);
+highlight.setAttribute('fill',lightenThreadColor(currentThreadColor));
+highlight.textContent = line;
+embroideryText.appendChild(highlight);
 });
+}
+
+function threadPalette(color){
+const palettes = {
+'#ff7cc6':{dark:'#b84d89',light:'#ffd0eb'},
+'#5c86ff':{dark:'#3157bd',light:'#d5e1ff'},
+'#69c27d':{dark:'#34864a',light:'#d8f5df'},
+'#f4c542':{dark:'#b08312',light:'#fff0aa'},
+'black':{dark:'#050505',light:'#777777'},
+'white':{dark:'#b9b9b9',light:'#ffffff'}
+};
+return palettes[color] || {dark:'rgba(0,0,0,.28)',light:'rgba(255,255,255,.52)'};
+}
+
+function darkenThreadColor(color){
+return threadPalette(color).dark;
+}
+
+function lightenThreadColor(color){
+return threadPalette(color).light;
 }
 
 function splitTextToLines(text,maxCharsPerLine,maxLines){
@@ -1890,11 +1950,11 @@ return lines.slice(0,maxLines);
 function calculateStableFontSize(lines,zone,hasSymbol){
 const longestLine = lines.reduce((max,line)=>Math.max(max,line.length),1);
 const availableWidth = zone.w * 0.68;
-const availableHeight = zone.h * (hasSymbol ? 0.42 : 0.68);
+const availableHeight = zone.h * (hasSymbol ? 0.5 : 0.68);
 const fontFactor = currentFont === 'Dancing Script' ? 0.74 : 0.68;
 const byWidth = availableWidth / (longestLine * fontFactor);
 const byHeight = availableHeight / Math.max(lines.length,1);
-const maxSize = hasSymbol ? 24 : 30;
+const maxSize = hasSymbol ? 25 : 30;
 const minSize = 16;
 return Math.floor(Math.max(minSize,Math.min(maxSize,byWidth,byHeight)));
 }
@@ -1916,15 +1976,10 @@ const centerX = zone.x + zone.w/2;
 updateEmbroideryClip(zone);
 
 if(selectedSymbol !== ''){
-symbolLayer.setAttribute('href',selectedSymbol);
-symbolLayer.setAttribute('x',centerX - 22);
-symbolLayer.setAttribute('y',zone.y + 8);
-symbolLayer.setAttribute('width',44);
-symbolLayer.setAttribute('height',44);
-symbolLayer.style.display='block';
+symbolLayer.style.display='none';
+symbolLayer.setAttribute('href','');
 symbolText.style.display='none';
-symbolSvgGroup.setAttribute('display','none');
-symbolSvgGroup.innerHTML = '';
+loadSymbolSvg(selectedSymbol,centerX,zone.y + 14);
 }else{
 symbolLayer.style.display='none';
 symbolLayer.setAttribute('href','');
@@ -1950,18 +2005,23 @@ symbolSvgGroup.innerHTML = '';
 [...svg.childNodes].forEach(node=>{
 if(node.nodeType === 1){
 const imported = document.importNode(node,true);
+imported.setAttribute('vector-effect','non-scaling-stroke');
 if(typeof imported.querySelectorAll === 'function'){
 imported.querySelectorAll('*').forEach(child=>{
 child.removeAttribute('style');
 child.setAttribute('fill','currentColor');
+child.setAttribute('stroke','currentColor');
+child.setAttribute('vector-effect','non-scaling-stroke');
 });
 }
 imported.removeAttribute('style');
 imported.setAttribute('fill','currentColor');
+imported.setAttribute('stroke',darkenThreadColor(currentThreadColor));
+imported.setAttribute('stroke-width','1.4');
 symbolSvgGroup.appendChild(imported);
 }
 });
-symbolSvgGroup.setAttribute('transform','translate(' + (centerX - 25) + ' ' + y + ') scale(0.5)');
+symbolSvgGroup.setAttribute('transform','translate(' + (centerX - 19) + ' ' + y + ') scale(0.38)');
 symbolSvgGroup.style.color = currentThreadColor;
 symbolSvgGroup.setAttribute('display','block');
 })
@@ -1969,8 +2029,9 @@ symbolSvgGroup.setAttribute('display','block');
 symbolSvgGroup.setAttribute('display','none');
 symbolText.textContent = symbolGlyphs[selectedSymbol] || '\u2726';
 symbolText.setAttribute('x',centerX);
-symbolText.setAttribute('y',y + 24);
+symbolText.setAttribute('y',y + 18);
 symbolText.style.fill = currentThreadColor;
+symbolText.style.fontSize = '28px';
 symbolText.style.display='block';
 });
 }
@@ -2138,6 +2199,7 @@ selectButton('.size-btn',btn=>btn.textContent.trim() === currentSize);
 embroideryText.style.fontFamily = currentFont;
 embroideryText.style.fill = currentThreadColor;
 symbolText.style.fill = currentThreadColor;
+symbolLayer.style.color = currentThreadColor;
 symbolSvgGroup.style.color = currentThreadColor;
 applyShirtColor();
 renderText();
@@ -2766,6 +2828,7 @@ color.classList.add('active');
 currentThreadColor = color.dataset.color;
 embroideryText.style.fill = currentThreadColor;
 symbolText.style.fill = currentThreadColor;
+symbolLayer.style.color = currentThreadColor;
 symbolSvgGroup.style.color = currentThreadColor;
 afterDesignChange();
 });
