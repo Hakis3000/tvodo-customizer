@@ -199,9 +199,9 @@ transform:translateY(-2px);
 
 .product-bar{
 display:flex;
-gap:8px;
+gap:10px;
 overflow:auto;
-padding:2px 2px 6px;
+padding:4px 2px 8px;
 scrollbar-width:none;
 transition:.35s;
 }
@@ -211,22 +211,26 @@ display:none;
 }
 
 .product-btn{
-min-width:118px;
+min-width:126px;
+min-height:92px;
 border:none;
-padding:8px 10px;
+padding:10px 12px;
 border-radius:16px;
 background:white;
 cursor:pointer;
 font-size:13px;
-font-weight:600;
+font-weight:800;
 display:flex;
 flex-direction:column;
 align-items:center;
-gap:5px;
+justify-content:center;
+gap:7px;
 transition:0.28s;
 box-shadow:0 10px 24px rgba(0,0,0,0.06);
 position:relative;
 overflow:hidden;
+line-height:1.15;
+white-space:normal;
 }
 
 .product-btn:hover{
@@ -266,9 +270,10 @@ color:white;
 }
 
 .product-preview-icon{
-width:44px;
-height:44px;
+width:50px;
+height:50px;
 object-fit:contain;
+flex:0 0 auto;
 }
 
 .preview-window{
@@ -746,12 +751,13 @@ transform:translateY(-3px);
 .cart-mini{
 margin-top:12px;
 border-radius:18px;
-background:white;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-padding:12px;
+background:linear-gradient(135deg,#ffffff,#f3f7ff);
+box-shadow:0 12px 28px rgba(0,0,0,0.07);
+padding:14px;
 font-size:13px;
-color:#555;
+color:#3f4a5f;
 display:none;
+border:1px solid rgba(125,175,255,0.18);
 }
 
 .cart-mini.active{
@@ -760,6 +766,35 @@ display:block;
 
 .cart-mini strong{
 color:#222;
+}
+
+.shipping-progress{
+margin-top:10px;
+height:10px;
+border-radius:999px;
+background:#e9edf7;
+overflow:hidden;
+box-shadow:inset 0 0 0 1px rgba(125,175,255,0.12);
+}
+
+.shipping-progress span{
+display:block;
+height:100%;
+width:0%;
+border-radius:inherit;
+background:linear-gradient(90deg,var(--pink),var(--blue),var(--green));
+transition:width .35s ease;
+}
+
+.shipping-note{
+margin-top:9px;
+font-size:12px;
+font-weight:800;
+color:#3e5e9f;
+}
+
+.shipping-note.done{
+color:#318448;
 }
 
 .smart-design-btn{
@@ -1045,6 +1080,76 @@ color:#3f68d8;
 text-decoration:none;
 }
 
+.info-tabs{
+display:flex;
+gap:8px;
+margin-top:22px;
+padding-top:4px;
+overflow-x:auto;
+scrollbar-width:none;
+}
+
+.info-tabs::-webkit-scrollbar{
+display:none;
+}
+
+.info-tab{
+border:none;
+border-radius:999px;
+background:white;
+padding:10px 13px;
+font-size:13px;
+font-weight:800;
+color:#3f4a5f;
+box-shadow:0 8px 18px rgba(0,0,0,0.05);
+cursor:pointer;
+white-space:nowrap;
+}
+
+.info-tab.active{
+color:white;
+background:linear-gradient(135deg,var(--pink),var(--blue));
+}
+
+.info-panel{
+display:none;
+margin-top:12px;
+border-radius:18px;
+background:white;
+padding:14px;
+box-shadow:0 10px 24px rgba(0,0,0,0.06);
+font-size:13px;
+line-height:1.6;
+color:#445;
+}
+
+.info-panel.active{
+display:block;
+}
+
+.info-panel h3{
+font-size:15px;
+margin-bottom:8px;
+color:#222;
+}
+
+.mini-gallery{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:10px;
+}
+
+.mini-gallery img{
+width:100%;
+aspect-ratio:1;
+object-fit:contain;
+border-radius:14px;
+background:#f7f9ff;
+padding:8px;
+box-shadow:inset 0 0 0 1px rgba(125,175,255,0.12);
+}
+
 .runtime-status{
 position:fixed;
 left:10px;
@@ -1164,7 +1269,7 @@ display:none;
 }
 
 .product-bar{
-flex:0 0 64px;
+flex:0 0 84px;
 overflow-x:auto;
 overflow-y:hidden;
 white-space:nowrap;
@@ -1173,17 +1278,17 @@ scroll-snap-type:x proximity;
 }
 
 .product-btn{
-min-width:96px;
-height:58px;
-padding:6px 8px;
+min-width:104px;
+height:78px;
+padding:8px 9px;
 border-radius:14px;
-font-size:11px;
+font-size:12px;
 scroll-snap-align:start;
 }
 
 .product-preview-icon{
-width:32px;
-height:32px;
+width:38px;
+height:38px;
 }
 
 .preview-window{
@@ -1530,6 +1635,41 @@ Brynd&#225;k
 <div class="cart-actions">
 <button class="add-cart-btn" id="addToCartButton" type="button">Prida&#357; produkt do objedn&#225;vky</button>
 <button class="order-btn" id="orderButton" type="button">Dokon&#269;i&#357; objedn&#225;vku</button>
+</div>
+
+<div class="info-tabs" aria-label="Inform&#225;cie">
+<button class="info-tab active" data-info-tab="contact" type="button">Kontakt</button>
+<button class="info-tab" data-info-tab="about" type="button">O TVODO</button>
+<button class="info-tab" data-info-tab="photos" type="button">Fotky</button>
+<button class="info-tab" data-info-tab="terms" type="button">Podmienky</button>
+</div>
+
+<div class="info-panel active" data-info-panel="contact">
+<h3>Kontakt</h3>
+<p>Nap&#237;&#353;te n&#225;m, ak potrebujete poradi&#357; s textom, farbou alebo dar&#269;ekom. Odpoved&#225;me osobne a radi pom&#244;&#382;eme doladi&#357; n&#225;vrh.</p>
+<p><strong>E-mail:</strong> doplnit@tvodo.sk<br><strong>Instagram:</strong> @tvodo.sk</p>
+</div>
+
+<div class="info-panel" data-info-panel="about">
+<h3>Personalizovan&#225; v&#253;&#353;ivka</h3>
+<p>Ka&#382;d&#253; produkt vyr&#225;bame na objedn&#225;vku pod&#318;a v&#225;&#353;ho n&#225;vrhu. Preto za&#269;&#237;name vy&#353;&#237;va&#357; a&#382; po prip&#237;san&#237; platby.</p>
+<p>Odpor&#250;&#269;ame krat&#353;&#237; text, aby v&#253;&#353;ivka ostala pekn&#225;, &#269;itate&#318;n&#225; a kompaktn&#225;.</p>
+</div>
+
+<div class="info-panel" data-info-panel="photos">
+<h3>Uk&#225;&#382;ky produktov</h3>
+<p>Vyberte produkt, text a farbu nite. N&#225;h&#318;ad sl&#250;&#382;i ako orienta&#269;n&#253; vizu&#225;l pre v&#253;robu.</p>
+<div class="mini-gallery">
+<img src="shirt.svg" alt="Tri&#269;ko">
+<img src="body.svg" alt="Body">
+<img src="bib.svg" alt="Brynd&#225;k">
+</div>
+</div>
+
+<div class="info-panel" data-info-panel="terms">
+<h3>Obchodn&#233; podmienky</h3>
+<p>Produkty s vlastnou v&#253;&#353;ivkou s&#250; vyr&#225;ban&#233; na mieru. Objedn&#225;vku preto spracujeme po platbe vopred a po odoslan&#237; n&#225;vrhu.</p>
+<p>Pred odoslan&#237;m si pros&#237;m skontrolujte text, ve&#318;kos&#357;, farbu a kontaktn&#233; &#250;daje.</p>
 </div>
 
 </div>
@@ -2476,11 +2616,12 @@ return;
 
 const itemsTotal = cartItems.reduce((sum,item)=>sum + item.price,0);
 const missingForFreeShipping = Math.max(0,FREE_SHIPPING_LIMIT - itemsTotal);
+const shippingProgress = Math.min(100,Math.round((itemsTotal / FREE_SHIPPING_LIMIT) * 100));
 cartMini.classList.add('active');
 cartMiniTitle.textContent = 'V objedn\u00e1vke: ' + cartItems.length + ' produkt' + (cartItems.length > 1 ? 'y' : '');
-cartMiniText.textContent = missingForFreeShipping > 0
-? 'Produkty spolu: ' + money(itemsTotal) + '. Ch\u00fdba v\u00e1m u\u017e len ' + money(missingForFreeShipping) + ' do dopravy zdarma.'
-: 'Produkty spolu: ' + money(itemsTotal) + '. Doprava zdarma je akt\u00edvna.';
+cartMiniText.innerHTML = missingForFreeShipping > 0
+? 'Produkty spolu: <strong>' + money(itemsTotal) + '</strong><div class="shipping-progress"><span style="width:' + shippingProgress + '%"></span></div><div class="shipping-note">Pridajte e\u0161te za ' + money(missingForFreeShipping) + ' a dopravu m\u00e1te zdarma.</div>'
+: 'Produkty spolu: <strong>' + money(itemsTotal) + '</strong><div class="shipping-progress"><span style="width:100%"></span></div><div class="shipping-note done">Doprava zdarma je akt\u00edvna. Pekn\u00fd set je pripraven\u00fd.</div>';
 renderBundleIdeas();
 }
 
@@ -2926,9 +3067,18 @@ document.querySelectorAll('[data-reset-customizer]').forEach(btn=>{
 btn.addEventListener('click',resetCustomizer);
 });
 
+document.querySelectorAll('.info-tab').forEach(tabButton=>{
+tabButton.addEventListener('click',()=>{
+const selected = tabButton.dataset.infoTab;
+document.querySelectorAll('.info-tab').forEach(btn=>btn.classList.toggle('active',btn === tabButton));
+document.querySelectorAll('.info-panel').forEach(panel=>{
+panel.classList.toggle('active',panel.dataset.infoPanel === selected);
+});
+});
+});
+
 document.getElementById('addToCartButton').addEventListener('click',()=>{
 addCurrentItemToCart();
-cartMiniText.textContent = 'Produkt bol pridan\u00fd. M\u00f4\u017eete naklika\u0165 \u010fal\u0161\u00ed alebo dokon\u010di\u0165 objedn\u00e1vku.';
 });
 
 document.getElementById('orderButton').addEventListener('click',openOrderModal);
