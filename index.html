@@ -427,16 +427,17 @@ fill:currentColor;
 }
 
 #symbolText{
-font-size:46px;
-font-family:Poppins,sans-serif;
+font-size:28px;
+font-family:Georgia,serif;
 font-weight:700;
 fill:#ff7cc6;
 text-anchor:middle;
 dominant-baseline:middle;
 paint-order:stroke;
-stroke:rgba(255,255,255,0.55);
-stroke-width:1.4;
+stroke:rgba(90,56,78,0.22);
+stroke-width:0.8;
 transition:.2s;
+filter:url(#embroideryThread);
 }
 
 .right{
@@ -1834,8 +1835,30 @@ const symbolGlyphs = {
 'srdce.svg':'\u2665',
 'hviezda.svg':'\u2605',
 'medved.svg':'\u25cf',
-'zajac.svg':'\u25c6'
+'zajac.svg':'\u2666'
 };
+
+const fontFamilies = {
+'Montserrat':'Arial, Helvetica, sans-serif',
+'Fredoka':'Trebuchet MS, Arial, sans-serif',
+'Dancing Script':'Georgia, Times New Roman, serif'
+};
+
+const fontWeights = {
+'Montserrat':'800',
+'Fredoka':'800',
+'Dancing Script':'700'
+};
+
+const fontStyles = {
+'Montserrat':'normal',
+'Fredoka':'normal',
+'Dancing Script':'italic'
+};
+
+function getFontFamily(font){
+return fontFamilies[font] || fontFamilies.Montserrat;
+}
 
 function renderText(){
 const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
@@ -1858,7 +1881,9 @@ updateEmbroideryClip(zone);
 const fontSize = calculateStableFontSize(lines,zone,selectedSymbol !== '');
 
 embroideryText.style.fontSize = fontSize + 'px';
-embroideryText.style.fontFamily = currentFont;
+embroideryText.style.fontFamily = getFontFamily(currentFont);
+embroideryText.style.fontWeight = fontWeights[currentFont] || '800';
+embroideryText.style.fontStyle = fontStyles[currentFont] || 'normal';
 embroideryText.style.fill = currentThreadColor;
 embroideryText.setAttribute('text-anchor','middle');
 embroideryText.setAttribute('dominant-baseline','middle');
@@ -1978,8 +2003,14 @@ updateEmbroideryClip(zone);
 if(selectedSymbol !== ''){
 symbolLayer.style.display='none';
 symbolLayer.setAttribute('href','');
-symbolText.style.display='none';
-loadSymbolSvg(selectedSymbol,centerX,zone.y + 14);
+symbolSvgGroup.setAttribute('display','none');
+symbolSvgGroup.innerHTML = '';
+symbolText.textContent = symbolGlyphs[selectedSymbol] || '\u2726';
+symbolText.setAttribute('x',centerX);
+symbolText.setAttribute('y',zone.y + 31);
+symbolText.style.fill = currentThreadColor;
+symbolText.style.stroke = darkenThreadColor(currentThreadColor);
+symbolText.style.display='block';
 }else{
 symbolLayer.style.display='none';
 symbolLayer.setAttribute('href','');
@@ -2196,9 +2227,12 @@ selectButton('.position-btn',btn=>btn.dataset.position === currentPosition);
 selectButton('.symbol-btn',btn=>btn.dataset.symbol === selectedSymbol);
 selectButton('.shirt-color-btn',btn=>btn.textContent.trim() === currentShirtColor);
 selectButton('.size-btn',btn=>btn.textContent.trim() === currentSize);
-embroideryText.style.fontFamily = currentFont;
+embroideryText.style.fontFamily = getFontFamily(currentFont);
+embroideryText.style.fontWeight = fontWeights[currentFont] || '800';
+embroideryText.style.fontStyle = fontStyles[currentFont] || 'normal';
 embroideryText.style.fill = currentThreadColor;
 symbolText.style.fill = currentThreadColor;
+symbolText.style.stroke = darkenThreadColor(currentThreadColor);
 symbolLayer.style.color = currentThreadColor;
 symbolSvgGroup.style.color = currentThreadColor;
 applyShirtColor();
@@ -2816,7 +2850,9 @@ btn.addEventListener('click',()=>{
 document.querySelectorAll('.font-btn').forEach(b=>b.classList.remove('active'));
 btn.classList.add('active');
 currentFont = btn.dataset.font;
-embroideryText.style.fontFamily = currentFont;
+embroideryText.style.fontFamily = getFontFamily(currentFont);
+embroideryText.style.fontWeight = fontWeights[currentFont] || '800';
+embroideryText.style.fontStyle = fontStyles[currentFont] || 'normal';
 afterDesignChange();
 });
 });
@@ -2828,6 +2864,7 @@ color.classList.add('active');
 currentThreadColor = color.dataset.color;
 embroideryText.style.fill = currentThreadColor;
 symbolText.style.fill = currentThreadColor;
+symbolText.style.stroke = darkenThreadColor(currentThreadColor);
 symbolLayer.style.color = currentThreadColor;
 symbolSvgGroup.style.color = currentThreadColor;
 afterDesignChange();
