@@ -14,9 +14,6 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="tvodo-icon.svg" type="image/svg+xml">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@600;700&family=Fredoka:wght@500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-
 <style>
 
 *{
@@ -767,56 +764,6 @@ overflow:hidden;
 transform:translateY(-3px);
 }
 
-.ai-helper{
-margin-top:12px;
-border-radius:18px;
-background:white;
-padding:12px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-}
-
-.ai-line{
-min-height:22px;
-font-size:13px;
-font-weight:800;
-color:#33415c;
-margin-bottom:10px;
-}
-
-.ai-helper input{
-width:100%;
-border:none;
-border-radius:14px;
-background:#f7f9ff;
-padding:12px;
-font:inherit;
-outline:none;
-box-shadow:inset 0 0 0 1px rgba(125,175,255,0.18);
-}
-
-.ai-helper-actions{
-display:flex;
-gap:8px;
-margin-top:10px;
-}
-
-.ai-helper-actions button{
-flex:1;
-border:none;
-border-radius:999px;
-padding:10px 12px;
-font-size:13px;
-font-weight:800;
-cursor:pointer;
-background:#f5f7ff;
-color:#33415c;
-}
-
-.ai-helper-actions button.primary{
-background:linear-gradient(135deg,var(--pink),var(--blue));
-color:white;
-}
-
 .bundle-panel{
 display:none;
 margin-top:12px;
@@ -1094,6 +1041,11 @@ font-weight:800;
 padding:8px 10px;
 box-shadow:0 8px 24px rgba(0,0,0,0.14);
 display:none;
+}
+
+.runtime-status.ready{
+display:block;
+color:#245f35;
 }
 
 .runtime-status.error{
@@ -1456,15 +1408,7 @@ Brynd&#225;k
 <button class="preset-btn" type="button" data-text="Nav&#382;dy spolu">Nav&#382;dy spolu</button>
 </div>
 
-<button class="smart-design-btn" id="smartDesignButton" type="button">N&#225;hodn&#253; pekn&#253; dizajn</button>
-
-<div class="ai-helper">
-<div class="ai-line" id="aiLine"></div>
-<div class="ai-helper-actions">
-<button class="primary" id="guidedDesignButton" type="button">Vygenerova&#357; n&#225;vrh</button>
-<button id="anotherDesignButton" type="button">In&#253; n&#225;vrh</button>
-</div>
-</div>
+<button class="smart-design-btn" id="smartDesignButton" type="button">N&#225;hodn&#253; v&#253;ber</button>
 </div>
 
 <div class="section">
@@ -1732,7 +1676,6 @@ const paymentResult = document.getElementById('paymentResult');
 const paymentQrImage = document.getElementById('paymentQrImage');
 const paymentResultText = document.getElementById('paymentResultText');
 const paymentQrLink = document.getElementById('paymentQrLink');
-const aiLine = document.getElementById('aiLine');
 const embroideryClipRect = document.getElementById('embroideryClipRect');
 
 let currentPosition = 'center';
@@ -1747,8 +1690,7 @@ let defaultPreviewText = '';
 let defaultTypingTimer = null;
 let pageStartedAt = Date.now();
 let activeOrderCode = '';
-let randomDesignIndex = 0;
-let aiTypingTimer = null;
+let lastRandomSignature = '';
 const ORDER_ENDPOINT = 'https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/formResponse';
 const GOOGLE_FORM_FIELDS = {
 interneCislo:'entry.1943247834',
@@ -1819,22 +1761,22 @@ const productBasePrices = {
 'Brynd\u00e1k':18.90
 };
 
-const smartDesigns = [
-{text:'Mini boss',font:'Fredoka',color:'#5c86ff',symbol:'hviezda.svg',position:'center'},
-{text:'L\u00e1ska',font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg',position:'center'},
-{text:'Mami\u010dka',font:'Montserrat',color:'black',symbol:'srdce.svg',position:'chest'},
-{text:'Nav\u017edy spolu',font:'Dancing Script',color:'#69c27d',symbol:'zajac.svg',position:'center'},
-{text:'Mal\u00fd poklad',font:'Fredoka',color:'#f4c542',symbol:'medved.svg',position:'center'},
-{text:'Vitaj na svete',font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg',position:'center'},
-{text:'Mama boss',font:'Fredoka',color:'black',symbol:'srdce.svg',position:'center'},
-{text:'Tata boss',font:'Fredoka',color:'#5c86ff',symbol:'hviezda.svg',position:'center'},
-{text:'Mala hviezda',font:'Fredoka',color:'#f4c542',symbol:'hviezda.svg',position:'center'},
-{text:'Nase stastie',font:'Dancing Script',color:'#69c27d',symbol:'srdce.svg',position:'center'},
-{text:'Super tato',font:'Montserrat',color:'black',symbol:'medved.svg',position:'chest'},
-{text:'Naj mama',font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg',position:'chest'},
-{text:'Maly hrdina',font:'Fredoka',color:'#5c86ff',symbol:'medved.svg',position:'center'},
-{text:'Velka laska',font:'Dancing Script',color:'#ff7cc6',symbol:'srdce.svg',position:'center'}
+const randomTexts = [
+'L\u00e1ska','Mami\u010dka','Mini boss','Nav\u017edy spolu','Mal\u00fd poklad','Vitaj na svete','Mama boss','Tata boss','Mal\u00e1 hviezda','Na\u0161e \u0161\u0165astie',
+'Super tato','Naj mama','Mal\u00fd hrdina','Ve\u013ek\u00e1 l\u00e1ska','Moje slnko','Srdce rodiny','Rodinn\u00fd poklad','Mini l\u00e1ska','Objatie','Z\u00e1zrak',
+'M\u00f4j svet','Na\u0161a rados\u0165','Babka je top','Dedko je top','Mama je top','Tato je top','Mal\u00e1 princezn\u00e1','Mal\u00fd princ','Hrdina','Slnie\u010dko',
+'Mil\u00e1\u010dik','Dar\u010dek','Zlat\u00ed\u010dko','Mini \u0161\u00e9f','Boss baby','Sweet baby','Happy kid','Tiny love','Best day','Love you',
+'Mami, si naj','Tati, si naj','Babka ma \u013e\u00fabi','Dedko ma \u013e\u00fabi','Som poklad','Som z\u00e1zrak','Som l\u00e1ska','Mini verzia','Rodina','Spolu',
+'Ty a ja','Moja rados\u0165','Moja hviezda','Moje srdce','Nav\u017edy tvoj','Nav\u017edy tvoja','Kr\u00e1sny de\u0148','S \u00fAsmevom','Dobr\u00e1 n\u00e1lada','Mal\u00fd sen',
+'Ve\u013ek\u00fd sen','T\u00edm mama','T\u00edm tata','T\u00edm babka','T\u00edm dedko','Najlep\u0161\u00ed dar','Jemn\u00e1 l\u00e1ska','M\u00e4kk\u00e9 objatie','Rodinn\u00e1 l\u00e1ska','Na pamiatku',
+'Prv\u00e9 Vianoce','Prv\u00fd rok','Krst','Narodeniny','Mal\u00fd osl\u00e1venec','Mal\u00e1 osl\u00e1venky\u0148a','Sestra boss','Brat boss','Bestie','Par\u0165\u00e1k',
+'Par\u0165\u00e1\u010dka','Mini par\u0165\u00e1k','Ve\u013ek\u00e1 sestra','Ve\u013ek\u00fd brat','Mal\u00e1 sestra','Mal\u00fd brat','Na\u0161e baby','Mama crew','Tata crew','Family crew',
+'Srdcovka','Milovan\u00fd','Milovan\u00e1','M\u00f4j anjel','Anjelik','Hviezdi\u010dka','Medved\u00edk','Zaja\u010dik','Srdie\u010dko','\u0160\u0165astie'
 ];
+
+const randomFonts = ['Montserrat','Fredoka','Dancing Script'];
+const randomColors = ['#ff7cc6','#5c86ff','#69c27d','#f4c542','black'];
+const randomSymbols = ['','srdce.svg','hviezda.svg','medved.svg','zajac.svg'];
 
 const bundleIdeas = {
 'Body':[
@@ -1971,13 +1913,21 @@ function updateVisuals(){
 const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
 const zone = product.positions[currentPosition] || product.positions.center;
 const centerX = zone.x + zone.w/2;
+updateEmbroideryClip(zone);
 
 if(selectedSymbol !== ''){
-symbolLayer.style.display='none';
+symbolLayer.setAttribute('href',selectedSymbol);
+symbolLayer.setAttribute('x',centerX - 22);
+symbolLayer.setAttribute('y',zone.y + 8);
+symbolLayer.setAttribute('width',44);
+symbolLayer.setAttribute('height',44);
+symbolLayer.style.display='block';
 symbolText.style.display='none';
-loadSymbolSvg(selectedSymbol,centerX,zone.y + 8);
+symbolSvgGroup.setAttribute('display','none');
+symbolSvgGroup.innerHTML = '';
 }else{
 symbolLayer.style.display='none';
+symbolLayer.setAttribute('href','');
 symbolText.style.display='none';
 symbolSvgGroup.setAttribute('display','none');
 symbolSvgGroup.innerHTML = '';
@@ -2255,25 +2205,26 @@ updateSummary();
 saveCurrentDesign();
 }
 
-function typeAiLine(text){
-clearInterval(aiTypingTimer);
-aiLine.textContent = '';
-let index = 0;
-aiTypingTimer = setInterval(()=>{
-aiLine.textContent = text.slice(0,index + 1);
-index++;
-if(index >= text.length){
-clearInterval(aiTypingTimer);
-}
-},32);
-}
-
 function pickRandomDesign(){
 const product = productConfig[currentProduct] || productConfig['Tri\u010dko'];
-const allowedDesigns = smartDesigns.filter(design=>!!product.positions[design.position]);
-const pool = allowedDesigns.length ? allowedDesigns : smartDesigns;
-randomDesignIndex = (randomDesignIndex + 1) % pool.length;
-return pool[Math.floor(Math.random() * pool.length)];
+const positions = Object.keys(product.positions);
+let design = null;
+
+for(let attempt = 0; attempt < 12; attempt++){
+const text = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+const font = randomFonts[Math.floor(Math.random() * randomFonts.length)];
+const color = randomColors[Math.floor(Math.random() * randomColors.length)];
+const symbol = randomSymbols[Math.floor(Math.random() * randomSymbols.length)];
+const position = positions[Math.floor(Math.random() * positions.length)];
+const signature = [text,font,color,symbol,position].join('|');
+design = {text,font,color,symbol,position,signature};
+if(signature !== lastRandomSignature){
+break;
+}
+}
+
+lastRandomSignature = design.signature;
+return design;
 }
 
 function applyRandomDesign(){
@@ -2291,7 +2242,6 @@ hasUserTyped = true;
 clearInterval(defaultTypingTimer);
 applyCurrentStateToControls();
 saveCurrentDesign();
-typeAiLine('Nahodny navrh: "' + design.text + '". Ked nesedi, klikni Iny navrh.');
 }
 
 function currentItem(){
@@ -2766,7 +2716,6 @@ applyCurrentStateToControls();
 if(!restoredDesign){
 startDefaultTyping();
 }
-typeAiLine('Klikni a vyberiem nahodny pekny navrh.');
 
 textInput.addEventListener('input',()=>{
 hasUserTyped = true;
@@ -2786,9 +2735,6 @@ afterDesignChange();
 document.getElementById('smartDesignButton').addEventListener('click',()=>{
 applyRandomDesign();
 });
-
-document.getElementById('guidedDesignButton').addEventListener('click',applyRandomDesign);
-document.getElementById('anotherDesignButton').addEventListener('click',applyRandomDesign);
 
 document.querySelectorAll('.product-btn').forEach(btn=>{
 btn.addEventListener('click',()=>{
@@ -2933,6 +2879,17 @@ alert('Objedn\u00e1vka bola odoslan\u00e1. QR platba je zobrazen\u00e1 v s\u00fa
 
 if('serviceWorker' in navigator && location.protocol === 'https:'){
 navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
+const runtimeStatus = document.getElementById('runtimeStatus');
+if(runtimeStatus){
+runtimeStatus.className = 'runtime-status ready';
+runtimeStatus.textContent = 'Stranka je pripravena';
+setTimeout(()=>{
+if(runtimeStatus.className === 'runtime-status ready'){
+runtimeStatus.className = 'runtime-status';
+}
+},2200);
 }
 
 </script>
