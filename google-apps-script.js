@@ -17,10 +17,11 @@ function testTvodoAliasEmail() {
 
 function onFormSubmit(e) {
   const data = readFormSubmitPayload_(e);
+  enrichDataFromText_(data);
   const orderCode = data.interne_cislo || data.interneCislo || createOrderCode_();
-  const items = parseItems_(data.polozky_json);
+  const items = getOrderItems_(data);
   const total = data.suma_spolu || data.sumaSpolu || '';
-  const qrUrl = data.qr_url || findQrUrl_(data.polozky_text || data.polozky || '');
+  const qrUrl = data.qr_url || findQrUrl_(data.polozky_text || data.polozky || '') || buildQrImageUrl_(orderCode, total);
   data.variabilny_symbol = data.variabilny_symbol || orderCode;
 
   sendCustomerEmail_(data, orderCode, items, total, qrUrl);
@@ -29,10 +30,11 @@ function onFormSubmit(e) {
 
 function doPost(e) {
   const data = readPayload_(e);
+  enrichDataFromText_(data);
   const orderCode = data.interne_cislo || createOrderCode_();
-  const items = parseItems_(data.polozky_json);
+  const items = getOrderItems_(data);
   const total = data.suma_spolu || '';
-  const qrUrl = data.qr_url || '';
+  const qrUrl = data.qr_url || buildQrImageUrl_(orderCode, total);
   data.variabilny_symbol = data.variabilny_symbol || orderCode;
 
   appendOrder_(data, orderCode, items);
@@ -86,9 +88,90 @@ function parseItems_(value) {
   }
 }
 
+function getOrderItems_(data) {
+  const jsonItems = parseItems_(data.polozky_json);
+  if (jsonItems.length) return jsonItems;
+  return parseProductionItems_(data.vyrobny_format || data.polozky_text || data.polozky || '');
+}
+
+function parseProductionItems_(text) {
+  return String(text || '')
+    .split(/\n+/)
+    .filter(function(line) {
+      return line.indexOf('Polozka ') !== -1 && line.indexOf(' | ') !== -1;
+    })
+    .map(function(line) {
+      const parts = line.split('|').map(function(part) { return part.trim(); });
+      const item = {
+        product: parts[2] || '',
+        size: valueAfter_(parts, 'Velkost:'),
+        productColor: valueAfter_(parts, 'Produkt:'),
+        text: valueAfter_(parts, 'Text:'),
+        position: parts[6] || '',
+        threadColor: valueAfter_(parts, 'Nit:'),
+        font: valueAfter_(parts, 'Pismo:'),
+        symbol: valueAfter_(parts, 'Symbol:'),
+        priceLabel: valueAfter_(parts, 'Cena:')
+      };
+      return item;
+    });
+}
+
+function valueAfter_(parts, label) {
+  const found = parts.filter(function(part) {
+    return part.indexOf(label) === 0;
+  })[0] || '';
+  return found.replace(label, '').trim();
+}
+
+function enrichDataFromText_(data) {
+  const text = String(data.polozky_text || data.polozky || '');
+  data.meno = data.meno || lineValue_(text, 'Meno:');
+  data.email = data.email || lineValue_(text, 'Email:');
+  data.telefon = data.telefon || lineValue_(text, 'Telefon:');
+  data.packeta = data.packeta || lineValue_(text, 'Packeta:');
+  data.vyrobny_format = data.vyrobny_format || sectionAfter_(text, 'VYROBNY FORMAT:', 'SPOLU:');
+}
+
+function lineValue_(text, label) {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = String(text || '').match(new RegExp(escaped + '\\s*([^\\n]*)'));
+  return match ? match[1].trim() : '';
+}
+
+function sectionAfter_(text, start, end) {
+  const source = String(text || '');
+  const startIndex = source.indexOf(start);
+  if (startIndex === -1) return '';
+  const fromStart = source.slice(startIndex + start.length);
+  const endIndex = fromStart.indexOf(end);
+  return (endIndex === -1 ? fromStart : fromStart.slice(0, endIndex)).trim();
+}
+
 function findQrUrl_(text) {
   const match = String(text || '').match(/https:\/\/api\.qrserver\.com\/[^\s]+/);
   return match ? match[0] : '';
+}
+
+function buildQrImageUrl_(orderCode, total) {
+  const amount = parseMoney_(total);
+  const data = [
+    'SPD',
+    '1.0',
+    'ACC:' + PAYMENT_IBAN,
+    'AM:' + amount.toFixed(2),
+    'CC:EUR',
+    'X-VS:' + orderCode,
+    'RN:' + PAYMENT_ACCOUNT_NAME,
+    'MSG:Objednavka ' + orderCode
+  ].join('*');
+  return 'https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=12&data=' + encodeURIComponent(data);
+}
+
+function parseMoney_(value) {
+  const normalized = String(value || '0').replace(/\s/g, '').replace('€', '').replace(',', '.');
+  const number = Number(normalized);
+  return isNaN(number) ? 0 : number;
 }
 
 function normalizeKey_(key) {
@@ -156,12 +239,14 @@ function sendCustomerEmail_(data, orderCode, items, total, qrUrl) {
 function sendShopEmail_(data, orderCode, items, total, qrUrl) {
   const subject = 'Nova objednavka ' + orderCode + ' | TVODO';
   const html = buildShopHtml_(data, orderCode, items, total, qrUrl);
+  const pdf = buildProductionPdf_(data, orderCode, items, total);
 
   sendTvodoEmail_({
     to: SHOP_EMAIL,
     subject,
     htmlBody: html,
-    replyTo: SHOP_EMAIL
+    replyTo: SHOP_EMAIL,
+    attachments: pdf ? [pdf] : []
   });
 }
 
@@ -172,6 +257,9 @@ function sendTvodoEmail_(message) {
     htmlBody: message.htmlBody,
     replyTo: message.replyTo || SHOP_EMAIL
   };
+  if (message.attachments && message.attachments.length) {
+    options.attachments = message.attachments;
+  }
 
   if (aliases.indexOf(SHOP_FROM_ALIAS) !== -1) {
     options.from = SHOP_FROM_ALIAS;
@@ -193,6 +281,7 @@ function buildCustomerHtml_(data, orderCode, items, total, qrUrl) {
     '<strong>Variabilny symbol:</strong> ' + esc_(data.variabilny_symbol || orderCode) + '<br>',
     '<strong>Sprava pre prijemcu:</strong> Objednavka ' + esc_(orderCode) + '</p>',
     qrUrl ? '<p><img src="' + esc_(qrUrl) + '" alt="QR platba" width="220" height="220"></p>' : '',
+    qrUrl ? '<p><a href="' + esc_(qrUrl) + '">Otvorit QR kod</a></p>' : '',
     '<p>Ak ste v objednavke nasli chybu, odpiste prosim na tento e-mail co najskor.</p>'
   ].join('');
 }
@@ -231,6 +320,42 @@ function buildItemsHtml_(items) {
       '</div>'
     ].join('');
   }).join('');
+}
+
+function buildProductionPdf_(data, orderCode, items, total) {
+  const html = [
+    '<html><body style="font-family:Arial,sans-serif;color:#111">',
+    '<h1>TVODO vyrobny list ' + esc_(orderCode) + '</h1>',
+    '<p><strong>Zakaznik:</strong> ' + esc_(data.meno) + '<br>',
+    '<strong>Email:</strong> ' + esc_(data.email) + '<br>',
+    '<strong>Telefon:</strong> ' + esc_(data.telefon) + '<br>',
+    '<strong>Packeta:</strong> ' + esc_(data.packeta) + '</p>',
+    '<p><strong>Suma:</strong> ' + esc_(total) + '<br>',
+    '<strong>Variabilny symbol:</strong> ' + esc_(data.variabilny_symbol || orderCode) + '</p>',
+    items.map(function(item, index) {
+      return [
+        '<div style="page-break-inside:avoid;border:2px solid #111;padding:14px;margin:16px 0">',
+        '<h2>Polozka ' + (index + 1) + ': ' + esc_(item.product) + '</h2>',
+        '<p><strong>Velkost:</strong> ' + esc_(item.size) + '<br>',
+        '<strong>Produkt:</strong> ' + esc_(item.productColor) + '<br>',
+        '<strong>Text:</strong> ' + esc_(item.text) + '<br>',
+        '<strong>Miesto:</strong> ' + esc_(item.position) + '<br>',
+        '<strong>Nit:</strong> ' + esc_(item.threadColor) + '<br>',
+        '<strong>Pismo:</strong> ' + esc_(item.font) + '<br>',
+        '<strong>Symbol:</strong> ' + esc_(item.symbol) + '<br>',
+        '<strong>Cena:</strong> ' + esc_(item.priceLabel || item.price) + '</p>',
+        '</div>'
+      ].join('');
+    }).join(''),
+    '<h2>Vyrobny format</h2>',
+    '<pre style="white-space:pre-wrap;font-family:Arial,sans-serif">' + esc_(data.vyrobny_format || data.polozky_text || '') + '</pre>',
+    '</body></html>'
+  ].join('');
+
+  return Utilities
+    .newBlob(html, 'text/html', 'vyrobny-list-' + orderCode + '.html')
+    .getAs('application/pdf')
+    .setName('vyrobny-list-' + orderCode + '.pdf');
 }
 
 function createOrderCode_() {

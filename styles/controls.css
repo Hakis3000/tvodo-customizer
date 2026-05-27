@@ -1,0 +1,48 @@
+.title{font-size:28px;line-height:1.08;font-weight:950;background:linear-gradient(90deg,var(--pink),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{font-size:13px;line-height:1.5;color:var(--muted);font-weight:650;margin-bottom:14px}
+.status-card{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#fff;border-radius:18px;padding:12px;box-shadow:0 8px 18px rgba(0,0,0,.05)}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#7a8292;font-weight:950}
+.value{font-size:14px;font-weight:950;margin-top:2px}
+.price-pill{border-radius:999px;background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff;padding:10px 12px;font-size:13px;font-weight:950}
+.next-product{margin-top:10px;border-radius:14px;background:#f7fbff;color:#3e5e9f;font-size:12px;font-weight:900;line-height:1.35;padding:10px;display:none}
+.next-product.active{display:block}
+.section{margin-top:18px}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.section-title{font-size:16px;font-weight:950}
+.char-count{font-size:12px;color:#7a8292;font-weight:900}
+textarea{width:100%;min-height:105px;border:0;border-radius:18px;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.05);padding:15px;resize:none;outline:0;font-size:15px}
+textarea:focus{box-shadow:0 0 0 3px rgba(92,134,255,.13),0 12px 24px rgba(0,0,0,.07)}
+.quick-presets,.row,.colors{display:flex;gap:9px;flex-wrap:wrap}
+.quick-presets{overflow:auto;padding-top:8px;flex-wrap:nowrap;scrollbar-width:none}
+.quick-presets::-webkit-scrollbar{display:none}
+.pill-btn{padding:9px 12px;background:rgba(255,255,255,.86);font-size:12px;color:#344054;white-space:nowrap}
+.control-btn{border:0;border-radius:16px;background:#fff;padding:12px 14px;font-weight:900;color:#344054;box-shadow:0 8px 18px rgba(0,0,0,.05)}
+.control-btn.active{background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff}
+.symbol-btn{width:58px;height:58px;padding:0;display:grid;place-items:center}
+.symbol-btn img{width:34px;height:34px;object-fit:contain}
+.swatch{width:46px;height:46px;border-radius:50%;border:3px solid #fff;box-shadow:0 8px 18px rgba(0,0,0,.10)}
+.swatch.active{outline:4px solid rgba(92,134,255,.22)}
+.primary-btn{border-radius:20px;background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff;padding:16px;font-size:16px}
+.secondary-btn{border-radius:20px;background:#fff;color:#344054;padding:15px;font-size:15px}
+.main-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:22px}
+.info-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px;overflow:visible;scrollbar-width:none}
+.info-tabs::-webkit-scrollbar{display:none}
+.info-tab{border:0;border-radius:16px;background:#fff;padding:13px 10px;min-height:54px;font-size:13px;font-weight:950;color:#3f4a5f;box-shadow:0 8px 18px rgba(0,0,0,.05);white-space:normal}
+.info-tab.active{background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff}
+.info-panel{display:none;margin-top:12px;border-radius:18px;background:#fff;padding:14px;box-shadow:0 10px 24px rgba(0,0,0,.06);font-size:13px;line-height:1.6;color:#445}
+.info-panel.active{display:block}
+.info-panel h3{font-size:15px;margin-bottom:8px}
+.mini-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.mini-gallery img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:14px;background:#f7f9ff;padding:8px}
+.detail-heart{background:#fff3f8}
+.detail-star{background:#fff9df}
+.detail-bear{background:#eefaf1}
+.detail-rabbit{background:#eef4ff}
+.detail-heart img{filter:brightness(0) saturate(100%) invert(57%) sepia(67%) saturate(1042%) hue-rotate(292deg)}
+.detail-star img{filter:brightness(0) saturate(100%) invert(78%) sepia(88%) saturate(708%) hue-rotate(344deg)}
+.detail-bear img{filter:brightness(0) saturate(100%) invert(55%) sepia(32%) saturate(629%) hue-rotate(79deg)}
+.detail-rabbit img{filter:brightness(0) saturate(100%) invert(52%) sepia(87%) saturate(1436%) hue-rotate(203deg)}
+.symbol-btn.active img{filter:brightness(0) invert(1)}
+.font-basic{font-family:Arial,Helvetica,sans-serif}
+.font-play{font-family:"Comic Sans MS","Trebuchet MS",cursive}
+.font-script{font-family:"Brush Script MT","Segoe Script",cursive;font-size:18px}

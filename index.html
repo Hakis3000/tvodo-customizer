@@ -7,128 +7,15 @@
 <title>TVODO - personalizovana vysivka</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="tvodo-icon.svg" type="image/svg+xml">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{--pink:#ff7cc6;--blue:#5c86ff;--green:#55b96d;--yellow:#f4c542;--ink:#22242a;--muted:#6b7280;--line:#e7eaf3;--soft:#fff7fc;--panel:rgba(255,255,255,.78)}
-html{scroll-behavior:smooth}
-body{min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(circle at 14% 8%,rgba(255,124,198,.22),transparent 28%),radial-gradient(circle at 86% 14%,rgba(92,134,255,.20),transparent 30%),linear-gradient(135deg,#fff9fd,#eff6ff);overflow-x:hidden}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-.top-cart{position:fixed;right:16px;top:16px;z-index:30;display:flex;align-items:center;gap:10px}
-.cart-toggle{border:0;border-radius:999px;background:#fff;color:#273044;box-shadow:0 14px 38px rgba(36,43,59,.14);padding:11px 14px;display:flex;align-items:center;gap:9px;font-weight:900}
-.cart-count{min-width:24px;height:24px;border-radius:999px;background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff;display:grid;place-items:center;font-size:12px}
-.cart-drawer{position:fixed;right:16px;top:68px;z-index:29;width:min(390px,calc(100vw - 32px));max-height:calc(100vh - 86px);overflow:auto;border-radius:20px;background:rgba(255,255,255,.96);box-shadow:0 24px 70px rgba(30,37,52,.2);border:1px solid rgba(255,255,255,.7);padding:16px;display:none}
-.cart-drawer.active{display:block}
-.cart-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:12px}
-.cart-title{font-size:19px;font-weight:950;letter-spacing:0}
-.cart-sub{font-size:12px;color:var(--muted);margin-top:3px;font-weight:700}
-.cart-empty{border-radius:16px;background:#f8faff;padding:14px;color:#596273;font-size:13px;line-height:1.45}
-.cart-list{display:flex;flex-direction:column;gap:10px}
-.cart-row{display:grid;grid-template-columns:74px 1fr auto;gap:10px;align-items:center;border-radius:16px;background:linear-gradient(135deg,#f9fbff,#fff4fa);padding:10px;box-shadow:inset 0 0 0 1px rgba(92,134,255,.12)}
-.cart-thumb{width:74px;height:74px;border-radius:12px;background:#fff;overflow:hidden;display:grid;place-items:center}
-.cart-thumb svg{width:100%;height:100%}
-.cart-name{font-weight:900;font-size:13px;line-height:1.25}
-.cart-meta{font-size:12px;color:#596273;line-height:1.35;margin-top:4px}
-.remove-item{border:0;border-radius:50%;width:30px;height:30px;background:#fff;font-weight:950;box-shadow:0 8px 16px rgba(0,0,0,.08)}
-.shipping-box{margin-top:12px;border-radius:16px;background:#fff;padding:13px;box-shadow:inset 0 0 0 1px rgba(92,134,255,.14)}
-.shipping-line{display:flex;justify-content:space-between;gap:10px;font-size:12px;font-weight:900;color:#41506a}
-.shipping-progress{height:10px;border-radius:999px;background:#e9edf7;overflow:hidden;margin-top:9px}
-.shipping-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--blue),var(--green));transition:.25s}
-.shipping-note{margin-top:8px;font-size:12px;font-weight:800;color:#3f68d8;line-height:1.35}
-.cart-total{display:flex;justify-content:space-between;align-items:center;margin-top:13px;font-weight:950}
-.cart-actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:12px}
-.app{max-width:1700px;margin:0 auto;padding:14px;display:grid;grid-template-columns:minmax(0,1fr) 410px;gap:16px}
-.left{position:sticky;top:14px;height:calc(100vh - 28px)}
-.preview-card,.right{border-radius:24px;background:var(--panel);backdrop-filter:blur(20px);box-shadow:0 22px 60px rgba(35,42,58,.10);border:1px solid rgba(255,255,255,.62)}
-.preview-card{height:100%;display:flex;flex-direction:column;gap:10px;padding:12px;overflow:hidden}
-.right{max-height:calc(100vh - 28px);overflow:auto;padding:20px}
-.brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:42px}
-.brand{font-size:25px;font-weight:950;background:linear-gradient(90deg,var(--pink),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.brand-sub{font-size:12px;color:var(--muted);font-weight:700;line-height:1.35}
-.mini-btn,.pill-btn,.primary-btn,.secondary-btn{border:0;border-radius:999px;font-weight:900;transition:.2s;box-shadow:0 10px 22px rgba(0,0,0,.07)}
-.mini-btn{padding:9px 12px;background:#fff;font-size:12px;color:#344054}
-.mini-btn:hover,.pill-btn:hover,.primary-btn:hover,.secondary-btn:hover{transform:translateY(-2px)}
-.product-bar{display:flex;gap:10px;overflow:auto;padding:2px 0 6px;scrollbar-width:none}
-.product-bar::-webkit-scrollbar{display:none}
-.product-btn{min-width:128px;min-height:92px;border:0;border-radius:16px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;font-weight:950;color:#344054;box-shadow:0 10px 24px rgba(0,0,0,.06)}
-.product-btn.active{background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff}
-.product-btn img{width:50px;height:50px;object-fit:contain}
-.preview-window{flex:1;min-height:0;border-radius:22px;background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.95),transparent 34%),radial-gradient(circle at 80% 84%,rgba(255,255,255,.86),transparent 36%),linear-gradient(135deg,#f4f7ff,#fff0f7);display:grid;place-items:center;position:relative;overflow:hidden}
-.preview-window:after{content:"Zivy nahlad";position:absolute;left:14px;bottom:14px;border-radius:999px;background:rgba(255,255,255,.8);padding:8px 12px;color:#586174;font-size:12px;font-weight:900;box-shadow:0 10px 24px rgba(0,0,0,.06)}
-#previewSvg{position:relative;z-index:2;width:100%;height:100%}
-#productImage{filter:drop-shadow(0 22px 30px rgba(0,0,0,.1));animation:float 5.8s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-#embroideryText,#symbolText{paint-order:stroke;stroke:rgba(75,45,65,.22);stroke-width:.8;filter:url(#thread)}
-.title{font-size:28px;line-height:1.08;font-weight:950;background:linear-gradient(90deg,var(--pink),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.subtitle{font-size:13px;line-height:1.5;color:var(--muted);font-weight:650;margin-bottom:14px}
-.status-card{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#fff;border-radius:18px;padding:12px;box-shadow:0 8px 18px rgba(0,0,0,.05)}
-.label{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#7a8292;font-weight:950}
-.value{font-size:14px;font-weight:950;margin-top:2px}
-.price-pill{border-radius:999px;background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff;padding:10px 12px;font-size:13px;font-weight:950}
-.next-product{margin-top:10px;border-radius:14px;background:#f7fbff;color:#3e5e9f;font-size:12px;font-weight:900;line-height:1.35;padding:10px;display:none}
-.next-product.active{display:block}
-.section{margin-top:18px}
-.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
-.section-title{font-size:16px;font-weight:950}
-.char-count{font-size:12px;color:#7a8292;font-weight:900}
-textarea{width:100%;min-height:105px;border:0;border-radius:18px;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.05);padding:15px;resize:none;outline:0;font-size:15px}
-textarea:focus{box-shadow:0 0 0 3px rgba(92,134,255,.13),0 12px 24px rgba(0,0,0,.07)}
-.quick-presets,.row,.colors{display:flex;gap:9px;flex-wrap:wrap}
-.quick-presets{overflow:auto;padding-top:8px;flex-wrap:nowrap;scrollbar-width:none}
-.quick-presets::-webkit-scrollbar{display:none}
-.pill-btn{padding:9px 12px;background:rgba(255,255,255,.86);font-size:12px;color:#344054;white-space:nowrap}
-.control-btn{border:0;border-radius:16px;background:#fff;padding:12px 14px;font-weight:900;color:#344054;box-shadow:0 8px 18px rgba(0,0,0,.05)}
-.control-btn.active{background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff}
-.symbol-btn{width:58px;height:58px;padding:0;display:grid;place-items:center}
-.symbol-btn img{width:34px;height:34px;object-fit:contain}
-.swatch{width:46px;height:46px;border-radius:50%;border:3px solid #fff;box-shadow:0 8px 18px rgba(0,0,0,.10)}
-.swatch.active{outline:4px solid rgba(92,134,255,.22)}
-.primary-btn{border-radius:20px;background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff;padding:16px;font-size:16px}
-.secondary-btn{border-radius:20px;background:#fff;color:#344054;padding:15px;font-size:15px}
-.main-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:22px}
-.info-tabs{display:flex;gap:8px;margin-top:22px;overflow:auto;scrollbar-width:none}
-.info-tabs::-webkit-scrollbar{display:none}
-.info-tab{border:0;border-radius:999px;background:#fff;padding:10px 13px;font-size:13px;font-weight:950;color:#3f4a5f;box-shadow:0 8px 18px rgba(0,0,0,.05);white-space:nowrap}
-.info-tab.active{background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff}
-.info-panel{display:none;margin-top:12px;border-radius:18px;background:#fff;padding:14px;box-shadow:0 10px 24px rgba(0,0,0,.06);font-size:13px;line-height:1.6;color:#445}
-.info-panel.active{display:block}
-.info-panel h3{font-size:15px;margin-bottom:8px}
-.mini-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.mini-gallery img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:14px;background:#f7f9ff;padding:8px}
-.modal{position:fixed;inset:0;z-index:50;background:rgba(28,31,38,.36);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:18px}
-.modal[hidden]{display:none}
-.panel{width:min(780px,100%);max-height:92vh;overflow:auto;border-radius:24px;background:rgba(255,255,255,.96);box-shadow:0 24px 70px rgba(0,0,0,.2);padding:22px}
-.order-head{display:flex;justify-content:space-between;gap:16px;margin-bottom:15px}
-.close-btn{border:0;border-radius:50%;width:38px;height:38px;background:#fff;font-size:20px;font-weight:950;box-shadow:0 8px 18px rgba(0,0,0,.08)}
-.order-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:900;color:#566174}
-.field.full{grid-column:1/-1}
-.field input,.field textarea{border:0;border-radius:15px;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.05);padding:13px 14px;outline:0}
-.field textarea{min-height:85px}
-.order-box{white-space:pre-line;border-radius:16px;background:linear-gradient(135deg,#f8fbff,#fff5fb);padding:14px;font-size:13px;line-height:1.62;color:#444;box-shadow:inset 0 0 0 1px rgba(92,134,255,.15)}
-.preview-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
-.preview-item{border-radius:16px;background:#fff;padding:10px;box-shadow:inset 0 0 0 1px rgba(92,134,255,.14)}
-.preview-item svg{width:100%;height:auto}
-.preview-caption{font-size:12px;font-weight:850;line-height:1.35;color:#566174;margin-top:6px}
-.payment-result{display:none;gap:12px;align-items:center;margin-top:12px;border-radius:16px;background:#fff;padding:12px;box-shadow:0 8px 18px rgba(0,0,0,.05)}
-.payment-result.active{display:flex}
-.payment-result img{width:124px;height:124px;border-radius:12px;background:#f6f6f6;object-fit:contain}
-.payment-result-text{font-size:13px;line-height:1.55;color:#444;white-space:pre-line}
-.spam{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.runtime-status{position:fixed;left:10px;bottom:10px;z-index:99;border-radius:12px;background:#fff;font-size:12px;font-weight:900;padding:8px 10px;box-shadow:0 8px 24px rgba(0,0,0,.14);display:none}
-.runtime-status.ready{display:block;color:#245f35}.runtime-status.error{display:block;color:#a4002f}
-@media print{body>*:not(#printSheet){display:none!important}#printSheet{display:block!important;color:#111;font-family:Arial,sans-serif}.print-page{page-break-after:always;padding:20mm}.print-preview svg{width:90mm;height:90mm}.print-title{font-size:24px;font-weight:800;margin-bottom:8px}.print-line{font-size:14px;margin:4px 0}.print-box{border:1px solid #222;padding:10px;margin-top:12px;white-space:pre-line}}
-#printSheet{display:none}
-@media(max-width:820px){
-body{overflow:hidden}.top-cart{right:10px;top:10px}.cart-toggle{padding:10px 12px}.cart-drawer{right:10px;top:60px;width:calc(100vw - 20px)}
-.app{height:100svh;display:flex;flex-direction:column;padding:0;gap:0}.left{position:relative;top:0;height:63svh}.preview-card{border-radius:0;padding:8px}.brand-sub{display:none}.product-bar{flex:0 0 82px}.product-btn{min-width:105px;min-height:76px;font-size:12px}.product-btn img{width:38px;height:38px}.right{height:37svh;max-height:37svh;border-radius:18px 18px 0 0;padding:14px 16px}.title{font-size:21px}.subtitle{display:none}.order-grid{grid-template-columns:1fr}.panel{padding:18px;border-radius:20px}.row,.colors{flex-wrap:nowrap;overflow:auto;padding-bottom:5px;scrollbar-width:none}.control-btn{white-space:nowrap;flex:0 0 auto}.main-actions{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,rgba(255,255,255,.92) 18%);padding-top:14px}
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="top-cart">
+<header class="top-cart">
+<div class="top-cart-inner">
+<div class="top-logo">TVODO <span>personalizovana vysivka pre darceky a rodinne momenty</span></div>
 <button class="cart-toggle" id="cartToggle" type="button" aria-expanded="false">Kosik <span class="cart-count" id="cartCount">0</span></button>
 </div>
+</header>
 <aside class="cart-drawer" id="cartDrawer" aria-label="Kosik">
 <div class="cart-head">
 <div><div class="cart-title">Kosik</div><div class="cart-sub" id="cartSub">Najprv si navrhnite produkt.</div></div>
@@ -137,40 +24,63 @@ body{overflow:hidden}.top-cart{right:10px;top:10px}.cart-toggle{padding:10px 12p
 <div id="cartBody"></div>
 </aside>
 
+
+<nav class="product-strip" aria-label="Vyber produktu">
+<div class="product-bar">
+<button class="product-btn active" data-product="Tricko" type="button"><img src="shirt.svg?v=20260527b" alt="">Tricko</button>
+<button class="product-btn" data-product="Body" type="button"><img src="body.svg?v=20260527b" alt="">Body</button>
+<button class="product-btn" data-product="Bryndak" type="button"><img src="bib.svg?v=20260527b" alt="">Bryndak</button>
+</div>
+</nav>
+
 <main class="app">
 <section class="left">
 <div class="preview-card">
-<div class="brand-row">
-<div><div class="brand">TVODO</div><div class="brand-sub">Personalizovana jemna vysivka pre vynimocne momenty</div></div>
-<button class="mini-btn" id="resetButton" type="button">Reset</button>
-</div>
-<div class="product-bar">
-<button class="product-btn active" data-product="Tricko" type="button"><img src="shirt.svg" alt="">Tricko</button>
-<button class="product-btn" data-product="Body" type="button"><img src="body.svg" alt="">Body</button>
-<button class="product-btn" data-product="Bryndak" type="button"><img src="bib.svg" alt="">Bryndak</button>
-</div>
+<aside class="preview-side preview-summary">
+<div class="side-label">Aktualny vyber</div>
+<div class="value" id="summaryText">Tricko - stred - S</div>
+<div class="price-pill" id="priceText">od 24,90 EUR</div>
+<div class="next-product" id="nextProductNote"></div>
+</aside>
+
 <div class="preview-window">
 <svg id="previewSvg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
 <defs>
 <clipPath id="embroideryClip"><rect id="clipRect" x="420" y="340" width="160" height="160" rx="8"/></clipPath>
 <filter id="thread" x="-14%" y="-14%" width="128%" height="128%"><feTurbulence type="fractalNoise" baseFrequency=".9 .08" numOctaves="2" seed="8" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale=".65"/><feDropShadow dx=".7" dy=".9" stdDeviation=".45" flood-color="#5d4354" flood-opacity=".24"/></filter>
 </defs>
-<image id="productImage" href="shirt.svg" x="120" y="60" width="760" height="860"/>
+<image id="productImage" href="shirt.svg?v=20260527b" x="42" y="0" width="916" height="980"/>
 <text id="symbolText" x="500" y="365" text-anchor="middle" dominant-baseline="middle" clip-path="url(#embroideryClip)"></text>
 <text id="embroideryText" x="500" y="430" text-anchor="middle" dominant-baseline="middle" clip-path="url(#embroideryClip)"></text>
 </svg>
 </div>
+
+<aside class="preview-side preview-buy">
+<div class="side-label">Objednavka</div>
+<div class="side-copy">Navrh si mozte vlozit do kosika alebo rovno dokoncit objednavku.</div>
+<div class="main-actions">
+<button class="secondary-btn" id="addToCart" type="button">Pridat do kosika</button>
+<button class="primary-btn" id="checkout" type="button">Dokoncit objednavku</button>
+</div>
+<button class="mini-btn reset-inline" id="resetButton" type="button">Reset navrhu</button>
+</aside>
 </div>
 </section>
 
 <section class="right">
 <h1 class="title">Vytvorte si vlastny kusok</h1>
 <p class="subtitle">Navrhnite vysivku, pridajte ju do kosika a objednavku dokoncte s QR platbou.</p>
-<div class="status-card">
-<div><div class="label">Aktualny vyber</div><div class="value" id="summaryText">Tricko · stred · S</div></div>
-<div class="price-pill" id="priceText">od 24,90 €</div>
+
+<div class="info-tabs">
+<button class="info-tab active" data-tab="contact" type="button">Kontakt</button>
+<button class="info-tab" data-tab="about" type="button">O TVODO</button>
+<button class="info-tab" data-tab="photos" type="button">Fotky</button>
+<button class="info-tab" data-tab="terms" type="button">Podmienky</button>
 </div>
-<div class="next-product" id="nextProductNote"></div>
+<div class="info-panel active" data-panel="contact"><h3>Kontakt</h3><p>Ak si nie ste isti textom, farbou alebo darcekom, napiste nam. Pomozeme navrh doladit.</p><p><strong>E-mail:</strong> doplnit@tvodo.sk<br><strong>Instagram:</strong> @tvodo.sk</p></div>
+<div class="info-panel" data-panel="about"><h3>Personalizovana vysivka</h3><p>Kazdy produkt vyrabame na objednavku podla vasho navrhu. Vyroba zacina po pripisani platby.</p></div>
+<div class="info-panel" data-panel="photos"><h3>Ukazky produktov</h3><div class="mini-gallery"><img src="shirt.svg?v=20260527b" alt="Tricko"><img src="body.svg?v=20260527b" alt="Body"><img src="bib.svg?v=20260527b" alt="Bryndak"></div></div>
+<div class="info-panel" data-panel="terms"><h3>Podmienky</h3><p>Produkty s vlastnou vysivkou su vyrabane na mieru. Pred odoslanim si prosim skontrolujte text, velkost, farbu a kontaktne udaje.</p></div>
 
 <div class="section">
 <div class="section-head"><div class="section-title">Co vysijeme?</div><div class="char-count" id="charCount">0/34</div></div>
@@ -185,11 +95,11 @@ body{overflow:hidden}.top-cart{right:10px;top:10px}.cart-toggle{padding:10px 12p
 </div>
 
 <div class="section"><div class="section-title">Detail</div><div class="row" id="symbolButtons">
-<button class="control-btn symbol-btn active" data-symbol="" type="button">×</button>
-<button class="control-btn symbol-btn" data-symbol="srdce.svg" data-glyph="♥" type="button"><img src="srdce.svg" alt="Srdce"></button>
-<button class="control-btn symbol-btn" data-symbol="hviezda.svg" data-glyph="★" type="button"><img src="hviezda.svg" alt="Hviezda"></button>
-<button class="control-btn symbol-btn" data-symbol="medved.svg" data-glyph="●" type="button"><img src="medved.svg" alt="Medved"></button>
-<button class="control-btn symbol-btn" data-symbol="zajac.svg" data-glyph="♦" type="button"><img src="zajac.svg" alt="Zajac"></button>
+<button class="control-btn symbol-btn active" data-symbol="" type="button">x</button>
+<button class="control-btn symbol-btn detail-heart" data-symbol="srdce.svg" data-glyph="&#9829;" type="button"><img src="srdce.svg" alt="Srdce"></button>
+<button class="control-btn symbol-btn detail-star" data-symbol="hviezda.svg" data-glyph="&#9733;" type="button"><img src="hviezda.svg" alt="Hviezda"></button>
+<button class="control-btn symbol-btn detail-bear" data-symbol="medved.svg" data-glyph="&#9679;" type="button"><img src="medved.svg" alt="Medved"></button>
+<button class="control-btn symbol-btn detail-rabbit" data-symbol="zajac.svg" data-glyph="&#9830;" type="button"><img src="zajac.svg" alt="Zajac"></button>
 </div></div>
 
 <div class="section"><div class="section-title">Miesto vysivky</div><div class="row">
@@ -204,10 +114,10 @@ body{overflow:hidden}.top-cart{right:10px;top:10px}.cart-toggle{padding:10px 12p
 
 <div class="section"><div class="section-title">Velkost</div><div class="row" id="sizeButtons"></div></div>
 
-<div class="section"><div class="section-title">Styl pisma</div><div class="row">
-<button class="control-btn font-btn active" data-font="Zakladny" type="button">Zakladny</button>
-<button class="control-btn font-btn" data-font="Hravy" type="button">Hravy</button>
-<button class="control-btn font-btn" data-font="Pisany" type="button">Pisany</button>
+<div class="section"><div class="section-title">Styl pisma</div><div class="row font-row">
+<button class="control-btn font-btn font-basic active" data-font="Zakladny" type="button">Zakladny</button>
+<button class="control-btn font-btn font-play" data-font="Hravy" type="button">Hravy</button>
+<button class="control-btn font-btn font-script" data-font="Pisany" type="button">Pisany</button>
 </div></div>
 
 <div class="section"><div class="section-title">Farba nite</div><div class="colors">
@@ -218,28 +128,12 @@ body{overflow:hidden}.top-cart{right:10px;top:10px}.cart-toggle{padding:10px 12p
 <button class="swatch" data-color="black" style="background:#111" type="button" aria-label="Cierna"></button>
 <button class="swatch" data-color="white" style="background:white;border-color:#d9dde8" type="button" aria-label="Biela"></button>
 </div></div>
-
-<div class="main-actions">
-<button class="secondary-btn" id="addToCart" type="button">Pridat do kosika</button>
-<button class="primary-btn" id="checkout" type="button">Dokoncit objednavku</button>
-</div>
-
-<div class="info-tabs">
-<button class="info-tab active" data-tab="contact" type="button">Kontakt</button>
-<button class="info-tab" data-tab="about" type="button">O TVODO</button>
-<button class="info-tab" data-tab="photos" type="button">Fotky</button>
-<button class="info-tab" data-tab="terms" type="button">Podmienky</button>
-</div>
-<div class="info-panel active" data-panel="contact"><h3>Kontakt</h3><p>Ak si nie ste isti textom, farbou alebo darcekom, napiste nam. Pomozeme navrh doladit.</p><p><strong>E-mail:</strong> doplnit@tvodo.sk<br><strong>Instagram:</strong> @tvodo.sk</p></div>
-<div class="info-panel" data-panel="about"><h3>Personalizovana vysivka</h3><p>Kazdy produkt vyrabame na objednavku podla vasho navrhu. Vyroba zacina po pripisani platby.</p></div>
-<div class="info-panel" data-panel="photos"><h3>Ukazky produktov</h3><div class="mini-gallery"><img src="shirt.svg" alt="Tricko"><img src="body.svg" alt="Body"><img src="bib.svg" alt="Bryndak"></div></div>
-<div class="info-panel" data-panel="terms"><h3>Podmienky</h3><p>Produkty s vlastnou vysivkou su vyrabane na mieru. Pred odoslanim si prosim skontrolujte text, velkost, farbu a kontaktne udaje.</p></div>
 </section>
 </main>
 
 <div class="modal" id="orderModal" hidden>
 <div class="panel" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
-<div class="order-head"><div><h2 class="title" id="orderTitle">Dokoncenie objednavky</h2><p class="subtitle">Skontrolujte kosik, doplnte udaje a po odoslani sa zobrazi QR platba.</p></div><button class="close-btn" id="closeOrder" type="button">×</button></div>
+<div class="order-head"><div><h2 class="title" id="orderTitle">Dokoncenie objednavky</h2><p class="subtitle">Skontrolujte kosik, doplnte udaje a po odoslani sa zobrazi QR platba.</p></div><button class="close-btn" id="closeOrder" type="button">x</button></div>
 <form id="orderForm">
 <div class="order-grid">
 <label class="field">Meno<input name="meno" autocomplete="name" required></label>
@@ -263,134 +157,29 @@ body{overflow:hidden}.top-cart{right:10px;top:10px}.cart-toggle{padding:10px 12p
 <label class="spam">Nevyplnajte<input name="website" id="websiteField" tabindex="-1" autocomplete="off"></label>
 <button class="primary-btn" style="width:100%;margin-top:16px" type="submit">Odoslat objednavku</button>
 </form>
+<div class="order-success" id="orderSuccess">
+<div class="success-card">
+<h3>Objednavka bola odoslana</h3>
+<div class="order-box" id="successSummaryBox"></div>
+<div class="success-payment">
+<img id="successQrImage" alt="QR platba">
+<div class="success-payment-text" id="successPaymentText"></div>
+</div>
+</div>
+</div>
 <iframe name="submitFrame" id="submitFrame" hidden></iframe>
 </div>
 </div>
 <div id="printSheet"></div>
 <div class="runtime-status" id="runtimeStatus"></div>
 
-<script>
-window.addEventListener('error',event=>showStatus('Chyba stranky: '+(event.message || 'neznamy problem'),'error'));
-const ORDER_ENDPOINT = 'https://docs.google.com/forms/d/e/1FAIpQLSepyUJ5aDK4GcTXfOUBUAd8xdwZflJ1cOTfmOeJvKh2hchXdw/formResponse';
-const APP_SCRIPT_ENDPOINT = '';
-const PAYMENT_IBAN = 'SK1009000000005154416378';
-const PAYMENT_ACCOUNT_NAME = 'Compel Miroslav';
-const SHIPPING_PRICE = 3.40;
-const FREE_SHIPPING_LIMIT = 50;
-const STORAGE_KEY = 'tvodo_cart_v2';
-const GOOGLE_FIELDS = {
-interneCislo:'entry.1943247834',meno:'entry.531831178',email:'entry.1398844849',telefon:'entry.2014121079',ulica:'entry.993318312',mesto:'entry.1875698237',psc:'entry.638573013',packeta:'entry.380080131',polozky:'entry.1722810673',vyrobnyFormat:'entry.320001101',pocetProduktov:'entry.830177637',produktySpolu:'entry.992906407',doprava:'entry.127799863',platba:'entry.1735533612',poplatokPlatby:'entry.736069030',sumaSpolu:'entry.2136560085',poznamka:'entry.1618273239',system:'entry.387972403'
-};
-const products = {
-Tricko:{image:'shirt.svg',price:24.90,sizes:['S','M','L','XL','2XL'],colors:['Biele','Cierne'],positions:{center:{x:420,y:340,w:160,h:160},chest:{x:530,y:320,w:160,h:160}}},
-Body:{image:'body.svg',price:22.90,sizes:['0-3 mes.','3-6 mes.','6-12 mes.','12-18 mes.','18-24 mes.'],colors:['Biele'],positions:{center:{x:420,y:380,w:160,h:160}}},
-Bryndak:{image:'bib.svg',price:18.90,sizes:['Univerzalna'],colors:['Biele'],positions:{center:{x:420,y:465,w:160,h:160}}}
-};
-const fontMap = {
-Zakladny:{family:'Arial, Helvetica, sans-serif',weight:'800',style:'normal',factor:.68},
-Hravy:{family:'Trebuchet MS, Arial, sans-serif',weight:'900',style:'normal',factor:.7},
-Pisany:{family:'Georgia, Times New Roman, serif',weight:'700',style:'italic',factor:.78}
-};
-const colorNames = {'#ff7cc6':'Ruzova','#5c86ff':'Modra','#55b96d':'Zelena','#f4c542':'Zlta',black:'Cierna',white:'Biela'};
-const glyphs = {'srdce.svg':'♥','hviezda.svg':'★','medved.svg':'●','zajac.svg':'♦'};
-const randomTexts = ['Laska','Mamicka','Mini boss','Navzdy spolu','Maly poklad','Vitaj na svete','Mama boss','Tata boss','Mala hviezda','Nase stastie','Super tato','Naj mama','Moje slnko','Srdce rodiny','Prve Vianoce','Narodeniny'];
-let state = {product:'Tricko',position:'center',symbol:'',symbolGlyph:'',thread:'#ff7cc6',shirt:'Biele',size:'S',font:'Zakladny'};
-let cart = loadCart();
-let activeOrderCode = '';
-let orderSubmitted = false;
-let pageStartedAt = Date.now();
-const $ = selector => document.querySelector(selector);
-const $$ = selector => [...document.querySelectorAll(selector)];
-function money(value){return value.toFixed(2).replace('.',',')+' €'}
-function showStatus(text,type='ready'){const el=$('#runtimeStatus');el.className='runtime-status '+type;el.textContent=text;setTimeout(()=>{if(el.textContent===text)el.className='runtime-status'},2200)}
-function saveCart(){localStorage.setItem(STORAGE_KEY,JSON.stringify(cart))}
-function loadCart(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]')}catch(e){return []}}
-function zone(){const p=products[state.product];return p.positions[state.position] || p.positions.center}
-function currentText(){return $('#textInput').value.trim() || 'Vasa vysivka'}
-function splitLines(text,maxChars,maxLines){const words=text.split(/\s+/).filter(Boolean);const lines=[];let line='';words.forEach(word=>{if(word.length>maxChars){if(line){lines.push(line);line=''}for(let i=0;i<word.length;i+=maxChars)lines.push(word.slice(i,i+maxChars));return}const test=(line+' '+word).trim();if(test.length>maxChars && line){lines.push(line);line=word}else line=test});if(line)lines.push(line);return lines.slice(0,maxLines)}
-function renderPreview(){
-const z=zone();const centerX=z.x+z.w/2;const centerY=z.y+z.h/2;$('#clipRect').setAttribute('x',z.x);$('#clipRect').setAttribute('y',z.y);$('#clipRect').setAttribute('width',z.w);$('#clipRect').setAttribute('height',z.h);
-$('#productImage').setAttribute('href',products[state.product].image);$('#productImage').style.filter=state.shirt==='Cierne'?'brightness(.18) drop-shadow(0 22px 30px rgba(0,0,0,.18))':'drop-shadow(0 22px 30px rgba(0,0,0,.1))';
-const sym=$('#symbolText');sym.textContent=state.symbol?state.symbolGlyph:'';sym.setAttribute('x',centerX);sym.setAttribute('y',z.y+32);sym.style.fill=state.thread;sym.style.fontSize='30px';
-const textEl=$('#embroideryText');textEl.innerHTML='';const hasSymbol=!!state.symbol;const maxChars=state.font==='Pisany'?9:11;const lines=splitLines(currentText(),maxChars,hasSymbol?2:3);const cfg=fontMap[state.font];const longest=lines.reduce((m,l)=>Math.max(m,l.length),1);const size=Math.floor(Math.max(16,Math.min(hasSymbol?25:30,(z.w*.68)/(longest*cfg.factor),(z.h*(hasSymbol?.48:.68))/lines.length)));textEl.style.fontFamily=cfg.family;textEl.style.fontWeight=cfg.weight;textEl.style.fontStyle=cfg.style;textEl.style.fill=state.thread;textEl.style.fontSize=size+'px';
-const lineHeight=Math.round(size*1.08);const offset=hasSymbol?Math.round(z.h*.12):0;const total=(lines.length-1)*lineHeight;lines.forEach((line,i)=>{const t=document.createElementNS('http://www.w3.org/2000/svg','tspan');t.setAttribute('x',centerX);t.setAttribute('y',centerY+offset-total/2+i*lineHeight);t.textContent=line;textEl.appendChild(t)});
-}
-function syncControls(){
-$$('.product-btn').forEach(b=>b.classList.toggle('active',b.dataset.product===state.product));
-$$('.position-btn').forEach(b=>{const allowed=!!products[state.product].positions[b.dataset.position];b.hidden=!allowed;b.disabled=!allowed;b.classList.toggle('active',b.dataset.position===state.position)});
-if(!products[state.product].positions[state.position])state.position='center';
-$$('.shirt-color-btn').forEach(b=>{const allowed=products[state.product].colors.includes(b.dataset.shirt);b.hidden=!allowed;b.disabled=!allowed;b.classList.toggle('active',b.dataset.shirt===state.shirt)});
-if(!products[state.product].colors.includes(state.shirt))state.shirt='Biele';
-if(!products[state.product].sizes.includes(state.size))state.size=products[state.product].sizes[0];
-const sizes=$('#sizeButtons');
-sizes.innerHTML=products[state.product].sizes.map(size=>'<button class="control-btn size-btn'+(size===state.size?' active':'')+'" data-size="'+escapeHtml(size)+'" type="button">'+escapeHtml(size)+'</button>').join('');
-$$('.size-btn').forEach(b=>b.addEventListener('click',()=>{state.size=b.dataset.size;syncControls();updateSummary()}));
-$$('.font-btn').forEach(b=>b.classList.toggle('active',b.dataset.font===state.font));$$('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.color===state.thread));$$('.symbol-btn').forEach(b=>b.classList.toggle('active',b.dataset.symbol===state.symbol));
-renderPreview();updateSummary();
-}
-function updateSummary(){
-const position=state.position==='center'?'stred':'prsia';$('#summaryText').textContent=state.product+' · '+position+' · '+state.size;$('#priceText').textContent='od '+money(products[state.product].price);$('#charCount').textContent=$('#textInput').value.length+'/34';
-const note=$('#nextProductNote');if(cart.length>0){note.classList.add('active');note.textContent='V kosiku uz mate '+cart.length+' produkt'+(cart.length>1?'y':'')+'. Teraz tvorite '+(cart.length+1)+'. produkt.'}else note.classList.remove('active');
-}
-function currentItem(){
-const price=products[state.product].price;
-return {id:Date.now()+'-'+Math.random().toString(16).slice(2),product:state.product,text:currentText(),size:state.size,productColor:state.shirt,position:state.position==='center'?'Na stred':'Na prsia',threadColor:colorNames[state.thread]||state.thread,threadValue:state.thread,font:state.font,symbol:state.symbol?state.symbol.replace('.svg',''):'Bez symbolu',price:price,priceLabel:money(price),previewSvg:getPreviewSvg(),signature:[state.product,currentText(),state.size,state.shirt,state.position,state.thread,state.font,state.symbol].join('|')}
-}
-function getPreviewSvg(){const clone=$('#previewSvg').cloneNode(true);clone.setAttribute('xmlns','http://www.w3.org/2000/svg');return new XMLSerializer().serializeToString(clone)}
-function totals(){const items=cart.reduce((s,i)=>s+i.price,0);const shipping=items>=FREE_SHIPPING_LIMIT?0:SHIPPING_PRICE;return {items,shipping,total:items+shipping}}
-function addCurrentToCart(){const item=currentItem();const duplicate=cart.find(cartItem=>cartItem.signature===item.signature);if(duplicate){showStatus('Tento produkt uz je v kosiku');$('#cartDrawer').classList.add('active');$('#cartToggle').setAttribute('aria-expanded','true');renderCart();return duplicate}cart.push(item);activeOrderCode='';orderSubmitted=false;saveCart();renderCart();showStatus('Produkt je v kosiku');$('#cartDrawer').classList.add('active');$('#cartToggle').setAttribute('aria-expanded','true');updateSummary();return item}
-function ensureCart(){if(cart.length===0)addCurrentToCart()}
-function renderCart(){
-$('#cartCount').textContent=cart.length;$('#cartSub').textContent=cart.length?cart.length+' produkt'+(cart.length>1?'y':'')+' v objednavke':'Kosik je prazdny';const body=$('#cartBody');
-if(cart.length===0){body.innerHTML='<div class="cart-empty">Kosik je prazdny. Navrhnite si produkt a kliknite na Pridat do kosika.</div>';updateSummary();return}
-const t=totals();const missing=Math.max(0,FREE_SHIPPING_LIMIT-t.items);const progress=Math.min(100,Math.round((t.items/FREE_SHIPPING_LIMIT)*100));
-body.innerHTML='<div class="cart-list">'+cart.map((item,index)=>'<div class="cart-row"><div class="cart-thumb">'+item.previewSvg+'</div><div><div class="cart-name">'+(index+1)+'. '+item.product+' / '+item.size+'</div><div class="cart-meta">'+escapeHtml(item.text)+'<br>'+item.threadColor+' · '+item.position+'<br>'+money(item.price)+'</div></div><button class="remove-item" data-id="'+item.id+'" type="button">×</button></div>').join('')+'</div><div class="shipping-box"><div class="shipping-line"><span>Doprava zdarma</span><span>'+money(t.items)+' / '+money(FREE_SHIPPING_LIMIT)+'</span></div><div class="shipping-progress"><span style="width:'+progress+'%"></span></div><div class="shipping-note">'+(missing>0?'Pridajte este za '+money(missing)+' a dopravu mate zdarma.':'Doprava zdarma je aktivna.')+'</div></div><div class="cart-total"><span>Spolu</span><span>'+money(t.total)+'</span></div><div class="cart-actions"><button class="primary-btn" id="cartCheckout" type="button">Dokoncit objednavku</button></div>';
-$$('.remove-item').forEach(b=>b.addEventListener('click',()=>{cart=cart.filter(i=>i.id!==b.dataset.id);activeOrderCode='';orderSubmitted=false;saveCart();renderCart();updateOrderForm();updateSummary()}));$('#cartCheckout').addEventListener('click',openOrder);updateSummary();
-}
-function escapeHtml(text){return String(text).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function orderCode(){if(activeOrderCode)return activeOrderCode;const d=new Date();const p=n=>String(n).padStart(2,'0');activeOrderCode='TV'+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes())+p(d.getSeconds());return activeOrderCode}
-function itemSummary(item,index){return (index+1)+'. '+item.product+' / '+item.size+' / '+item.productColor+'\nText: '+item.text+'\nMiesto: '+item.position+'\nNit: '+item.threadColor+'\nPismo: '+item.font+'\nSymbol: '+item.symbol+'\nCena: '+money(item.price)}
-function productionLine(item,index,code){return 'Obj. '+code+' | Polozka '+(index+1)+' | '+item.product+' | Velkost: '+item.size+' | Produkt: '+item.productColor+' | Text: '+item.text+' | '+item.position+' | Nit: '+item.threadColor+' | Pismo: '+item.font+' | Symbol: '+item.symbol+' | Cena: '+money(item.price)}
-function buildPaymentText(code,total){return ['BCD','002','1','SCT','',PAYMENT_ACCOUNT_NAME,PAYMENT_IBAN,'EUR'+total.toFixed(2),'','',code,'Objednavka '+code].join('\n')}
-function qrUrl(code,total){return 'https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=12&data='+encodeURIComponent(buildPaymentText(code,total))}
-function updateOrderForm(){
-if(cart.length===0)return;const code=orderCode();const t=totals();$('#orderPreviewList').innerHTML=cart.map((item,index)=>'<div class="preview-item">'+item.previewSvg+'<div class="preview-caption">'+(index+1)+'. '+item.product+' / '+item.size+' / '+escapeHtml(item.text)+'</div></div>').join('');
-$('#orderSummaryBox').textContent='Interne cislo: '+code+'\n\nPOLOZKY:\n'+cart.map(itemSummary).join('\n\n');
-$('#orderTotalBox').textContent='Produkty spolu: '+money(t.items)+'\nPacketa: '+(t.shipping===0?'zdarma':money(t.shipping))+'\nPlatba: prevod na ucet vopred\nSpolu: '+money(t.total)+'\n\nPlatobne udaje, variabilny symbol a QR kod sa zobrazia az po odoslani objednavky.';
-if(!orderSubmitted){$('#paymentResult').classList.remove('active');$('#paymentQrImage').removeAttribute('src');$('#paymentResultText').textContent=''}
-$('#itemsText').value=cart.map(itemSummary).join('\n\n');$('#itemsJson').value=JSON.stringify(cart.map(({previewSvg,signature,id,...rest})=>rest));$('#totalInput').value=money(t.total);$('#orderCodeInput').value=code;
-}
-function openOrder(){ensureCart();updateOrderForm();$('#orderModal').hidden=false;$('#cartDrawer').classList.remove('active')}
-function buildPayload(formData){
-const code=orderCode();const t=totals();const production=cart.map((item,index)=>productionLine(item,index,code)).join('\n');const customer='Meno: '+(formData.get('meno')||'')+'\nEmail: '+(formData.get('email')||'')+'\nTelefon: '+(formData.get('telefon')||'');const delivery='Adresa: '+[formData.get('ulica'),formData.get('mesto'),formData.get('psc')].filter(Boolean).join(', ')+'\nPacketa: '+(formData.get('packeta')||'');const full='OBJEDNAVKA '+code+'\n\n'+customer+'\n\n'+delivery+'\n\nPOLOZKY:\n'+cart.map(itemSummary).join('\n\n')+'\n\nVYROBNY FORMAT:\n'+production+'\n\nSPOLU:\nProdukty: '+money(t.items)+'\nPacketa: '+(t.shipping===0?'zdarma':money(t.shipping))+'\nSuma: '+money(t.total)+'\n\nPLATBA PO POTVRDENI:\nIBAN: '+PAYMENT_IBAN+'\nPrijemca: '+PAYMENT_ACCOUNT_NAME+'\nVariabilny symbol: '+code+'\nSprava pre prijemcu: Objednavka '+code+'\nQR URL: '+qrUrl(code,t.total);
-return {[GOOGLE_FIELDS.interneCislo]:code,[GOOGLE_FIELDS.meno]:formData.get('meno')||'',[GOOGLE_FIELDS.email]:formData.get('email')||'',[GOOGLE_FIELDS.telefon]:formData.get('telefon')||'',[GOOGLE_FIELDS.ulica]:formData.get('ulica')||'',[GOOGLE_FIELDS.mesto]:formData.get('mesto')||'',[GOOGLE_FIELDS.psc]:formData.get('psc')||'',[GOOGLE_FIELDS.packeta]:formData.get('packeta')||'',[GOOGLE_FIELDS.polozky]:full,[GOOGLE_FIELDS.vyrobnyFormat]:production,[GOOGLE_FIELDS.pocetProduktov]:String(cart.length),[GOOGLE_FIELDS.produktySpolu]:money(t.items),[GOOGLE_FIELDS.doprava]:t.shipping===0?'Zdarma':money(t.shipping),[GOOGLE_FIELDS.platba]:'Prevod na ucet vopred',[GOOGLE_FIELDS.poplatokPlatby]:money(0),[GOOGLE_FIELDS.sumaSpolu]:money(t.total),[GOOGLE_FIELDS.poznamka]:formData.get('poznamka')||'',[GOOGLE_FIELDS.system]:'Vytvorene: '+new Date().toLocaleString('sk-SK')+'\nZdroj: tvodo.sk'};
-}
-function buildAppScriptPayload(formData){
-const code=orderCode();const t=totals();const production=cart.map((item,index)=>productionLine(item,index,code)).join('\n');
-return {interne_cislo:code,variabilny_symbol:code,meno:formData.get('meno')||'',email:formData.get('email')||'',telefon:formData.get('telefon')||'',ulica:formData.get('ulica')||'',mesto:formData.get('mesto')||'',psc:formData.get('psc')||'',packeta:formData.get('packeta')||'',poznamka:formData.get('poznamka')||'',pocet_poloziek:String(cart.length),produkty_spolu:money(t.items),doprava:t.shipping===0?'Zdarma':money(t.shipping),platba:'Prevod na ucet vopred',platba_poplatok:money(0),suma_spolu:money(t.total),polozky_text:cart.map(itemSummary).join('\n\n'),vyrobny_format:production,polozky_json:JSON.stringify(cart.map(({previewSvg,signature,id,...rest})=>rest)),qr_url:qrUrl(code,t.total),payment_text:buildPaymentText(code,t.total),zdroj:'tvodo.sk'}
-}
-function nativeSubmit(payload){const form=document.createElement('form');form.method='POST';form.action=ORDER_ENDPOINT;form.target='submitFrame';form.style.display='none';Object.entries(payload).forEach(([name,value])=>{const input=document.createElement('input');input.type='hidden';input.name=name;input.value=value;form.appendChild(input)});document.body.appendChild(form);form.submit();setTimeout(()=>form.remove(),1000)}
-function showPayment(){const code=orderCode();const t=totals();orderSubmitted=true;$('#paymentQrImage').src=qrUrl(code,t.total);$('#paymentResultText').textContent='Objednavka '+code+' bola odoslana.\nNa uhradu: '+money(t.total)+'\nIBAN: '+PAYMENT_IBAN.replace(/(.{4})/g,'$1 ').trim()+'\nPrijemca: '+PAYMENT_ACCOUNT_NAME+'\nVariabilny symbol: '+code+'\nSprava pre prijemcu: Objednavka '+code;$('#paymentResult').classList.add('active')}
-function printOrder(){
-updateOrderForm();const code=orderCode();const t=totals();$('#printSheet').innerHTML=cart.map((item,index)=>'<div class="print-page"><div class="print-title">TVODO vyrobny list '+code+'</div><div class="print-line">Polozka '+(index+1)+' z '+cart.length+'</div><div class="print-preview">'+item.previewSvg+'</div><div class="print-box">'+escapeHtml(productionLine(item,index,code))+'</div><div class="print-box">'+escapeHtml(itemSummary(item,index))+'</div><div class="print-line">Zakaznik a doprava su v suhrne objednavky. Suma spolu: '+money(t.total)+'</div></div>').join('');window.print()
-}
-function resetDesign(){state={product:'Tricko',position:'center',symbol:'',symbolGlyph:'',thread:'#ff7cc6',shirt:'Biele',size:'S',font:'Zakladny'};$('#textInput').value='';syncControls()}
-$$('.product-btn').forEach(b=>b.addEventListener('click',()=>{state.product=b.dataset.product;state.position='center';state.shirt='Biele';state.size=products[state.product].sizes[0];syncControls()}));
-$$('.position-btn').forEach(b=>b.addEventListener('click',()=>{state.position=b.dataset.position;syncControls()}));
-$$('.shirt-color-btn').forEach(b=>b.addEventListener('click',()=>{state.shirt=b.dataset.shirt;syncControls()}));
-$$('.font-btn').forEach(b=>b.addEventListener('click',()=>{state.font=b.dataset.font;syncControls()}));
-$$('.swatch').forEach(b=>b.addEventListener('click',()=>{state.thread=b.dataset.color;syncControls()}));
-$$('.symbol-btn').forEach(b=>b.addEventListener('click',()=>{state.symbol=b.dataset.symbol;state.symbolGlyph=b.dataset.glyph || '';syncControls()}));
-$$('.pill-btn[data-text]').forEach(b=>b.addEventListener('click',()=>{$('#textInput').value=b.dataset.text;syncControls()}));
-$('#textInput').addEventListener('input',syncControls);
-$('#randomButton').addEventListener('click',()=>{$('#textInput').value=randomTexts[Math.floor(Math.random()*randomTexts.length)];state.thread=['#ff7cc6','#5c86ff','#55b96d','#f4c542','black'][Math.floor(Math.random()*5)];state.font=['Zakladny','Hravy','Pisany'][Math.floor(Math.random()*3)];syncControls()});
-$('#cartToggle').addEventListener('click',()=>{const d=$('#cartDrawer');d.classList.toggle('active');$('#cartToggle').setAttribute('aria-expanded',d.classList.contains('active'))});
-$('#closeCart').addEventListener('click',()=>$('#cartDrawer').classList.remove('active'));
-$('#addToCart').addEventListener('click',addCurrentToCart);$('#checkout').addEventListener('click',openOrder);$('#resetButton').addEventListener('click',resetDesign);$('#closeOrder').addEventListener('click',()=>$('#orderModal').hidden=true);$('#printOrder').addEventListener('click',printOrder);
-$$('.info-tab').forEach(tab=>tab.addEventListener('click',()=>{$$('.info-tab').forEach(b=>b.classList.toggle('active',b===tab));$$('.info-panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===tab.dataset.tab))}));
-$('#orderForm').addEventListener('submit',event=>{event.preventDefault();if(orderSubmitted){showStatus('Objednavka uz bola odoslana');return}updateOrderForm();const form=event.currentTarget;const submitButton=form.querySelector('button[type="submit"]');if($('#websiteField').value.trim())return;if(Date.now()-pageStartedAt<2500){alert('Skuste objednavku odoslat este raz o par sekund.');return}if(!form.checkValidity()){form.reportValidity();return}if(submitButton)submitButton.disabled=true;const data=new FormData(form);if(APP_SCRIPT_ENDPOINT){fetch(APP_SCRIPT_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(buildAppScriptPayload(data))}).catch(()=>{});}else{nativeSubmit(buildPayload(data));}showPayment();showStatus('Objednavka bola odoslana')});
-document.addEventListener('keydown',event=>{if(event.key==='Escape'){$('#orderModal').hidden=true;$('#cartDrawer').classList.remove('active')}});
-renderCart();syncControls();showStatus('Stranka je pripravena');
-</script>
+<script src="scripts/config.js"></script>
+<script src="scripts/utils.js"></script>
+<script src="scripts/preview.js"></script>
+<script src="scripts/cart.js"></script>
+<script src="scripts/order.js"></script>
+<script src="scripts/controls.js"></script>
+<script src="scripts/init.js"></script>
 </body>
 </html>
+

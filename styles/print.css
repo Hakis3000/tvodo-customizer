@@ -1,0 +1,2 @@
+@media print{body>*:not(#printSheet){display:none!important}#printSheet{display:block!important;color:#111;font-family:Arial,sans-serif}.print-page{page-break-after:always;padding:20mm}.print-preview svg{width:90mm;height:90mm}.print-title{font-size:24px;font-weight:800;margin-bottom:8px}.print-line{font-size:14px;margin:4px 0}.print-box{border:1px solid #222;padding:10px;margin-top:12px;white-space:pre-line}}
+#printSheet{display:none}
