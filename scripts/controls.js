@@ -16,7 +16,29 @@ closeCartDrawer();
 }
 });
 $('#closeCart').addEventListener('click',closeCartDrawer);
-$('#addToCart').addEventListener('click',addCurrentToCart);$('#checkout').addEventListener('click',openOrder);$('#resetButton').addEventListener('click',resetDesign);$('#closeOrder').addEventListener('click',()=>$('#orderModal').hidden=true);$('#printOrder').addEventListener('click',printOrder);
-$$('.info-tab').forEach(tab=>tab.addEventListener('click',()=>{$$('.info-tab').forEach(b=>b.classList.toggle('active',b===tab));$$('.info-panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===tab.dataset.tab))}));
+function animateAddToCart(){
+const source=document.querySelector('.preview-window');const target=$('#cartToggle');const svg=previewElement('#previewSvg');
+if(!source || !target || !svg)return;
+const from=source.getBoundingClientRect();const to=target.getBoundingClientRect();const ghost=document.createElement('div');
+const size=Math.min(190,Math.max(120,from.width*.26));ghost.className='cart-flyout';ghost.style.left=from.left+from.width/2-size/2+'px';ghost.style.top=from.top+from.height/2-size/2+'px';ghost.style.width=size+'px';ghost.style.height=size+'px';ghost.innerHTML=new XMLSerializer().serializeToString(svg.cloneNode(true));
+document.body.appendChild(ghost);
+const startLeft=from.left+from.width/2-size/2;const startTop=from.top+from.height/2-size/2;const endLeft=to.left+to.width/2-size/2;const endTop=to.top+to.height/2-size/2;
+requestAnimationFrame(()=>{ghost.style.transform='translate('+(endLeft-startLeft)+'px,'+(endTop-startTop)+'px) scale(.22)';ghost.style.opacity='0'});
+setTimeout(()=>ghost.remove(),680);
+}
+$('#addToCart').addEventListener('click',()=>{animateAddToCart();addCurrentToCart()});$('#checkout').addEventListener('click',openOrder);$('#resetButton').addEventListener('click',resetDesign);$('#closeOrder').addEventListener('click',()=>$('#orderModal').hidden=true);
+function openInfoModal(selected){
+$('#infoModal').hidden=false;
+$$('.info-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===selected));
+$$('.info-panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===selected));
+const activePanel=document.querySelector('.info-panel.active h3');
+if(activePanel)$('#infoModalTitle').textContent=activePanel.textContent;
+}
+function closeInfoModal(){
+$('#infoModal').hidden=true;
+}
+$$('.info-tab').forEach(tab=>tab.addEventListener('click',()=>openInfoModal(tab.dataset.tab)));
+$('#closeInfoModal').addEventListener('click',closeInfoModal);
+$('#infoModal').addEventListener('click',event=>{if(event.target.id==='infoModal')closeInfoModal()});
 $('#orderForm').addEventListener('submit',event=>{event.preventDefault();if(orderSubmitted){showStatus('Objednavka uz bola odoslana');return}updateOrderForm();const form=event.currentTarget;const submitButton=form.querySelector('button[type="submit"]');if($('#websiteField').value.trim())return;if(Date.now()-pageStartedAt<2500){alert('Skuste objednavku odoslat este raz o par sekund.');return}if(!form.checkValidity()){form.reportValidity();return}if(submitButton)submitButton.disabled=true;const data=new FormData(form);if(APP_SCRIPT_ENDPOINT){fetch(APP_SCRIPT_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(buildAppScriptPayload(data))}).catch(()=>{});}else{nativeSubmit(buildPayload(data));}showPayment();showStatus('Objednavka bola odoslana')});
-document.addEventListener('keydown',event=>{if(event.key==='Escape'){$('#orderModal').hidden=true;closeCartDrawer()}});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'){$('#orderModal').hidden=true;closeCartDrawer();closeInfoModal()}});

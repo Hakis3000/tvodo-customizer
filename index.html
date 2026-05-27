@@ -13,6 +13,10 @@
 <header class="top-cart">
 <div class="top-cart-inner">
 <div class="top-logo">TVODO <span>personalizovana vysivka pre darceky a rodinne momenty</span></div>
+<div class="top-shipping" id="topShipping">
+<div class="top-shipping-line"><span>Doprava zdarma</span><strong id="topShippingValue">0,00 EUR / 50,00 EUR</strong></div>
+<div class="top-shipping-progress"><span id="topShippingBar"></span></div>
+</div>
 <button class="cart-toggle" id="cartToggle" type="button" aria-expanded="false">Kosik <span class="cart-count" id="cartCount">0</span></button>
 </div>
 </header>
@@ -26,23 +30,24 @@
 
 
 <nav class="product-strip" aria-label="Vyber produktu">
+<div class="product-strip-inner">
 <div class="product-bar">
 <button class="product-btn active" data-product="Tricko" type="button"><img src="shirt.svg?v=20260527b" alt="">Tricko</button>
 <button class="product-btn" data-product="Body" type="button"><img src="body.svg?v=20260527b" alt="">Body</button>
 <button class="product-btn" data-product="Bryndak" type="button"><img src="bib.svg?v=20260527b" alt="">Bryndak</button>
+</div>
+<div class="info-tabs" aria-label="Informacie">
+<button class="info-tab" data-tab="contact" type="button">Kontakt</button>
+<button class="info-tab" data-tab="about" type="button">O TVODO</button>
+<button class="info-tab" data-tab="photos" type="button">Fotky</button>
+<button class="info-tab" data-tab="terms" type="button">Podmienky</button>
+</div>
 </div>
 </nav>
 
 <main class="app">
 <section class="left">
 <div class="preview-card">
-<aside class="preview-side preview-summary">
-<div class="side-label">Aktualny vyber</div>
-<div class="value" id="summaryText">Tricko - stred - S</div>
-<div class="price-pill" id="priceText">od 24,90 EUR</div>
-<div class="next-product" id="nextProductNote"></div>
-</aside>
-
 <div class="preview-window">
 <svg id="previewSvg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
 <defs>
@@ -56,8 +61,15 @@
 </div>
 
 <aside class="preview-side preview-buy">
+<div class="side-label">Cena</div>
+<div class="price-pill" id="priceText">od 24,90 EUR</div>
 <div class="side-label">Objednavka</div>
-<div class="side-copy">Navrh si mozte vlozit do kosika alebo rovno dokoncit objednavku.</div>
+<div class="side-copy">Navrh vlozte do kosika alebo rovno dokoncte objednavku.</div>
+<div class="checkout-progress" id="checkoutProgress">
+<div class="shipping-line"><span>Doprava zdarma</span><span id="checkoutProgressValue">0,00 EUR / 50,00 EUR</span></div>
+<div class="shipping-progress"><span id="checkoutProgressBar"></span></div>
+<div class="shipping-note" id="checkoutProgressNote">Pridajte produkt do kosika.</div>
+</div>
 <div class="main-actions">
 <button class="secondary-btn" id="addToCart" type="button">Pridat do kosika</button>
 <button class="primary-btn" id="checkout" type="button">Dokoncit objednavku</button>
@@ -70,17 +82,6 @@
 <section class="right">
 <h1 class="title">Vytvorte si vlastny kusok</h1>
 <p class="subtitle">Navrhnite vysivku, pridajte ju do kosika a objednavku dokoncte s QR platbou.</p>
-
-<div class="info-tabs">
-<button class="info-tab active" data-tab="contact" type="button">Kontakt</button>
-<button class="info-tab" data-tab="about" type="button">O TVODO</button>
-<button class="info-tab" data-tab="photos" type="button">Fotky</button>
-<button class="info-tab" data-tab="terms" type="button">Podmienky</button>
-</div>
-<div class="info-panel active" data-panel="contact"><h3>Kontakt</h3><p>Ak si nie ste isti textom, farbou alebo darcekom, napiste nam. Pomozeme navrh doladit.</p><p><strong>E-mail:</strong> doplnit@tvodo.sk<br><strong>Instagram:</strong> @tvodo.sk</p></div>
-<div class="info-panel" data-panel="about"><h3>Personalizovana vysivka</h3><p>Kazdy produkt vyrabame na objednavku podla vasho navrhu. Vyroba zacina po pripisani platby.</p></div>
-<div class="info-panel" data-panel="photos"><h3>Ukazky produktov</h3><div class="mini-gallery"><img src="shirt.svg?v=20260527b" alt="Tricko"><img src="body.svg?v=20260527b" alt="Body"><img src="bib.svg?v=20260527b" alt="Bryndak"></div></div>
-<div class="info-panel" data-panel="terms"><h3>Podmienky</h3><p>Produkty s vlastnou vysivkou su vyrabane na mieru. Pred odoslanim si prosim skontrolujte text, velkost, farbu a kontaktne udaje.</p></div>
 
 <div class="section">
 <div class="section-head"><div class="section-title">Co vysijeme?</div><div class="char-count" id="charCount">0/34</div></div>
@@ -131,9 +132,19 @@
 </section>
 </main>
 
+<div class="info-modal" id="infoModal" hidden>
+<div class="info-dialog" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+<div class="info-dialog-head"><h2 id="infoModalTitle">TVODO</h2><button class="close-btn" id="closeInfoModal" type="button">x</button></div>
+<div class="info-panel active" data-panel="contact"><h3>Kontakt</h3><p>Ak si nie ste isti textom, farbou alebo darcekom, napiste nam. Pomozeme navrh doladit.</p><p><strong>E-mail:</strong> doplnit@tvodo.sk<br><strong>Instagram:</strong> @tvodo.sk</p></div>
+<div class="info-panel" data-panel="about"><h3>Personalizovana vysivka</h3><p>Kazdy produkt vyrabame na objednavku podla vasho navrhu. Vyroba zacina po pripisani platby.</p></div>
+<div class="info-panel" data-panel="photos"><h3>Ukazky produktov</h3><div class="mini-gallery"><img src="shirt.svg?v=20260527b" alt="Tricko"><img src="body.svg?v=20260527b" alt="Body"><img src="bib.svg?v=20260527b" alt="Bryndak"></div></div>
+<div class="info-panel" data-panel="terms"><h3>Podmienky</h3><p>Produkty s vlastnou vysivkou su vyrabane na mieru. Pred odoslanim si prosim skontrolujte text, velkost, farbu a kontaktne udaje.</p></div>
+</div>
+</div>
+
 <div class="modal" id="orderModal" hidden>
 <div class="panel" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
-<div class="order-head"><div><h2 class="title" id="orderTitle">Dokoncenie objednavky</h2><p class="subtitle">Skontrolujte kosik, doplnte udaje a po odoslani sa zobrazi QR platba.</p></div><button class="close-btn" id="closeOrder" type="button">x</button></div>
+<div class="order-head"><div><h2 class="title" id="orderTitle">Dokoncenie objednavky</h2><p class="subtitle">Doplnte kontakt a dorucenie. Platobne udaje a QR kod sa zobrazia az po potvrdeni objednavky.</p></div><button class="close-btn" id="closeOrder" type="button">x</button></div>
 <form id="orderForm">
 <div class="order-grid">
 <label class="field">Meno<input name="meno" autocomplete="name" required></label>
@@ -144,26 +155,25 @@
 <label class="field">PSC<input name="psc" autocomplete="postal-code" required></label>
 <label class="field full">Packeta / Zasielkovna<input name="packeta" placeholder="Nazov alebo adresa vydajneho miesta" required></label>
 <label class="field full">Poznamka<textarea name="poznamka" placeholder="Termin, darcekove balenie alebo ina prosba"></textarea></label>
+<div class="field full"><button class="primary-btn order-confirm-btn" type="submit">Potvrdit objednavku</button></div>
 <div class="field full">Nahlad objednavky<div class="preview-list" id="orderPreviewList"></div></div>
 <div class="field full">Suhrn<div class="order-box" id="orderSummaryBox"></div></div>
 <div class="field full">Cena spolu<div class="order-box" id="orderTotalBox"></div></div>
-<div class="field full"><button class="secondary-btn" id="printOrder" type="button">Vytlacit vyrobny list</button></div>
-<div class="field full"><div class="payment-result" id="paymentResult"><img id="paymentQrImage" alt="QR platba"><div class="payment-result-text" id="paymentResultText"></div></div></div>
 </div>
 <input type="hidden" name="polozky_text" id="itemsText">
 <input type="hidden" name="polozky_json" id="itemsJson">
 <input type="hidden" name="suma_spolu" id="totalInput">
 <input type="hidden" name="interne_cislo" id="orderCodeInput">
 <label class="spam">Nevyplnajte<input name="website" id="websiteField" tabindex="-1" autocomplete="off"></label>
-<button class="primary-btn" style="width:100%;margin-top:16px" type="submit">Odoslat objednavku</button>
 </form>
 <div class="order-success" id="orderSuccess">
 <div class="success-card">
-<h3>Objednavka bola odoslana</h3>
+<h3>Objednavka je potvrdena</h3>
+<p class="success-lead">Platbu prosim odoslite prevodom. Tie iste pokyny odchadzaju aj na vas e-mail.</p>
 <div class="order-box" id="successSummaryBox"></div>
 <div class="success-payment">
 <img id="successQrImage" alt="QR platba">
-<div class="success-payment-text" id="successPaymentText"></div>
+<div><div class="success-payment-text" id="successPaymentText"></div><a class="payment-link" id="successQrLink" href="#" target="_blank" rel="noopener">Otvorit QR kod</a></div>
 </div>
 </div>
 </div>

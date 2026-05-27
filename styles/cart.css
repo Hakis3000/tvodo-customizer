@@ -2,7 +2,13 @@
 .top-cart-inner{height:58px;max-width:1700px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .top-logo{font-size:22px;font-weight:950;line-height:1;background:linear-gradient(90deg,var(--pink),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
 .top-logo span{display:block;margin-top:4px;font-size:11px;font-weight:850;color:#6b7280;background:none;-webkit-text-fill-color:#6b7280}
+.top-shipping{width:260px;border-radius:16px;background:#fff;padding:8px 10px;box-shadow:0 10px 24px rgba(36,43,59,.10);border:1px solid rgba(92,134,255,.12)}
+.top-shipping-line{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;font-weight:950;color:#41506a}
+.top-shipping-line strong{font-size:11px;color:#273044;white-space:nowrap}
+.top-shipping-progress{height:8px;border-radius:999px;background:#e9edf7;overflow:hidden;margin-top:6px}
+.top-shipping-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--blue),var(--green));transition:width .3s ease}
 .cart-toggle{border:0;border-radius:999px;background:#fff;color:#273044;box-shadow:0 10px 24px rgba(36,43,59,.12);padding:10px 14px;display:flex;align-items:center;gap:9px;font-weight:900}
+.cart-toggle.cart-bump{animation:cartBump .5s ease}
 .cart-count{min-width:24px;height:24px;border-radius:999px;background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff;display:grid;place-items:center;font-size:12px}
 .cart-drawer{position:fixed;right:16px;top:70px;z-index:29;width:min(390px,calc(100vw - 32px));max-height:calc(100vh - 86px);overflow:auto;border-radius:20px;background:rgba(255,255,255,.96);box-shadow:0 24px 70px rgba(30,37,52,.2);border:1px solid rgba(255,255,255,.7);padding:16px;display:none}
 .cart-drawer.active{display:block}
@@ -24,3 +30,4 @@
 .shipping-note{margin-top:8px;font-size:12px;font-weight:800;color:#3f68d8;line-height:1.35}
 .cart-total{display:flex;justify-content:space-between;align-items:center;margin-top:13px;font-weight:950}
 .cart-actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:12px}
+@keyframes cartBump{0%,100%{transform:scale(1)}35%{transform:scale(1.12)}65%{transform:scale(.97)}}
